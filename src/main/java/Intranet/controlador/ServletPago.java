@@ -30,7 +30,7 @@ public class ServletPago extends HttpServlet {
 	private void ListarSueldo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setAttribute("pago", new MySQL_Pago().findAll());
-		request.getRequestDispatcher("/Empleado.jsp").forward(request, response);
+		request.getRequestDispatcher("/Pagos.jsp").forward(request, response);
 	}
 
 	private void GuardarSueldo(HttpServletRequest request, HttpServletResponse response)
