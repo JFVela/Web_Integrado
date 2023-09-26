@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="ServletPago?accion=listado"></a>
+	<a href="ServletPago?accion=listado">PAGO</a>
 </body>
 </html>
