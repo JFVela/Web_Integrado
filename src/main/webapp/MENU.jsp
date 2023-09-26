@@ -8,5 +8,7 @@
 </head>
 <body>
 	<a href="ServletPago?accion=listado">PAGO</a>
+	<a href="ServletDepa?accion=listado">DEPA</a>
+
 </body>
 </html>
