@@ -9,7 +9,7 @@
 <body>
 	<a href="ServletPago?accion=listado">PAGO</a>
 	<a href="ServletDepa?accion=listado">DEPA</a>
-	<a href="ServletRol?accion=listado">PAGO</a>
+	<a href="ServletRol?accion=listado">ROL</a>
 
 </body>
 </html>

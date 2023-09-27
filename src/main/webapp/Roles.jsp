@@ -166,39 +166,36 @@
 </script>
 
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$('#FormularioRol')
-								.bootstrapValidator(
-										{
-											fields : {
-												nombre : { 
-													validators : {
-														notEmpty : {
-															message : 'Campo de nombre es obligatorio'
-														},
-														regexp : {
-															regexp : /^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s,.;:¡!¿?"'()]+$/,
-															message : 'El nombre solo puede contener letras, números, espacios y signos de puntuación'
-														}
-													}
-												},
-												descripcion : {
-													validators : {
-														notEmpty : {
-															message : 'Campo de descripcion es obligatorio'
-														},
-														regexp : {
-															regexp : /^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s,.;:¡!¿?"'()]+$/,
-															message : 'La descripcion solo puede contener letras, números, espacios y signos de puntuación'
-														}
-													}
-												}
-											}
-										});
-					});
+	$(document).ready(function() {
+		$('#FormularioRol').bootstrapValidator({
+			fields: {
+				nombre: {
+					validators: {
+						notEmpty: {
+							message: 'Campo de nombre es obligatorio'
+						},
+						regexp: {
+							regexp: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s,.;:¡!¿?"'()]+$/, // Modificado para no permitir números
+							message: 'Solo se aceptan letras'
+						}
+					}
+				},
+				descripcion: {
+					validators: {
+						notEmpty: {
+							message: 'Campo de descripcion es obligatorio'
+						},
+						regexp: {
+							regexp: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s,.;:¡!¿?"'()]+$/, // Modificado para no permitir números
+							message: 'Solo se aceptan letras'
+						}
+					}
+				}
+			}
+		});
+	});
 </script>
+
 
 
 </html>

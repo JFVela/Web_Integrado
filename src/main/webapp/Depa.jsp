@@ -173,14 +173,14 @@
 								.bootstrapValidator(
 										{
 											fields : {
-												nombre : { 
+												nombre : {
 													validators : {
 														notEmpty : {
 															message : 'Campo de nombre es obligatorio'
 														},
 														regexp : {
-															regexp : /^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s,.;:¡!¿?"'()]+$/,
-															message : 'El nombre solo puede contener letras, números, espacios y signos de puntuación'
+															regexp : /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s,.;:¡!¿?"'()]+$/, // Modificado para no permitir números
+															message : 'El nombre solo puede contener letras, espacios y signos de puntuación, pero no números'
 														}
 													}
 												},
@@ -199,6 +199,7 @@
 										});
 					});
 </script>
+
 
 
 </html>
