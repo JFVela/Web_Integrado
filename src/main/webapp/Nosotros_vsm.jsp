@@ -230,7 +230,7 @@
 					</li>
 					<li class="nav-item"><a class="nav-link" href="Nosotros.jsp">Nosotros</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="#!">Historias
+					<li class="nav-item"><a class="nav-link" href="HisExito.jsp">Historias
 							de éxito</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="voluntariado.jsp">Voluntariado</a></li>
