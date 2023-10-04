@@ -12,7 +12,7 @@
     if (autenticado != null && autenticado) {
         // El usuario está autenticado, mostrar el contenido de la página
     } else {
-        // El usuario no está autenticado, redirigir a una página de inicio de sesión o mostrar un mensaje de error
+        // El usuario no está autenticado, redirigir voluntariado
         response.sendRedirect("voluntariado.jsp");
     }
 %>
@@ -335,7 +335,7 @@ body.shimeji-select-ie {
         // Realiza una solicitud AJAX para cerrar la sesión en el servidor
         $.ajax({
             type: "POST",
-            url: "CerrarSesionServlet", // Debes crear un servlet para cerrar la sesión
+            url: "CerrarSesionServlet", 
             success: function() {
                 console.log("Sesión cerrada");
             },
@@ -345,7 +345,7 @@ body.shimeji-select-ie {
         });
     }
 
-    // Asigna la función cerrarSesion al evento beforeunload o unload
+    // Asigna la función cerrarSesion al evento beforeunload 
     $(window).on('beforeunload', function() {
         cerrarSesion();
     });

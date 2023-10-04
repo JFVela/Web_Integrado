@@ -35,8 +35,7 @@ public class CerrarSesionServlet extends HttpServlet {
             session.invalidate();
         }
 
-        // Redirigir a una página de inicio de sesión u otra página deseada
-        response.sendRedirect("voluntariado.jsp");
+        // Redirigir a una página de inicio de sesión
 	}
 
 }

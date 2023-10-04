@@ -57,14 +57,13 @@ public class ServletVoluntario extends HttpServlet {
 	
 
 	private void verificarDNI(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		  // Recuperar el DNI del formulario
 		 // Recuperar el DNI del formulario
 	    String dni = request.getParameter("dni");
 
 	    System.out.println("Verificando DNI: " + dni); // Para verificar si se ejecuta esta parte
 
 	    // Llama al método findById de tu DAO para buscar el DNI en la base de datos
-	    MySqlVoluntarioDAO voluntarioDAO = new MySqlVoluntarioDAO(); // Reemplaza con la instancia real de tu DAO
+	    MySqlVoluntarioDAO voluntarioDAO = new MySqlVoluntarioDAO(); 
 	    Voluntario voluntario = voluntarioDAO.findDNI(Integer.parseInt(dni));
 
 	    Gson gson = new Gson();

@@ -663,7 +663,7 @@ $(document).ready(function() {
         // Obtén el valor del campo de DNI
         var dni = $(this).val();
         
-        // Realiza la solicitud AJAX solo si el DNI tiene 8 caracteres (ajusta según tus necesidades)
+        // Realiza la solicitud AJAX solo si el DNI tiene 8 caracteres 
         if (dni.length === 8) {
             $.ajax({
                 type: "POST", // Método HTTP POST
@@ -686,9 +686,7 @@ $(document).ready(function() {
                         	  imageHeight: 200,
                         	  imageAlt: 'imgError',
 						});
-                        // Puedes personalizar el mensaje y el tipo de alerta según tus necesidades
                     } else {
-                        // El DNI no existe, no hagas nada o muestra un mensaje en otro lugar si lo deseas
                     }
                 },
                 error: function() {
