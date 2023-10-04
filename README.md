@@ -11,7 +11,7 @@ El proyecto en cuestión es un sistema web diseñado para la ONG ficticia “Ren
 
 ## Tecnologías utilizadas
 
-Este proyecto ha sido desarrollado utilizando una variedad de tecnologías para garantizar un sistema robusto y eficiente. A continuación, se detallan las tecnologías que hemos utilizado:
+Este proyecto ha sido desarrollado utilizando una variedad de tecnologías para garantizar un sistema robusto y eficiente. A continuación, se mencionan las tecnologías que hemos utilizado:
 
 Java, JavaScript, HTML/CSS, JSP/JSTL, AJAX (Asynchronous JavaScript and XML), SQL, JSON.
 
