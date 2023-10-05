@@ -391,6 +391,7 @@ body.shimeji-select-ie {
 		</div>
 		
 		<!-- Footer -->
+ <!-- Footer -->
 		<footer class="footer-area footer--light">
   <div class="footer-big">
     <!-- start .container -->
@@ -400,7 +401,7 @@ body.shimeji-select-ie {
           <div class="footer-widget">
             <div class="widget-about">
               <img src="assets/img/footerimg.jpg" alt="" class="img-fluid">
-              <p id="footerp">Organización sin fines de lucro creada para ayudar a los mas neceesitados del Perú</p>
+              <p id="footerp">Organización sin fines de lucro creada para ayudar a los más neceesitados del Perú</p>
               <ul class="contact-details">
                 <li id="footerli">
                   <span class="icon-earphones"></span> Telef:
@@ -447,16 +448,16 @@ body.shimeji-select-ie {
               <h4 id="footerh4" class="footer-widget-title">ONG</h4>
               <ul id="footerul">
                 <li id="footerli">
-                  <a id="footera" href="#">Nosotros</a>
+                  <a id="footera" href="Nosotros.jsp">Nosotros</a>
                 </li>
                 <li id="footerli">
-                  <a id="footera" href="#">Historias de exito </a>
+                  <a id="footera" href="HisExito.jsp">Historias de éxito </a>
                 </li>
                 <li id="footerli">
                   <a id="footera" href="voluntariado.jsp">Voluntariado</a>
                 </li>
                 <li id="footerli">
-                  <a id="footera" href="#">Contactanos</a>
+                  <a id="footera" href="#">Contáctanos</a>
                 </li>
                 <li id="footerli">
                   <a id="footera" href="#">Eventos &amp; Noticiaas</a>
