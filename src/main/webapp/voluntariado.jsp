@@ -78,7 +78,7 @@ body.shimeji-select-ie {
 </head>
 <body>
 	<!-- Navbar -->
-	<nav
+<nav
 		class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0 border-bottom">
 		<div id="navv" class="container">
 			<a class="navbar-brand" href="#!"> <img id="logoimg"
@@ -95,9 +95,9 @@ body.shimeji-select-ie {
 				<ul class="navbar-nav ms-auto">
 					<li class="nav-item"><a class="nav-link" href="menu.html">Inicio</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="#!">Nosotros</a>
+					<li class="nav-item"><a class="nav-link" href="Nosotros.jsp">Nosotros</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="#!">Historias
+					<li class="nav-item"><a class="nav-link" href="HisExito.jsp">Historias
 							de éxito</a></li>
 					<li class="nav-item"><a class="nav-link" href="voluntariado.jsp">Voluntariado</a>
 					</li>

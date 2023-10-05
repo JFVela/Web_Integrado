@@ -161,6 +161,7 @@
 <body>
 
 	<!-- Navbar -->
+	<!-- Navbar -->
 	<nav
 		class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0 border-bottom">
 		<div id="navv" class="container">
@@ -176,18 +177,18 @@
 			<div class="navbar-collapse collapse" id="navbarSupportedContent"
 				style="">
 				<ul class="navbar-nav ms-auto">
-					<li class="nav-item"><a class="nav-link" href="menu.jsp">Inicio</a>
+					<li class="nav-item"><a class="nav-link" href="menu.html">Inicio</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="Nosotros.jsp">Nosotros</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="#!">Historias
+					<li class="nav-item"><a class="nav-link" href="HisExito.jsp">Historias
 							de éxito</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="voluntariado.jsp">Voluntariado</a></li>
+					<li class="nav-item"><a class="nav-link" href="voluntariado.jsp">Voluntariado</a>
+					</li>
 					<li class="nav-item"><a class="nav-link" href="#!">Blog</a></li>
 					<li class="nav-item"><a class="nav-link" href="#!">Eventos
 							y noticias</a></li>
-					<button type="button" class="btn btn-primary ms-3" >Dona</button>
+					<button type="button" class="btn btn-primary ms-3">Dona</button>
 				</ul>
 			</div>
 		</div>
