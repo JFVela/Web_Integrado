@@ -49,7 +49,7 @@ body {
     font-size: 1.2rem;
     line-height: 1.5;
     font-weight: 400;
-    font-family: 'Inter';
+   /* font-family: 'Inter'; */
    cursor: url(../img/arrow.png) 6 0, auto !important;
 
 }
