@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import UtilsAdmin.MySqlConexion;
 import ong.entity.Locacion;
 import ong.entity.Moneda;
 import ong.interfaces.MonedaDAO;

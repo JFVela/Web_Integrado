@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import UtilsAdmin.MySqlConexion;
 import ong.entity.Tarjeta;
 import ong.interfaces.verificarTarjeta;
+import ong.utils.MySqlConectar;
 
 public class MySqlTarjetaDAO implements verificarTarjeta{
 
@@ -17,7 +17,7 @@ public class MySqlTarjetaDAO implements verificarTarjeta{
 		ResultSet rs = null;
 
 		try {
-			cn = new MySqlConexion().getConnection();
+			cn = new MySqlConectar().getConectar();
 			String sentencia = "SELECT*FROM cuenta WHERE numero=? AND cvc=? AND mes=? AND año=?";
 			pstm=cn.prepareStatement(sentencia);
 			pstm.setInt(1, bean.getNumCuenta());
@@ -50,7 +50,7 @@ public class MySqlTarjetaDAO implements verificarTarjeta{
 		ResultSet rs = null;
 
 		try {
-			cn = new MySqlConexion().getConnection();
+			cn = new MySqlConectar().getConectar();
 			String sentencia = "UPDATE cuenta SET saldo_actual = saldo_actual - ? "
 								+ "WHERE numero = ? AND cvc = ? AND mes = ? AND año = ? "
 								+ "AND saldo_actual >= ?;";
@@ -85,7 +85,7 @@ public class MySqlTarjetaDAO implements verificarTarjeta{
 		ResultSet rs = null;
 
 		try {
-			cn = new MySqlConexion().getConnection();
+			cn = new MySqlConectar().getConectar();
 			String sentencia = "SELECT saldo_actual FROM cuenta WHERE numero = ? AND cvc = ? AND mes = ? AND año = ?";
 			pstm=cn.prepareStatement(sentencia);
 			pstm.setInt(1, bean.getNumCuenta());
