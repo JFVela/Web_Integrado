@@ -10,6 +10,7 @@ import UtilsAdmin.MySqlConexion;
 import ong.entity.Locacion;
 import ong.entity.Moneda;
 import ong.interfaces.MonedaDAO;
+import ong.utils.MySqlConectar;
 
 public class MySqlMonedaDAO implements MonedaDAO {
 
@@ -21,7 +22,7 @@ public class MySqlMonedaDAO implements MonedaDAO {
 		PreparedStatement pstm=null;
 		ResultSet rs=null;
 		try {
-			cn=new MySqlConexion().getConnection();
+			cn=new MySqlConectar().getConectar();
 			String sql="select *from moneda;";
 			pstm=cn.prepareStatement(sql);
 			rs=pstm.executeQuery();

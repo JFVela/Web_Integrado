@@ -10,6 +10,7 @@ import UtilsAdmin.MySqlConexion;
 import ong.entity.Locacion;
 import ong.entity.Tipo_Donacion;
 import ong.interfaces.Tipo_donacionDAO;
+import ong.utils.MySqlConectar;
 
 public class MySqlTipoDonacionDAO implements Tipo_donacionDAO {
 
@@ -21,7 +22,7 @@ public class MySqlTipoDonacionDAO implements Tipo_donacionDAO {
 		PreparedStatement pstm=null;
 		ResultSet rs=null;
 		try {
-			cn=new MySqlConexion().getConnection();
+			cn=new MySqlConectar().getConectar();
 			String sql="select *from tipos_donacion;";
 			pstm=cn.prepareStatement(sql);
 			rs=pstm.executeQuery();

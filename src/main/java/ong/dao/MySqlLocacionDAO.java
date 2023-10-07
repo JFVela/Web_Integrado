@@ -1,10 +1,10 @@
 package ong.dao;
-import UtilsAdmin.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import ong.entity.Locacion;
 import ong.interfaces.LocacionDAO;
+import ong.utils.MySqlConectar;
 
 public class MySqlLocacionDAO implements LocacionDAO{
 
@@ -16,7 +16,7 @@ public class MySqlLocacionDAO implements LocacionDAO{
 		PreparedStatement pstm=null;
 		ResultSet rs=null;
 		try {
-			cn=new MySqlConexion().getConnection();
+			cn=new MySqlConectar().getConectar();
 			String sql="select *from local_donacion;";
 			pstm=cn.prepareStatement(sql);
 			rs=pstm.executeQuery();

@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import UtilsAdmin.MySqlConexion;
 import ong.entity.DonacionVirtual;
 import ong.interfaces.DonacionVirtualDAO;
+import ong.utils.MySqlConectar;
 
 public class MySqlDonacionVIrtualDAO implements DonacionVirtualDAO{
 
@@ -18,7 +18,7 @@ public class MySqlDonacionVIrtualDAO implements DonacionVirtualDAO{
 		ResultSet rs = null;
 
 		try {
-			cn = new MySqlConexion().getConnection();
+			cn = new MySqlConectar().getConectar();
 			String sentencia = "INSERT INTO donacion_virtual(donantes_dni,campaña_id_campaña,tipos_donacion_id_tipo\r\n"
 					+ ",moneda_id_moneda,monto,cuenta_numero)VALUES(?,?,?,?,?,?);";
 			pstm=cn.prepareStatement(sentencia);

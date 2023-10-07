@@ -6,9 +6,9 @@ import java.util.List;
 
 import com.mysql.cj.protocol.Resultset;
 
-import UtilsAdmin.MySqlConexion;
 import ong.entity.Donante;
 import ong.interfaces.*;
+import ong.utils.MySqlConectar;
 
 public class MySqlDonanteDAO implements DonanteDAO {
 
@@ -19,7 +19,7 @@ public class MySqlDonanteDAO implements DonanteDAO {
 		ResultSet rs = null;
 
 		try {
-			cn = new MySqlConexion().getConnection();
+			cn = new MySqlConectar().getConectar();
 			String sentencia = "INSERT INTO donantes (dni,nombre, paterno, materno, celular, email, ciudad, direccion) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
 			pstm=cn.prepareStatement(sentencia);
 			pstm.setInt(1, bean.getDni());
@@ -57,7 +57,7 @@ public class MySqlDonanteDAO implements DonanteDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			con=new MySqlConexion().getConnection();
+			con=new MySqlConectar().getConectar();
 			String sql = "SELECT *FROM donantes";
 			ps=con.prepareStatement(sql);
 			rs=ps.executeQuery();

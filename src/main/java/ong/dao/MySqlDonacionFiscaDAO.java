@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import UtilsAdmin.MySqlConexion;
 import ong.entity.DonacionFisica;
 import ong.interfaces.DonacionFisicoDAO;
+import ong.utils.MySqlConectar;
 
 public class MySqlDonacionFiscaDAO implements DonacionFisicoDAO {
 
@@ -19,7 +19,7 @@ public class MySqlDonacionFiscaDAO implements DonacionFisicoDAO {
 		ResultSet rs = null;
 
 		try {
-			cn = new MySqlConexion().getConnection();
+			cn = new MySqlConectar().getConectar();
 			String sentencia = "INSERT INTO donacion_fisica(donantes_dni,local_donacion_id_local,descripcion,"
 					+ "estado) values(?,?,?,?);";
 			pstm=cn.prepareStatement(sentencia);

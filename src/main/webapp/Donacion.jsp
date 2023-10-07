@@ -1262,9 +1262,9 @@ $(document).ready(function () {
 	        				      message: 'Este campo debe contener solo números'
 	        				},
 	        				stringLength: {
-	        		            min: 14,
-	        		            max: 16,
-	        		            message: 'Rango de 14-16'
+	        		            min: 9,
+	        		            max: 10,
+	        		            message: 'Rango de 9-10'
 	        		        }
 	        			}
 	        		},cvv:{

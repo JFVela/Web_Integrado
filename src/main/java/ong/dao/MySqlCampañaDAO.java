@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import UtilsAdmin.MySqlConexion;
 import ong.entity.Campaña;
 import ong.entity.Locacion;
 import ong.interfaces.CampañaDAO;
+import ong.utils.MySqlConectar;
 
 public class MySqlCampañaDAO implements CampañaDAO{
 
@@ -21,7 +21,7 @@ public class MySqlCampañaDAO implements CampañaDAO{
 		PreparedStatement pstm=null;
 		ResultSet rs=null;
 		try {
-			cn=new MySqlConexion().getConnection();
+			cn=new MySqlConectar().getConectar();
 			String sql="select *from campaña;";
 			pstm=cn.prepareStatement(sql);
 			rs=pstm.executeQuery();
