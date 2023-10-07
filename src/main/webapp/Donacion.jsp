@@ -301,7 +301,6 @@ body.shimeji-select-ie {
 								<input id="monto" placeholder="Monto:" type="text" class="form-control" name="monto">
 							</div>
 						</div>
-						<div id="mensajeValidacion1" style="text-align:right;"></div>
 					</div>
 					
 					<h2>Información Personal</h2>
@@ -997,12 +996,21 @@ $('.owl-carousel').owlCarousel({
 	<script>
     var mensaje = "${sessionScope.MENSAJE}";
     if (mensaje !== null && mensaje !== "") {
-        Swal.fire({
-            title: "Donación Exitosa!",
-            text: "Tu donación se ha registrado exitosamente. Agradecemos tu generosidad!",
-            icon: "success",
-            confirmButtonText: "Cerrar"
-        });
+    	if (mensaje.includes("Exitosa")) {
+            Swal.fire({
+                title: "Donación Exitosa!",
+                text: "Tu donación se ha registrado exitosamente. Agradecemos tu generosidad!",
+                icon: "success",
+                confirmButtonText: "Cerrar"
+            });
+        } else if (mensaje.includes("Fallida")) {
+            Swal.fire({
+                title: "Donación Fallida",
+                text: "Tu donación ha fallado debido a saldo insuficiente. Por favor, verifica tu saldo e inténtalo de nuevo.",
+                icon: "error",
+                confirmButtonText: "Cerrar"
+            });
+        }
     }
 </script>
 
@@ -1057,14 +1065,6 @@ $(document).ready(function () {
             validarTarjeta();
         }
     });
-
-
-    $("#monto").on("keyup", function () {
-        if (enableCustomValidations) {
-            verificarSaldo();
-        }
-    });
-
   
     function validarTarjeta() {
         // valores de los campos de la tarjeta
@@ -1096,8 +1096,7 @@ $(document).ready(function () {
                     $("#numcuen, #cvv, #expirationMonth, #expirationYear").addClass("success");
                     mensajeElemento.css("color", "green");
                     $("#monto").prop("disabled", false);
-                    
-                    verificarSaldo();
+                    $("#formDonante").off('submit');
                 } else {
                     mensajeElemento.text("Tarjeta no válida"); // Actualiza el contenido con el mensaje de tarjeta no válida
                     $("#numcuen, #cvv, #expirationMonth, #expirationYear").removeClass("success");
@@ -1113,52 +1112,6 @@ $(document).ready(function () {
         });
     }
 
-    function verificarSaldo() {
-   
-        var numcuen = $("#numcuen").val();
-        var cvv = $("#cvv").val();
-        var expirationMonth = $("#expirationMonth").val();
-        var expirationYear = $("#expirationYear").val();
-        var tmone = $("#id-moneda").val();
-        var monto = $("#monto").val();
-        var mensajeElemento1 = $("#mensajeValidacion1");
-        if (!monto) {
-        	mensajeElemento1.text("");
-            return;
-        }
-
-
-        $.ajax({
-            type: "POST",
-            url: "ServletVerificarSaldo",
-            data: {
-                tmone: tmone,
-                monto: monto,
-                numcuen: numcuen,
-                cvv: cvv,
-                expirationMonth: expirationMonth,
-                expirationYear: expirationYear
-            },
-            success: function (response) {
-                if (response === "Agotado") {
-                	mensajeElemento1.text("Saldo Agotado");
-                    $("#monto").addClass("error");
-                    mensajeElemento1.css("color", "red");
-
-                    $("#formDonante").on('submit', function (e) {
-                        e.preventDefault();
-                        $("#monto").focus();
-                    });
-                } else {
-                	mensajeElemento1.text("Tarjeta válida"); 
-                	mensajeElemento1.css("color", "green");
-                    $("#numcuen, #cvv, #expirationMonth, #expirationYear").removeClass("error");
-                    $("#monto").removeClass("error");
-                    $("#formDonante").off('submit');
-                }
-            }
-        });
-    }
 });
 
 </script>
@@ -1358,11 +1311,12 @@ $(document).ready(function () {
 	        				      regexp: /^[0-9]+$/, // Expresión regular para aceptar solo números
 	        				      message: 'Este campo debe contener solo números'
 	        				},
-	        				stringLength: {
-	        		            min: 1,
-	        		            max: 500,
-	        		            message: 'Solo está permitido hasta 500'
-	        		        }
+	        				between:{
+        		 				min:1,
+        		 				max:300,
+        		 				message:'Campo hijos solo números rango 1 - 300'
+        		 			}
+        		 			
 	        		    }
 	        		}
 	        	 }	        	 

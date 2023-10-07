@@ -1,6 +1,8 @@
 package ong.controlador;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +36,7 @@ public class ServletDonante extends HttpServlet {
 			listarDonante(request, response);
 	}
 
+	
 	private void listarDonante(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -67,58 +70,94 @@ public class ServletDonante extends HttpServlet {
 		bean.setEmail(email);
 
 		int estado = new MySqlDonanteDAO().insertar(bean);
+		if(estado==1) {
+			if (Integer.parseInt(tp) == 1) {
+				String local, des;
+				dni=request.getParameter("dni");
+				local = request.getParameter("locacion");
+				des = request.getParameter("descrip");
+				
+				DonacionFisica bean1 = new DonacionFisica();
+				bean1.setDniDonantes(Integer.parseInt(dni));
+				bean1.setIdLocal(Integer.parseInt(local));
+				bean1.setDescripcion(des);
 
-		if (Integer.parseInt(tp) == 1) {
-			String local, des;
-			dni=request.getParameter("dni");
-			local = request.getParameter("locacion");
-			des = request.getParameter("descrip");
-			
-			DonacionFisica bean1 = new DonacionFisica();
-			bean1.setDniDonantes(Integer.parseInt(dni));
-			bean1.setIdLocal(Integer.parseInt(local));
-			bean1.setDescripcion(des);
-
-			int estado1 = new MySqlDonacionFiscaDAO().save(bean1);
-		} else if(Integer.parseInt(tp) == 2) {
-			String camp,tipdon,tpmon,monto,numcuen;
-			dni=request.getParameter("dni");
-			camp=request.getParameter("camp");
-			tipdon=request.getParameter("tdon");
-			tpmon=request.getParameter("tmone");
-			monto=request.getParameter("monto");
-			numcuen=request.getParameter("numcuen");
-			
-			DonacionVirtual bean2=new DonacionVirtual();
-			bean2.setDniDonante(Integer.parseInt(dni));
-			bean2.setIdCampaña(Integer.parseInt(camp));
-			bean2.setIdMoneda(Integer.parseInt(tpmon));
-			bean2.setMonto(Double.parseDouble(monto));
-			bean2.setTipoDonacion(Integer.parseInt(tipdon));
-			bean2.setNumCuenta(Integer.parseInt(numcuen));
-			int estado2 = new MySqlDonacionVIrtualDAO().save(bean2);
-			
-			//Actualiza la tarjeta
-			Tarjeta bean3=new Tarjeta();
-			if(Integer.parseInt(tpmon)==2) {
-				bean3.setSaldo(Double.parseDouble(monto)*3.81);
-			}else {
-				bean3.setSaldo(Double.parseDouble(monto));
+				int estado1 = new MySqlDonacionFiscaDAO().save(bean1);
+				request.getSession().setAttribute("MENSAJE","Donacion Exitosa");
+			} else if(Integer.parseInt(tp) == 2) {
+				boolean respuesta=verficarSaldo(request,response);
+				if(respuesta) {
+					String camp,tipdon,tpmon,monto,numcuen;
+					dni=request.getParameter("dni");
+					camp=request.getParameter("camp");
+					tipdon=request.getParameter("tdon");
+					tpmon=request.getParameter("tmone");
+					monto=request.getParameter("monto");
+					numcuen=request.getParameter("numcuen");
+					
+					DonacionVirtual bean2=new DonacionVirtual();
+					bean2.setDniDonante(Integer.parseInt(dni));
+					bean2.setIdCampaña(Integer.parseInt(camp));
+					bean2.setIdMoneda(Integer.parseInt(tpmon));
+					bean2.setMonto(Double.parseDouble(monto));
+					bean2.setTipoDonacion(Integer.parseInt(tipdon));
+					bean2.setNumCuenta(Integer.parseInt(numcuen));
+					int estado2 = new MySqlDonacionVIrtualDAO().save(bean2);
+					
+					//Actualiza la tarjeta
+					Tarjeta bean3=new Tarjeta();
+					if(Integer.parseInt(tpmon)==2) {
+						bean3.setSaldo(Double.parseDouble(monto)*3.81);
+					}else {
+						bean3.setSaldo(Double.parseDouble(monto));
+					}
+					bean3.setCvc(Integer.parseInt(request.getParameter("cvv")));
+					bean3.setNumCuenta(Integer.parseInt(request.getParameter("numcuen")));
+					bean3.setMes(Integer.parseInt(request.getParameter("expirationMonth")));
+					bean3.setAño(Integer.parseInt(request.getParameter("expirationYear")));
+					
+					int estado3=new MySqlTarjetaDAO().ActualizarSaldo(bean3);
+					request.getSession().setAttribute("MENSAJE","Exitosa");
+				}else {
+					request.getSession().setAttribute("MENSAJE","Fallida");
+				}	
 			}
-			bean3.setCvc(Integer.parseInt(request.getParameter("cvv")));
-			bean3.setNumCuenta(Integer.parseInt(request.getParameter("numcuen")));
-			bean3.setMes(Integer.parseInt(request.getParameter("expirationMonth")));
-			bean3.setAño(Integer.parseInt(request.getParameter("expirationYear")));
-			
-			int estado3=new MySqlTarjetaDAO().ActualizarSaldo(bean3);
 		}
-		//Sesion
-		request.getSession().setAttribute("MENSAJE","Donacion Exitosa");
-		
 		//Sale el error:
 		//request.getRequestDispatcher("Donacion.jsp").forward(request, response);
 		
 		response.sendRedirect("Donacion.jsp");
 	}
-
+	private boolean verficarSaldo(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		String saldo=request.getParameter("monto");
+		int tipomon=Integer.parseInt(request.getParameter("tmone"));
+		int numeroTarjeta = Integer.parseInt(request.getParameter("numcuen"));
+		int mes = Integer.parseInt(request.getParameter("expirationMonth"));
+		int ano = Integer.parseInt(request.getParameter("expirationYear"));
+		int cvc = Integer.parseInt(request.getParameter("cvv"));
+		Tarjeta tarjeta = new Tarjeta();
+		tarjeta.setNumCuenta(numeroTarjeta);
+		tarjeta.setMes(mes);
+		tarjeta.setAño(ano);
+		tarjeta.setCvc(cvc);
+		
+	      double saldoActual = new MySqlTarjetaDAO().saldoTarjeta(tarjeta);
+	      if(tipomon==1) {
+	    		if (saldoActual < Double.parseDouble(saldo)) {
+	    			return false;
+		    	   }else {
+		    		   return true;
+		    	   }
+	      }else if(tipomon==2){
+	    			if (saldoActual < Double.parseDouble(saldo)*3.81) {
+		    	        return false;
+		    	    }else {
+		    	    	return true;
+		    	    }
+	      }
+		return false;
+	     
+	}
 }
