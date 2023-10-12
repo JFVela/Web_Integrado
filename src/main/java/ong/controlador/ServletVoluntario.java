@@ -50,11 +50,37 @@ public class ServletVoluntario extends HttpServlet {
 	        grabarInscripcion(request, response);
 	    } else if (tipo.equals("verificarDNI")) {
 	        verificarDNI(request, response);
-	    }
+	    } else if(tipo.equals("listado"))
+			listarVoluntario(request,response);
+		else if(tipo.equals("eliminar"))
+			eliminarVoluntario(request,response);	
 	}
 
 
 	
+
+	private void eliminarVoluntario(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String dni=request.getParameter("dni");
+		//invocar al método deleteById y enviar la variable "cod"
+		int estado=new MySqlVoluntarioDAO().deleteById(Integer.parseInt(dni));
+		//validar estado
+		if(estado==1)
+			System.out.println("SI");
+		else
+			System.out.println("NO");
+		//crear atributo de tipo sesión
+		request.getSession().setAttribute("MENSAJE","Voluntario eliminado");
+		//invocar método listarDocente
+		//listarDocente(request,response);
+		response.sendRedirect("AdVoluntarios.jsp");		
+	}
+
+	private void listarVoluntario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//crear atributo
+		request.setAttribute("docentes",new MySqlVoluntarioDAO().findAll());
+		//direccionar a la página "docente.jsp"
+		request.getRequestDispatcher("/AdVoluntarios.jsp").forward(request,response);		
+	}
 
 	private void verificarDNI(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		 // Recuperar el DNI del formulario
@@ -122,6 +148,7 @@ public class ServletVoluntario extends HttpServlet {
 		bean.setDistrito(dist);
 		//4. Invocar al metodo save y enviar el objeto "bean"
 		int estado = new MySqlVoluntarioDAO().save(bean);
+		System.out.println(dni+" "+nom+" "+pat+" "+dist);
 		// 5. Validar el estado y mostrar el mensaje de SweetAlert
 		// Procesa los datos del formulario y guarda el mensaje en el ámbito de solicitud
 		String mensaje = ""; // Inicializa el mensaje
@@ -141,10 +168,6 @@ public class ServletVoluntario extends HttpServlet {
 		
 		// Guarda el mensaje en el ámbito de solicitud
 		request.setAttribute("mensaje", mensaje);
-
-		
-		
-		
 	}
 	
 	private void grabarInscripcion(HttpServletRequest request, HttpServletResponse response) {

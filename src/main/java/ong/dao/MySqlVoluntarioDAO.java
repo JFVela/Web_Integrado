@@ -108,43 +108,64 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 	}
 
 	@Override
-	public int deleteById(int cod) {
-		  int salida = -1;
+	public int deleteById(int dni) {
+		 int salida = -1;
 		    Connection con = null;
-		    PreparedStatement ps = null;
+		    PreparedStatement psInscripcion = null;
+		    PreparedStatement psVoluntario = null;
 
 		    try {
-		        // 1. Obtener Conexion
 		        con = new MySqlConectar().getConectar();
-		        // 2. Sentencia SQL para eliminar por ID
-		        String sql = "DELETE FROM voluntario WHERE dni=?";
-		        // 3. Crear objeto "ps" y enviar la variable "sql"
-		        ps = con.prepareStatement(sql);
-		        // 4. Parámetro
-		        ps.setInt(1, cod); // ID de la fila que deseas eliminar
+		        // Comenzar una transacción
+		        con.setAutoCommit(false);
 
-		        // 5. Ejecutar ps
-		        // El método executeUpdate retorna el número de filas afectadas por la operación de eliminación.
-		        // Si todo está bien, debería retornar 1, lo que significa que una fila se eliminó.
-		        salida = ps.executeUpdate();
+		        // 1. Borrar de la tabla 'inscripcion'
+		        String sqlInscripcion = "DELETE FROM inscripcion WHERE voluntario_dni=?";
+		        psInscripcion = con.prepareStatement(sqlInscripcion);
+		        psInscripcion.setInt(1, dni);
+		        salida = psInscripcion.executeUpdate();
+
+		        if (salida == 1) {
+		            // Si se borró correctamente de 'inscripcion', entonces borrar de 'voluntario'
+		            String sqlVoluntario = "DELETE FROM voluntario WHERE dni=?";
+		            psVoluntario = con.prepareStatement(sqlVoluntario);
+		            psVoluntario.setInt(1, dni);
+		            salida = psVoluntario.executeUpdate();
+		        } else {
+		            // Si no se borró de 'inscripcion', deshacer la transacción
+		            con.rollback();
+		        }
+
+		        // Confirmar la transacción
+		        con.commit();
 		    } catch (Exception e) {
 		        e.printStackTrace();
+		        try {
+		            // En caso de error, deshacer la transacción
+		            con.rollback();
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
 		    } finally {
 		        try {
-		            if (ps != null)
-		                ps.close();
-		            if (con != null)
+		            if (psInscripcion != null)
+		                psInscripcion.close();
+		            if (psVoluntario != null)
+		                psVoluntario.close();
+		            if (con != null) {
+		                con.setAutoCommit(true); // Restaurar el modo de autocommit
 		                con.close();
+		            }
 		        } catch (SQLException e2) {
 		            e2.printStackTrace();
 		        }
 		    }
 
-		    return salida;	
- }
+		    return salida;
+		}
 
 	@Override
-	public Voluntario findById(int cod) {
+	public Voluntario findById(int dni) {
 		 Voluntario voluntario = null;
 		    Connection con = null;
 		    PreparedStatement ps = null;
@@ -158,7 +179,7 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 		        // 3. Crear objeto "ps" y enviar la variable "sql"
 		        ps = con.prepareStatement(sql);
 		        // 4. Parámetro
-		        ps.setInt(1, cod); // ID de la fila que deseas buscar
+		        ps.setInt(1, dni); // ID de la fila que deseas buscar
 
 		        // 5. Ejecutar la consulta
 		        rs = ps.executeQuery();
@@ -171,9 +192,9 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 		            voluntario.setPaterno(rs.getString("paterno"));
 		            voluntario.setMaterno(rs.getString("materno"));
 		            voluntario.setDni(rs.getInt("dni"));
-		            voluntario.setEmail(rs.getString("email"));
+		            voluntario.setEmail(rs.getString("correo"));
 		            voluntario.setTelefono(rs.getInt("telefono"));
-		            voluntario.setEspecialidad(rs.getInt("especialidad"));
+		            voluntario.setEspecialidad(rs.getInt("Especialidades_idEspecialidades"));
 		            voluntario.setCiudad(rs.getString("ciudad"));
 		            voluntario.setProvincia(rs.getString("provincia"));
 		            voluntario.setDistrito(rs.getString("distrito"));
@@ -208,13 +229,17 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 		        // 1. Obtener Conexion
 		        con = new MySqlConectar().getConectar();
 		        // 2. Sentencia SQL para obtener todos los registros
-		        String sql = "SELECT * FROM voluntario";
+		        String sql = "SELECT v.*, i.eventos_id_evento, e.nombre AS especialidad_nombre, ev.nombre AS evento_nombre " +
+	                     "FROM voluntario v " +
+	                     "LEFT JOIN inscripcion i ON v.dni = i.voluntario_dni " +
+	                     "LEFT JOIN especialidades e ON v.Especialidades_idEspecialidades = e.idEspecialidades " +
+	                     "LEFT JOIN eventos ev ON i.eventos_id_evento = ev.id_evento";
 		        // 3. Crear objeto "ps" y enviar la variable "sql"
 		        ps = con.prepareStatement(sql);
-
+	
 		        // 4. Ejecutar la consulta
 		        rs = ps.executeQuery();
-
+	
 		        // 5. Procesar el resultado
 		        while (rs.next()) {
 		            // Crear un objeto Voluntario con los datos obtenidos de la consulta
@@ -223,13 +248,16 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 		            voluntario.setNombre(rs.getString("nombre"));
 		            voluntario.setPaterno(rs.getString("paterno"));
 		            voluntario.setMaterno(rs.getString("materno"));
-		            voluntario.setEmail(rs.getString("email"));
+		            voluntario.setEmail(rs.getString("correo"));
 		            voluntario.setTelefono(rs.getInt("telefono"));
-		            voluntario.setEspecialidad(rs.getInt("especialidad"));
+		            voluntario.setEspecialidad(rs.getInt("Especialidades_idEspecialidades"));
+		            voluntario.setEspecialidadNombre(rs.getString("especialidad_nombre"));
 		            voluntario.setCiudad(rs.getString("ciudad"));
 		            voluntario.setProvincia(rs.getString("provincia"));
 		            voluntario.setDistrito(rs.getString("distrito"));
-		            
+		            voluntario.setEventos_id_evento(rs.getInt("eventos_id_evento"));
+		            voluntario.setEventoNombre(rs.getString("evento_nombre")); // Nuevo campo para el nombre del evento
+		
 		            // Agregar el objeto Voluntario a la lista
 		            voluntarios.add(voluntario);
 		        }

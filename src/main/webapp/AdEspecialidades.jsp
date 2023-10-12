@@ -1,0 +1,294 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ADMIN | Especialidades</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/table.css">
+
+<style >
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic,Inter");
+
+body {
+
+  height:95vh;
+  align-items: center;
+   background: linear-gradient(to bottom, #d4d4d4bd,#dedada5e, #ffffff, #ffffff);
+  font-family: 'Inter';
+  cursor: url(assets/img/arrow.png) 6 0, auto !important;
+
+}
+td{
+	font-size:20px
+}
+.modal-header{
+		color:#fff;
+		background: #428bca;
+		display: flex;
+  		justify-content: center;
+  		
+	}
+	.help-block {
+	  		color: red;
+	}
+	.form-group.has-error .form-control-label {
+	  color: red;
+	}
+	.form-group.has-error .form-control {
+	  border: 1px solid red;
+	  box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+	}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+  <h1 class="mt-5 text-center">Especialidades</h1>
+   <!-- Button trigger modal -->
+<button type="button" class="c__cta btn btn-rounded" 
+	data-bs-toggle="modal" data-bs-target="#exampleModal">Nueva Especialidad</button>
+  
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-header">
+                <h5 class="modal-title form-head text-bold fs-4">Tabla de Especialidades</h5>
+            </div>
+            
+            <div class="modal-body">
+                
+                <form id="contact-form" method="post" action="ServletVoluntario?accion=guardar">
+                   <div class="form-group">
+                        <label for="dni" class="label-form text-secondary">ID</label>
+                        <input type="text" name="id" class="form-control dni-label" id="id-especialidad" required>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre" class="label-form text-secondary">Nombre de la especialidad</label>
+                        <input type="text" class="form-control name-label" name="nombre" id="nombre" required>
+                    </div>
+                   
+                   <div class="modal-footer">
+			             <button type="submit" class="btn btn-primary">Grabar</button>
+			             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
+      				</div>
+                </form>
+            </div>
+    </div>
+  </div>
+</div>
+  <div class="mt-3">
+  <table id="TableEspecialidad" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre de Especialidad</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        
+        </tbody>
+    </table>
+  </div>
+  
+</div>
+
+
+</body>
+
+<!-- libreria principal de JQUERY -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<!-- libreria JS de bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+<!-- libreria JS de la tabla -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- libreria para validar (bootstrap validator) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.MENSAJE!=null}">
+	<script>
+			toastr.error("${sessionScope.MENSAJE}", toastr.options = {
+					"timeOut": "2000",
+					"positionClass " : " toast-top-right ",
+				});
+	</script>
+</c:if>
+<!-- eliminar atributo de tipo sesión MENSAJE -->
+<c:remove var="MENSAJE" scope="session"/>
+
+	<script>
+		
+		//invocar funciones de carga
+		cargarEspecialidades()
+		
+	
+		//crear función para leer JSON de docentes
+		function cargarEspecialidades(){
+			$.get("ServletEspecialidadesJSON",function(response){	
+				let botonEditar="<button type='button' class='c__cta btn btn-rounded-ed btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+                let botonEliminar="<button type='button' class='c__cta font-weight-bold btn btn-rounded-el btn-eliminar'>Eliminar</button>";
+				$.each(response,function(index,item){
+					//llenar tabla
+					$("#TableEspecialidad").append("<tr><td>"+item.IdEspecialidades+"</td>"+
+						 "<td>"+item.nombre+
+						 "<td>"+botonEditar+"</td>"+"<td>"+botonEliminar+"</td></tr>");
+				})
+				$(document).ready(function() {
+				    $('#TableEspecialidad').DataTable({
+				        "language": {
+				            "lengthMenu": "Mostrar _MENU_ registros por página",
+				            "zeroRecords": "No se encontraron registros",
+				            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+				            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+				            "infoFiltered": "(filtrados de un total de _MAX_ registros)",
+				            "search": "Buscar:",
+				            "paginate": {
+				                "first": "Primero",
+				                "previous": "Anterior",
+				                "next": "Siguiente",
+				                "last": "Último"
+				            }
+				        }
+				    });
+				});
+			})
+		}
+		
+		
+		//asignar evento click a todos los botones con nombre de clase btn-eliminar
+		$(document).on("click",".btn-eliminar",function(){
+			var dni;
+			var nom;
+			dni=$(this).parents("tr").find("td")[0].innerHTML;
+			nom=$(this).parents("tr").find("td")[1].innerHTML;
+			Swal.fire({
+				  title: '¿Seguro de eliminar?',
+				  text: "Voluntario " + nom +  " con DNI: "+dni,
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Aceptar',
+				  cancelButtonText: 'Cancelar'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+				    window.location="http://localhost:8080/GitHub_ONG/ServletVoluntario?accion=eliminar&dni="+dni;
+				  }
+				})			
+		})
+		//asignar evento click a todos los botones con nombre de clase btn-editar
+		$(document).on("click",".btn-editar",function(){
+			var cod;
+			cod=$(this).parents("tr").find("td")[0].innerHTML;
+			$.get("ServletFindDocenteJSON?codigo="+cod, function(response){
+				//console.log(response);
+				//mostrar valores en las cajas
+				$("#id-codigo").val(response.codigo);
+				$("#id-nombre").val(response.nombre);
+				$("#id-paterno").val(response.paterno);
+				$("#id-materno").val(response.materno);
+				$("#id-hijos").val(response.hijos);
+				$("#id-sueldo").val(response.sueldo);
+				$("#id-sexo").val(response.sexo);
+				$("#id-colegio").val(response.codigoColegio);
+			})
+		})
+		//asignar evento click al botón con ID "btn-cerrar"
+		$(document).on("click","#btn-cerrar",function(){
+			//resetear formulario
+			$("#contact-form").trigger("reset");
+			//resetar validación
+			$("#contact-form").data("bootstrapValidator").resetForm(true);
+			//
+			$("#dni").val("0");
+		})
+	</script>
+
+<script>    
+    $(document).ready(function(){     
+        $('#formDocente').bootstrapValidator({      
+        	 fields:{
+        		 	nombre:{
+        		 		validators:{
+        		 			notEmpty:{
+        		 				message:'Campo nombre es obligatorio'
+        		 			},
+        		 			regexp:{
+        		 				regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,20}$/,
+        		 				message:'Campo nombre valores errores(Letras,espacio, vocales con tilde y .)'
+        		 			}
+        		 		}
+        		 	},
+        		 	paterno:{
+        		 		validators:{
+        		 			notEmpty:{
+        		 				message:'Campo paterno es obligatorio'
+        		 			}
+        		 		}
+        		 	},
+        		 	materno:{
+        		 		validators:{
+        		 			notEmpty:{
+        		 				message:'Campo materno es obligatorio'
+        		 			}
+        		 		}
+        		 	},
+        		 	sexo:{
+        		 		validators:{
+        		 			notEmpty:{
+        		 				message:'Seleccione sexo'
+        		 			}
+        		 		}
+        		 	},
+        		 	sueldo:{
+        		 		validators:{
+        		 			notEmpty:{
+        		 				message:'Campo sueldo es obligatorio'
+        		 			}
+        		 		}
+        		 	},
+        		 	hijos:{
+        		 		validators:{
+        		 			notEmpty:{
+        		 				message:'Campo hijos es obligatorio'
+        		 			},
+        		 			between:{
+        		 				min:0,
+        		 				max:10,
+        		 				message:'Campo hijos solo números rango 0 - 10'
+        		 			}
+        		 			
+        		 		}
+        		 	}
+        		 
+        	 }
+        });   
+			
+    });    
+</script>   
+
+
+
+
+
+</html>
