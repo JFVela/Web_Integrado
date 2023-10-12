@@ -28,6 +28,9 @@ body {
 td{
 	font-size:20px
 }
+th{
+	font-size:25px
+}
 .modal-header{
 		color:#fff;
 		background: #428bca;
@@ -53,6 +56,7 @@ td{
 
 <div class="container">
   <h1 class="mt-5 text-center">Especialidades</h1>
+    <hr class="my-4 pb-2">
    <!-- Button trigger modal -->
 <button type="button" class="c__cta btn btn-rounded" 
 	data-bs-toggle="modal" data-bs-target="#exampleModal">Nueva Especialidad</button>
@@ -66,20 +70,45 @@ td{
             
             <div class="modal-body">
                 
-                <form id="contact-form" method="post" action="ServletVoluntario?accion=guardar">
-                   <div class="form-group">
+                <form id="contact-form" method="post" action="ServletEspecialidad?accion=guardar">
+                <div class="form-group">
                         <label for="dni" class="label-form text-secondary">ID</label>
-                        <input type="text" name="id" class="form-control dni-label" id="id-especialidad" required>
+                        <input type="text" name="id" class="form-control dni-label" id="id" required>
                         
                     </div>
                     <div class="form-group">
                         <label for="nombre" class="label-form text-secondary">Nombre de la especialidad</label>
                         <input type="text" class="form-control name-label" name="nombre" id="nombre" required>
                     </div>
+                  
+                   <div class="modal-footer">
+			             <button type="submit" class="btn  btn-rounded-ed">Grabar</button>
+			             <button type="button" class="btn  btn-cerrar" data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
+      				</div>
+                </form>
+            </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-header">
+                <h5 class="modal-title form-head text-bold fs-4">Tabla de Especialidades</h5>
+            </div>
+            
+            <div class="modal-body">
+                
+                <form id="contact-form-c" method="post" action="ServletEspecialidad?accion=actualizar">
+                		 <input type="hidden" name="id" id="id-hidden" value="">
+                    <div class="form-group">
+                        <label for="nombre" class="label-form text-secondary">Nombre de la especialidad</label>
+                        <input type="text" class="form-control name-label" name="nombre" id="id-nombre" required>
+                    </div>
                    
                    <div class="modal-footer">
-			             <button type="submit" class="btn btn-primary">Grabar</button>
-			             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
+			             <button type="submit" class="btn btn-rounded-ed">Grabar</button>
+			             <button type="button" class="btn btn-cerrar" data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
       				</div>
                 </form>
             </div>
@@ -127,7 +156,8 @@ td{
 <!-- validar si existe el atrubuto MENSAJE -->
 <c:if test="${sessionScope.MENSAJE!=null}">
 	<script>
-			toastr.error("${sessionScope.MENSAJE}", toastr.options = {
+	  var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
+      toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
 					"timeOut": "2000",
 					"positionClass " : " toast-top-right ",
 				});
@@ -137,7 +167,7 @@ td{
 <c:remove var="MENSAJE" scope="session"/>
 
 	<script>
-		
+
 		//invocar funciones de carga
 		cargarEspecialidades()
 		
@@ -145,7 +175,7 @@ td{
 		//crear función para leer JSON de docentes
 		function cargarEspecialidades(){
 			$.get("ServletEspecialidadesJSON",function(response){	
-				let botonEditar="<button type='button' class='c__cta btn btn-rounded-ed btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+				let botonEditar="<button type='button' class='c__cta btn btn-rounded-ed btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal1'>Editar</button>";
                 let botonEliminar="<button type='button' class='c__cta font-weight-bold btn btn-rounded-el btn-eliminar'>Eliminar</button>";
 				$.each(response,function(index,item){
 					//llenar tabla
@@ -177,13 +207,13 @@ td{
 		
 		//asignar evento click a todos los botones con nombre de clase btn-eliminar
 		$(document).on("click",".btn-eliminar",function(){
-			var dni;
-			var nom;
-			dni=$(this).parents("tr").find("td")[0].innerHTML;
+			var id;
+			var nombre;
+			id=$(this).parents("tr").find("td")[0].innerHTML;
 			nom=$(this).parents("tr").find("td")[1].innerHTML;
 			Swal.fire({
 				  title: '¿Seguro de eliminar?',
-				  text: "Voluntario " + nom +  " con DNI: "+dni,
+				  text: "Especialidad " + nom +  " con ID: "+id,
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
@@ -192,25 +222,20 @@ td{
 				  cancelButtonText: 'Cancelar'
 				}).then((result) => {
 				  if (result.isConfirmed) {
-				    window.location="http://localhost:8080/GitHub_ONG/ServletVoluntario?accion=eliminar&dni="+dni;
+				    window.location="http://localhost:8080/GitHub_ONG/ServletEspecialidad?accion=eliminar&id="+id;
 				  }
 				})			
 		})
 		//asignar evento click a todos los botones con nombre de clase btn-editar
 		$(document).on("click",".btn-editar",function(){
-			var cod;
-			cod=$(this).parents("tr").find("td")[0].innerHTML;
-			$.get("ServletFindDocenteJSON?codigo="+cod, function(response){
+			var id;
+			id=$(this).parents("tr").find("td")[0].innerHTML;
+
+			$.get("ServletFindEspecialidadJSON?id="+id, function(response){
 				//console.log(response);
 				//mostrar valores en las cajas
-				$("#id-codigo").val(response.codigo);
+				    $("#id-hidden").val(id);
 				$("#id-nombre").val(response.nombre);
-				$("#id-paterno").val(response.paterno);
-				$("#id-materno").val(response.materno);
-				$("#id-hijos").val(response.hijos);
-				$("#id-sueldo").val(response.sueldo);
-				$("#id-sexo").val(response.sexo);
-				$("#id-colegio").val(response.codigoColegio);
 			})
 		})
 		//asignar evento click al botón con ID "btn-cerrar"
@@ -220,13 +245,12 @@ td{
 			//resetar validación
 			$("#contact-form").data("bootstrapValidator").resetForm(true);
 			//
-			$("#dni").val("0");
 		})
 	</script>
 
 <script>    
     $(document).ready(function(){     
-        $('#formDocente').bootstrapValidator({      
+        $('#contact-form').bootstrapValidator({      
         	 fields:{
         		 	nombre:{
         		 		validators:{
@@ -239,48 +263,17 @@ td{
         		 			}
         		 		}
         		 	},
-        		 	paterno:{
+        		 	id:{
         		 		validators:{
         		 			notEmpty:{
-        		 				message:'Campo paterno es obligatorio'
-        		 			}
-        		 		}
-        		 	},
-        		 	materno:{
-        		 		validators:{
-        		 			notEmpty:{
-        		 				message:'Campo materno es obligatorio'
-        		 			}
-        		 		}
-        		 	},
-        		 	sexo:{
-        		 		validators:{
-        		 			notEmpty:{
-        		 				message:'Seleccione sexo'
-        		 			}
-        		 		}
-        		 	},
-        		 	sueldo:{
-        		 		validators:{
-        		 			notEmpty:{
-        		 				message:'Campo sueldo es obligatorio'
-        		 			}
-        		 		}
-        		 	},
-        		 	hijos:{
-        		 		validators:{
-        		 			notEmpty:{
-        		 				message:'Campo hijos es obligatorio'
+        		 				message:'Campo ID es obligatorio'
         		 			},
-        		 			between:{
-        		 				min:0,
-        		 				max:10,
-        		 				message:'Campo hijos solo números rango 0 - 10'
+        		 			regexp:{
+        		 				  regexp: /^[0-9]{8}$/,
+      	                        message: 'Campo ID con errores'
         		 			}
-        		 			
         		 		}
-        		 	}
-        		 
+        		 	},
         	 }
         });   
 			

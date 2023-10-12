@@ -32,6 +32,7 @@ body {
 
 <div class="container">
   <h1 class="mt-5 text-center">Voluntarios</h1>
+    <hr class="my-4 pb-2">
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

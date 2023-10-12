@@ -10,6 +10,35 @@ public class Eventos {
 	private java.sql.Date einicio;
 	private java.sql.Date efinal;
 	private String detalle;
+	private String inicio_inscripcionStr;
+	private String final_inscripcionStr;
+	private String einicioStr;
+	private String efinalStr;
+
+	public String getInicio_inscripcionStr() {
+		return inicio_inscripcionStr;
+	}
+	public void setInicio_inscripcionStr(String inicio_inscripcionStr) {
+		this.inicio_inscripcionStr = inicio_inscripcionStr;
+	}
+	public String getFinal_inscripcionStr() {
+		return final_inscripcionStr;
+	}
+	public void setFinal_inscripcionStr(String final_inscripcionStr) {
+		this.final_inscripcionStr = final_inscripcionStr;
+	}
+	public String getEinicioStr() {
+		return einicioStr;
+	}
+	public void setEinicioStr(String einicioStr) {
+		this.einicioStr = einicioStr;
+	}
+	public String getEfinalStr() {
+		return efinalStr;
+	}
+	public void setEfinalStr(String efinalStr) {
+		this.efinalStr = efinalStr;
+	}
 	public String getDetalle() {
 		return detalle;
 	}
