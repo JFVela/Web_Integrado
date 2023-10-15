@@ -635,8 +635,7 @@ body.shimeji-select-ie {
                     provinciaSelect.options.add(new Option(provincia, provincia));
                 }
             });
-
-            // Manejar el cambio en el select de provincias
+         	// Manejar el cambio en el select de provincias
             provinciaSelect.addEventListener('change', function () {
                 // Obtener la provincia y ciudad seleccionadas
                 const selectedCiudad = ciudadSelect.value;
@@ -646,6 +645,7 @@ body.shimeji-select-ie {
                 // Limpiar y llenar el select de distritos
                 distritoSelect.innerHTML = '<option value="">[Seleccione un distrito]</option>';
                 for (const distrito in distritos) {
+                    // Debes acceder al valor del distrito en lugar de todo el objeto distritos
                     distritoSelect.options.add(new Option(distrito, distritos[distrito]));
                 }
             });

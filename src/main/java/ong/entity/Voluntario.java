@@ -12,6 +12,9 @@ public class Voluntario {
 	private String ciudad;
 	private String distrito;
 	private int especialidad;
+	private String EspecialidadNombre;
+	private int eventos_id_evento;
+	private String eventoNombre;
 	public String getNombre() {
 		return nombre;
 	}
@@ -71,6 +74,24 @@ public class Voluntario {
 	}
 	public void setEspecialidad(int especialidad) {
 		this.especialidad= especialidad;
+	}
+	public int getEventos_id_evento() {
+		return eventos_id_evento;
+	}
+	public void setEventos_id_evento(int eventos_id_evento) {
+		this.eventos_id_evento = eventos_id_evento;
+	}
+	public String getEspecialidadNombre() {
+		return EspecialidadNombre;
+	}
+	public void setEspecialidadNombre(String especialidadNombre) {
+		EspecialidadNombre = especialidadNombre;
+	}
+	public String getEventoNombre() {
+		return eventoNombre;
+	}
+	public void setEventoNombre(String eventoNombre) {
+		this.eventoNombre = eventoNombre;
 	}
 	
 	
