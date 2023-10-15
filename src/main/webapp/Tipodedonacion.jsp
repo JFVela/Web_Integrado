@@ -133,17 +133,16 @@ body{
 <!-- mesanje eliminar -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
-<!-- Validar si existe el atributo MENSAJE -->
-<c:if test="${requestScope.MENSAJE!=null}">
-<script>
-		toastr.success("${requestScope.MENSAJE}", toastr.options = {
-				"timeOut": "2000",
-				"positionClass " : " toast-top-right ",
-			});
-
-</script>
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.MENSAJE!=null}">
+	<script>
+			toastr.success("${sessionScope.MENSAJE}", toastr.options = {
+					"timeOut": "2000",
+					"positionClass " : " toast-top-right ",
+				});
+	</script>
 </c:if>
-
+<!-- eliminar atributo de tipo sesión MENSAJE -->
 <c:remove var="MENSAJE" scope="session"/>
 
 <!-- JSON para mostrar la tabla creo -->
