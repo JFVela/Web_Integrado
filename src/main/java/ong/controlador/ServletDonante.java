@@ -30,18 +30,106 @@ public class ServletDonante extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String tipo = request.getParameter("accion");
+		
 		if (tipo.equals("insertar")) {
 			insertarDonante(request, response);
-		} else if (tipo.equals("listado"))
+		} else if (tipo.equals("listado")) {
 			listarDonante(request, response);
+		} else if(tipo.equals("insertarModal")) {
+			insertarDonanteMo(request, response);
+		}else if(tipo.equals("actualizar")) {
+			actualizar(request, response);
+		}else if(tipo.equals("eliminar"))
+			eliminar(request,response);
 	}
 
 	
+	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String dato=request.getParameter("dato");
+		//invocar al método deleteById y enviar la variable "cod"
+		int estado=new MySqlDonanteDAO().deleteById(Integer.parseInt(dato));
+		//validar estado
+		if(estado==1)
+			System.out.println("SI");
+		else
+			System.out.println("NO");
+		request.getSession().setAttribute("MENSAJE","Docente eliminado");
+		//invocar método listarDocente
+		//listarDocente(request,response);
+		response.sendRedirect("Donantes.jsp");
+	}
+
+	private void actualizar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String dni,nom, ma, pa, ciu, direc, cel, email;
+		
+		String dniAntiguo = request.getParameter("dniAntiguo");
+		dni=request.getParameter("dni");
+		nom = request.getParameter("nombre");
+		ma = request.getParameter("materno");
+		pa = request.getParameter("paterno");
+		ciu = request.getParameter("ciudad");
+		direc = request.getParameter("direccion");
+		cel = request.getParameter("celular");
+		email = request.getParameter("email");
+		Donante bean = new Donante();
+		bean.setDni(Integer.parseInt(dni));
+		bean.setNombre(nom);
+		bean.setMaterno(ma);
+		bean.setPaterno(pa);
+		bean.setCiudad(ciu);
+		bean.setCelular(Integer.parseInt(cel));
+		bean.setDireccion(direc);
+		bean.setEmail(email);
+		
+		int estado = new MySqlDonanteDAO().update(bean,Integer.parseInt(dniAntiguo));		
+		if(estado==1) {
+			request.getSession().setAttribute("MENSAJE","Exitosa");
+
+		}else {
+			request.getSession().setAttribute("MENSAJE","Fallida");
+		}
+	
+		response.sendRedirect("Donantes.jsp");
+	}
+
+	private void insertarDonanteMo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String dni,nom, ma, pa, ciu, direc, cel, email;
+		
+		dni=request.getParameter("dni");
+		nom = request.getParameter("nombre");
+		ma = request.getParameter("materno");
+		pa = request.getParameter("paterno");
+		ciu = request.getParameter("ciudad");
+		direc = request.getParameter("direccion");
+		cel = request.getParameter("celular");
+		email = request.getParameter("email");
+		
+		Donante bean = new Donante();
+		bean.setDni(Integer.parseInt(dni));
+		bean.setNombre(nom);
+		bean.setMaterno(ma);
+		bean.setPaterno(pa);
+		bean.setCiudad(ciu);
+		bean.setCelular(Integer.parseInt(cel));
+		bean.setDireccion(direc);
+		bean.setEmail(email);
+		
+			int estado = new MySqlDonanteDAO().insertar(bean);		
+			if(estado==1) {
+				request.getSession().setAttribute("MENSAJE","Exitosa");
+
+			}else {
+				request.getSession().setAttribute("MENSAJE","Fallida");
+			}
+		
+		listarDonante(request,response);
+	}
+
 	private void listarDonante(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		request.setAttribute("donantes", new MySqlDonanteDAO().findAll());
-		request.getRequestDispatcher("/TablaDonante.jsp").forward(request, response);
+		request.getRequestDispatcher("/Donantes.jsp").forward(request, response);
 	}
 
 

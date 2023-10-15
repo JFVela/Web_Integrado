@@ -7,4 +7,7 @@ import ong.entity.Donante;
 public interface DonanteDAO {
 	int insertar(Donante bean);
 	List<Donante> findAll();
+	Donante findById(int dni);
+	int update(Donante bean,int dniActual);
+	int deleteById(int cod);
 }

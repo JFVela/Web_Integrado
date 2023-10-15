@@ -1,6 +1,7 @@
 package ong.entity;
 
 public class DonacionFisica {
+	private int idFisico;
 	private int dniDonantes;
 	private int idLocal;
 	private String descripcion;
@@ -28,6 +29,12 @@ public class DonacionFisica {
 	}
 	public void setEstado(boolean estado) {
 		this.estado = estado;
+	}
+	public int getIdFisico() {
+		return idFisico;
+	}
+	public void setIdFisico(int idFisico) {
+		this.idFisico = idFisico;
 	}
 	
 	
