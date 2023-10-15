@@ -36,5 +36,5 @@ public class ServletLocacionJSON extends HttpServlet {
 				PrintWriter pw=response.getWriter();
 				pw.print(json);	
 	}
-
+//S1
 }
