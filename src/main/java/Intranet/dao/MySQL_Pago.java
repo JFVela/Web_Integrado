@@ -19,7 +19,7 @@ public class MySQL_Pago implements interfazPago {
 		PreparedStatement pstm = null;
 		try {
 			cn = new MySQL_Conexion().getConnection();
-			String sql = "INSERT INTO pago VALUES(null,?,?)";
+			String sql = "INSERT INTO pago VALUES(?,?,?)";
 			pstm = cn.prepareStatement(sql);
 			pstm.setDouble(1, bean.getSueldo());
 			pstm.setString(2, bean.getDetalle());
