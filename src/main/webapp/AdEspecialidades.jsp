@@ -269,7 +269,7 @@ th{
         		 				message:'Campo ID es obligatorio'
         		 			},
         		 			regexp:{
-        		 				  regexp: /^[0-9]{8}$/,
+        		 				  regexp: /^[0-9]{1}$/,
       	                        message: 'Campo ID con errores'
         		 			}
         		 		}

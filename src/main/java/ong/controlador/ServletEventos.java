@@ -129,7 +129,7 @@ public class ServletEventos extends HttpServlet {
 	        if(estado==1) {
 		        tipoMensaje = "success"; // Para mensajes de éxito (verde)
 	        	request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-	        	request.getSession().setAttribute("MENSAJE","Eventos registrada");
+	        	request.getSession().setAttribute("MENSAJE","Evento registrado");
 	        }else {
 				request.getSession().setAttribute("MENSAJE","Error en el registro");
 	        }
@@ -139,8 +139,10 @@ public class ServletEventos extends HttpServlet {
 			if(estado==1) {
 		        tipoMensaje = "warning"; 
         		request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE","Docente actualizado");
+				request.getSession().setAttribute("MENSAJE","Evento actualizado");
 			}else {
+				 tipoMensaje = "error";
+				 request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 				request.getSession().setAttribute("MENSAJE","Error en la actualización");
 			}
 		}

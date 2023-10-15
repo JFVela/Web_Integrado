@@ -60,9 +60,11 @@ public class ServletEspecialidad extends HttpServlet {
 			tipoMensaje = "warning";
 	    	request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 			request.getSession().setAttribute("MENSAJE","Especialidad actualizada");
-		}else
-			request.getSession().setAttribute("MENSAJE","Error en la actualización");
-		
+		}else {
+			
+			 request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			 request.getSession().setAttribute("MENSAJE","Error en la actualización");
+		}
 		response.sendRedirect("AdEspecialidades.jsp");	
 
 		}
@@ -112,6 +114,8 @@ public class ServletEspecialidad extends HttpServlet {
 		        request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 				request.getSession().setAttribute("MENSAJE","Especialidad registrada");
 			}else {
+				 tipoMensaje = "error";
+				 request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 				request.getSession().setAttribute("MENSAJE","Error en el registro");
 		}
 		
