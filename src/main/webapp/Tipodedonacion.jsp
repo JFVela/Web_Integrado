@@ -74,7 +74,7 @@ body{
 		  
 	      <div class="modal-footer">
 	      	<button type="submit" class="btn btn-primary">Grabar</button>
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
 	        
 	      </div>
 		  
@@ -178,6 +178,15 @@ body{
 		})
 		
 	})
+	//Asignamos eventos a cerrar para reiniciar formulario
+	$(document).on("click", "#btn-cerrar", function() {
+    // Resetear formulario
+    $("#frmTDonacion").trigger("reset");
+    // Resetear Validación
+    $("#frmTDonacion").data("bootstrapValidator").resetForm(true);
+    // Restablecer el valor del campo "codigo" a 0
+    $("#id-codigo").val("0");
+})
 	
 	//asignar evento click a todos los botones con nombre de clase btn-eliminar
 	$(document).on("click",".btn-eliminar",function(){
@@ -198,15 +207,6 @@ body{
 				  }
 				})
 				
-				//
-				$(document).on("click","#btn-cerrar"),function(){
-				//resetear formulario
-				$("#frmTDonacion").trigger("reset");
-				//resetear Validación
-				$("#frmTDonacion").data("bootstrapValidator").resetForm(true);
-				//
-				$("#id-codigo").val("0");
-			}
 		})
 
 
