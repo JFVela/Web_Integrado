@@ -30,7 +30,7 @@ public class ServletTipoDonacion extends HttpServlet {
 	}
 
 
-	private void eliminarTipoDonacion(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void eliminarTipoDonacion(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
 		String cod = request.getParameter("codigo");
 		int estado=new MySqlTipoDonacionDAO().deleteById(Integer.parseInt(cod));
 		
@@ -48,7 +48,7 @@ public class ServletTipoDonacion extends HttpServlet {
 	}
 
 
-	private void grabarTipoDonacion(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void grabarTipoDonacion(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
 	
 		String cod, nom;
 		

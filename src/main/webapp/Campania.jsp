@@ -9,8 +9,16 @@
 <title>Campañas</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+<!-- para mensajes de confirmacion -->
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<!-- para eliminar -->
+<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
+
 
 <style>
 .modal-header{
@@ -40,7 +48,7 @@
 <h1 class="mt-5 text-center">Campañas</h1>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Agregar
 </button>
 
@@ -53,27 +61,28 @@
         
       </div>
       <div class="modal-body">
-        <form id="frmCampania" method="POST" action="ServletCampania">
+        <form id="frmCampania" method="POST" action="ServletCampaña?accion=grabar">
         
         <div class="form-group">
 		    <label for="exampleInputEmail1" class="form-label">codigo</label>
-		    <input type="text" class="form-control" name="codigo">
+		    <input type="text" class="form-control" id="id-codigo" name="codigo" value="0" readonly>
 		  </div>
         
 		  <div class="form-group">
 		    <label for="exampleInputEmail1" class="form-label">Nombre de Campaña</label>
-		    <input type="text" class="form-control" name="nombre">
+		    <input type="text" class="form-control" id="id-nombre" name="nombre">
 		  </div>
 		  
 		  <div class="form-group">
 		  <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
-		  <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+		  <textarea class="form-control" id="id-descripcion" name="descripcion" rows="3"></textarea>
 		  </div>
 		  
 		  
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-	        <button type="submit" class="btn btn-primary">Grabar</button>
+	      <button type="submit" class="btn btn-primary">Grabar</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
+	        
 	      </div>
 		  
 		</form>
@@ -82,25 +91,31 @@
   </div>
 </div>
 
-<table id="tablaCampana" class="table table-striped" style="width:100%">
+<table id="tablaCampana" class="table table-striped table-bordered" style="width:100%">
   <thead>
     <tr>
       <th>CÓDIGO</th>
       <th>NOMBRE</th>
       <th>DESCRIPCIÓN</th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
+  <!-- 
 	    <tr>
 	      <td>1</td>
 		  <td>2</td>
 		  <td>3</td>
 	    </tr>
+	     -->
   </tbody>
 </table>
 </div>
 
 
+
+</body>
 
 
 <!-- libreria principal de JQUERY -->
@@ -118,21 +133,88 @@
 
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-<!-- Validar si existe el atributo MENSAJE -->
-<c:if test="${requestScope.MENSAJE!=null}">
-<script>
-		toastr.success("${requestScope.MENSAJE}", toastr.options = {
-				"timeOut": "2000",
-				"positionClass " : " toast-top-right ",
-			});
+<!-- mesanje eliminar -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
-</script>
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.MENSAJE!=null}">
+	<script>
+			toastr.success("${sessionScope.MENSAJE}", toastr.options = {
+					"timeOut": "2000",
+					"positionClass " : " toast-top-right ",
+				});
+	</script>
 </c:if>
+<!-- eliminar atributo de tipo sesión MENSAJE -->
+<c:remove var="MENSAJE" scope="session"/>
 
 <script>
-    $(document).ready(function() {
-        $('#tablaCampana').DataTable();
-    });
+	cargarCampana();
+    
+	//crear funcion para leer JSON de TDonacion
+	function cargarCampana(){
+		$.get("ServletCampañaJSON",function(response){
+			console.log(response)
+			let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+            let botonEliminar="<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+            $.each(response, function(index,item){
+            	//llenar la tabla
+            	$("#tablaCampana").append("<tr><td>"+item.id+"</td>"+
+						 "<td>"+item.nombre+"</td>"+
+						 "<td>"+item.descripcion+"</td>"+
+						 "<td>"+botonEditar+"</td><td>"+botonEliminar+"</td></tr>");
+            });
+            new DataTable('#tablaCampana');
+		})
+	}
+	//
+	//asignamos eventos oneClick
+	$(document).on("click",".btn-editar",function(){
+		var cod;
+		cod=$(this).parents("tr").find("td")[0].innerHTML;
+		$.get("ServletFindCampaña?codigo="+cod,function(response){
+			
+			$("#id-codigo").val(response.id);
+			$("#id-nombre").val(response.nombre);
+			$("#id-descripcion").val(response.descripcion);
+			
+		})
+		
+	})
+	//
+	//Asignamos eventos a cerrar para reiniciar formulario
+	$(document).on("click", "#btn-cerrar", function() {
+    	// Resetear formulario
+    	$("#frmCampania").trigger("reset");
+    	// Resetear Validación
+    	$("#frmCampania").data("bootstrapValidator").resetForm(true);
+    	// Restablecer el valor del campo "codigo" a 0
+    	$("#id-codigo").val("0");
+	})
+	//
+	//asignar evento click a todos los botones con nombre de clase btn-eliminar
+	$(document).on("click",".btn-eliminar",function(){
+			var cod;
+			cod=$(this).parents("tr").find("td")[0].innerHTML;
+			Swal.fire({
+				  title: '¿Seguro de eliminar?',
+				  text: "Campaña con ID: "+cod,
+				  icon: 'error',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Aceptar',
+				  cancelButtonText: 'Cancelar'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+				    window.location="http://localhost:8080/GitHub_ONG/ServletCampaña?accion=eliminar&codigo="+cod;
+				  }
+				})
+				
+		})
+	
+	
+	
 </script>
 
 <script>    
@@ -163,6 +245,4 @@
     });    
 </script>
 
-
-</body>
 </html>
