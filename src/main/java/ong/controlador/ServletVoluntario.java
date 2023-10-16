@@ -160,7 +160,6 @@ public class ServletVoluntario extends HttpServlet {
 		    mensaje = "Los datos se guardaron correctamente.";
 		    // Obtener la sesión o crear una nueva
 		    HttpSession session = request.getSession(true);
-
 		    // Establecer un atributo de sesión para marcar al usuario como autenticado
 		    session.setAttribute("voluntario", true);
 		 // Redirige a la página JSP deseada
