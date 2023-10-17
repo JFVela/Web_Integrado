@@ -324,9 +324,11 @@ body.shimeji-select-ie {
          // Captura el correo del formulario enviado (desde la URL)
          const urlParams = new URLSearchParams(window.location.search);
          const correoVoluntario = urlParams.get('q');
-
+			
+         // Decodifica el correo
+         const correoDecodificado = decodeURIComponent(correoVoluntario);
          // Actualiza el texto en la página con el correo dinámico
-         $("#email").text(correoVoluntario);
+         $("#email").text(correoDecodificado);
         });
     </script>
     <script type="text/javascript">

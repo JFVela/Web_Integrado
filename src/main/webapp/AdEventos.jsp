@@ -349,7 +349,11 @@ th{
                             },
                             integer: {
                                 message: 'Campo vacantes debe contener solo números'
-                            }
+                            },
+                            regexp: {
+                            	 regexp: /^(?:[0-4]\d{2}|500)$/,
+                            	 message: 'Campo vacantes debe ser menor o igual a 500'
+    	                    }
         		 		}
         		 	},
         	 }

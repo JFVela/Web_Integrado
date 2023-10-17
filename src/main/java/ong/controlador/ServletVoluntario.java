@@ -1,6 +1,8 @@
 package ong.controlador;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -152,12 +154,12 @@ public class ServletVoluntario extends HttpServlet {
 		// 5. Validar el estado y mostrar el mensaje de SweetAlert
 		// Procesa los datos del formulario y guarda el mensaje en el ámbito de solicitud
 		String mensaje = ""; // Inicializa el mensaje
-		String paginaDestino = "voluntariadoenviado.jsp?q=" + email; // Crear la URL de destino
+		String correoCodificado = URLEncoder.encode(email, StandardCharsets.UTF_8.toString());
+		String paginaDestino = "voluntariadoenviado.jsp?q=" + correoCodificado; // Crear la URL de destino
 		if (estado == 1) {
 		    mensaje = "Los datos se guardaron correctamente.";
 		    // Obtener la sesión o crear una nueva
 		    HttpSession session = request.getSession(true);
-
 		    // Establecer un atributo de sesión para marcar al usuario como autenticado
 		    session.setAttribute("voluntario", true);
 		 // Redirige a la página JSP deseada

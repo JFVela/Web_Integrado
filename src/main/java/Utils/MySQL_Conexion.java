@@ -14,8 +14,10 @@ public class MySQL_Conexion {
 			user = "root";
 			pass = "";
 			cn = DriverManager.getConnection(url, user, pass);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			
 		}
 		return cn;
 	}
