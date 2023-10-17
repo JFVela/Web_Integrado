@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <link rel="icon" href="assets/img/health-monitoring-svgrepo-com.svg">
-<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
+	rel="stylesheet">
 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -21,7 +23,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
 	integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap">
@@ -29,12 +31,13 @@
 	href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.4.1/css/mdb.min.css">
 <link rel="stylesheet"
 	href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.4.1/plugins/css/all.min.css">
-<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
+	rel="stylesheet">
 <link rel="stylesheet" href="assets/css/menu.css">
-	
+
 <title>Donacion</title>
 <style>
-
 body.shimeji-pinned iframe {
 	pointer-events: none;
 }
@@ -57,85 +60,88 @@ body.shimeji-select-ie {
 }
 </style>
 <style>
+.alto {
+	height: 450px;
+	background-color: #dfd5e0;
+}
 
-	.error{
-    border: 1px solid red;
+.error {
+	border: 1px solid red;
 	box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
-    color: #f00; /* Texto en rojo */
+	color: #f00; /* Texto en rojo */
+}
 
-	}
-	.success {
-    border: 1px solid green;
-    box-shadow: 0 0 0 0.2rem rgba(0, 128, 0, 0.18); /* Cambiado a verde */
-    color: green; /* Texto en verde */
-	}
+.success {
+	border: 1px solid green;
+	box-shadow: 0 0 0 0.2rem rgba(0, 128, 0, 0.18); /* Cambiado a verde */
+	color: green; /* Texto en verde */
+}
 
-	.tam{
-		height: 605px;
-	}
-	.padd{
-		padding: 100px;
-	}
-	.contenedor {
-		max-width: 900px;
-		margin: 0 auto;
-		border-radius: 25px;
-	}
-	
-	.help-block {
-		color: red;
-	}
-	
-	.form-group.has-error .form-control-label {
-		color: red;
-	}
-	
-	.form-group.has-error .form-control {
-		border: 1px solid red;
-		box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
-	}
-	#formulario-section{
-		border-radius: 30px 0px 0px 30px;
-		margin-left: 80px;
-	}
-	#formDonante{
-		padding: 30px;
-	}
-	
-	.sombra {
-		-webkit-box-shadow: 0px 5px 15px 0px rgba(112, 112, 112, 1);
-		-moz-box-shadow: 0px 5px 15px 0px rgba(112, 112, 112, 1);
-		box-shadow: 0px 5px 15px 0px rgba(112, 112, 112, 1);
-	}
-	
-	.nav-link.active:focus {
-		background-color: #dc3545;
-		color: white;
-	}
-	
-	.ra {
-		padding: 20px
-	}
-	
-	.espace {
-		margin-left: 20px;
-	}
-	
-	.scrollable-form {
-		overflow-y: scroll;
-		max-height: 370px;
-		/* Establece la altura máxima según tus necesidades */
-		border-radius: 15px;
-	}
-	
-	.fondo {
-		background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-			url('img/r2.jpg');
-		background-size: cover;
-		background-repeat: no-repeat;
-		background-position: center top;
-	}
-	
+.tam {
+	height: 605px;
+}
+
+.padd {
+	padding: 100px;
+}
+
+.contenedor {
+	max-width: 900px;
+	margin: 0 auto;
+	border-radius: 25px;
+}
+
+.help-block {
+	color: red;
+}
+
+.form-group.has-error .form-control-label {
+	color: red;
+}
+
+.form-group.has-error .form-control {
+	border: 1px solid red;
+	box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+}
+
+#formulario-section {
+	border-radius: 30px 0px 0px 30px;
+	margin-left: 80px;
+}
+
+.sombra {
+	-webkit-box-shadow: 0px 5px 15px 0px rgba(112, 112, 112, 1);
+	-moz-box-shadow: 0px 5px 15px 0px rgba(112, 112, 112, 1);
+	box-shadow: 0px 5px 15px 0px rgba(112, 112, 112, 1);
+}
+
+.nav-link.active:focus {
+	background-color: #dc3545;
+	color: white;
+}
+
+.ra {
+	padding: 20px
+}
+
+.espace {
+	margin-left: 20px;
+}
+
+.scrollable-form {
+	overflow-y: scroll;
+	max-height: 370px;
+	/* Establece la altura máxima según tus necesidades */
+	border-radius: 15px;
+}
+
+.fondo {
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url('img/r2.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center top;
+}
 </style>
 </head>
 <body>
@@ -178,196 +184,353 @@ body.shimeji-select-ie {
 			<!-- Columna de la imagen -->
 			<div class="col-md-6 text-light"
 				style="padding-top: 190px; font-size: 50px">
-					<h1 class="display-3"><strong>¡Un pequeño acto crea</strong></h1>
-					<h1 class="display-3"><strong>un gran impacto!</strong></h1>
+				<h1 class="display-3">
+					<strong>¡Un pequeño acto crea</strong>
+				</h1>
+				<h1 class="display-3">
+					<strong>un gran impacto!</strong>
+				</h1>
 			</div>
-			
-			
-			<!-- Columna del formulario con scroll vertical -->
-			<div id="formulario-section"
-				class="col-md-5 scrollable-form bg-white" style="margin-top: 50px">
-				
-				<form id="formDonante" method="post"
-					action="ServletDonante?accion=insertar">
+			</div>
+			</div>
 
-					<div class="form-group">
-						<!--  <label for="exampleInputEmail1" class="form-label">Campaña de Destino</label>-->
-						<select style="display: none;"
-							form-select" aria-label="Default select example" name="ong">
-							<option value="1">Mejorando Vidas para un Mundo Mejor</option selected>
-						</select>
+
+			
+
+	<div class="alto">
+		<div class="container-fluid">
+			<div class="row">
+
+				<div class="col ">
+					<div class="text-center">
+						<h1>Donación Física</h1>
+						<img src="img/R.png" class="img-fluid"
+							style="height: 300px; width: 450px;">
+						<p>Tu donación física tiene un impacto local. Al ofrecer
+							recursos tangibles, marcas la diferencia en comunidades cercanas</p>
+						<!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#donafisico">
+							Donar en Físico</button>
 					</div>
-					<h1>Donación</h1>
-					
-					<div class="form-group">
-						<label for="exampleInputEmail2" class="form-label">Forma de
-							Donación</label> 
-							<select class="form-select form-control"
-							aria-label="Default select example" id="tipo" name="tipodedonao">
-								<option value="" selected hidden="disable" >Seleccione
-									forma de donación</option>
-								<option value="1">Físico</option>
-								<option value="2">Virtual</option>
-								<option value="3">Kits</option>
-							</select>
-					</div>
-	
-					<%--Condicional Físico --%>
-						<%--Locación --%>
-						<div id="location" class="form-group" style="display: none;">
-						<label for="exampleInputEmail2" class="form-label">Lugar de Entrega</label> 
-							<select class="form-select form-control"
-							aria-label="Default select example" id="id-location" name="locacion">
-								<option value="" selected hidden="disable">Seleccione
-									tipo de donación</option>
-							</select>
+					<!-- Modal -->
+					<div class="modal fade" id="donafisico"
+						data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+						aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="staticBackdropLabel">Donación
+										Física</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="col-md-6 ms-auto">
+												<form id="formDonante" method="post"
+													action="ServletDonante?accion=insertar">
+
+													<h1>Donación</h1>
+
+
+													<%-- Físico --%>
+													<%--Locación --%>
+													<div id="location" class="form-group">
+														<label for="exampleInputEmail2" class="form-label">Lugar
+															de Entrega</label> <select class="form-select form-control"
+															aria-label="Default select example" id="id-location"
+															name="locacion">
+															<option value="" selected hidden="disable">Seleccione
+																tipo de donación</option>
+														</select>
+													</div>
+													<%--Descripción --%>
+
+													<div id="textareaDes" class="form-group">
+														<label for="exampleInputEmail2" class="form-label">Descripción:</label>
+														<textarea type="text" name="descrip" class="form-control"></textarea>
+													</div>
+													<%--Final  Físico --%>
+
+
+													<h2>Información Personal</h2>
+
+
+													<div class="row">
+
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="exampleInputPassword1" class="form-label">DNI</label>
+																<input type="text" class="form-control"
+																	placeholder="DNI:" name="dni">
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="exampleInputEmail1" class="form-label">Nombre</label>
+															<input type="text" class="form-control"
+																placeholder="Nombre:" name="nombre">
+														</div>
+
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="exampleInputPassword1" class="form-label">Paterno</label>
+																<input type="text" class="form-control"
+																	placeholder="Apelldio Paterno:" name="paterno">
+															</div>
+														</div>
+
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="exampleInputPassword1" class="form-label">Materno</label>
+																<input type="text" class="form-control"
+																	placeholder="Apellido Materno:" name="materno">
+															</div>
+														</div>
+
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="exampleInputPassword1" class="form-label">Celular</label>
+																<input type="text" class="form-control"
+																	placeholder="Número Celular:" name="celular">
+															</div>
+														</div>
+
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="exampleInputPassword1" class="form-label">Ciudad</label>
+																<input type="text" class="form-control"
+																	placeholder="Ciudad:" name="ciudad">
+															</div>
+														</div>
+
+
+														<div class="form-group">
+															<label for="exampleInputPassword1" class="form-label">Email</label>
+															<input type="text" class="form-control"
+																placeholder="usuario@gmail.com" name="email">
+														</div>
+
+														<div class="form-group">
+															<label for="exampleInputEmail1" class="form-label">Dirección</label>
+															<input type="text" class="form-control"
+																placeholder="Dirección:" name="direccion">
+														</div>
+
+													</div>													
+												</form>
+											</div>
+											<div class="col-md-6 ms-auto">
+												<img src="img/ola.jpg" class="img-fluid"">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">Cerrar</button>
+									<button id="botonexterno" class="btn btn-primary">Donar</button>
+								</div>
+							</div>
 						</div>
-						<%--Descripción --%>
-						
-						 <div id="textareaDes" class="form-group"  style="display: none;">
-					        <label for="exampleInputEmail2" class="form-label">Descripción:</label>
-					        <textarea type="text" name="descrip" class="form-control"></textarea>
-					    </div>
-					<%--Final Condicional Físico --%>
-					
-					
+					</div>
+				</div>
+				
+				<%--DONACION VIRTUAL --%>
+				<div class="col" style="background-color: #b5d7ff">
+					<div class="text-center">
+						<h1>Donación Virtual</h1>
+						<img src="img/asa.png" class="img-fluid"
+							style="height: 300px; width: 250px;">
+						<p>"Donar en línea es poderoso. Con tu ayuda virtual, apoyas
+							causas en todo el mundo desde casa."</p>
+							<button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#donavirtual">
+							Donar en Virtual</button>
+					</div>
+					<!-- Modal -->
+					<div class="modal fade" id="donavirtual"
+						data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+						aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="staticBackdropLabel">Donación
+										Virtual</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class="container-fluid">
+										<div class="row">
+										<div class="col-md-6 ms-auto">
+											<img src="img/ola.jpg" class="img-fluid">
+										</div>
+										<div class="col-md-6 ms-auto">
+											<form id="formDonante" method="post"
+												action="ServletDonante?accion=insertar">
+
+						<h1>Donación</h1>
+
+
 					<%--Condicional Virtual --%>
 					<%--Tipo donacion --%>
-					<div id="tipodona" class="form-group" style="display: none;">
-						<label for="exampleInputEmail2" class="form-label">Tipo Donación</label> 
-							<select class="form-select form-control"
+					<div id="tipodona" class="form-group">
+						<label for="exampleInputEmail2" class="form-label">Tipo
+							Donación</label> <select class="form-select form-control"
 							aria-label="Default select example" id="id-tipodona" name="tdon">
-								<option value="" selected hidden="disable">Seleccione
-									Tipo de Donación</option>
-							</select>
-						</div>
+							<option value="" selected hidden="disable">Seleccione
+								Tipo de Donación</option>
+						</select>
+					</div>
 					<%--Campaña --%>
-					<div id="campaña" class="form-group" style="display: none;">
-						<label for="exampleInputEmail2" class="form-label">Campaña</label> 
-							<select class="form-select form-control"
+					<div id="campaña" class="form-group">
+						<label for="exampleInputEmail2" class="form-label">Campaña</label>
+						<select class="form-select form-control"
 							aria-label="Default select example" id="id-campaña" name="camp">
-								<option value="" selected hidden="disable">Seleccione
-									Campaña</option>
-							</select>
-						</div>
+							<option value="" selected hidden="disable">Seleccione
+								Campaña</option>
+						</select>
+					</div>
 					<%--Moneda --%>
 					<div class="col-md-6">
-							<div id="tipo-moneda" class="form-group" style="display: none;">
-						<label for="exampleInputEmail2" class="form-label">Moneda</label> 
+						<div id="tipo-moneda" class="form-group">
+							<label for="exampleInputEmail2" class="form-label">Moneda</label>
 							<select class="form-select form-control"
-							aria-label="Default select example" id="id-moneda" name="tmone">
+								aria-label="Default select example" id="id-moneda" name="tmone">
 								<option value="" selected hidden="disable">Seleccione
 									Moneda</option>
 							</select>
 						</div>
-						</div>
-						
+					</div>
+
 					<%--Tarjeta --%>
-					
-					<div id="info-tarj" class="form-group" style="display: none;">
+
+					<div id="info-tarj" class="form-group">
 						<h2 class="my-3">INFORMACIÓN DE LA TARJETA DE CRÉDITO</h2>
 						<div class="row">
 							<div class="col-12">
-								<label for="card_number" class="form-label">
-								Número de tarjeta *</label>
-								<input type="text" class="form-control" id="numcuen" placeholder="Número de tarjeta:" name="numcuen">
+								<label for="card_number" class="form-label"> Número de
+									tarjeta *</label> <input type="text" class="form-control" id="numcuen"
+									placeholder="Número de tarjeta:" name="numcuen">
 							</div>
 						</div>
 					</div>
-					<div id="tarj-adi" class="form-group" style="display: none;">
+					<div id="tarj-adi" class="form-group">
 						<div class="row">
 							<div class="mb-3 col-12 col-md-6">
-								<label for="cvv" class="form-label">CVC *</label>
-								<input type="password" class="form-control" id="cvv" placeholder="CVV" name="cvv"> 
+								<label for="cvv" class="form-label">CVC *</label> <input
+									type="password" class="form-control" id="cvv" placeholder="CVV"
+									name="cvv">
 							</div>
 							<div class="mb-3 col-12 col-md-6">
-								<label for="expiration_month" class="form-label">Caducidad *</label>
+								<label for="expiration_month" class="form-label">Caducidad
+									*</label>
 								<div class="input-group ">
-									<input type="text" class="form-control"  aria-label="MM"
-									id="expirationMonth"  name="expirationMonth">
-									<span class="input-group-text">/</span>
-									<input type="text" class="form-control" placeholder="YYYY" aria-label="YYYY" id="expirationYear" 
-									 name="expirationYear">
+									<input type="text" class="form-control" aria-label="MM"
+										id="expirationMonth" name="expirationMonth"> <span
+										class="input-group-text">/</span> <input type="text"
+										class="form-control" placeholder="YYYY" aria-label="YYYY"
+										id="expirationYear" name="expirationYear">
 								</div>
 							</div>
 						</div>
-						<div id="mensajeValidacion" style="text-align:right;"></div>
-						
+						<div id="mensajeValidacion" style="text-align: right;"></div>
+
 					</div>
 					<div>
-						<div id="id-monto" class="col-md-6 form-group" style="display: none;" >
+						<div id="id-monto" class="col-md-6 form-group">
 							<div class="form-group">
 								<label for="exampleInputPassword1" class="form-label">Monto</label>
-								<input id="monto" placeholder="Monto:" type="text" class="form-control" name="monto">
+								<input id="monto" placeholder="Monto:" type="text"
+									class="form-control" name="monto">
 							</div>
 						</div>
 					</div>
 					
-					<h2>Información Personal</h2>
-				
-					
 					<div class="row">
-						
-						<div class="col-md-6">
+					<h2>Información Personal</h2>
+						<div class="col-md-6 ms-auto">
+							<div class="col-md-6">
 							<div class="form-group">
 								<label for="exampleInputPassword1" class="form-label">DNI</label>
-								<input type="text" class="form-control" placeholder="DNI:" name="dni">
+								<input type="text" class="form-control"
+									placeholder="DNI:" name="dni">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail1" class="form-label">Nombre</label>
-							<input type="text" class="form-control" placeholder="Nombre:" name="nombre">
+							<input type="text" class="form-control"
+								placeholder="Nombre:" name="nombre">
 						</div>
 
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="exampleInputPassword1" class="form-label">Paterno</label>
-								<input type="text" class="form-control" placeholder="Apelldio Paterno:" name="paterno">
+								<input type="text" class="form-control"
+									placeholder="Apelldio Paterno:" name="paterno">
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="exampleInputPassword1" class="form-label">Materno</label>
-								<input type="text" class="form-control" placeholder="Apellido Materno:" name="materno">
+								<input type="text" class="form-control"
+									placeholder="Apellido Materno:" name="materno">
 							</div>
 						</div>
-
-						<div class="col-md-6">
+						</div>
+						<div class="col-md-6 ms-auto">
+							<div class="col-md-6">
 							<div class="form-group">
 								<label for="exampleInputPassword1" class="form-label">Celular</label>
-								<input type="text" class="form-control" placeholder="Número Celular:" name="celular">
+								<input type="text" class="form-control"
+									placeholder="Número Celular:" name="celular">
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="exampleInputPassword1" class="form-label">Ciudad</label>
-								<input type="text" class="form-control" placeholder="Ciudad:" name="ciudad">
+								<input type="text" class="form-control"
+									placeholder="Ciudad:" name="ciudad">
 							</div>
 						</div>
 
 
 						<div class="form-group">
 							<label for="exampleInputPassword1" class="form-label">Email</label>
-							<input type="text" class="form-control" placeholder="usuario@gmail.com" name="email">
+							<input type="text" class="form-control"
+								placeholder="usuario@gmail.com" name="email">
 						</div>
 
 						<div class="form-group">
 							<label for="exampleInputEmail1" class="form-label">Dirección</label>
-							<input type="text" class="form-control" placeholder="Dirección:" name="direccion">
+							<input type="text" class="form-control"
+								placeholder="Dirección:" name="direccion">
 						</div>
+						</div>
+					</div>													
+						</form>
+					</div>
 
+				</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-bs-dismiss="modal">Cerrar</button>
+								<button id="botonexterno" class="btn btn-primary">Donar</button>
+							</div>
+						</div>
 					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary m-2">Donar a
-							Mundo Mejor</button>
-					</div>
-				</form>
+				</div>
+			</div>
+			
 			</div>
 		</div>
 	</div>
-
 	<!-- Medios de Pago -->
 
 	<h6 class="text-center">Tu aporte hace la diferencia</h6>
@@ -782,7 +945,7 @@ body.shimeji-select-ie {
 				<div class="col-md">
 					<iframe
 						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d250044.83577748813!2d-77.42498272823141!3d-11.697914333027477!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105d5451df56977%3A0xc8b24208cd77794!2zQW5jw7Nu!5e0!3m2!1ses-419!2spe!4v1694738306792!5m2!1ses-419!2spe"
-						width="700" height="350" style="border: 0;" allowfullscreen=""
+						width="700" height="350" style="border: 0"; allowfullscreen=""
 						loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 				</div>
 			</div>
@@ -984,39 +1147,40 @@ $('.owl-carousel').owlCarousel({
 	<!-- Libreria para validar (boostrap validator) -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
-<script
+	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 		crossorigin="anonymous"></script>
-		
-		
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
-<c:if test="${sessionScope.MENSAJE!=null}">
-	<script>
-    var mensaje = "${sessionScope.MENSAJE}";
-    if (mensaje !== null && mensaje !== "") {
-    	if (mensaje.includes("Exitosa")) {
-            Swal.fire({
-                title: "Donación Exitosa!",
-                text: "Tu donación se ha registrado exitosamente. Agradecemos tu generosidad!",
-                icon: "success",
-                confirmButtonText: "Cerrar"
-            });
-        } else if (mensaje.includes("Fallida")) {
-            Swal.fire({
-                title: "Donación Fallida",
-                text: "Tu donación ha fallado debido a saldo insuficiente. Por favor, verifica tu saldo e inténtalo de nuevo.",
-                icon: "error",
-                confirmButtonText: "Cerrar"
-            });
-        }
-    }
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+	<c:if test="${sessionScope.MENSAJE!=null}">
+		<script>
+		    var mensaje = "${sessionScope.MENSAJE}";
+		    if (mensaje !== null && mensaje !== "") {
+		    	if (mensaje.includes("Exitosa")) {
+		            Swal.fire({
+		                title: "Donación Exitosa!",
+		                text: "Tu donación se ha registrado exitosamente. Agradecemos tu generosidad!",
+		                icon: "success",
+		                confirmButtonText: "Cerrar"
+		            });
+		        } else if (mensaje.includes("Fallida")) {
+		            Swal.fire({
+		                title: "Donación Fallida",
+		                text: "Tu donación ha fallado debido a saldo insuficiente. Por favor, verifica tu saldo e inténtalo de nuevo.",
+		                icon: "error",
+		                confirmButtonText: "Cerrar"
+		            });
+		        }
+		    }
 </script>
 
-</c:if>
-<c:remove var="MENSAJE" scope="session"/>
-	
+	</c:if>
+	<c:remove var="MENSAJE" scope="session" />
+
 	<script>
 		new DataTable('#tableDocente');
 		CargarLocaciones();
@@ -1052,9 +1216,17 @@ $('.owl-carousel').owlCarousel({
 				})
 			})
 		}
-		
+		document.getElementById('botonexterno').addEventListener('click', function () {
+		    var formDonante = $('#formDonante').bootstrapValidator();
+		    formDonante.data('bootstrapValidator').validate(); // Activa la validación
+
+		    if (formDonante.data('bootstrapValidator').isValid()) {
+		        document.getElementById('formDonante').submit(); // Envía el formulario si es válido
+		    }
+		});
+
 	</script>
-<script>
+	<script>
 $(document).ready(function () {
     var enableCustomValidations = true; 
  
@@ -1325,7 +1497,7 @@ $(document).ready(function () {
 	    });
 	    
 	</script>
-	
+
 	<%--Formulario Condicional con JQUERY --%>
 	<script>
 		$(document).ready(function(){

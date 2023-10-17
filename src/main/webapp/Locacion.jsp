@@ -154,13 +154,7 @@ function cargarLocacion(){
     $(document).ready(function(){     
         $('#formLocacion').bootstrapValidator({      
         	 fields:{
-        		 id:{
-     		 		validators:{
-     		 			notEmpty:{
-     		 				message:'Campo DNI es obligatorio'
-     		 			}
-     		 		}
-     		 		}, 
+        		
      		 		nombre:{
         		 		validators:{
         		 			notEmpty:{
