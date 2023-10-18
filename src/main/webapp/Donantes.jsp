@@ -42,7 +42,7 @@
       <form id="formDonante" method="post" action="ServletDonante?accion=insertarModal">
 		  <div class="form-group">
 		    <label for="exampleInputEmail1" class="form-label">DNI</label>
-		    <input type="text" class="form-control" name="dni" id="id-dni" >
+		    <input type="text" class="form-control" name="dni" id="id-dni" readonly>
 		  </div>
 		  
 		  <div class="form-group">
