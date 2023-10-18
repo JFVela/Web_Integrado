@@ -156,7 +156,7 @@ body.shimeji-select-ie {
                     </div>
                     <div class="form-group">
                         <label for="materno" class="label-form text-secondary">Materno Paterno</label>
-                        <input type="text" name="materno" class="form-control materno-label" id="materno" required>
+                        <input type="text" name="materno" class="form-control materno-label " id="materno" required>
                     </div>
                     <div class="form-group">
                         <label for="email" class="label-form text-secondary">E-mail</label>
@@ -200,7 +200,7 @@ body.shimeji-select-ie {
                    
                     <div class="form-group form-check personal-group pt-3">
                         <input type="checkbox" name="personal" class="form-check-input" id="soglasieid" required>
-                        <label class="form-check-label personal-label label-form fs-6 text-primary text-opacity-50" for="soglasieid">
+                        <label class="form-check-label personal-label label-form fs-6 text-primary text-opacity-50 " for="soglasieid">
                         Al participar en el voluntariado, acepta los términos y politicas de Renovando Vidas.</label>
                     </div>
                     <div class="text-center pt-2">
@@ -581,15 +581,46 @@ body.shimeji-select-ie {
 	cargarCategoria();
 	//crear funcion para leer JSON
 	function cargarCategoria(){
-		$.get("ServletEventosJSON", function(response){
-			//bucle each "for"
-			$.each(response,function(index,item){
-				//lenar combo
-				$("#id-evento").append("<option value='"+item.id_evento+"'>"+item.nombre+"</option")
-			})
-			console.log(response);
-		})
+		 $.get("ServletEventosJSON", function(response) {
+		        // Obtener la fecha actual en formato ISO (YYYY-MM-DD)
+		        var fechaActual = new Date().toISOString().slice(0, 10);
+
+		        // Filtrar los eventos que no están llenos y están dentro del rango de fechas
+		        var eventosDisponibles = response.filter(function(evento) {
+		            // Convertir fechas a formato ISO
+		            var inicioInscripcion = convertirFecha(evento.inicio_inscripcion);
+		            var finalInscripcion = convertirFecha(evento.final_inscripcion);
+
+		            // Verificar si la fecha actual está dentro del rango de inicio y final de inscripción
+		            var estaDisponible = fechaActual >= inicioInscripcion && fechaActual <= finalInscripcion;
+
+		            return estaDisponible && evento.inscritos < evento.vacantes;
+		        });
+
+		        // Llenar el select con los eventos disponibles
+		        $.each(eventosDisponibles, function(index, item) {
+		            $("#id-evento").append("<option value='" + item.id_evento + "'>" + item.nombre + "</option");
+		        });
+		        console.log(response);
+		    });
 		
+
+		// Función para convertir fechas a formato ISO
+		function convertirFecha(fecha) {
+		    var partes = fecha.split(' ');
+		    var mes = partes[0];
+		    var dia = partes[1].replace(',', '');
+		    var anio = partes[2];
+		    var meses = {
+		        "ene.": "01", "feb.": "02", "mar.": "03",
+		        "abr.": "04", "may.": "05", "jun.": "06",
+		        "jul.": "07", "ago.": "08", "sep.": "09",
+		        "oct.": "10", "nov.": "11", "dic.": "12"
+		    };
+		    var mesNumero = meses[mes];
+		    var fechaISO = anio + '-' + mesNumero + '-' + dia;
+		    return fechaISO;
+		}
 		
 		
 		$.get("ServletEspecialidadesJSON", function(response){
@@ -657,6 +688,11 @@ body.shimeji-select-ie {
 
 <script>
 $(document).ready(function() {
+	  // Variable para controlar si se ha encontrado un DNI existente
+    var dniExistente = false;
+    // Variable para controlar si se ha encontrado un correo existente
+    var correoExistente = false;
+
     // Detecta cambios en el campo de DNI
     $("#dni").on("input", function() {
         console.log("Input event triggered."); // Para verificar si se dispara el evento
@@ -674,7 +710,7 @@ $(document).ready(function() {
                     dni: dni // Valor del DNI
                 },
                 success: function(data) {
-                    // La solicitud fue exitosa, data contiene la respuesta JSON del servlet
+                    // La solicitud fue exitosa, data c	ontiene la respuesta JSON del servlet
                     console.log("Received JSON response: ", data); // Verifica la respuesta JSON
                     
                     if (data.status === "dni_existente") {
@@ -687,8 +723,17 @@ $(document).ready(function() {
                         	  imageHeight: 200,
                         	  imageAlt: 'imgError',
 						});
+                        // Marca el DNI como existente
+                        dniExistente = true;
+
+                        // Deshabilita todos los campos excepto el DNI
+                        $("#nombre, #paterno, #materno, #email, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", true);
                     } else {
+                        // El DNI no existe, habilita todos los campos
+                        dniExistente = false;
+                        $("#nombre, #paterno, #materno, #email, #telefono,#id-evento, #id-especialidad, #ciudad, #provincia, #distrito").prop("disabled", false);
                     }
+                    
                 },
                 error: function() {
                     // Ocurrió un error en la solicitud AJAX
@@ -697,7 +742,54 @@ $(document).ready(function() {
             });
         }
     });
+    
+    // Detecta cambios en el campo de correo electrónico
+    $("#email").on("input", function() {
+        // Obtén el valor del campo de correo electrónico
+        var email = $(this).val();
+        
+        // Realiza la solicitud AJAX solo si el correo electrónico tiene un formato válido
+        if (isValidEmail(email)) {
+            $.ajax({
+                type: "POST",
+                url: "ServletVoluntario",
+                data: {
+                    accion: "verificarCorreo", // Acción para verificar el correo
+                    email: email // Valor del correo electrónico
+                },
+                success: function(data) {
+                    if (data.status === "correo_existente") {
+                        // El correo ya está registrado, muestra un SweetAlert
+                        Swal.fire({
+                            title: '¡Correo ya registrado!',
+                            text: 'El correo ' + email + ' ya está registrado, por favor utiliza otro correo.',
+                            icon: 'error',
+                        });
+                        // Marca el correo como existente
+                        correoExistente = true;
+
+                        // Deshabilita todos los campos excepto el correo
+                        $("#nombre, #paterno, #materno, #dni, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", true);
+                    } else {
+                        // El correo no existe, habilita todos los campos
+                        correoExistente = false;
+                        $("#nombre, #paterno, #materno, #email, #dni, #telefono,#id-evento, #id-especialidad, #ciudad, #provincia, #distrito").prop("disabled", false);
+                    }
+                    
+                },
+                error: function() {
+                    console.error("Error en la solicitud AJAX");
+                }
+            });
+        }
+    });
 });
+
+//Función para verificar el formato del correo electrónico
+function isValidEmail(email) {
+   
+    return /.+@.+\..+/.test(email);
+}
 </script>
 
 
@@ -766,7 +858,7 @@ $(document).ready(function() {
 	                        message: 'El campo teléfono es obligatorio'
 	                    },
 	                    regexp: {
-	                        regexp: /^[0-9]{9}$/,
+	                        regexp: /^9[0-9]{8}$/,
 	                        message: 'Campo teléfono con errores (9 dígitos numéricos)'
 	                    }
 	                }

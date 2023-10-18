@@ -15,4 +15,7 @@ public interface InscripcionDAO {
 			Inscripcion findById(int cod);
 			//Lista EInscripcion
 		public List<Inscripcion> findAll();
+		
+		int deleteByEventId(int cod);
+		int deleteByEspecialidad(int especialidadID);
 }

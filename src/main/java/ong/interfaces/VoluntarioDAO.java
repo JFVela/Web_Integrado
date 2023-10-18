@@ -2,12 +2,13 @@ package ong.interfaces;
 
 import java.util.List;
 
+import ong.entity.Inscripcion;
 import ong.entity.Voluntario;
 
 public interface VoluntarioDAO {
 
 	//método que registra un VOLUNTARIO y retorna un entero
-	int save(Voluntario bean);
+	int save(Voluntario voluntario, Inscripcion inscripcion);
 	//método que actualiza un VOLUNTARIO y retorna un entero
 	int update(Voluntario bean);
 	//método deleteById que elimina un VOLUNTARIO según su código  y retorna un entero
@@ -18,5 +19,11 @@ public interface VoluntarioDAO {
 	List<Voluntario> findAll();
 	
 	Voluntario findDNI(int cod);
-		
+	
+	Voluntario findCorreo(String email);
+	
+	int deleteByEventId(int cod);
+	
+	int deleteByEspecialidad(int especialidadId);
+
 }

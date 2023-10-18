@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ong.dao.MySqlEspecialidadesDAO;
+import ong.dao.MySqlEventosDAO;
 import ong.entity.Especialidad;
 
 /**
@@ -35,60 +36,29 @@ public class ServletEspecialidad extends HttpServlet {
 		    //validar tipo
 		    if (tipo.equals("guardar")) {
 		        grabarEspecialidad(request, response);
-		    } else if(tipo.equals("actualizar")) {
-				actualizarEspecialidad(request,response);
 		    }else if(tipo.equals("eliminar"))
 				eliminarEspecialidad(request,response);	
 	}
 
-	private void actualizarEspecialidad(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String nom, id;
-		nom = request.getParameter("nombre");
-		id = request.getParameter("id");
-		//2.Crear objeto de la clase Especialidad
-		Especialidad bean = new Especialidad();
-		//3.Setear los atributos del objeto "bean" con las variables
-		bean.setNombre(nom);
-		bean.setIdEspecialidades(Integer.parseInt(id));
-	    String tipoMensaje = "error"; // Color por defecto: rojo
-		//validar variable cod
-		//4.invocar al método update y enviar el objeto "bean"
-		System.out.println(nom + id);
-		int estado=new MySqlEspecialidadesDAO().update(bean);
-		//validar estado
-		if(estado==1) {
-			tipoMensaje = "warning";
-	    	request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE","Especialidad actualizada");
-		}else {
-			
-			 request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			 request.getSession().setAttribute("MENSAJE","Error en la actualización");
-		}
-		response.sendRedirect("AdEspecialidades.jsp");	
 
-		}
 
 	private void eliminarEspecialidad(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String id=request.getParameter("id");
-		//invocar al método deleteById y enviar la variable "cod"
-		int estado=new MySqlEspecialidadesDAO().deleteById(Integer.parseInt(id));
-		//validar estado
-		if(estado==1) {
-			System.out.println("SI");
-			 String tipoMensaje = "error";
-			 request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+		 String id = request.getParameter("id");
+		    int especialidadId = Integer.parseInt(id);
 
-			request.getSession().setAttribute("MENSAJE","Especialidad eliminado");
+		    int estado = new MySqlEspecialidadesDAO().deleteWithVolunteers(especialidadId);
 
-	}else {
-			System.out.println("NO");
+		    if (estado == 1) {
+		        System.out.println("SI");
+		        String tipoMensaje = "error";
+		        request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+		        request.getSession().setAttribute("MENSAJE", "Especialidad eliminada");
+		    } else {
+		        System.out.println("NO");
+		    }
+
+		    response.sendRedirect("AdEspecialidades.jsp");
 		}
-		//crear atributo de tipo sesión
-		//invocar método listarDocente
-		//listarDocente(request,response);
-		response.sendRedirect("AdEspecialidades.jsp");	
-	}
 
 	private void grabarEspecialidad(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		//1. recuperar los valores de los controles (cajas) del form
@@ -105,7 +75,7 @@ public class ServletEspecialidad extends HttpServlet {
 	    String tipoMensaje = "error"; // Color por defecto: rojo
 
 		//validar variable cod
-		if(id!=null){
+	    if(Integer.parseInt(id)==0) {
 			//4.invocar al método save y enviar el objeto "bean"
 			int estado=new MySqlEspecialidadesDAO().save(bean);
 			//validar estado
@@ -113,14 +83,22 @@ public class ServletEspecialidad extends HttpServlet {
 		        tipoMensaje = "success"; // Para mensajes de éxito (verde)
 		        request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 				request.getSession().setAttribute("MENSAJE","Especialidad registrada");
+			}
+		}else {
+			int estado=new MySqlEspecialidadesDAO().update(bean);
+
+			if(estado==1) {
+				tipoMensaje = "warning";
+		    	request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE","Especialidad actualizada");
 			}else {
 				 tipoMensaje = "error";
 				 request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE","Error en el registro");
-		}
+				request.getSession().setAttribute("MENSAJE","Error en la actualización");
+			}}
 		
 		response.sendRedirect("AdEspecialidades.jsp");	
-		}
+		
 
 	}
 }	

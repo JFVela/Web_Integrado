@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ong.entity.Eventos;
 import ong.interfaces.EventosDAO;
@@ -201,10 +203,13 @@ public class MySqlEventosDAO implements EventosDAO{
 		ResultSet rs = null;
 
 		try {
-	        // 1. Obtener Conexion
+			  // 1. Obtener la conexión
 	        con = new MySqlConectar().getConectar();
-	     // 2. Sentencia SQL para obtener todos los registros
-	        String sql = "SELECT * FROM eventos";
+	        // 2. Sentencia SQL para obtener todos los registros de eventos y contar inscripciones
+	        String sql = "SELECT eventos.id_evento, eventos.nombre, eventos.ubicacion, eventos.inicio_inscripcion, eventos.final_inscripcion, eventos.inicio, eventos.final, eventos.detalle, eventos.vacantes, COUNT(inscripcion.id_inscripcion) AS inscritos " +
+	                     "FROM eventos " +
+	                     "LEFT JOIN inscripcion ON eventos.id_evento = inscripcion.eventos_id_evento " +
+	                     "GROUP BY eventos.id_evento, eventos.nombre, eventos.ubicacion, eventos.inicio_inscripcion, eventos.final_inscripcion, eventos.inicio, eventos.final, eventos.detalle, eventos.vacantes";
 	        // 3. Crear objeto "ps" y enviar la variable "sql"
 	        ps = con.prepareStatement(sql);
 
@@ -213,20 +218,19 @@ public class MySqlEventosDAO implements EventosDAO{
 
 	        // 5. Procesar el resultado
 	        while (rs.next()) {
-	            // Crear un objeto Voluntario con los datos obtenidos de la consulta
-	            Eventos eventos = new Eventos();
-	            eventos.setId_evento(rs.getInt("id_evento"));
-	            eventos.setNombre(rs.getString("nombre"));
-	            eventos.setUbicacion(rs.getString("ubicacion"));
-	            eventos.setInicio_inscripcion(rs.getDate("inicio_inscripcion"));
-	            eventos.setFinal_inscripcion(rs.getDate("final_inscripcion"));
-	            eventos.setEinicio(rs.getDate("inicio"));
-	            eventos.setEfinal(rs.getDate("final"));
-	            eventos.setDetalle(rs.getString("detalle"));
-	            eventos.setVacantes(rs.getInt("vacantes"));;
-	            
-	            // Agregar el objeto data a la lista
-	            data.add(eventos);
+	            Eventos evento = new Eventos();
+	            evento.setId_evento(rs.getInt("id_evento"));
+	            evento.setNombre(rs.getString("nombre"));
+	            evento.setUbicacion(rs.getString("ubicacion"));
+	            evento.setInicio_inscripcion(rs.getDate("inicio_inscripcion"));
+	            evento.setFinal_inscripcion(rs.getDate("final_inscripcion"));
+	            evento.setEinicio(rs.getDate("inicio"));
+	            evento.setEfinal(rs.getDate("final"));
+	            evento.setDetalle(rs.getString("detalle"));
+	            evento.setVacantes(rs.getInt("vacantes"));
+	            evento.setInscritos(rs.getInt("inscritos"));
+
+	            data.add(evento);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();

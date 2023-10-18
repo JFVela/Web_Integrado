@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ong.entity.Inscripcion;
 import ong.entity.Voluntario;
 import ong.interfaces.VoluntarioDAO;
 import ong.utils.MySqlConectar;
@@ -14,53 +15,6 @@ import ong.utils.MySqlConectar;
 public class MySqlVoluntarioDAO implements VoluntarioDAO {
 	
 	
-
-	@Override
-	public int save(Voluntario bean) {
-		int salida = -1;
-		Connection con = null;
-		PreparedStatement ps = null;
-
-			try {
-			// 1. Obtener Conexion
-			con = new MySqlConectar().getConectar();
-			// 2. sentencia SQL
-			String sql = "INSERT INTO voluntario (dni, nombre, paterno, materno, correo, telefono, ciudad, provincia, distrito, Especialidades_idEspecialidades) VALUES(?,?,?,?,?,?,?,?,?,?)";
-			// 3. Crear objeto "ps"y enviar la variable "sql"
-			ps = con.prepareStatement(sql);
-			// 4. parametros
-			ps.setInt(1, bean.getDni());
-			ps.setString(2, bean.getNombre());
-			ps.setString(3, bean.getPaterno());
-			ps.setString(4, bean.getMaterno());
-			ps.setString(5, bean.getEmail());
-			ps.setInt(6, bean.getTelefono());
-			ps.setString(7, bean.getCiudad());
-			ps.setString(8, bean.getProvincia());
-			ps.setString(9, bean.getDistrito());
-			ps.setInt(10, bean.getEspecialidad());
-			
-			
-			// 5. Ejecutar ps
-			// si la sentencia INSERT se ejecuta correctamente el metodo executeupdate
-			// retorna 1
-			salida = ps.executeUpdate();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (ps != null)
-					ps.close();
-				if (con != null)
-					con.close();
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-		}
-
-		return salida;
-	}
 
 	@Override
 	public int update(Voluntario bean) {
@@ -289,7 +243,7 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 		    try {
 		        // 1. Obtener Conexion
 		        con = new MySqlConectar().getConectar();
-		        // 2. Sentencia SQL para obtener el DNI por código (supongo que "cod" es el ID del voluntario)
+		        // 2. Sentencia SQL para obtener el DNI por código 
 		        String sql = "SELECT dni FROM voluntario WHERE dni = ?";
 		        // 3. Crear objeto "ps" y enviar la variable "sql"
 		        ps = con.prepareStatement(sql);
@@ -321,6 +275,207 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 
 		    return voluntario;
 	}
+
+	@Override
+	public Voluntario findCorreo(String email) {
+		Voluntario voluntario = null;
+	    Connection con = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+
+	    try {
+	        // 1. Obtener Conexion
+	        con = new MySqlConectar().getConectar();
+	        // 2. Sentencia SQL para obtener el correo por email 
+	        String sql = "SELECT correo FROM voluntario WHERE correo = ?";
+	        // 3. Crear objeto "ps" y enviar la variable "sql"
+	        ps = con.prepareStatement(sql);
+	        ps.setString(1, email); // Setea el parámetro con el email del voluntario
+
+	        // 4. Ejecutar la consulta
+	        rs = ps.executeQuery();
+
+	        // 5. Procesar el resultado
+	        if (rs.next()) {
+	            // Si hay un resultado, crea un objeto Voluntario y establece el correo
+	            voluntario = new Voluntario();
+	            voluntario.setEmail(rs.getString("email"));
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null)
+	                rs.close();
+	            if (ps != null)
+	                ps.close();
+	            if (con != null)
+	                con.close();
+	        } catch (SQLException e2) {
+	            e2.printStackTrace();
+	        }
+	    }
+
+	    return voluntario;
+}
+
+	@Override
+	public int save(Voluntario voluntario, Inscripcion inscripcion) {
+		Connection con = null;
+	    PreparedStatement psVoluntario = null;
+	    PreparedStatement psInscripcion = null;
+	    int salida = -1;
+
+	    try {
+	        // 1. Obtener la conexión a la base de datos
+	        con = new MySqlConectar().getConectar();
+	        con.setAutoCommit(false); // Deshabilitar la confirmación automática
+
+	        // 2. Sentencia SQL para la inserción del voluntario
+	        String sqlVoluntario = "INSERT INTO voluntario (dni, nombre, paterno, materno, correo, telefono, ciudad, provincia, distrito, Especialidades_idEspecialidades) VALUES(?,?,?,?,?,?,?,?,?,?)";
+	        psVoluntario = con.prepareStatement(sqlVoluntario);
+	        psVoluntario.setInt(1, voluntario.getDni());
+	        psVoluntario.setString(2, voluntario.getNombre());
+	        psVoluntario.setString(3, voluntario.getPaterno());
+	        psVoluntario.setString(4, voluntario.getMaterno());
+	        psVoluntario.setString(5, voluntario.getEmail());
+	        psVoluntario.setInt(6, voluntario.getTelefono());
+	        psVoluntario.setString(7, voluntario.getCiudad());
+	        psVoluntario.setString(8, voluntario.getProvincia());
+	        psVoluntario.setString(9, voluntario.getDistrito());
+	        psVoluntario.setInt(10, voluntario.getEspecialidad());
+	        
+	        // 3. Sentencia SQL para la inserción de la inscripción
+	        String sqlInscripcion = "INSERT INTO inscripcion (voluntario_dni, eventos_id_evento) VALUES(?,?)";
+	        psInscripcion = con.prepareStatement(sqlInscripcion);
+	        psInscripcion.setInt(1, inscripcion.getVoluntario_dni());
+	        psInscripcion.setInt(2, inscripcion.getEventos_id_evento());
+
+	        // 4. Ejecutar las inserciones
+	        int resultadoVoluntario = psVoluntario.executeUpdate();
+	        int resultadoInscripcion = psInscripcion.executeUpdate();
+
+	        // 5. Confirmar o deshacer la transacción según los resultados
+	        if (resultadoVoluntario > 0 && resultadoInscripcion > 0) {
+	            con.commit(); // Confirmar la transacción
+	            salida = 1; // Indicar éxito
+	        } else {
+	            con.rollback(); // Deshacer la transacción
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        if (con != null) {
+	            try {
+	                con.rollback(); // En caso de excepción, deshacer la transacción
+	            } catch (SQLException e2) {
+	                e2.printStackTrace();
+	            }
+	        }
+	    } finally {
+	        try {
+	            if (psVoluntario != null)
+	                psVoluntario.close();
+	            if (psInscripcion != null)
+	                psInscripcion.close();
+	            if (con != null)
+	                con.close();
+	        } catch (SQLException e2) {
+	            e2.printStackTrace();
+	        }
+	    }
+
+	    return salida;
+	}
+
+	@Override
+	public int deleteByEventId(int cod) {
+		 int salida = -1;
+		    Connection con = null;
+		    PreparedStatement ps = null;
+
+		    try {
+		        // 1. Obtener Conexión
+		        con = new MySqlConectar().getConectar();
+		        // 2. Sentencia SQL para eliminar voluntarios por ID de evento
+		        String sql = "DELETE FROM voluntario WHERE Especialidades_idEspecialidades = ?";
+		        // 3. Crear objeto "ps" y enviar la variable "sql"
+		        ps = con.prepareStatement(sql);
+		        // 4. Parámetros
+		        ps.setInt(1, cod);
+
+		        // 5. Ejecutar ps
+		        salida = ps.executeUpdate();
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    } finally {
+		        try {
+		            if (ps != null)
+		                ps.close();
+		            if (con != null)
+		                con.close();
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
+		    }
+
+		    return salida;
+	}
+
+	@Override
+	public int deleteByEspecialidad(int especialidadId) {
+		 int result = -1;
+		    Connection con = null;
+		    PreparedStatement ps = null;
+
+		    try {
+		        con = new MySqlConectar().getConectar();
+		        // Deshabilitar el autocommit para iniciar una transacción
+		        con.setAutoCommit(false);
+
+		        // Antes de eliminar voluntarios, eliminar las inscripciones relacionadas
+		        int inscripcionResult = new MySqlnscripcionDAO().deleteByEspecialidad(especialidadId);
+
+		        if (inscripcionResult >= 0) {
+		            // Si se eliminaron las inscripciones correctamente, eliminar los voluntarios
+		            String sql = "DELETE FROM voluntario WHERE Especialidades_idEspecialidades = ?";
+		            ps = con.prepareStatement(sql);
+		            ps.setInt(1, especialidadId);
+		            result = ps.executeUpdate();
+		        } else {
+		            // Si hubo problemas al eliminar inscripciones, hacer un rollback
+		            con.rollback();
+		        }
+
+		        // Confirmar la transacción
+		        con.commit();
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        try {
+		            if (con != null) {
+		                // Si hay una excepción, hacer un rollback
+		                con.rollback();
+		            }
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
+		    } finally {
+		        try {
+		            if (ps != null)
+		                ps.close();
+		            if (con != null) {
+		                // Restablecer el autocommit
+		                con.setAutoCommit(true);
+		                con.close();
+		            }
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
+		    }
+
+		    return result;
+	}
+	
 
 	
 	

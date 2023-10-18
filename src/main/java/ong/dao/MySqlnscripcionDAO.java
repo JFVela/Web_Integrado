@@ -72,5 +72,84 @@ public class MySqlnscripcionDAO implements InscripcionDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int deleteByEventId(int cod) {
+		  int salida = -1;
+		    Connection con = null;
+		    PreparedStatement ps = null;
+
+		    try {
+		        // 1. Obtener Conexión
+		        con = new MySqlConectar().getConectar();
+		        // 2. Sentencia SQL para eliminar inscripciones por ID de evento
+		        String sql = "DELETE FROM inscripcion WHERE eventos_id_evento = ?";
+		        // 3. Crear objeto "ps" y enviar la variable "sql"
+		        ps = con.prepareStatement(sql);
+		        // 4. Parámetros
+		        ps.setInt(1, cod);
+
+		        // 5. Ejecutar ps
+		        salida = ps.executeUpdate();
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    } finally {
+		        try {
+		            if (ps != null)
+		                ps.close();
+		            if (con != null)
+		                con.close();
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
+		    }
+		return salida;
+	}
+
+	@Override
+	public int deleteByEspecialidad(int especialidadID) {
+		 int result = -1;
+		    Connection con = null;
+		    PreparedStatement ps = null;
+
+		    try {
+		        con = new MySqlConectar().getConectar();
+		        // Deshabilitar el autocommit para iniciar una transacción
+		        con.setAutoCommit(false);
+
+		        // Eliminar las inscripciones relacionadas con la especialidad
+		        String sql = "DELETE FROM inscripcion WHERE voluntario_dni IN (SELECT dni FROM voluntario WHERE Especialidades_idEspecialidades = ?)";
+		        ps = con.prepareStatement(sql);
+		        ps.setInt(1, especialidadID);
+		        result = ps.executeUpdate();
+
+		        // Confirmar la transacción
+		        con.commit();
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        try {
+		            if (con != null) {
+		                // Si hay una excepción, hacer un rollback
+		                con.rollback();
+		            }
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
+		    } finally {
+		        try {
+		            if (ps != null)
+		                ps.close();
+		            if (con != null) {
+		                // Restablecer el autocommit
+		                con.setAutoCommit(true);
+		                con.close();
+		            }
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
+		    }
+
+		    return result;
+	}
 	
 }

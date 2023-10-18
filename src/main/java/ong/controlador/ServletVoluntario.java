@@ -49,10 +49,11 @@ public class ServletVoluntario extends HttpServlet {
 	    //validar tipo
 	    if (tipo.equals("guardar")) {
 	        grabarVoluntario(request, response);
-	        grabarInscripcion(request, response);
 	    } else if (tipo.equals("verificarDNI")) {
 	        verificarDNI(request, response);
-	    } else if(tipo.equals("listado"))
+	    } else if (tipo.equals("verificarCorreo")) {
+	        verificarCorreo(request, response);
+	    }else if(tipo.equals("listado"))
 			listarVoluntario(request,response);
 		else if(tipo.equals("eliminar"))
 			eliminarVoluntario(request,response);	
@@ -60,6 +61,38 @@ public class ServletVoluntario extends HttpServlet {
 
 
 	
+
+	private void verificarCorreo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		 // Recuperar el email del formulario
+	    String email = request.getParameter("email");
+
+	    System.out.println("Verificando Correo: " + email); // Para verificar si se ejecuta esta parte
+
+	    // Llama al método findById de tu DAO para buscar el DNI en la base de datos
+	    MySqlVoluntarioDAO voluntarioDAO = new MySqlVoluntarioDAO(); 
+	    Voluntario voluntario = voluntarioDAO.findCorreo(email);
+
+	    Gson gson = new Gson();
+	    JsonObject jsonObject = new JsonObject();
+
+	    if (voluntario != null) {
+	        // Si el voluntario existe, agrega una propiedad al objeto JSON
+	        jsonObject.addProperty("status", "correo_existente");
+	        System.out.println("Correo existente en la base de datos.");
+	    } else {
+	        System.out.println("Correo no encontrado en la base de datos.");
+	    }
+
+	    // Convierte el objeto JSON a una cadena JSON
+	    String jsonString = gson.toJson(jsonObject);
+
+	    // Configura la respuesta HTTP
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+
+	    // Escribe la cadena JSON en la respuesta
+	    response.getWriter().write(jsonString);
+	}
 
 	private void eliminarVoluntario(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String dni=request.getParameter("dni");
@@ -118,38 +151,41 @@ public class ServletVoluntario extends HttpServlet {
 	}
 
 	private void grabarVoluntario(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		 // Recuperar los valores de los controles del formulario
+	    String nom, pat, mat, dni, email, tel, espec, ciud, prov, dist, evento;
+	    nom = request.getParameter("nombre");
+	    pat = request.getParameter("paterno");
+	    mat = request.getParameter("materno");
+	    dni = request.getParameter("dni");
+	    email = request.getParameter("email");
+	    tel = request.getParameter("telefono");
+	    espec = request.getParameter("especialidad");
+	    ciud = request.getParameter("ciudad");
+	    prov = request.getParameter("provincia");
+	    dist = request.getParameter("distrito");
+	    evento = request.getParameter("evento");
+		
+	    // Crear un objeto de la clase Voluntario
+	    Voluntario voluntario = new Voluntario();
+	    voluntario.setNombre(nom);
+	    voluntario.setPaterno(pat);
+	    voluntario.setMaterno(mat);
+	    voluntario.setDni(Integer.parseInt(dni));
+	    voluntario.setEmail(email);
+	    voluntario.setTelefono(Integer.parseInt(tel));
+	    voluntario.setEspecialidad(Integer.parseInt(espec));
+	    voluntario.setCiudad(ciud);
+	    voluntario.setProvincia(prov);
+	    voluntario.setDistrito(dist);
 
-		//1. recuperar los valores de los controles (cajas) del form
-		//usar atributo name.
-		String nom,pat,mat,dni, email,tel,espec,ciud,prov,dist;
-		nom = request.getParameter("nombre");
-		pat = request.getParameter("paterno");
-		mat = request.getParameter("materno");
-		dni = request.getParameter("dni");
-		email = request.getParameter("email");
-		tel = request.getParameter("telefono");
-		espec = request.getParameter("especialidad");
-		ciud = request.getParameter("ciudad");
-		prov = request.getParameter("provincia");
-		dist = request.getParameter("distrito");
-		//2.Crear objeto de la clase Voluntario
-		Voluntario bean = new Voluntario();
-		//3.Setear los atributos del objeto "bean" con las variables
-		bean.setNombre(nom);
-		bean.setPaterno(pat);
-		bean.setMaterno(mat);
-		bean.setDni(Integer.parseInt(dni));
-		bean.setEmail(email);
-		bean.setTelefono(Integer.parseInt(tel));
-	
+	    // Crear un objeto de la clase Inscripcion
+	    Inscripcion inscripcion = new Inscripcion();
+	    inscripcion.setVoluntario_dni(Integer.parseInt(dni));
+	    inscripcion.setEventos_id_evento(Integer.parseInt(evento)); // Reemplaza 1 con el valor correcto de id_evento
 
-	    bean.setEspecialidad(Integer.parseInt(espec)); // Asignar el valor numérico a la especialidad
+	    // Llamar al método saveVoluntarioEInscripcion en el DAO
+	    int estado = new MySqlVoluntarioDAO().save(voluntario, inscripcion);
 
-		bean.setCiudad(ciud);
-		bean.setProvincia(prov);
-		bean.setDistrito(dist);
-		//4. Invocar al metodo save y enviar el objeto "bean"
-		int estado = new MySqlVoluntarioDAO().save(bean);
 		System.out.println(dni+" "+nom+" "+pat+" "+dist);
 		// 5. Validar el estado y mostrar el mensaje de SweetAlert
 		// Procesa los datos del formulario y guarda el mensaje en el ámbito de solicitud
@@ -172,33 +208,6 @@ public class ServletVoluntario extends HttpServlet {
 		request.setAttribute("mensaje", mensaje);
 	}
 	
-	private void grabarInscripcion(HttpServletRequest request, HttpServletResponse response) {
-		//1. recuperar los valores de los controles (cajas) del form
-		//usar atributo name.
-		String dni, evento;
-				
-		dni = request.getParameter("dni");
-		evento = request.getParameter("evento");
-				
-		//2.Crear objeto de la clase Voluntario
-		Inscripcion inscripcion = new Inscripcion();
-			
-		
-	    
-		inscripcion.setVoluntario_dni(Integer.parseInt(dni));
-	    inscripcion.setEventos_id_evento(Integer.parseInt(evento)); // Asignar el valor numérico a id_evento
-				
-		//4. Invocar al metodo save y enviar el objeto "bean"
-		int estado = new MySqlnscripcionDAO().save(inscripcion);
-		
-		//validar estado
-		if (estado == 1) {
-			System.out.println("Si");
-		} else {
-			System.out.println("NO");
-		}
-		
-	}
 	
 
 	

@@ -70,7 +70,7 @@ th{
             
             <div class="modal-body">
                 
-                <form id="contact-form" method="post" action="ServletEventos?accion=guardar">
+                <form id="contact-form" method="post" action="ServletEventos?accion=guardar" onsubmit="return validarFechas();">
                 	<div class="form-group"">
 					    <label for="dni" class="label-form font-weight-bold">ID</label>
 					    <input type="text" value="0" name="id" class="form-control dni-label" id="id" readonly>
@@ -105,7 +105,10 @@ th{
 					</div>
 					<div class="form-group">
 					    <label for="vacantes" class="label-form text-secondary">Vacantes</label>
-					    <input type="text" class="form-control name-label" name="vacantes" id="vacantes" required>
+					    <input type="text" class="form-control name-label" name="vacantes" id="vacantes" required 
+					    	data-bv-callback="true"
+						    data-bv-callback-message="Campo vacantes debe estar entre 1 y 500"
+						    data-bv-callback-callback="validarVacantes">
 					</div>
                 	
                    <div class="modal-footer">
@@ -131,6 +134,7 @@ th{
                 <th>Fin Evento</th>
                 <th>Detalle</th>
                 <th>Vacantes</th>
+                <th>Inscritos</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -178,7 +182,36 @@ th{
 <c:remove var="MENSAJE" scope="session"/>
 
 	<script>
-	
+	// Función para validar las fechas
+	function validarFechas() {
+    // Obtén los valores de las fechas desde los campos
+    var inicioInscripcion = new Date(document.getElementById('inicioInscripcion').value);
+    var finalInscripcion = new Date(document.getElementById('finalInscripcion').value);
+    var inicioEvento = new Date(document.getElementById('inicioEvento').value);
+    var finalEvento = new Date(document.getElementById('finalEvento').value);
+
+    // Realiza la validación
+    if (finalInscripcion < inicioInscripcion) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'La fecha de "Final de Inscripción" no puede ser menor que la fecha de "Inicio de Inscripción"',
+        });
+        return false;
+    }
+    if (finalEvento < inicioEvento) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'La fecha de "Final del Evento" no puede ser menor que la fecha de "Inicio del Evento"',
+        });
+        return false;
+    }
+
+    // Si las fechas son válidas, puedes enviar el formulario 
+    return true;
+}
+
 
 		//invocar funciones de carga
 		cargarEventos()
@@ -196,6 +229,7 @@ th{
 						 "<td>"+item.inicio_inscripcion+"</td>"+"<td>"+item.final_inscripcion+"</td>"+
 						 "<td>"+item.einicio+"</td>"+"<td>"+item.efinal+"</td>"+
 						 "<td>"+item.detalle+"</td>"+"<td>"+item.vacantes+"</td>"+
+						 "<td>"+item.inscritos+"</td>"+
 						 "<td>"+botonEditar+"</td>"+"<td>"+botonEliminar+"</td></tr>");
 				})
 				$(document).ready(function() {
@@ -224,11 +258,13 @@ th{
 		$(document).on("click",".btn-eliminar",function(){
 			var id;
 			var nombre;
+			var inscritos;
 			id=$(this).parents("tr").find("td")[0].innerHTML;
 			nom=$(this).parents("tr").find("td")[1].innerHTML;
+			inscritos=$(this).parents("tr").find("td")[9].innerHTML;
 			Swal.fire({
 				  title: '¿Seguro de eliminar?',
-				  text: "Evento " + nom +  " con ID: "+id,
+				  text: "El evento '" + nom +  "' tiene "+inscritos+" voluntario(s) inscrito(s). Al eliminar el "+nom+" se eliminaran todos los voluntarios inscritos.",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
@@ -350,16 +386,34 @@ th{
                             integer: {
                                 message: 'Campo vacantes debe contener solo números'
                             },
-                            regexp: {
-                            	 regexp: /^(?:[0-4]\d{2}|500)$/,
-                            	 message: 'Campo vacantes debe ser menor o igual a 500'
-    	                    }
+                            callback: {
+                                message: 'El campo vacantes debe estar entre 1 y 500',
+                                callback: function(value, validator, $field) {
+                                    var vacantes = parseInt(value, 10);
+                                    if (isNaN(vacantes) || vacantes < 1 || vacantes > 500) {
+                                        return false;
+                                    }
+                                    return true;
+                                
+                            }
+                        }
+                    }
         		 		}
-        		 	},
+        		 	
         	 }
         });   
 			
     });    
+    
+    function validarVacantes(value, validator, $field) {
+        var vacantes = parseInt(value, 10);
+
+        if (isNaN(vacantes) || vacantes < 1 || vacantes > 500) {
+            return false;
+        }
+
+        return true;
+    }
 </script>   
 
 </html>
