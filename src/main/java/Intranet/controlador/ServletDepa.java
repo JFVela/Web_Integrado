@@ -27,6 +27,20 @@ public class ServletDepa extends HttpServlet {
 			GuardarDepa(request, response);
 		else if (tipo.equals("listado"))
 			ListarDepa(request, response);
+		else if (tipo.equals("eliminar"))
+			EliminarDepa(request, response);
+	}
+
+	private void EliminarDepa(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String id = request.getParameter("codigo");
+		int estado = new MySQL_Departamento().deleteID(Integer.parseInt(id));
+		if (estado == 1)
+			System.out.print("SI");
+		else
+			System.out.print("NO");
+		request.getSession().setAttribute("MENSAJE", "Departamento eliminado con éxito");
+		response.sendRedirect("Depa.jsp");
+
 	}
 
 	private void ListarDepa(HttpServletRequest request, HttpServletResponse response)
@@ -38,21 +52,30 @@ public class ServletDepa extends HttpServlet {
 
 	private void GuardarDepa(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String nom, des;
+		String cod, nom, des;
+		cod = request.getParameter("codigo");
 		nom = request.getParameter("nombre");
 		des = request.getParameter("descripcion");
 
 		Departamento bean = new Departamento();
+		bean.setId(Integer.parseInt(cod));
 		bean.setNombre(nom);
 		bean.setDescripcion(des);
 
-		int estado = new MySQL_Departamento().save(bean);
-		if (estado == 1) {
-			System.out.println("Se guardo con Exito");
+		if (Integer.parseInt(cod) == 0) {
+			int estado = new MySQL_Departamento().save(bean);
+			if (estado == 1)
+				request.getSession().setAttribute("MENSAJE", "Departamento registrado");
+			else
+				request.getSession().setAttribute("MENSAJE", "Error en el registro");
 		} else {
-			System.out.println("No se guardo con Éxito");
+			int estado = new MySQL_Departamento().update(bean);
+			if (estado == 1)
+				request.getSession().setAttribute("MENSAJE", "Departamento actualizado");
+			else
+				request.getSession().setAttribute("MENSAJE", "Error en la actualización");
 		}
-		ListarDepa(request, response);
+		response.sendRedirect("Depa.jsp");
 
 	}
 
