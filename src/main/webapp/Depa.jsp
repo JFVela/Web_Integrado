@@ -185,24 +185,27 @@
  })
  
  //asignar evento click a todos los botones con nombre de clase btn-eliminar
-		$(document).on("click",".btn-eliminar",function(){
-			var cod;
-			cod=$(this).parents("tr").find("td")[0].innerHTML;
-			Swal.fire({
-				  title: 'Seguro de eliminar?',
-				  text: "Docente con ID: "+cod,
-				  icon: 'warning',
-				  showCancelButton: true,
-				  confirmButtonColor: '#3085d6',
-				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Aceptar',
-				  cancelButtonText: 'Cancelar'
-				}).then((result) => {
-				  if (result.isConfirmed) {
-				    window.location="http://localhost:8080/GitHub_ONG/ServletDepa?accion=eliminar&codigo="+cod;
-				  }
-				})			
-		})
+		$(document).on("click", ".btn-eliminar", function () {
+    var cod;
+    var nombre;
+    cod = $(this).parents("tr").find("td")[0].innerHTML;
+    nombre = $(this).parents("tr").find("td")[1].innerHTML; // Obtener el nombre del departamento
+
+    Swal.fire({
+        title: '¿Seguro de eliminar?',
+        text: '¿Desea eliminar el departamento "' + nombre + '", ID: ' + cod + '"?', // Usar el nombre y el ID en el mensaje
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = "http://localhost:8080/GitHub_ONG/ServletDepa?accion=eliminar&codigo=" + cod;
+        }
+    });
+});
 		
 		//asignar evento click al botón con ID "btn-cerrar"
 		$(document).on("click","#btn-cerrar",function(){
