@@ -60,9 +60,13 @@ body.shimeji-select-ie {
 }
 </style>
 <style>
-.alto {
-	height: 450px;
-	background-color: #dfd5e0;
+.estilo-don {
+	margin-bottom: 10px;
+}
+.estilo-col2{
+background-color: #5cb9d4;
+border-radius: 30px; 
+padding-bottom: 10px;
 }
 
 .error {
@@ -179,7 +183,7 @@ body.shimeji-select-ie {
 	</nav>
 	<!-- Navbar -->
 
-	<div class="container-fluid fondo tam" style="margin-bottom: 80px">
+	<div class="container-fluid fondo tam">
 		<div class="row padd">
 			<!-- Columna de la imagen -->
 			<div class="col-md-6 text-light"
@@ -191,16 +195,16 @@ body.shimeji-select-ie {
 					<strong>un gran impacto!</strong>
 				</h1>
 			</div>
-			</div>
-			</div>
+		</div>
+	</div>
 
 
-			
 
-	<div class="alto">
+
+	<div class="p-5 estilo-don" id="donaAqui">
 		<div class="container-fluid">
 			<div class="row">
-
+			<%--PRIMERA COLUMNA --%>
 				<div class="col ">
 					<div class="text-center">
 						<h1>Donación Física</h1>
@@ -214,23 +218,24 @@ body.shimeji-select-ie {
 							Donar en Físico</button>
 					</div>
 					<!-- Modal -->
-					<div class="modal fade" id="donafisico"
-						data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+					<div class="modal fade" id="donafisico" data-bs-backdrop="static"
+						data-bs-keyboard="false" tabindex="-1"
 						aria-labelledby="staticBackdropLabel" aria-hidden="true">
 						<div class="modal-dialog modal-lg">
 							<div class="modal-content">
 								<div class="modal-header">
 									<h1 class="modal-title fs-5" id="staticBackdropLabel">Donación
 										Física</h1>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
+									<button type="button" class="btn-close btn-cerrar" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
 									<div class="container-fluid">
 										<div class="row">
-											<div class="col-md-6 ms-auto">
-												<form id="formDonante" method="post"
-													action="ServletDonante?accion=insertar">
+										<div class="col-md-6 ms-auto">
+										<form id="formDonante" method="post"
+													action="ServletDonante?accion=insertarfi">
+											
 
 													<h1>Donación</h1>
 
@@ -239,7 +244,8 @@ body.shimeji-select-ie {
 													<%--Locación --%>
 													<div id="location" class="form-group">
 														<label for="exampleInputEmail2" class="form-label">Lugar
-															de Entrega</label> <select class="form-select form-control"
+															de Entrega</label> 
+															<select class="form-select form-control"
 															aria-label="Default select example" id="id-location"
 															name="locacion">
 															<option value="" selected hidden="disable">Seleccione
@@ -250,7 +256,8 @@ body.shimeji-select-ie {
 
 													<div id="textareaDes" class="form-group">
 														<label for="exampleInputEmail2" class="form-label">Descripción:</label>
-														<textarea type="text" name="descrip" class="form-control"></textarea>
+														<textarea type="text"  style="height: 100px" name="descrip"  class="form-control" 
+														placeholder="Donaré una caja llena de alimentos no perecederos, mantas y ropa abrigada para apoyar a las personas."></textarea>
 													</div>
 													<%--Final  Físico --%>
 
@@ -292,8 +299,9 @@ body.shimeji-select-ie {
 														<div class="col-md-6">
 															<div class="form-group">
 																<label for="exampleInputPassword1" class="form-label">Celular</label>
-																<input type="text" class="form-control"
+																<input type="text" class="form-control numcel"
 																	placeholder="Número Celular:" name="celular">
+																	<div class="mensajeCelular" style="text-align: left;"></div>
 															</div>
 														</div>
 
@@ -308,8 +316,9 @@ body.shimeji-select-ie {
 
 														<div class="form-group">
 															<label for="exampleInputPassword1" class="form-label">Email</label>
-															<input type="text" class="form-control"
+															<input type="text" class="form-control correo"
 																placeholder="usuario@gmail.com" name="email">
+																<div class="mensajeEmail" style="text-align: left;"></div>
 														</div>
 
 														<div class="form-group">
@@ -317,18 +326,19 @@ body.shimeji-select-ie {
 															<input type="text" class="form-control"
 																placeholder="Dirección:" name="direccion">
 														</div>
-
-													</div>													
+													
+													</div>
 												</form>
+												
 											</div>
 											<div class="col-md-6 ms-auto">
-												<img src="img/ola.jpg" class="img-fluid"">
+												<img src="img/ola.jpg" class="img-fluid">
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
+									<button type="button" class="btn btn-secondary btn-cerrar1"
 										data-bs-dismiss="modal">Cerrar</button>
 									<button id="botonexterno" class="btn btn-primary">Donar</button>
 								</div>
@@ -336,22 +346,24 @@ body.shimeji-select-ie {
 						</div>
 					</div>
 				</div>
-				
+				<%--FIN DONACION FISICO --%>
+			
+			<%--SEGUNDA COLUMNA --%>
 				<%--DONACION VIRTUAL --%>
-				<div class="col" style="background-color: #b5d7ff">
+				<div class="col estilo-col2">
 					<div class="text-center">
 						<h1>Donación Virtual</h1>
 						<img src="img/asa.png" class="img-fluid"
 							style="height: 300px; width: 250px;">
 						<p>"Donar en línea es poderoso. Con tu ayuda virtual, apoyas
 							causas en todo el mundo desde casa."</p>
-							<button type="button" class="btn btn-primary"
+						<button type="button" class="btn btn-primary btn-cerrar2"
 							data-bs-toggle="modal" data-bs-target="#donavirtual">
 							Donar en Virtual</button>
 					</div>
 					<!-- Modal -->
-					<div class="modal fade" id="donavirtual"
-						data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+					<div class="modal fade" id="donavirtual" data-bs-backdrop="static"
+						data-bs-keyboard="false" tabindex="-1"
 						aria-labelledby="staticBackdropLabel" aria-hidden="true">
 						<div class="modal-dialog modal-lg">
 							<div class="modal-content">
@@ -363,174 +375,189 @@ body.shimeji-select-ie {
 								</div>
 								<div class="modal-body">
 									<div class="container-fluid">
+									<form id="formDonante1" method="post"
+													action="ServletDonante?accion=insertarvir">
 										<div class="row">
-										<div class="col-md-6 ms-auto">
-											<img src="img/ola.jpg" class="img-fluid">
+												<div class="col-md-6 ms-auto">
+													<img src="img/img-modal.jpg" class="img-fluid">
+												</div>
+										
+												
+											
+												<div class="col-md-6 ms-auto">
+												<%--Comienzo Formulario virtual --%>
+												
+													<h1>Donación</h1>
+
+
+													<%--Condicional Virtual --%>
+													<%--Tipo donacion --%>
+													<div id="tipodona" class="form-group">
+														<label for="exampleInputEmail2" class="form-label">Tipo
+															Donación</label> <select class="form-select form-control"
+															aria-label="Default select example" id="id-tipodona"
+															name="tdon">
+															<option value="" selected hidden="disable">Seleccione
+																Tipo de Donación</option>
+														</select>
+													</div>
+													<%--Campaña --%>
+													<div id="campaña" class="form-group">
+														<label for="exampleInputEmail2" class="form-label">Campaña</label>
+														<select class="form-select form-control"
+															aria-label="Default select example" id="id-campaña"
+															name="camp">
+															<option value="" selected hidden="disable">Seleccione
+																Campaña</option>
+														</select>
+													</div>
+													<%--Moneda --%>
+													<div class="col-md-6">
+														<div id="tipo-moneda" class="form-group">
+															<label for="exampleInputEmail2" class="form-label">Moneda</label>
+															<select class="form-select form-control"
+																aria-label="Default select example" id="id-moneda"
+																name="tmone">
+																<option value="" selected hidden="disable">Seleccione
+																	Moneda</option>
+															</select>
+														</div>
+													</div>
+
+													<%--Tarjeta  de Credito--%>
+
+													<div id="info-tarj" class="form-group">
+														<h2 class="my-3">INFORMACIÓN DE LA TARJETA DE CRÉDITO</h2>
+														<div class="row">
+															<div class="col-12">
+																<label for="card_number" class="form-label">
+																	Número de tarjeta *</label> <input type="text"
+																	class="form-control" id="numcuen"
+																	placeholder="Número de tarjeta:" name="numcuen">
+															</div>
+														</div>
+													</div>
+													<div id="tarj-adi" class="form-group">
+														<div class="row">
+															<div class="mb-3 col-12 col-md-6">
+																<label for="cvv" class="form-label">CVC *</label> <input
+																	type="password" class="form-control" id="cvv"
+																	placeholder="CVV" name="cvv">
+															</div>
+															<div class="mb-3 col-12 col-md-6">
+																<label for="expiration_month" class="form-label">Caducidad
+																	*</label>
+																<div class="input-group ">
+																	<input type="text" class="form-control" aria-label="MM"
+																		id="expirationMonth" placeholder="MM"
+																		name="expirationMonth"> <span
+																		class="input-group-text">/</span> <input type="text"
+																		class="form-control" placeholder="YYYY"
+																		aria-label="YYYY" id="expirationYear"
+																		name="expirationYear">
+																</div>
+															</div>
+														</div>
+														<div id="mensajeValidacion" style="text-align: right;"></div>
+
+													</div>
+													<div>
+														<div id="id-monto" class="col-md-6 form-group">
+															<div class="form-group">
+																<label for="exampleInputPassword1" class="form-label">Monto</label>
+																<input id="monto" placeholder="Monto:" type="text"
+																	class="form-control" name="monto">
+															</div>
+														</div>
+													</div>
+													<%--</form>--%>
+											</div>
+											<div class="row mt-3">
+												<h2>Información Personal</h2>
+												<div class="col-md-6 ms-auto">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="exampleInputPassword1" class="form-label">DNI</label>
+															<input type="text" class="form-control"
+																placeholder="DNI:" name="dni">
+														</div>
+													</div>
+													<div class="form-group col-8">
+														<label for="exampleInputEmail1" class="form-label">Nombre</label>
+														<input type="text" class="form-control"
+															placeholder="Nombre:" name="nombre">
+													</div>
+
+
+													<div class="form-group col-8">
+														<label for="exampleInputPassword1" class="form-label">Paterno</label>
+														<input type="text" class="form-control"
+															placeholder="Apelldio Paterno:" name="paterno">
+													</div>
+
+
+
+													<div class="form-group col-8">
+														<label for="exampleInputPassword1" class="form-label">Materno</label>
+														<input type="text" class="form-control"
+															placeholder="Apellido Materno:" name="materno">
+													</div>
+												</div>
+												<div class="col-md-6 ms-auto">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="exampleInputPassword1" class="form-label">Celular</label>
+															<input type="text" class="form-control numcel"
+																placeholder="Número Celular:" name="celular">
+															<div class="mensajeCelular" style="text-align: left;"></div>
+															
+														</div>
+													</div>
+
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="exampleInputPassword1" class="form-label">Ciudad</label>
+															<input type="text" class="form-control"
+																placeholder="Ciudad:" name="ciudad">
+														</div>
+													</div>
+
+
+													<div class="form-group">
+														<label for="exampleInputPassword1" class="form-label">Email</label>
+														<input type="text" class="form-control correo"
+															placeholder="usuario@gmail.com" name="email">
+														<div class="mensajeEmail" style="text-align: left;"></div>
+															
+													</div>
+
+													<div class="form-group">
+														<label for="exampleInputEmail1" class="form-label">Dirección</label>
+														<input type="text" class="form-control"
+															placeholder="Dirección:" name="direccion">
+													</div>
+													
+												</div>
+												</div>
+											</div>
+											</form>	
+											<%--ACA TERMINA --%>
 										</div>
-										<div class="col-md-6 ms-auto">
-											<form id="formDonante" method="post"
-												action="ServletDonante?accion=insertar">
-
-						<h1>Donación</h1>
-
-
-					<%--Condicional Virtual --%>
-					<%--Tipo donacion --%>
-					<div id="tipodona" class="form-group">
-						<label for="exampleInputEmail2" class="form-label">Tipo
-							Donación</label> <select class="form-select form-control"
-							aria-label="Default select example" id="id-tipodona" name="tdon">
-							<option value="" selected hidden="disable">Seleccione
-								Tipo de Donación</option>
-						</select>
-					</div>
-					<%--Campaña --%>
-					<div id="campaña" class="form-group">
-						<label for="exampleInputEmail2" class="form-label">Campaña</label>
-						<select class="form-select form-control"
-							aria-label="Default select example" id="id-campaña" name="camp">
-							<option value="" selected hidden="disable">Seleccione
-								Campaña</option>
-						</select>
-					</div>
-					<%--Moneda --%>
-					<div class="col-md-6">
-						<div id="tipo-moneda" class="form-group">
-							<label for="exampleInputEmail2" class="form-label">Moneda</label>
-							<select class="form-select form-control"
-								aria-label="Default select example" id="id-moneda" name="tmone">
-								<option value="" selected hidden="disable">Seleccione
-									Moneda</option>
-							</select>
-						</div>
-					</div>
-
-					<%--Tarjeta --%>
-
-					<div id="info-tarj" class="form-group">
-						<h2 class="my-3">INFORMACIÓN DE LA TARJETA DE CRÉDITO</h2>
-						<div class="row">
-							<div class="col-12">
-								<label for="card_number" class="form-label"> Número de
-									tarjeta *</label> <input type="text" class="form-control" id="numcuen"
-									placeholder="Número de tarjeta:" name="numcuen">
-							</div>
-						</div>
-					</div>
-					<div id="tarj-adi" class="form-group">
-						<div class="row">
-							<div class="mb-3 col-12 col-md-6">
-								<label for="cvv" class="form-label">CVC *</label> <input
-									type="password" class="form-control" id="cvv" placeholder="CVV"
-									name="cvv">
-							</div>
-							<div class="mb-3 col-12 col-md-6">
-								<label for="expiration_month" class="form-label">Caducidad
-									*</label>
-								<div class="input-group ">
-									<input type="text" class="form-control" aria-label="MM"
-										id="expirationMonth" name="expirationMonth"> <span
-										class="input-group-text">/</span> <input type="text"
-										class="form-control" placeholder="YYYY" aria-label="YYYY"
-										id="expirationYear" name="expirationYear">
+									</div>
+									<div class="modal-footer">
+									<button type="button" class="btn btn-secondary btn-cerrar3"
+										data-bs-dismiss="modal">Cerrar</button>
+									<button id="donarexterno1" class="btn btn-primary">Donar</button>
 								</div>
-							</div>
-						</div>
-						<div id="mensajeValidacion" style="text-align: right;"></div>
-
-					</div>
-					<div>
-						<div id="id-monto" class="col-md-6 form-group">
-							<div class="form-group">
-								<label for="exampleInputPassword1" class="form-label">Monto</label>
-								<input id="monto" placeholder="Monto:" type="text"
-									class="form-control" name="monto">
-							</div>
-						</div>
-					</div>
-					
-					<div class="row">
-					<h2>Información Personal</h2>
-						<div class="col-md-6 ms-auto">
-							<div class="col-md-6">
-							<div class="form-group">
-								<label for="exampleInputPassword1" class="form-label">DNI</label>
-								<input type="text" class="form-control"
-									placeholder="DNI:" name="dni">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="exampleInputEmail1" class="form-label">Nombre</label>
-							<input type="text" class="form-control"
-								placeholder="Nombre:" name="nombre">
-						</div>
-
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="exampleInputPassword1" class="form-label">Paterno</label>
-								<input type="text" class="form-control"
-									placeholder="Apelldio Paterno:" name="paterno">
-							</div>
-						</div>
-
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="exampleInputPassword1" class="form-label">Materno</label>
-								<input type="text" class="form-control"
-									placeholder="Apellido Materno:" name="materno">
-							</div>
-						</div>
-						</div>
-						<div class="col-md-6 ms-auto">
-							<div class="col-md-6">
-							<div class="form-group">
-								<label for="exampleInputPassword1" class="form-label">Celular</label>
-								<input type="text" class="form-control"
-									placeholder="Número Celular:" name="celular">
-							</div>
-						</div>
-
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="exampleInputPassword1" class="form-label">Ciudad</label>
-								<input type="text" class="form-control"
-									placeholder="Ciudad:" name="ciudad">
-							</div>
-						</div>
-
-
-						<div class="form-group">
-							<label for="exampleInputPassword1" class="form-label">Email</label>
-							<input type="text" class="form-control"
-								placeholder="usuario@gmail.com" name="email">
-						</div>
-
-						<div class="form-group">
-							<label for="exampleInputEmail1" class="form-label">Dirección</label>
-							<input type="text" class="form-control"
-								placeholder="Dirección:" name="direccion">
-						</div>
-						</div>
-					</div>													
-						</form>
-					</div>
-
-				</div>
 								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
-									data-bs-dismiss="modal">Cerrar</button>
-								<button id="botonexterno" class="btn btn-primary">Donar</button>
+								
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 			
 			</div>
 		</div>
-	</div>
 	<!-- Medios de Pago -->
 
 	<h6 class="text-center">Tu aporte hace la diferencia</h6>
@@ -945,7 +972,7 @@ body.shimeji-select-ie {
 				<div class="col-md">
 					<iframe
 						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d250044.83577748813!2d-77.42498272823141!3d-11.697914333027477!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105d5451df56977%3A0xc8b24208cd77794!2zQW5jw7Nu!5e0!3m2!1ses-419!2spe!4v1694738306792!5m2!1ses-419!2spe"
-						width="700" height="350" style="border: 0"; allowfullscreen=""
+						width="700" height="350" style="border: 0;" allowfullscreen=""
 						loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 				</div>
 			</div>
@@ -1085,22 +1112,26 @@ body.shimeji-select-ie {
 		</div>
 	</footer>
 
+	<!-- Libreria principal de jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
+<!-- Libreria JS de bosstrap -->
 	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-		integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
-		integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
-		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<!-- Libreria para validar (Bootstrap Validator) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+<!-- Otras bibliotecas que puedas necesitar -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+
+	<%--carrusel sea responsivo --%>
 	<script>
-	
 	
 $('.owl-carousel').owlCarousel({
     loop:true,
@@ -1119,6 +1150,7 @@ $('.owl-carousel').owlCarousel({
     }
 })
 </script>
+
 	<script>
    const tabs = document.querySelectorAll('.nav-link[data-bs-toggle="tab"]');
 
@@ -1129,32 +1161,7 @@ $('.owl-carousel').owlCarousel({
       });
    });
 </script>
-	<!-- Libreria principal -->
-	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
-	<!-- Libreria JS de bosstrap -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-		crossorigin="anonymous"></script>
-
-	<!-- libreria JS de la tabla -->
-	<script
-		src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-	<script
-		src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
-	<!-- Libreria para validar (boostrap validator) -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-
-
-	<script
-		src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 	<c:if test="${sessionScope.MENSAJE!=null}">
 		<script>
@@ -1182,7 +1189,6 @@ $('.owl-carousel').owlCarousel({
 	<c:remove var="MENSAJE" scope="session" />
 
 	<script>
-		new DataTable('#tableDocente');
 		CargarLocaciones();
 		CargarCampaña();
 		CargarTipoDonacion();
@@ -1216,19 +1222,110 @@ $('.owl-carousel').owlCarousel({
 				})
 			})
 		}
-		document.getElementById('botonexterno').addEventListener('click', function () {
-		    var formDonante = $('#formDonante').bootstrapValidator();
-		    formDonante.data('bootstrapValidator').validate(); // Activa la validación
+		//resetar al cerrar el modal
+		$(document).on("click",".btn-cerrar, .btn-cerrar1",function(){
+			$("#formDonante").trigger("reset");
+			$("#formDonante").data("bootstrapValidator").resetForm(true);
+			var emailInput = $("#formDonante").find(".correo"); // Obtener el campo de correo
+		    emailInput.removeClass("error"); // Eliminar la clase de error
+		    emailInput.siblings(".mensajeEmail").text(""); 
+		    
+		    
+		    var celularInput = $("#formDonante").find(".numcel"); 
+		    celularInput.removeClass("error");
+		    celularInput.siblings(".mensajeCelular").text("");
+		})
+		$(document).on("click",".btn-cerrar2, .btn-cerrar3",function(){
+			$("#formDonante1").trigger("reset");
+			$("#formDonante1").data("bootstrapValidator").resetForm(true);
+			 var emailInput = $("#formDonante1").find(".correo"); // Obtener el campo de correo
+			    emailInput.removeClass("error"); // Eliminar la clase de error
+			    emailInput.siblings(".mensajeEmail").text("");
+			    
+			    var celularInput = $("#formDonante1").find(".numcel"); // Obtener el campo de número de celular
+			    celularInput.removeClass("error"); // Eliminar la clase de error
+			    celularInput.siblings(".mensajeCelular").text("");
+		})
+		// Verificar si los correos ya existen con JSON
+		$(".correo").on("input", function () {
+		    var emailObtenido = $(this).val().trim();
+		    var mensajeEmail = $(".mensajeEmail");
+		    var elementoActual = $(this);
+		
+		    // Obtén los botones externos de ambos formularios
+		    var botonExternoForm1 = document.getElementById('botonexterno');
+		    var botonExternoForm2 = document.getElementById('donarexterno1');
+		
+		    $.get("ServletDonanteJSON", function (response) {
+		        var emailExistente = false; // Variable para rastrear si el correo ya existe
+		
+		        // Recorre los datos del JSON obtenidos
+		        $.each(response, function (index, item) {
+		            var jsonEmail = item.email;
+		
+		            // Comparar el valor del campo email en el JSON con el valor del campo de entrada
+		            if (emailObtenido === jsonEmail) {
+		                mensajeEmail.text("La dirección de correo electrónico ya está en uso");
+		                $(elementoActual).addClass("error");
+		                mensajeEmail.css("color", "red");
+		                emailExistente = true;
+		            }
+		            
+		        });
+		
+		        // Habilitar o deshabilitar los botones según si el correo existe en cualquiera de los formularios
+		        if (emailExistente) {
+		            botonExternoForm1.disabled = true;
+		            botonExternoForm2.disabled = true;
+		        } else {
+		            botonExternoForm1.disabled = false;
+		            botonExternoForm2.disabled = false;
+		            $(elementoActual).removeClass("error");
+		            mensajeEmail.text("");
+		        }
+		    });
+		});
 
-		    if (formDonante.data('bootstrapValidator').isValid()) {
-		        document.getElementById('formDonante').submit(); // Envía el formulario si es válido
-		    }
+
+		//Verificar si los celulares ya existen con JSON
+		$(".numcel").on("input", function () {
+		    var celObtenido = $(this).val().trim();
+		    var mensajeCelular = $(".mensajeCelular");
+		    var elementoActual = $(this);
+		    var botonExternoForm1 = document.getElementById('botonexterno');
+		    var botonExternoForm2 = document.getElementById('donarexterno1');
+		    $.get("ServletDonanteJSON", function (response) {
+		    	var emailExistente = false;
+		        // Recorre los datos del JSON obtenidos
+		        $.each(response, function (index, item) {
+		            var jsoncel = item.celular;
+		            
+		            // Comparar el valor del campo email en el JSON con el valor del campo de entrada
+		            if (parseInt(celObtenido) === jsoncel) {
+		            	mensajeCelular.text("La número de celular ya ha sido registrado");
+			                $(elementoActual).addClass("error");
+			                mensajeCelular.css("color", "red");
+			                emailExistente = true;
+		            }
+		        });
+		        if (emailExistente) {
+		            botonExternoForm1.disabled = true;
+		            botonExternoForm2.disabled = true;
+		        } else {
+		            botonExternoForm1.disabled = false;
+		            botonExternoForm2.disabled = false;
+		            $(elementoActual).removeClass("error");
+	            	mensajeCelular.text("");
+		        }
+		    });
 		});
 
 	</script>
+
+	<%--VERIFIACR SI LOS DATOS DE LA TARJETA COINCIDEN--%>
 	<script>
-$(document).ready(function () {
-    var enableCustomValidations = true; 
+	$(document).ready(function () {
+   	 var enableCustomValidations = true; 
  
     $("#monto").prop("disabled", true);
     
@@ -1251,6 +1348,7 @@ $(document).ready(function () {
             mensajeElemento.text(""); 
             return;
         }
+		
 
         $.ajax({
             type: "POST",
@@ -1288,6 +1386,7 @@ $(document).ready(function () {
 
 </script>
 
+	<%--bootrap validator --%>
 	<script>    
 	    $(document).ready(function(){     
 	        $('#formDonante').bootstrapValidator({      
@@ -1299,6 +1398,147 @@ $(document).ready(function () {
 		        				}
 		        			} 
 	        		 },tipodedonao:{
+	        			 validators:{
+		        				notEmpty:{
+		        					message:'Este campo es obligatorio'
+		        				}
+		        			}
+	        		 },dni:{
+	        			 validators:{
+		        				notEmpty:{
+		        					message:'Este campo es obligatorio'
+		        				},
+		        				regexp: {
+		        				      regexp: /^[0-9]+$/, // Expresión regular para aceptar solo números
+		        				      message: 'Este campo debe contener solo números'
+		        				},
+		        				stringLength: {
+		        		            min: 6,
+		        		            max: 9,
+		        		            message: 'Rango de 6-9'
+		        		        }
+		        			}
+	        		 },nombre:{
+	        			validators:{
+	        				notEmpty:{
+	        					message:'Campo nombre es obligatorio'
+	        				},
+	        				regexp:{
+	        					regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,20}$/,
+	        					 message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
+	        				}
+	        			}
+	        		},paterno:{
+	        			validators:{
+	        				notEmpty:{
+	        					message:'Campo paterno es obligatorio'
+	        				}
+	        			}
+	        		},
+	        		materno:{
+	        			validators:{
+	        				notEmpty:{
+	        					message:'Campo materno es obligatorio'
+	        				}
+	        			}
+	        		},celular:{
+	        			validators:{
+	        				notEmpty: {
+	        		            message: 'El campo celular es obligatorio'
+	        		        },
+	        		        stringLength: {
+	        		            min: 9,
+	        		            max: 9,
+	        		            message: 'El número de celular debe tener exactamente 9 dígitos'
+	        		        },
+	        		        regexp: {
+	        		            regexp: /^9[0-9]{8}$/, // Comienza con 9 seguido de 8 dígitos
+	        		            message: 'El número de celular debe comenzar con el primer dígito "9" y contener 9 dígitos en total'
+	        		        },
+	        		        callback: {
+	        		            message: 'El número de celular no puede ser negativo',
+	        		            callback: function(value, validator, $field) {
+	        		                // Convierte el valor a un número entero
+	        		                var celular = parseInt(value, 10);
+	        		                // Comprueba si el valor es negativo
+	        		                if (celular < 0) {
+	        		                    return false;
+	        		                }
+	        		                return true;
+	        		            }
+	        		        }
+	        			}
+	        		},email:{
+	        			validators:{
+	        				notEmpty:{
+	        					message:'Campo email es obligatorio'
+	        				},
+	        				emailAddress: {
+	        		            message: 'El campo email debe contener una dirección de correo electrónico válida'
+	        		        }
+	        			}
+	        		},descrip:{
+	        			validators:{
+	        				notEmpty:{
+	        					message:'Este campo es obligatorio'
+	        				}
+	        			} 
+	        		},tdon:{
+	        			validators:{
+	        				notEmpty:{
+	        					message:'Este campo es obligatorio'
+	        				}
+	        			}
+	        		},camp:{
+	        			validators:{
+	        				notEmpty:{
+	        					message:'Este campo es obligatorio'
+	        				}
+	        			}
+	        		},direccion:{
+	        			validators:{
+	        				notEmpty:{
+	        					message:'Campo direccion es obligatorio'
+	        				}
+	        			}
+	        		},ciudad:{
+	        			validators:{
+	        				notEmpty:{
+	        					message:'Campo ciudad es obligatorio'
+	        				}
+	        			}
+	        		},monto:{
+	        			validators: {
+	        		        notEmpty: {
+	        		            message: 'El campo monto es obligatorio'
+	        		        },
+	        		        greaterThan: {
+	        		            value: 0,
+	        		            inclusive: false,
+	        		            message: 'El monto debe ser un número positivo'
+	        		        },regexp: {
+	        				      regexp: /^[0-9]+$/, // Expresión regular para aceptar solo números
+	        				      message: 'Este campo debe contener solo números'
+	        				},
+	        				between:{
+        		 				min:1,
+        		 				max:300,
+        		 				message:'Campo hijos solo números rango 1 - 300'
+        		 			}
+        		 			
+	        		    }
+	        		}
+	        	 }	        	 
+	        });   
+				
+	    });
+	    
+	</script>
+	<script>    
+	    $(document).ready(function(){     
+	        $('#formDonante1').bootstrapValidator({      
+	        	 fields:{
+	        		 tipodedonao:{
 	        			 validators:{
 		        				notEmpty:{
 		        					message:'Este campo es obligatorio'
@@ -1434,12 +1674,6 @@ $(document).ready(function () {
 	        		            message: 'Error'
 	        		        }
 	        			}
-	        		},descrip:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Este campo es obligatorio'
-	        				}
-	        			} 
 	        		},tdon:{
 	        			validators:{
 	        				notEmpty:{
@@ -1498,56 +1732,37 @@ $(document).ready(function () {
 	    
 	</script>
 
-	<%--Formulario Condicional con JQUERY --%>
+
+	<%--ESTILO NAV --%>
 	<script>
-		$(document).ready(function(){
-			$("#tipo").change(function(){
-				var opcionseleccionada=$(this).val();
-				if(opcionseleccionada==="1"){
-					$("#location").show();
-					$("#textareaDes").show();
-					$("#campaña").hide();
-					$("#info-tarj").hide();
-					$("#tarj-adi").hide();
-					$("#moneda").hide();
-					$("#tipodona").hide();
-					$("#tipo-moneda").hide();
-					$("#id-monto").hide();
-				}else if(opcionseleccionada==="2"){
-					$("#campaña").show();
-					$("#location").hide();
-					$("#textareaDes").hide();
-					$("#tarj-adi").show();
-					$("#info-tarj").show();
-					$("#moneda").show();
-					$("#tipodona").show();
-					$("#tipo-moneda").show();
-					$("#id-monto").show();
-				}else {
-                    $("#location").hide();
-                    $("#textareaDes").hide();
-                    $("#campaña").hide();
-                    $("#info-tarj").hide();
-                    $("#moneda").hide();
-                    $("#tipodona").hide();
-                    $("#tipo-moneda").hide();
-                    $("#id-monto").hide();
-                    $("#tarj-adi").hide();
-                }
-			});
+		document.getElementById('botonexterno').addEventListener('click', function () {
+		    var formDonante = $('#formDonante').bootstrapValidator();
+		    formDonante.data('bootstrapValidator').validate(); // Activa la validación
+		
+		    if (formDonante.data('bootstrapValidator').isValid()) {
+		        document.getElementById('formDonante').submit(); // Envía el formulario si es válido
+		    }
 		});
-	
-	</script>
-	<script>
+		document.getElementById('donarexterno1').addEventListener('click', function () {
+		    var formDonante = $('#formDonante1').bootstrapValidator();
+		    formDonante.data('bootstrapValidator').validate(); // Activa la validación
+		
+		    if (formDonante.data('bootstrapValidator').isValid()) {
+		        document.getElementById('formDonante1').submit(); // Envía el formulario si es válido
+		    }
+		});
 		var navBar = document.querySelector('.js-nav-bar');
 		if (typeof navBar === 'object')
 			document.documentElement.style.setProperty('--nav-height',
 					navBar.offsetHeight +'px');
+		
 	</script>
+
+	
 	<script>
     // Obtén una lista de todos los botones con la clase "scroll-to-formulario"
     var scrollButtons = document.querySelectorAll('.scroll-to-formulario');
-    var formularioSection = document.getElementById('formulario-section');
+    var formularioSection = document.getElementById('donaAqui');
 
     // Agrega un evento de clic a cada botón
     scrollButtons.forEach(function(button) {

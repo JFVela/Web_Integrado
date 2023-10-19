@@ -173,7 +173,6 @@ function cargarDonantes(){
 }
 
 $(document).on("click",".boton-cerrar",function(){
-    console.log("Clic en el botón Cerrar");
 
 	$("#formDonante").trigger("reset");
 	$("#formDonante").data("bootstrapValidator").resetForm(true);
@@ -220,6 +219,7 @@ $(document).on("click",".boton-cerrar",function(){
 				  }
 				})
 		})
+
 </script>
 <script>    
 	    $(document).ready(function(){     

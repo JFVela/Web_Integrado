@@ -207,4 +207,34 @@ public class MySqlDonanteDAO implements DonanteDAO {
 		return salida;
 	}
 
+
+
+	@Override
+	public boolean verificarDNI(int dni) {
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		try {
+			cn = new MySqlConectar().getConectar();
+			String sentencia = "SELECT dni from donantes where dni=?;";
+			pstm=cn.prepareStatement(sentencia);
+			pstm.setInt(1, dni);
+			rs = pstm.executeQuery();
+			return rs.next();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (pstm != null)
+					pstm.close();
+				if (cn != null)
+					cn.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
 }
