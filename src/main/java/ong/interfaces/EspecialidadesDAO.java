@@ -16,5 +16,6 @@ public interface EspecialidadesDAO {
 		Especialidad findById(int cod);
 		//Lista ESpecialidades
 	public List<Especialidad> findAll();
+	int deleteWithVolunteers(int id);
 
 }

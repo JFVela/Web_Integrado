@@ -14,6 +14,8 @@ public class Eventos {
 	private String final_inscripcionStr;
 	private String einicioStr;
 	private String efinalStr;
+	private int vacantes;
+	private int inscritos;
 
 	public String getInicio_inscripcionStr() {
 		return inicio_inscripcionStr;
@@ -45,7 +47,6 @@ public class Eventos {
 	public void setDetalle(String detalle) {
 		this.detalle = detalle;
 	}
-	private int vacantes;
 	public int getId_evento() {
 		return id_evento;
 	}
@@ -94,6 +95,13 @@ public class Eventos {
 	public void setVacantes(int vacantes) {
 		this.vacantes = vacantes;
 	}
+	public int getInscritos() {
+		return inscritos;
+	}
+	public void setInscritos(int inscritos) {
+		this.inscritos = inscritos;
+	}
+
 	
 
 }

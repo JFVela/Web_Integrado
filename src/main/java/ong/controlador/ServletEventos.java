@@ -1,6 +1,8 @@
 package ong.controlador;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,7 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ong.dao.MySqlEventosDAO;
+import ong.dao.MySqlVoluntarioDAO;
+import ong.dao.MySqlnscripcionDAO;
 import ong.entity.Eventos;
+import ong.utils.MySqlConectar;
 
 
 /**
@@ -43,23 +48,61 @@ public class ServletEventos extends HttpServlet {
 	}
 
 	private void eliminarEvento(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String id=request.getParameter("id");
-		//invocar al método deleteById y enviar la variable "cod"
-		int estado=new MySqlEventosDAO().deleteById(Integer.parseInt(id));
-		//validar estado
-		if(estado==1) {
-			System.out.println("SI");
-			 String tipoMensaje = "error";
-			 request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+		 String id = request.getParameter("id");
+		    int eventId = Integer.parseInt(id);
 
-			request.getSession().setAttribute("MENSAJE","Evento eliminado");
+		    // Inicializar el resultado de la operación
+		    int result = 0;
 
-		}else {
-			System.out.println("NO");
-		}
-		//crear atributo de tipo sesión
-		//invocar método listarDocente
-		//listarDocente(request,response);
+		    Connection con = null;
+
+		    try {
+		        con = new MySqlConectar().getConectar();
+		        // Deshabilitar el autocommit para iniciar una transacción
+		        con.setAutoCommit(false);
+
+		        // Eliminar voluntarios inscritos en el evento
+		        int inscripcionResult = new MySqlnscripcionDAO().deleteByEventId(eventId);
+
+		        // Eliminar voluntarios que están inscritos en el evento
+		        int voluntarioResult = new MySqlVoluntarioDAO().deleteByEventId(eventId);
+
+		        // Eliminar el evento si y solo si no hubo problemas al eliminar las inscripciones y los voluntarios
+		        if (inscripcionResult >= 0 && voluntarioResult >= 0) {
+		            result = new MySqlEventosDAO().deleteById(eventId);
+		        } else {
+		            // Si hubo problemas al eliminar inscripciones o voluntarios, hacer un rollback
+		            con.rollback();
+		        }
+
+		        // Confirmar la transacción
+		        con.commit();
+		    	System.out.println("SI");
+				 String tipoMensaje = "error";
+				 request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+
+				request.getSession().setAttribute("MENSAJE","Evento eliminado");
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        try {
+		            if (con != null) {
+		                // Si hay una excepción, hacer un rollback
+		                con.rollback();
+		            }
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
+		    } finally {
+		        try {
+		            if (con != null) {
+		                // Restablecer el autocommit
+		                con.setAutoCommit(true);
+		                con.close();
+		            }
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
+		    }
 		response.sendRedirect("AdEventos.jsp");	
 	}
 

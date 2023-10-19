@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Salario</title>
-<!-- BOOSTRAP -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -17,7 +15,11 @@
 <link
 	href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
 	rel="stylesheet">
-
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
+	rel="stylesheet">
 <style>
 .modal-header {
 	color: #fff;
@@ -50,38 +52,12 @@
 
 </head>
 <body style="background: #fffbc1;">
-	<!-- NAVBAR -->
-	<nav class="navbar navbar-expand-lg bg-light">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="MenuAdmin.jsp">MENÚ</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="MenuAdmin.jsp">DASHBOARD</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="ServletEmpleados?accion=listado">Empleados</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="ServletVoluntario?accion=listar">Voluntarios</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="ServletDonante?accion=listado">Donantes</a></li>
-				</ul>
-				<a class="btn btn-outline-success" href="menu.jsp">CERRAR</a>
-			</div>
-		</div>
-	</nav>
 
 	<div class="container">
-		<h1 class="mt-5 text-center">Tipo de Salario</h1>
-
+		<h1 class="mt-5 text-center">Departamentos</h1>
 		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-			data-bs-target="#exampleModal">Agregar sueldo</button>
+			data-bs-target="#exampleModal">+ Departamento</button>
 
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -96,20 +72,26 @@
 
 						<form id="FormularioDepa" method="post"
 							action="ServletDepa?accion=grabar">
-
+							<div class="form-group">
+								<label for="" class="">Código</label> <input type="text"
+									class="form-control" name="codigo" id="id-codigo" value="0"
+									readonly>
+							</div>
 							<div class="form-group">
 								<label for="" class="form-label">Nombre del departamento</label>
-								<input type="text" class="form-control" name="nombre">
+								<input type="text" class="form-control" name="nombre"
+									id="id-nombre">
 							</div>
 							<div class="form-group">
 								<label for="" class="form-label">Descripción</label> <input
-									type="text" class="form-control" name="descripcion">
+									type="text" class="form-control" name="descripcion"
+									id="id-descrip">
 							</div>
 
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-primary" action="">Guardar</button>
 								<button type="button" class="btn btn-danger"
-									data-bs-dismiss="modal">Cerrar</button>
+									data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
 							</div>
 						</form>
 					</div>
@@ -127,48 +109,118 @@
 						<th>ID</th>
 						<th>Nombre del departamento</th>
 						<th>Descripción</th>
+						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${requestScope.depa}" var="row">
-						<tr>
-							<td>${row.id}</td>
-							<td>${row.nombre}</td>
-							<td>${row.descripcion}</td>
-						</tr>
-					</c:forEach>
 				</tbody>
 			</table>
 		</div>
 	</div>
-
-
 </body>
 
-<!-- Libreria principal -->
+<!-- libreria principal de JQUERY -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<!-- Libreria JS -->
+
+<!-- libreria JS de bootstrap -->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	crossorigin="anonymous"></script>
-<!-- Libreria js de la tabla -->
+
+<!-- libreria JS de la tabla -->
 <script
 	src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script
 	src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-<!-- Libreria para validar -->
+
+<!-- libreria para validar (bootstrap validator) -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
 
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.MENSAJE!=null}">
+	<script>
+	toastr.success("${sessionScope.MENSAJE}", toastr.options = {
+		    "timeOut": "2000",
+		    "positionClass": "toast-top-right",
+		});
+	</script>
+</c:if>
+<!-- eliminar atributo de tipo sesión MENSAJE -->
+<c:remove var="MENSAJE" scope="session" />
+
 <script>
-	new DataTable('#TablaDepa');
+ cargarDepa();
+ 
+ //crear función para leer JSON de Departamentos
+ function cargarDepa() {
+	 $.get("ServletDepaJSON", function(response) {
+		 let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+         let botonEliminar="<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+			$.each(response,function(index,item){
+				$("#TablaDepa").append("<tr><td>"+item.id+"</td>"+
+						 "<td>"+item.nombre+"</td><td>"+item.descripcion+"</td>"+
+						 "<td>"+botonEditar+"</td><td>"+botonEliminar+"</td></tr>");				})
+				new DataTable('#TablaDepa');
+			})
+		}
+ 
+//asignar evento click a todos los botones con nombre de clase btn-editar
+ $(document).on("click",".btn-editar",function(){ var cod;
+ cod=$(this).parents("tr").find("td")[0].innerHTML;
+ $.get("ServletFindDepaJSON?codigo="+cod, function(response){
+		$("#id-codigo").val(response.id);
+		$("#id-nombre").val(response.nombre);
+		$("#id-descrip").val(response.descripcion); 
+	 
+ }) 
+ })
+ 
+ //asignar evento click a todos los botones con nombre de clase btn-eliminar
+		$(document).on("click", ".btn-eliminar", function () {
+    var cod;
+    var nombre;
+    cod = $(this).parents("tr").find("td")[0].innerHTML;
+    nombre = $(this).parents("tr").find("td")[1].innerHTML; // Obtener el nombre del departamento
+
+    Swal.fire({
+        title: '¿Seguro de eliminar?',
+        text: '¿Desea eliminar el departamento "' + nombre + '", ID: ' + cod + '"?', // Usar el nombre y el ID en el mensaje
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = "http://localhost:8080/GitHub_ONG/ServletDepa?accion=eliminar&codigo=" + cod;
+        }
+    });
+});
+		
+		//asignar evento click al botón con ID "btn-cerrar"
+		$(document).on("click","#btn-cerrar",function(){
+			//resetear formulario
+			$("#FormularioDepa").trigger("reset");
+			//resetar validación
+			$("#FormularioDepa").data("bootstrapValidator").resetForm(true);
+			//
+			$("#id-codigo").val("0");
+		})
 </script>
 
-<script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
+
+<script>
+	$(document).ready(}function() {
 						$('#FormularioDepa')
 								.bootstrapValidator(
 										{
@@ -199,7 +251,4 @@
 										});
 					});
 </script>
-
-
-
 </html>

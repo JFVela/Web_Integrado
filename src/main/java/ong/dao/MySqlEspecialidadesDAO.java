@@ -168,16 +168,19 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 
 	@Override
 	public List<Especialidad> findAll() {		
-		List<Especialidad> data= new ArrayList<Especialidad>();
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		List<Especialidad> data = new ArrayList<Especialidad>();
+	    Connection con = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
 
-		try {
-	        // 1. Obtener Conexion
+	    try {
+	        // 1. Obtener Conexión
 	        con = new MySqlConectar().getConectar();
-	     // 2. Sentencia SQL para obtener todos los registros
-	        String sql = "SELECT * FROM especialidades";
+	        // 2. Sentencia SQL para obtener todos los registros
+	        String sql = "SELECT e.idEspecialidades, e.nombre, COUNT(v.dni) AS inscritos " +
+	                     "FROM especialidades e " +
+	                     "LEFT JOIN voluntario v ON e.idEspecialidades = v.Especialidades_idEspecialidades " +
+	                     "GROUP BY e.idEspecialidades, e.nombre";
 	        // 3. Crear objeto "ps" y enviar la variable "sql"
 	        ps = con.prepareStatement(sql);
 
@@ -186,12 +189,13 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 
 	        // 5. Procesar el resultado
 	        while (rs.next()) {
-	            // Crear un objeto Voluntario con los datos obtenidos de la consulta
+	            // Crear un objeto Especialidad con los datos obtenidos de la consulta
 	            Especialidad especialidad = new Especialidad();
 	            especialidad.setIdEspecialidades(rs.getInt("idEspecialidades"));
 	            especialidad.setNombre(rs.getString("nombre"));
-	           
-	            // Agregar el objeto data a la lista
+	            especialidad.setInscritos(rs.getInt("inscritos"));
+
+	            // Agregar el objeto especialidad a la lista
 	            data.add(especialidad);
 	        }
 	    } catch (Exception e) {
@@ -210,6 +214,54 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 	    }
 
 	    return data;
+	}
+
+	@Override
+	public int deleteWithVolunteers(int id) {
+		 int result = -1;
+		    Connection con = null;
+
+		    try {
+		        con = new MySqlConectar().getConectar();
+		        // Deshabilitar el autocommit para iniciar una transacción
+		        con.setAutoCommit(false);
+
+		        // Eliminar voluntarios de la especialidad
+		        int volunteerResult = new MySqlVoluntarioDAO().deleteByEspecialidad(id);
+
+		        if (volunteerResult >= 0) {
+		            // Si se eliminaron los voluntarios correctamente, eliminar la especialidad
+		            result = deleteById(id);
+		        } else {
+		            // Si hubo problemas al eliminar los voluntarios, hacer un rollback
+		            con.rollback();
+		        }
+
+		        // Confirmar la transacción
+		        con.commit();
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        try {
+		            if (con != null) {
+		                // Si hay una excepción, hacer un rollback
+		                con.rollback();
+		            }
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
+		    } finally {
+		        try {
+		            if (con != null) {
+		                // Restablecer el autocommit
+		                con.setAutoCommit(true);
+		                con.close();
+		            }
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
+		    }
+
+		    return result;
 	}
 
 }

@@ -4,6 +4,7 @@ public class Especialidad {
 	
 	private int IdEspecialidades;
 	private String nombre;
+	private int inscritos;
 	
 	public int getIdEspecialidades() {
 		return IdEspecialidades;
@@ -16,6 +17,12 @@ public class Especialidad {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	public int getInscritos() {
+		return inscritos;
+	}
+	public void setInscritos(int inscritos) {
+		this.inscritos = inscritos;
 	}
 	
 }
