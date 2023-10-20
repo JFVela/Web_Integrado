@@ -152,13 +152,10 @@ public class ServletDonante extends HttpServlet {
 		bean.setCelular(Integer.parseInt(cel));
 		bean.setDireccion(direc);
 		bean.setEmail(email);
-		String tipoMensaje = "error";
 		int estado = new MySqlDonanteDAO().update(bean,Integer.parseInt(dniAntiguo));		
 		if(estado==1) {
-			tipoMensaje = "warning"; 
-        	request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 
-			request.getSession().setAttribute("MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE","asas");
 
 		}else {
 			request.getSession().setAttribute("MENSAJE","Fallida");
