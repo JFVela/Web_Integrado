@@ -20,6 +20,7 @@ public class ServletRol extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String tipo = request.getParameter("accion");
 		if (tipo.equals("grabar"))
 			GuardarRol(request, response);
@@ -37,26 +38,42 @@ public class ServletRol extends HttpServlet {
 
 	private void GuardarRol(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String nom, des;
+		String cod, nom, des;
+		cod = request.getParameter("codigo");
 		nom = request.getParameter("nombre");
 		des = request.getParameter("descripcion");
+		String tipoMensaje = "error";
 
 		Roles bean = new Roles();
+		bean.setId(Integer.parseInt(cod));
 		bean.setNombre(nom);
 		bean.setDescripcion(des);
 
-		int estado = new MySQL_Roles().save(bean);
-		String tipoMensaje = "error";
-
-		if (estado == 1) {
-			tipoMensaje = "success";
-			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE", "Rol registrado con éxito");
+		if (bean.getId() == 0) {
+			int estado = new MySQL_Roles().save(bean);
+			if (estado == 1) {
+				tipoMensaje = "success";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE", "Rol registrado con éxito");
+			} else {
+				tipoMensaje = "error";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE", "Error en el registro del rol");
+			}
 		} else {
-			tipoMensaje = "error";
-			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE", "Error en el registro del rol");
+			int estado = new MySQL_Roles().update(bean);
+
+			if (estado == 1) {
+				tipoMensaje = "warning";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE", "Rol actualizado con éxito");
+			} else {
+				tipoMensaje = "error";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE", "Error en la actualización del rol");
+			}
 		}
+
 		response.sendRedirect("Roles.jsp");
 	}
 
