@@ -41,11 +41,13 @@ public class ServletDonante extends HttpServlet {
 			insertarDonanteMo(request, response);
 		}else if(tipo.equals("actualizar")) {
 			actualizar(request, response);
-		}else if(tipo.equals("eliminar"))
+		}else if(tipo.equals("eliminar")) {
 			eliminar(request,response);
+		}
 	}
 
 	
+
 	private void insertarDonantevir(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 		boolean respuesta=verficarSaldo(request,response);

@@ -206,20 +206,59 @@ $(document).on("click",".boton-cerrar",function(){
 	$(document).on("click",".btn-deleted",function(){
 		var dni;
 		dni=$(this).parents("tr").find("td")[0].innerHTML;
-			Swal.fire({
-				  title: 'Seguro de Eliminar?',
-				  text: "Donate con DNI: "+dni,
-				  icon: 'warning',
-				  showCancelButton: true,
-				  confirmButtonColor: '#3085d6',
-				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Aceptar',
-				  cancelButtonText: 'Cancelar'
-				}).then((result) => {
-				  if (result.isConfirmed) {
-				    window.location="http://localhost:8080/GitHub_ONG/ServletDonante?accion=eliminar&dato="+dni;
-				  }
-				})
+		// Definir la función verificarDonacion fuera del controlador de clic
+		function verificarDonacion(dni) {
+		    $.ajax({
+		        type: "POST",
+		        url: "ServletVerificarDonacion",
+		        data: { dni: dni },
+		        success: function(response) {
+		            if (response === "false") {
+		                Swal.fire({
+		                    title: 'Seguro de Eliminar?',
+		                    text: "Donante con DNI: " + dni + " tiene donaciones asociadas.",
+		                    icon: 'warning',
+		                    showCancelButton: true,
+		                    confirmButtonColor: '#3085d6',
+		                    cancelButtonColor: '#d33',
+		                    confirmButtonText: 'Aceptar',
+		                    cancelButtonText: 'Cancelar'
+		                }).then((result) => {
+		  				  if (result.isConfirmed) {
+		  				    window.location="http://localhost:8080/GitHub_ONG/ServletDonante?accion=eliminar&dato=" + dni;
+		  				  }
+		  				})	
+		            } else {
+		                Swal.fire({
+		                    title: 'No se puede realizar la eliminación',
+		                    text: 'La donación no se puede eliminar',
+		                    icon: 'error',
+		                    confirmButtonColor: '#3085d6',
+		                    confirmButtonText: 'Aceptar'
+		                });
+		            }
+		        },
+		        error: function() {
+		            Swal.fire({
+		                title: 'Error de servidor',
+		                text: 'No se pudo verificar la donación',
+		                icon: 'error',
+		                confirmButtonColor: '#3085d6',
+		                confirmButtonText: 'Aceptar'
+		            });
+		        }
+		    });
+		}
+
+		$(document).on("click", ".btn-deleted", function() {
+		    var dni;
+		    dni = $(this).parents("tr").find("td")[0].innerHTML;
+
+		    // Llamar la función verificarDonacion con el valor de dni
+		    verificarDonacion(dni);
+		});
+
+
 		})
 
 </script>
