@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTP-8">
+<meta charset="UTF-8">
 
 <title>Campañas</title>
 
@@ -38,6 +38,10 @@
 	  border: 1px solid red;
 	  box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
 	}
+	
+   
+</style>
+	
 </style>
 
 </head>
@@ -61,7 +65,7 @@
         
       </div>
       <div class="modal-body">
-        <form id="frmCampania" method="POST" action="ServletCampaña?accion=grabar">
+        <form accept-charset="UTF-8" id="frmCampania" method="POST" action="ServletCampaña?accion=grabar">
         
         <div class="form-group">
 		    <label for="exampleInputEmail1" class="form-label">codigo</label>
@@ -145,9 +149,28 @@
 				});
 	</script>
 </c:if>
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.MODIFICADO!=null}">
+	<script>
+			toastr.warning("${sessionScope.MODIFICADO}", toastr.options = {
+					"timeOut": "2000",
+					"positionClass " : " toast-top-right ",
+				});
+	</script>
+</c:if>
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.ERROR!=null}">
+	<script>
+			toastr.error("${sessionScope.ERROR}", toastr.options = {
+					"timeOut": "2000",
+					"positionClass " : " toast-top-right ",
+				});
+	</script>
+</c:if>
 <!-- eliminar atributo de tipo sesión MENSAJE -->
 <c:remove var="MENSAJE" scope="session"/>
-
+<c:remove var="MODIFICADO" scope="session"/>
+<c:remove var="ERROR" scope="session"/>
 <script>
 	cargarCampana();
     
@@ -227,7 +250,7 @@
         					 message: 'Campo nombre es obligatorio'
         				 },
         				 regexp:{
-        					 regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,50}$/,
+        					 regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,45}$/,
         					 message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
         				 }
         			 }
@@ -236,6 +259,10 @@
         			 validators:{
         				 notEmpty:{
         					 message: 'Campo descripción es obligatorio'
+        				 },
+        				 regexp:{
+        					 regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.\,\:\;\""]{2,45}$/,
+        					 message: 'Campo Descripcion valores errores(letras,espacios,vocales con tilde y.)'
         				 }
         			 }
         		 }

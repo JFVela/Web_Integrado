@@ -10,7 +10,8 @@ public class MySQL_Conexion {
 			String url, user, pass;
 			// driver
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			url = "jdbc:mysql://localhost:3306/ong_web?serverTimezone=UTC";
+			//url = "jdbc:mysql://localhost:3306/ong_web?serverTimezone=UTC";
+			url = "jdbc:mysql://localhost:3306/ong_web?serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8";
 			user = "root";
 			pass = "";
 			cn = DriverManager.getConnection(url, user, pass);
