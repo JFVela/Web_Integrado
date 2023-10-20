@@ -1,12 +1,21 @@
 package ong.entity;
 
 public class DonacionVirtual {
+	private int id;
 	private int dniDonante;
 	private int idCampaña;
 	private int tipoDonacion;
 	private int idMoneda;
 	private double monto;
 	private int numCuenta;
+	
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getDniDonante() {
 		return dniDonante;
 	}

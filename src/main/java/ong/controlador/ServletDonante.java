@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 import ong.dao.MySqlTarjetaDAO;
 import ong.dao.MySqlDonacionFiscaDAO;
-import ong.dao.MySqlDonacionVIrtualDAO;
+import ong.dao.MySqlDonacionVirtualDAO;
 import ong.dao.MySqlDonanteDAO;
 import ong.entity.DonacionFisica;
 import ong.entity.DonacionVirtual;
@@ -89,10 +89,10 @@ public class ServletDonante extends HttpServlet {
 			
 			boolean veri= new MySqlDonanteDAO().verificarDNI(Integer.parseInt(dni));
 			if(veri) {
-				 estado2 = new MySqlDonacionVIrtualDAO().save(bean2);
+				 estado2 = new MySqlDonacionVirtualDAO().save(bean2);
 			}else {
 				 estado = new MySqlDonanteDAO().insertar(bean);
-				 estado2 = new MySqlDonacionVIrtualDAO().save(bean2);
+				 estado2 = new MySqlDonacionVirtualDAO().save(bean2);
 			}
 			
 			//Actualiza la tarjeta
