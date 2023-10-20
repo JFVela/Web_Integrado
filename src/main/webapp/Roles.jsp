@@ -157,7 +157,6 @@
 		});
 	</script>
 </c:if>
-
 <!-- eliminar atributo de tipo sesión MENSAJE -->
 <c:remove var="MENSAJE" scope="session" />
 <script>

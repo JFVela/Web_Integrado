@@ -73,20 +73,6 @@ public class ServletRol extends HttpServlet {
 				request.getSession().setAttribute("MENSAJE", "Error en la actualización del rol");
 			}
 		}
-
-		response.sendRedirect("Roles.jsp");
-		int estado = new MySQL_Roles().save(bean);
-		String tipoMensaje = "error";
-
-		if (estado == 1) {
-			tipoMensaje = "success";
-			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE", "Rol registrado con éxito");
-		} else {
-			tipoMensaje = "error";
-			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE", "Error en el registro del rol");
-		}
 		response.sendRedirect("Roles.jsp");
 	}
 
