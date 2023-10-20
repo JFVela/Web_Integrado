@@ -1,400 +1,409 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<base target="_parent">
-<title> ONG | Voluntariado</title>
-<meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0"/>
-  <link rel="icon" href="./assets/img/health-monitoring-svgrepo-com.svg">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">	
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap">
-<link rel="stylesheet"
-	href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.4.1/css/mdb.min.css">
-<link rel="stylesheet"
-	href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.4.1/plugins/css/all.min.css">
-<link rel="stylesheet" href="assets/css/menu.css">
-<link
-	href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Manjari:400,700|Nunito:300,400,600,700,800|Roboto:300,400,500,700,900&amp;display=swap"
-	rel="stylesheet">
-<style>
-body.shimeji-pinned iframe {
-	pointer-events: none; 
-}
+	<base target="_parent">
+	<title> ONG | Voluntariado</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="icon" href="./assets/img/health-monitoring-svgrepo-com.svg">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap">
+	<link rel="stylesheet"
+		href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.4.1/css/mdb.min.css">
+	<link rel="stylesheet"
+		href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.4.1/plugins/css/all.min.css">
+	<link rel="stylesheet" href="assets/css/menu.css">
+	<link
+		href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Manjari:400,700|Nunito:300,400,600,700,800|Roboto:300,400,500,700,900&amp;display=swap"
+		rel="stylesheet">
+	<style>
+		body.shimeji-pinned iframe {
+			pointer-events: none;
+		}
 
-body.shimeji-select-ie {
-	cursor: cell !important;
-}
+		body.shimeji-select-ie {
+			cursor: cell !important;
+		}
 
-#shimeji-contextMenu::-webkit-scrollbar {
-	width: 6px;
-}
+		#shimeji-contextMenu::-webkit-scrollbar {
+			width: 6px;
+		}
 
-#shimeji-contextMenu::-webkit-scrollbar-thumb {
-	background-color: rgba(30, 30, 30, 0.6);
-	border-radius: 3px;
-}
+		#shimeji-contextMenu::-webkit-scrollbar-thumb {
+			background-color: rgba(30, 30, 30, 0.6);
+			border-radius: 3px;
+		}
 
-#shimeji-contextMenu::-webkit-scrollbar-thumb:hover {
-	background: #555;
-}
-</style>
+		#shimeji-contextMenu::-webkit-scrollbar-thumb:hover {
+			background: #555;
+		}
+	</style>
 </head>
+
 <body>
-  <main> 
-	<!-- Navbar -->
-	<nav
-		class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0 border-bottom">
-		<div id="navv" class="container">
-			<a class="navbar-brand" href="#!"> <img id="logoimg"
-				src="assets/img/logo1.png" alt="ONG">
-			</a>
-			<button class="navbar-toggler collapsed" type="button"
-				data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<i class="fas fa-bars"></i>
-			</button>
-			<div class="navbar-collapse collapse" id="navbarSupportedContent"
-				style="">
-				<ul class="navbar-nav ms-auto">
-					<li class="nav-item"><a class="nav-link" href="menu.html">Inicio</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="Nosotros.jsp">Nosotros</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="HisExito.jsp">Historias
-							de éxito</a></li>
-					<li class="nav-item"><a class="nav-link" href="voluntariado.jsp">Voluntariado</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#!">Blog</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">Eventos
-							y noticias</a></li>
-					<button type="button" class="btn btn-primary ms-3">Dona</button>
-				</ul>
+	<main>
+		<!-- Navbar -->
+		<nav class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0 border-bottom">
+			<div id="navv" class="container">
+				<a class="navbar-brand" href="#!"> <img id="logoimg" src="assets/img/logo1.png" alt="ONG">
+				</a>
+				<button class="navbar-toggler collapsed" type="button" data-mdb-toggle="collapse"
+					data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-bars"></i>
+				</button>
+				<div class="navbar-collapse collapse" id="navbarSupportedContent" style="">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item"><a class="nav-link" href="menu.html">Inicio</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="Nosotros.jsp">Nosotros</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="HisExito.jsp">Historias
+								de éxito</a></li>
+						<li class="nav-item"><a class="nav-link" href="voluntariado.jsp">Voluntariado</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="#!">Eventos
+								y noticias</a></li>
+						<a type="" class="btn btn-primary ms-3" href="Donacion.jsp">Dona</a>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<!-- Navbar -->
+		<!-- welcome -->
+		<div class="container-fluid sec1 wel" id="welcome">
+
+			<div class="row">
+				<div class="col-sm-offset-1 col-sm-4 col-md-offset-1 col-md-4 ">
+					<div class="box">
+						<p class="welcome fade-in" id="p1">Renovando vidas.</p>
+						<p class="article about fade-in fade-in-two" id="p2">Transformación.</p>
+						<p class="article about fade-in fade-in-two" id="p2">Solidaridad en Acción.</p>
+						<p class="article about fade-in fade-in-two pb-5" id="p2">Impacto Positivo.</p>
+						<a type="button" class="btnw article about fade-in fade-in-two c__cta btn btn-rounded"
+							href="Nosotros">Conoce más</a>
+
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-6 col-xs-6 text-right imgw">
+
+
+					<img src="assets/img/vvv.jpg" alt="img1" class="image-size image-padding fade-in">
+
+
+
+					<br>
+					<br>
+					<br>
+
+
+
+
+				</div>
 			</div>
 		</div>
-	</nav>
-	<!-- Navbar -->
-	<!-- welcome -->
-<div class="container-fluid sec1 wel" id="welcome">
-
-  <div class="row">
-    <div class="col-sm-offset-1 col-sm-4 col-md-offset-1 col-md-4 ">
-      <div class="box">
-        <p class="welcome fade-in" id="p1">Renovando vidas.</p>
-        <p class="article about fade-in fade-in-two" id="p2">Transformación.</p>
-        <p class="article about fade-in fade-in-two" id="p2">Solidaridad en Acción.</p>
-        <p class="article about fade-in fade-in-two pb-5"id="p2" >Impacto Positivo.</p>
-      <a type="button" class="btnw article about fade-in fade-in-two c__cta btn btn-rounded" href="Nosotros">Conoce más</a>
-
-      </div>
-       </div>
-    <div class="col-sm-6 col-md-6 col-xs-6 text-right imgw">
-      
- 
-    <img src="assets/img/vvv.jpg" alt="img1" class= "image-size image-padding fade-in">  
-     
-      
-      
-<br>
-<br>
-<br>
-
-
-      
-
-</div>
-</div>
-</div>
-    <!-- welcome end -->
+		<!-- welcome end -->
 
 
 
-    <!--Desripcion-->
-    <div class="descr"> 
-      <h1 class="h1des">Renovando vidas, para cada familia</h1>
-    <div class="options">
-   <div class="option active" style="--optionBackground:url(https://www.unicef.org/sites/default/files/styles/hero_extended/public/UN0591240.jpg?itok=lgjuj3r9);">
-      <div class="shadow"></div>
-      <div class="label">
-         <div class="icon">
-            <i class="fas fa-walking"></i>
-         </div>
-         <div class="info">
-            <div class="main">Suministros</div>
-            <div class="sub">Llevando recursos a los necesitados</div>
-         </div>
-      </div>
-   </div>
-   <div class="option" style="--optionBackground:url(https://www.unicef.org/sites/default/files/styles/press_release_feature/public/UN0658410.jpg?itok=wcMPwDYr);">
-      <div class="shadow"></div>
-      <div class="label">
-         <div class="icon">
-          <i class="fa fa-institution" style='color:#e85b2c'></i> 
-         </div>
-         <div class="info">
-            <div class="main">Educación</div>
-            <div class="sub">Promoviendo la educación</div>
-         </div>
-      </div>
-   </div>
-   <div class="option" style="--optionBackground:url(https://unicef.org.pe/img/emergencia-dengue/a1.jpg?v=20);">
-      <div class="shadow"></div>
-      <div class="label">
-         <div class="icon">
-          <i class='fas fa-donate' style='color: #f3da35'></i>
-         </div>
-         <div class="info">
-            <div class="main">Dona</div>
-            <div class="sub">Ayuda donando a los necesitado </div>
-         </div>
-      </div>
-   </div>
-   <div class="option" style="--optionBackground:url(https://www.unicef.org/sites/default/files/styles/press_release_feature/public/IMG_9802.jpg?itok=JPaD7sLW);">
-      <div class="shadow"></div>
-      <div class="label">
-         <div class="icon">
-            <i class="fas fa-tint"></i>
-         </div>
-         <div class="info">
-            <div class="main">Igualdad</div>
-            <div class="sub">Todos tienen el mismo derecho</div>
-         </div>
-      </div>
-   </div>
-   <div class="option" style="--optionBackground:url(https://www.unicef.org/sites/default/files/styles/hero_extended/public/UN0590799.jpg?itok=6eTax_AY);">
-      <div class="shadow"></div>
-      <div class="label">
-         <div class="icon">
-            <i class="fas fa-sun"></i>
-         </div>
-         <div class="info">
-            <div class="main">Innovación para los niños</div>
-            <div class="sub">Innovar para impulsar resultados</div>
-         </div>
-      </div>
-   </div>
-</div> 
-    </div>
-    <!--End Descr-->
-
-  <!--Counter-->
-<div class="contador" id="contador-section"> 
-  <div class="elementor-element elementor-element-0b6a8bd exad-sticky-section-no exad-glass-effect-no elementor-widget elementor-widget-image">
-				<div class="elementor-widget-container">
-															<img  width="681" height="161" src="assets/img/Untitled-1.png" class="attachment-large size-large wp-image-700" alt="" srcset="" sizes="(max-width: 681px) 100vw, 681px">
-      </div>
+		<!--Desripcion-->
+		<div class="descr">
+			<h1 class="h1des">Renovando vidas, para cada familia</h1>
+			<div class="options">
+				<div class="option active"
+					style="--optionBackground:url(https://www.unicef.org/sites/default/files/styles/hero_extended/public/UN0591240.jpg?itok=lgjuj3r9);">
+					<div class="shadow"></div>
+					<div class="label">
+						<div class="icon">
+							<i class="fas fa-walking"></i>
+						</div>
+						<div class="info">
+							<div class="main">Suministros</div>
+							<div class="sub">Llevando recursos a los necesitados</div>
+						</div>
+					</div>
 				</div>
-  <div class="cont">
-  <div class="cont__slot">
-    <h4 class="counter" data-progress-value="5">0</h4>
-    <h5 class="title">Sedes a nivel nacional</h5>
-  </div>
-
-  <div class="cont__slot">
-    <h4 class="counter" data-progress-value="10">0</h4>
-    <h5 class="title">Millones de soles gestionados</h5>
-  </div>
-
-  <div class="cont__slot">
-    <h4 class="counter" data-progress-value="100000">0</h4>
-    <h5 class="title">Proyectos de desarrollo</h5>
-  </div>
-
-  <div class="cont__slot">
-    <div class="imgder">
-       <img class="imgder" src="assets/img/imgcount1der.png" alt=""> 
-    </div>
-  </div>
-
-  <div class="cont__slot">
-    <h4 class="counter" data-progress-value="20000">0</h4>
-    <h5 class="title">Mil familias atendidas</h5>
-  </div>
-
-  <div class="cont__slot">
-   <div class="imgder">
-       <img class="imgder" src="assets/img/imgcount1izq.png" alt=""> 
-    </div>
-  </div>
-</div>
-<div class="elementor-element elementor-element-0b6a8bd exad-sticky-section-no exad-glass-effect-no elementor-widget elementor-widget-image">
-				<div class="elementor-widget-container">
-															<img  width="681" height="161" src="assets/img/contdonaimg.png" class="attachment-large size-large wp-image-700" alt="" srcset="" sizes="(max-width: 681px) 100vw, 681px">
-      </div>
+				<div class="option"
+					style="--optionBackground:url(https://www.unicef.org/sites/default/files/styles/press_release_feature/public/UN0658410.jpg?itok=wcMPwDYr);">
+					<div class="shadow"></div>
+					<div class="label">
+						<div class="icon">
+							<i class="fa fa-institution" style='color:#e85b2c'></i>
+						</div>
+						<div class="info">
+							<div class="main">Educación</div>
+							<div class="sub">Promoviendo la educación</div>
+						</div>
+					</div>
 				</div>
-</div> 
-  <!--End counter-->
+				<div class="option"
+					style="--optionBackground:url(https://unicef.org.pe/img/emergencia-dengue/a1.jpg?v=20);">
+					<div class="shadow"></div>
+					<div class="label">
+						<div class="icon">
+							<i class='fas fa-donate' style='color: #f3da35'></i>
+						</div>
+						<div class="info">
+							<div class="main">Dona</div>
+							<div class="sub">Ayuda donando a los necesitado </div>
+						</div>
+					</div>
+				</div>
+				<div class="option"
+					style="--optionBackground:url(https://www.unicef.org/sites/default/files/styles/press_release_feature/public/IMG_9802.jpg?itok=JPaD7sLW);">
+					<div class="shadow"></div>
+					<div class="label">
+						<div class="icon">
+							<i class="fas fa-tint"></i>
+						</div>
+						<div class="info">
+							<div class="main">Igualdad</div>
+							<div class="sub">Todos tienen el mismo derecho</div>
+						</div>
+					</div>
+				</div>
+				<div class="option"
+					style="--optionBackground:url(https://www.unicef.org/sites/default/files/styles/hero_extended/public/UN0590799.jpg?itok=6eTax_AY);">
+					<div class="shadow"></div>
+					<div class="label">
+						<div class="icon">
+							<i class="fas fa-sun"></i>
+						</div>
+						<div class="info">
+							<div class="main">Innovación para los niños</div>
+							<div class="sub">Innovar para impulsar resultados</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--End Descr-->
 
-  <!--CTA-->
-  <div class="ctacontent">
-  <div class="ctac"> 
-   <div class="content">
-            <h1 class="anim1 h1span"><span class="span1">Ayuda</span> <span class="span1">a los más</span> <span class="span1">necesitados</span></h1>
-            <p class="anim1">Los niños necesitan defensores. Hágase voluntario o donante y dé a todos los niños una oportunidad justa de salir adelante.</p>
-            <a href="donacion.jsp" class="anim1" id="cta">Donar</a>
-        </div>
-  </div>
-         <aside>
-            <div class="wrapper">
-                <img class="swirl"id="img1" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/2621168/swirl.png" alt="Swirl Graphic">
-            </div>
-    </aside>
-  </div>
-  <!--END CTA-->
-  <!-- Footer -->
+		<!--Counter-->
+		<div class="contador" id="contador-section">
+			<div
+				class="elementor-element elementor-element-0b6a8bd exad-sticky-section-no exad-glass-effect-no elementor-widget elementor-widget-image">
+				<div class="elementor-widget-container">
+					<img width="681" height="161" src="assets/img/Untitled-1.png"
+						class="attachment-large size-large wp-image-700" alt="" srcset=""
+						sizes="(max-width: 681px) 100vw, 681px">
+				</div>
+			</div>
+			<div class="cont">
+				<div class="cont__slot">
+					<h4 class="counter" data-progress-value="5">0</h4>
+					<h5 class="title">Sedes a nivel nacional</h5>
+				</div>
+
+				<div class="cont__slot">
+					<h4 class="counter" data-progress-value="10">0</h4>
+					<h5 class="title">Millones de soles gestionados</h5>
+				</div>
+
+				<div class="cont__slot">
+					<h4 class="counter" data-progress-value="100000">0</h4>
+					<h5 class="title">Proyectos de desarrollo</h5>
+				</div>
+
+				<div class="cont__slot">
+					<div class="imgder">
+						<img class="imgder" src="assets/img/imgcount1der.png" alt="">
+					</div>
+				</div>
+
+				<div class="cont__slot">
+					<h4 class="counter" data-progress-value="20000">0</h4>
+					<h5 class="title">Mil familias atendidas</h5>
+				</div>
+
+				<div class="cont__slot">
+					<div class="imgder">
+						<img class="imgder" src="assets/img/imgcount1izq.png" alt="">
+					</div>
+				</div>
+			</div>
+			<div
+				class="elementor-element elementor-element-0b6a8bd exad-sticky-section-no exad-glass-effect-no elementor-widget elementor-widget-image">
+				<div class="elementor-widget-container">
+					<img width="681" height="161" src="assets/img/contdonaimg.png"
+						class="attachment-large size-large wp-image-700" alt="" srcset=""
+						sizes="(max-width: 681px) 100vw, 681px">
+				</div>
+			</div>
+		</div>
+		<!--End counter-->
+
+		<!--CTA-->
+		<div class="ctacontent">
+			<div class="ctac">
+				<div class="content">
+					<h1 class="anim1 h1span"><span class="span1">Ayuda</span> <span class="span1">a los más</span> <span
+							class="span1">necesitados</span></h1>
+					<p class="anim1">Los niños necesitan defensores. Hágase voluntario o donante y dé a todos los niños
+						una oportunidad justa de salir adelante.</p>
+					<a href="donacion.jsp" class="anim1" id="cta">Donar</a>
+				</div>
+			</div>
+			<aside>
+				<div class="wrapper">
+					<img class="swirl" id="img1" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/2621168/swirl.png"
+						alt="Swirl Graphic">
+				</div>
+			</aside>
+		</div>
+		<!--END CTA-->
+		<!-- Footer -->
 		<footer class="footer-area footer--light">
-  <div class="footer-big">
-    <!-- start .container -->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 col-sm-12">
-          <div class="footer-widget">
-            <div class="widget-about">
-              <img src="assets/img/footerimg.jpg" alt="" class="img-fluid">
-              <p id="footerp">Organización sin fines de lucro creada para ayudar a los más neceesitados del Perú</p>
-              <ul class="contact-details">
-                <li id="footerli">
-                  <span class="icon-earphones"></span> Telef:
-                  <a id="footera"href="tel:344-755-111">344-755-111</a>
-                </li>
-                <li id="footerli">
-                  <span class="icon-envelope-open"></span>
-                  <a id="footera" href="">51, San Martín 15108</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!-- Ends: .footer-widget -->
-        </div>
-        <!-- end /.col-md-4 -->
-        <div class="col-md-3 col-sm-4">
-          <div class="footer-widget">
-            <div class="footer-menu footer-menu--1">
-              <h4 id="footerh4"class="footer-widget-title">Categotoria popular</h4>
-              <ul id="footerul">
-                <li id="footerli">
-                  <a  id="footera" href="voluntariado.jsp">Voluntariado</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Donar</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="voluntariado.jsp#howvol">¿Cómo ser voluntario?</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Admin</a>
-                </li>
-              </ul>
-            </div>
-            <!-- end /.footer-menu -->
-          </div>
-          <!-- Ends: .footer-widget -->
-        </div>
-        <!-- end /.col-md-3 -->
+			<div class="footer-big">
+				<!-- start .container -->
+				<div class="container">
+					<div class="row">
+						<div class="col-md-3 col-sm-12">
+							<div class="footer-widget">
+								<div class="widget-about">
+									<img src="assets/img/footerimg.jpg" alt="" class="img-fluid">
+									<p id="footerp">Organización sin fines de lucro creada para ayudar a los más
+										neceesitados del Perú</p>
+									<ul class="contact-details">
+										<li id="footerli">
+											<span class="icon-earphones"></span> Telef:
+											<a id="footera" href="tel:344-755-111">344-755-111</a>
+										</li>
+										<li id="footerli">
+											<span class="icon-envelope-open"></span>
+											<a id="footera" href="">51, San Martín 15108</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<!-- Ends: .footer-widget -->
+						</div>
+						<!-- end /.col-md-4 -->
+						<div class="col-md-3 col-sm-4">
+							<div class="footer-widget">
+								<div class="footer-menu footer-menu--1">
+									<h4 id="footerh4" class="footer-widget-title">Categotoria popular</h4>
+									<ul id="footerul">
+										<li id="footerli">
+											<a id="footera" href="voluntariado.jsp">Voluntariado</a>
+										</li>
+										<li id="footerli">
+											<a id="footera" href="Donacion.jsp">Donar</a>
+										</li>
+										<li id="footerli">
+											<a id="footera" href="voluntariado.jsp#howvol">¿Cómo ser voluntario?</a>
+										</li>
+										<li id="footerli">
+											<a id="footera" href="#">Admin</a>
+										</li>
+									</ul>
+								</div>
+								<!-- end /.footer-menu -->
+							</div>
+							<!-- Ends: .footer-widget -->
+						</div>
+						<!-- end /.col-md-3 -->
 
-        <div class="col-md-3 col-sm-4">
-          <div class="footer-widget">
-            <div class="footer-menu">
-              <h4 id="footerh4" class="footer-widget-title">ONG</h4>
-              <ul id="footerul">
-                <li id="footerli">
-                  <a id="footera" href="Nosotros.jsp">Nosotros</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="HisExito.jsp">Historias de éxito </a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="voluntariado.jsp">Voluntariado</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Contáctanos</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Eventos &amp; Noticiaas</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Blog</a>
-                </li>
-              </ul>
-            </div>
-            <!-- end /.footer-menu -->
-          </div>
-          <!-- Ends: .footer-widget -->
-        </div>
-        <!-- end /.col-lg-3 -->
+						<div class="col-md-3 col-sm-4">
+							<div class="footer-widget">
+								<div class="footer-menu">
+									<h4 id="footerh4" class="footer-widget-title">ONG</h4>
+									<ul id="footerul">
+										<li id="footerli">
+											<a id="footera" href="Nosotros.jsp">Nosotros</a>
+										</li>
+										<li id="footerli">
+											<a id="footera" href="HisExito.jsp">Historias de éxito </a>
+										</li>
+										<li id="footerli">
+											<a id="footera" href="voluntariado.jsp">Voluntariado</a>
+										</li>
+										<li id="footerli">
+											<a id="footera" href="#">Contáctanos</a>
+										</li>
+										<li id="footerli">
+											<a id="footera" href="#">Eventos &amp; Noticiaas</a>
+										</li>
+									</ul>
+								</div>
+								<!-- end /.footer-menu -->
+							</div>
+							<!-- Ends: .footer-widget -->
+						</div>
+						<!-- end /.col-lg-3 -->
 
-        <div class="col-md-3 col-sm-4">
-          <div class="footer-widget">
-            <div class="footer-menu no-padding">
-              <h4 id="footerh4"class="footer-widget-title">Soporte de ayuda</h4>
-              <ul id="footerul">
-                <li id="footerli">
-                  <a id="footera" href="#">Foro de soporte</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Terminos &amp; Condiciones</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Politica de privacidad</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="voluntariado.jsp#fa1">FAQ voluntariado</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">FAQ Donar</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera"  href="#">FAQ Nosotros</a>
-                </li>
-              </ul>
-            </div>
-            <!-- end /.footer-menu -->
-          </div>
-          <!-- Ends: .footer-widget -->
-        </div>
-        <!-- Ends: .col-lg-3 -->
+						<div class="col-md-3 col-sm-4">
+							<div class="footer-widget">
+								<div class="footer-menu no-padding">
+									<h4 id="footerh4" class="footer-widget-title">Soporte de ayuda</h4>
+									<ul id="footerul">
+										<li id="footerli">
+											<a id="footera" href="#">Foro de soporte</a>
+										</li>
+										<li id="footerli">
+											<a id="footera" href="#">Terminos &amp; Condiciones</a>
+										</li>
+										<li id="footerli">
+											<a id="footera" href="#">Politica de privacidad</a>
+										</li>
+										<li id="footerli">
+											<a id="footera" href="voluntariado.jsp#fa1">FAQ voluntariado</a>
+										</li>
+										<li id="footerli">
+											<a id="footera" href="#">FAQ Donar</a>
+										</li>
+										<li id="footerli">
+											<a id="footera" href="#">FAQ Nosotros</a>
+										</li>
+									</ul>
+								</div>
+								<!-- end /.footer-menu -->
+							</div>
+							<!-- Ends: .footer-widget -->
+						</div>
+						<!-- Ends: .col-lg-3 -->
 
-      </div>
-      <!-- end /.row -->
-    </div>
-    <!-- end /.container -->
-  </div>
-  <!-- end /.footer-big -->
+					</div>
+					<!-- end /.row -->
+				</div>
+				<!-- end /.container -->
+			</div>
+			<!-- end /.footer-big -->
 
-  <div class="mini-footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="copyright-text">
-            <p id="footerp">© 2023	
-              <a id="footera" href="#">Renovando Vidas</a>. Todos los derechos reservados. Creado por
-              <a id="footera" href="#">J.José, Juan, Diego, Alex</a>
-            </p>
-          </div>
+			<div class="mini-footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="copyright-text">
+								<p id="footerp">© 2023
+									<a id="footera" href="#">Renovando Vidas</a>. Todos los derechos reservados. Creado
+									por
+									<a id="footera" href="#">J.José, Juan, Diego, Alex</a>
+								</p>
+							</div>
 
-          
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
 	</main>
-	
-	
-<!-- libreria principal de JQUERY -->
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
-<!-- libreria JS de bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-	
+
+	<!-- libreria principal de JQUERY -->
+	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+	<!-- libreria JS de bootstrap -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+		crossorigin="anonymous"></script>
+
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
 		crossorigin="anonymous"></script>
 	<script type="text/javascript"
@@ -402,14 +411,14 @@ body.shimeji-select-ie {
 	<script type="text/javascript"
 		src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.4.1/plugins/js/all.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
-	
+
 	<script type="text/javascript">
 		{
-      $(".option").click(function(){
-   $(".option").removeClass("active");
-   $(this).addClass("active");
-   
-});
+			$(".option").click(function () {
+				$(".option").removeClass("active");
+				$(this).addClass("active");
+
+			});
 
 		}
 	</script>
@@ -420,142 +429,145 @@ body.shimeji-select-ie {
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/browser.min.js"></script>
 	<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
 	<!-- libreria para validar (bootstrap validator) -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
-  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>	
+	<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
 	<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/CSSRulePlugin3.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
 
-  
-  <script>
 
-	
+	<script>
+
+
 		var navBar = document.querySelector('.js-nav-bar');
 		if (typeof navBar === 'object')
 			document.documentElement.style.setProperty('--nav-height',
-					navBar.offsetHeight + 'px');
+				navBar.offsetHeight + 'px');
 	</script>
-  <script>
-  const animateCounter = function () {
-  const startAnimation = () => {
-    function animateValue({ step, start, end, duration }) {
-      const timeStep = 50 ,
-        valueStep = ((end - start) / duration) * timeStep;
+	<script>
+		const animateCounter = function () {
+			const startAnimation = () => {
+				function animateValue({step, start, end, duration}) {
+					const timeStep = 50,
+						valueStep = ((end - start) / duration) * timeStep;
 
-      const intervalId = setInterval(function () {
-        start += valueStep;
+					const intervalId = setInterval(function () {
+						start += valueStep;
 
-        if (start > end) {
-          start = end;
-          clearInterval(intervalId);
-        }
+						if (start > end) {
+							start = end;
+							clearInterval(intervalId);
+						}
 
-        step(start);
-      }, timeStep);
-    }
+						step(start);
+					}, timeStep);
+				}
 
-    document.querySelectorAll(".counter").forEach((n) => {
-      const progressValue = n.getAttribute("data-progress-value");
+				document.querySelectorAll(".counter").forEach((n) => {
+					const progressValue = n.getAttribute("data-progress-value");
 
-      animateValue({
-        start: 0,
-        end: progressValue,
-        duration: 8000 ,
-        step: (val) => (n.textContent = `${val | 0}`)
-      });
-    });
-  };
-  setTimeout(startAnimation, 2000);
-};
+					animateValue({
+						start: 0,
+						end: progressValue,
+						duration: 8000,
+						step: (val) => (n.textContent = `${val | 0}`)
+					});
+				});
+			};
+			setTimeout(startAnimation, 2000);
+		};
 
-document.addEventListener("DOMContentLoaded", animateCounter);
-
-
-</script>
+		document.addEventListener("DOMContentLoaded", animateCounter);
 
 
-<script id="OnScroll">
-// Importa ScrollTrigger
-const { ScrollTrigger } = window;
-const { CSSRulePlugin } = window;
+	</script>
 
 
-// Crea una función para definir la animación
-function animateOnScroll() {
-  var rule = CSSRulePlugin.getRule("span:after");
-
-  var tl = gsap.timeline({
-    defaults: { duration: 1 },
-    scrollTrigger: {
-      trigger: ".anim1", // Elemento que activará la animación
-      start: "top 80%", // Inicia la animación cuando el 80% del elemento es visible
-    },
-  });
-
-  tl.from(".anim1", { y: -50, stagger: 0.6, opacity: 0 })
-    .to(rule, { duration: 1.8, cssRule: { scaleY: 0 } }, "-=2.2")
-    .from("aside", { backgroundPosition: "200px 0px", opacity: 0 }, "-=1.5")
-    .from("#img1", { y: 100, opacity: 0 }, "-=0.5");
-    
-    var tl = gsap.timeline({
-    defaults: { duration: 3 },
-    scrollTrigger: {
-      trigger: "body", // Elemento que activará la animación
-      start: "top 80%", // Inicia la animación cuando el 80% del elemento es visible
-    },
-  });
-
-  tl.from("#logoimg", { y: 30, opacity: 0 }, "-=.5");
+	<script id="OnScroll">
+		// Importa ScrollTrigger
+		const {ScrollTrigger} = window;
+		const {CSSRulePlugin} = window;
 
 
-}
+		// Crea una función para definir la animación
+		function animateOnScroll() {
+			var rule = CSSRulePlugin.getRule("span:after");
 
-// Crea una función para iniciar el contador cuando se haga scroll
-function initCounter() {
-  // Obtenemos el elemento del contador
-  const contadorSection = document.getElementById('contador-section');
+			var tl = gsap.timeline({
+				defaults: {duration: 1},
+				scrollTrigger: {
+					trigger: ".anim1", // Elemento que activará la animación
+					start: "top 80%", // Inicia la animación cuando el 80% del elemento es visible
+				},
+			});
 
-  // Creamos una función para iniciar el contador
-  function startCounter() {
-    const counters = document.querySelectorAll('.counter');
-    counters.forEach(counter => {
-      const targetValue = parseInt(counter.getAttribute('data-progress-value'));
-      let currentValue = 0;
-      const increment = targetValue / 900; // Velocidad de incremento
+			tl.from(".anim1", {y: -50, stagger: 0.6, opacity: 0})
+				.to(rule, {duration: 1.8, cssRule: {scaleY: 0}}, "-=2.2")
+				.from("aside", {backgroundPosition: "200px 0px", opacity: 0}, "-=1.5")
+				.from("#img1", {y: 100, opacity: 0}, "-=0.5");
 
-      const updateCounter = () => {
-        if (currentValue < targetValue) {
-          currentValue += increment;
-          counter.textContent = Math.ceil(currentValue); // Muestra un valor entero
-          requestAnimationFrame(updateCounter);
-        } else {
-          counter.textContent = targetValue; // Asegura que el valor final sea exacto
-        }
-      };
+			var tl = gsap.timeline({
+				defaults: {duration: 3},
+				scrollTrigger: {
+					trigger: "body", // Elemento que activará la animación
+					start: "top 80%", // Inicia la animación cuando el 80% del elemento es visible
+				},
+			});
 
-      updateCounter();
-    });
-  }
+			tl.from("#logoimg", {y: 30, opacity: 0}, "-=.5");
 
-  // Configuramos ScrollTrigger para iniciar el contador cuando se hace scroll hasta la sección
-  ScrollTrigger.create({
-    trigger: contadorSection,
-    start: 'top 80%', // Inicia la animación cuando el 80% de la sección es visible
-    onEnter: startCounter, // Llama a la función para iniciar el contador
-    once: true, // Solo se ejecutará una vez
-  });
-}
 
-// Llama a la función cuando se carga la página
-window.addEventListener("load", () => {
-  animateOnScroll();
-  initCounter();
+		}
 
-});
+		// Crea una función para iniciar el contador cuando se haga scroll
+		function initCounter() {
+			// Obtenemos el elemento del contador
+			const contadorSection = document.getElementById('contador-section');
 
-</script>	
+			// Creamos una función para iniciar el contador
+			function startCounter() {
+				const counters = document.querySelectorAll('.counter');
+				counters.forEach(counter => {
+					const targetValue = parseInt(counter.getAttribute('data-progress-value'));
+					let currentValue = 0;
+					const increment = targetValue / 900; // Velocidad de incremento
+
+					const updateCounter = () => {
+						if (currentValue < targetValue) {
+							currentValue += increment;
+							counter.textContent = Math.ceil(currentValue); // Muestra un valor entero
+							requestAnimationFrame(updateCounter);
+						} else {
+							counter.textContent = targetValue; // Asegura que el valor final sea exacto
+						}
+					};
+
+					updateCounter();
+				});
+			}
+
+			// Configuramos ScrollTrigger para iniciar el contador cuando se hace scroll hasta la sección
+			ScrollTrigger.create({
+				trigger: contadorSection,
+				start: 'top 80%', // Inicia la animación cuando el 80% de la sección es visible
+				onEnter: startCounter, // Llama a la función para iniciar el contador
+				once: true, // Solo se ejecutará una vez
+			});
+		}
+
+		// Llama a la función cuando se carga la página
+		window.addEventListener("load", () => {
+			animateOnScroll();
+			initCounter();
+
+		});
+
+	</script>
 
 </body>
+
 </html>
