@@ -6,18 +6,22 @@
 <html>
 <head>
 <base target="_parent">
-<title> ONG | Voluntariado</title>
+<title>ONG | Voluntariado</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="icon" href="assets/img/health-monitoring-svgrepo-com.svg">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">	
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap">
 <link rel="stylesheet"
 	href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.4.1/css/mdb.min.css">
-	
+
 <link rel="stylesheet"
 	href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.4.1/plugins/css/all.min.css">
 <link rel="stylesheet" href="assets/css/voluntario.css">
@@ -25,7 +29,6 @@
 	href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Manjari:400,700|Nunito:300,400,600,700,800|Roboto:300,400,500,700,900&amp;display=swap"
 	rel="stylesheet">
 <style>
-
 .modal-header {
 	color: #fff;
 	background: #428bca;
@@ -78,7 +81,7 @@ body.shimeji-select-ie {
 </head>
 <body>
 	<!-- Navbar -->
-<nav
+	<nav
 		class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0 border-bottom">
 		<div id="navv" class="container">
 			<a class="navbar-brand" href="#!"> <img id="logoimg"
@@ -99,12 +102,11 @@ body.shimeji-select-ie {
 					</li>
 					<li class="nav-item"><a class="nav-link" href="HisExito.jsp">Historias
 							de éxito</a></li>
-					<li class="nav-item"><a class="nav-link" href="voluntariado.jsp">Voluntariado</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#!">Blog</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="voluntariado.jsp">Voluntariado</a></li>
 					<li class="nav-item"><a class="nav-link" href="#!">Eventos
 							y noticias</a></li>
-					<button type="button" class="btn btn-primary ms-3">Dona</button>
+					<a type="" class="btn btn-primary ms-3" href="Donacion.jsp">Dona</a>
 				</ul>
 			</div>
 		</div>
@@ -121,96 +123,118 @@ body.shimeji-select-ie {
 							nuestro equipo de voluntarios y haz una diferencia en la
 							comunidad! Tu ayuda es valiosa para nosotros.</h1>
 						<div class="c-cta__content-inner">
-							<button type="button" class="c__cta btn btn-rounded" data-bs-toggle="modal" data-bs-target="#exampleModal">Inscríbete</button>
+							<button type="button" class="c__cta btn btn-rounded"
+								data-bs-toggle="modal" data-bs-target="#exampleModal">Inscríbete</button>
 						</div>
-						
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-     <div class="modal-header">
-                <h5 class="modal-title form-head text-bold fs-4">Inscríbete para ser voluntario</h5>
-                
-            </div>
-            <div class="modal-body">
-                <div class="success-message" id="success" style="display: none;">
-                    <h3>Tu solicitud ha sido aceptada!</h3>
-                    <br/>
-                    <p>Las familias agradecen tu apoyo</p>
-                    <br/>
-                    <p>Te llegara un email con mas información</p>
-                    </div>
-                <form id="contact-form" method="post" action="ServletVoluntario?accion=guardar">
-                   <div class="form-group">
-                        <label for="dni" class="label-form text-secondary">DNI</label>
-                        <input type="text" name="dni" class="form-control dni-label" id="dni" required>
-                        
-                    </div>
-                    <div class="form-group">
-                        <label for="nombre" class="label-form text-secondary">Nombre</label>
-                        <input type="text" class="form-control name-label" name="nombre" id="nombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="apellido" class="label-form text-secondary">Apellido Paterno</label>
-                        <input type="text" name="paterno" class="form-control paterno-label" id="paterno" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="materno" class="label-form text-secondary">Materno Paterno</label>
-                        <input type="text" name="materno" class="form-control materno-label " id="materno" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="label-form text-secondary">E-mail</label>
-                        <input type="email" name="email" class="form-control email-label" id="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="telefono" class="label-form text-secondary">Télefono</label>
-                        <input type="text" name="telefono" class="form-control telefono-label" id="telefono" required>
-                    </div>
-                    <div class="form-group">
-						<label for="eventos" class="form-label text-secondary">Eventos</label>
-						<select class="form-select"  name="evento" id="id-evento" >
-							<option value=" ">[Seleccione evento]</option>
-						</select>
-					</div>	
-                    <div class="form-group">
-                        <label for="especialidad" class="label-form text-secondary">Especialidad</label>
-                        <select class="form-select" name="especialidad"  id="id-especialidad">
-                        	<option value=" ">[Seleccione tipo de voluntariado]</option>
-                        </select>	
-                    </div>
-                   <div class="form-group">
-					    <label for="ciudad" class="label-form text-secondary">Ciudad</label>
-					    <select name="ciudad" class="form-control ciudad-label" id="ciudad" required>
-					      	<option value=" ">[Seleccione una ciudad]</option>
-					    </select>
-					    
-					</div>
-					<div class="form-group">
-					    <label for="provincia" class="label-form text-secondary">Provincia</label>
-					    <select name="provincia" class="form-control provincia-label" id="provincia" required>
-							<option value=" ">[Seleccione una provincia]</option>
-					    </select>
-					</div>
-					<div class="form-group">
-					    <label for="distrito" class="label-form text-secondary">Distrito</label>
-					    <select name="distrito" class="form-control distrito-label" id="distrito" required>
-                        	<option value=" ">[Seleccione un distrito]</option>
-					    </select>
-					</div>
-                   
-                    <div class="form-group form-check personal-group pt-3">
-                        <input type="checkbox" name="personal" class="form-check-input" id="soglasieid" required>
-                        <label class="form-check-label personal-label label-form fs-6 text-primary text-opacity-50 " for="soglasieid">
-                        Al participar en el voluntariado, acepta los términos y politicas de Renovando Vidas.</label>
-                    </div>
-                    <div class="text-center pt-2">
-                    <button type="submit" class="submit-btn c__cta btn btn-rounded fs-5" style="margin-bottom: 10px;">Inscríbirse</button>
-                    </div>
-                </form>
-            </div>
-    </div>
-  </div>
-</div>
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title form-head text-bold fs-4">Inscríbete
+											para ser voluntario</h5>
+
+									</div>
+									<div class="modal-body">
+										<div class="success-message" id="success"
+											style="display: none;">
+											<h3>Tu solicitud ha sido aceptada!</h3>
+											<br />
+											<p>Las familias agradecen tu apoyo</p>
+											<br />
+											<p>Te llegara un email con mas información</p>
+										</div>
+										<form id="contact-form" method="post"
+											action="ServletVoluntario?accion=guardar">
+											<div class="form-group">
+												<label for="dni" class="label-form text-secondary">DNI</label>
+												<input type="text" name="dni" class="form-control dni-label"
+													id="dni" required>
+
+											</div>
+											<div class="form-group">
+												<label for="nombre" class="label-form text-secondary">Nombre</label>
+												<input type="text" class="form-control name-label"
+													name="nombre" id="nombre" required>
+											</div>
+											<div class="form-group">
+												<label for="apellido" class="label-form text-secondary">Apellido
+													Paterno</label> <input type="text" name="paterno"
+													class="form-control paterno-label" id="paterno" required>
+											</div>
+											<div class="form-group">
+												<label for="materno" class="label-form text-secondary">Materno
+													Paterno</label> <input type="text" name="materno"
+													class="form-control materno-label " id="materno" required>
+											</div>
+											<div class="form-group">
+												<label for="email" class="label-form text-secondary">E-mail</label>
+												<input type="email" name="email"
+													class="form-control email-label" id="email" required>
+											</div>
+											<div class="form-group">
+												<label for="telefono" class="label-form text-secondary">Télefono</label>
+												<input type="text" name="telefono"
+													class="form-control telefono-label" id="telefono" required>
+											</div>
+											<div class="form-group">
+												<label for="eventos" class="form-label text-secondary">Eventos</label>
+												<select class="form-select" name="evento" id="id-evento">
+													<option value=" ">[Seleccione evento]</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="especialidad" class="label-form text-secondary">Especialidad</label>
+												<select class="form-select" name="especialidad"
+													id="id-especialidad">
+													<option value=" ">[Seleccione tipo de
+														voluntariado]</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="ciudad" class="label-form text-secondary">Ciudad</label>
+												<select name="ciudad" class="form-control ciudad-label"
+													id="ciudad" required>
+													<option value=" ">[Seleccione una ciudad]</option>
+												</select>
+
+											</div>
+											<div class="form-group">
+												<label for="provincia" class="label-form text-secondary">Provincia</label>
+												<select name="provincia"
+													class="form-control provincia-label" id="provincia"
+													required>
+													<option value=" ">[Seleccione una provincia]</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="distrito" class="label-form text-secondary">Distrito</label>
+												<select name="distrito" class="form-control distrito-label"
+													id="distrito" required>
+													<option value=" ">[Seleccione un distrito]</option>
+												</select>
+											</div>
+
+											<div class="form-group form-check personal-group pt-3">
+												<input type="checkbox" name="personal"
+													class="form-check-input" id="soglasieid" required>
+												<label
+													class="form-check-label personal-label label-form fs-6 text-primary text-opacity-50 "
+													for="soglasieid"> Al participar en el voluntariado,
+													acepta los términos y politicas de Renovando Vidas.</label>
+											</div>
+											<div class="text-center pt-2">
+												<button type="submit"
+													class="submit-btn c__cta btn btn-rounded fs-5"
+													style="margin-bottom: 10px;">Inscríbirse</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="o-image c-cta__image-wrap">
@@ -362,7 +386,10 @@ body.shimeji-select-ie {
 						<div
 							class="col-md-6 col-lg-4 pt-5 align-content-center align-items-center">
 							<div id="btnPasos" class="c-cta__content-inner">
-								<buttton type="button" class="c__cta btn btn-rounded fs-4 pt-3 pb-3" data-bs-toggle="modal" data-bs-target="#exampleModal" href="">Inscríbete</button>
+								<buttton type="button"
+									class="c__cta btn btn-rounded fs-4 pt-3 pb-3"
+									data-bs-toggle="modal" data-bs-target="#exampleModal" href="">Inscríbete
+								</button>
 							</div>
 						</div>
 					</div>
@@ -389,155 +416,139 @@ body.shimeji-select-ie {
 				</ul>
 			</div>
 		</div>
-		
+
 		<!-- Footer -->
- <!-- Footer -->
 		<footer class="footer-area footer--light">
-  <div class="footer-big">
-    <!-- start .container -->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 col-sm-12">
-          <div class="footer-widget">
-            <div class="widget-about">
-              <img src="assets/img/footerimg.jpg" alt="" class="img-fluid">
-              <p id="footerp">Organización sin fines de lucro creada para ayudar a los más neceesitados del Perú</p>
-              <ul class="contact-details">
-                <li id="footerli">
-                  <span class="icon-earphones"></span> Telef:
-                  <a id="footera"href="tel:344-755-111">344-755-111</a>
-                </li>
-                <li id="footerli">
-                  <span class="icon-envelope-open"></span>
-                  <a id="footera" href="">51, San Martín 15108</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!-- Ends: .footer-widget -->
-        </div>
-        <!-- end /.col-md-4 -->
-        <div class="col-md-3 col-sm-4">
-          <div class="footer-widget">
-            <div class="footer-menu footer-menu--1">
-              <h4 id="footerh4"class="footer-widget-title">Categotoria popular</h4>
-              <ul id="footerul">
-                <li id="footerli">
-                  <a  id="footera" href="voluntariado.jsp">Voluntariado</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Donar</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="voluntariado.jsp#howvol">¿Cómo ser voluntario?</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Admin</a>
-                </li>
-              </ul>
-            </div>
-            <!-- end /.footer-menu -->
-          </div>
-          <!-- Ends: .footer-widget -->
-        </div>
-        <!-- end /.col-md-3 -->
+			<div class="footer-big">
+				<!-- start .container -->
+				<div class="container">
+					<div class="row">
+						<div class="col-md-3 col-sm-12">
+							<div class="footer-widget">
+								<div class="widget-about">
+									<img src="assets/img/footerimg.jpg" alt="" class="img-fluid">
+									<p id="footerp">Organización sin fines de lucro creada para
+										ayudar a los más neceesitados del Perú</p>
+									<ul class="contact-details">
+										<li id="footerli"><span class="icon-earphones"></span>
+											Telef: <a id="footera" href="tel:344-755-111">344-755-111</a>
+										</li>
+										<li id="footerli"><span class="icon-envelope-open"></span>
+											<a id="footera" href="">51, San Martín 15108</a></li>
+									</ul>
+								</div>
+							</div>
+							<!-- Ends: .footer-widget -->
+						</div>
+						<!-- end /.col-md-4 -->
+						<div class="col-md-3 col-sm-4">
+							<div class="footer-widget">
+								<div class="footer-menu footer-menu--1">
+									<h4 id="footerh4" class="footer-widget-title">Categotoria
+										popular</h4>
+									<ul id="footerul">
+										<li id="footerli"><a id="footera" href="voluntariado.jsp">Voluntariado</a>
+										</li>
+										<li id="footerli"><a id="footera" href="Donacion.jsp">Donar</a>
+										</li>
+										<li id="footerli"><a id="footera"
+											href="voluntariado.jsp#howvol">¿Cómo ser voluntario?</a></li>
+										<li id="footerli"><a id="footera" href="#">Admin</a></li>
+									</ul>
+								</div>
+								<!-- end /.footer-menu -->
+							</div>
+							<!-- Ends: .footer-widget -->
+						</div>
+						<!-- end /.col-md-3 -->
 
-        <div class="col-md-3 col-sm-4">
-          <div class="footer-widget">
-            <div class="footer-menu">
-              <h4 id="footerh4" class="footer-widget-title">ONG</h4>
-              <ul id="footerul">
-                <li id="footerli">
-                  <a id="footera" href="Nosotros.jsp">Nosotros</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="HisExito.jsp">Historias de éxito </a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="voluntariado.jsp">Voluntariado</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Contáctanos</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Eventos &amp; Noticiaas</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Blog</a>
-                </li>
-              </ul>
-            </div>
-            <!-- end /.footer-menu -->
-          </div>
-          <!-- Ends: .footer-widget -->
-        </div>
-        <!-- end /.col-lg-3 -->
+						<div class="col-md-3 col-sm-4">
+							<div class="footer-widget">
+								<div class="footer-menu">
+									<h4 id="footerh4" class="footer-widget-title">ONG</h4>
+									<ul id="footerul">
+										<li id="footerli"><a id="footera" href="Nosotros.jsp">Nosotros</a>
+										</li>
+										<li id="footerli"><a id="footera" href="HisExito.jsp">Historias
+												de éxito </a></li>
+										<li id="footerli"><a id="footera" href="voluntariado.jsp">Voluntariado</a>
+										</li>
+										<li id="footerli"><a id="footera" href="#">Contáctanos</a>
+										</li>
+										<li id="footerli"><a id="footera" href="#">Eventos
+												&amp; Noticiaas</a></li>
+									</ul>
+								</div>
+								<!-- end /.footer-menu -->
+							</div>
+							<!-- Ends: .footer-widget -->
+						</div>
+						<!-- end /.col-lg-3 -->
 
-        <div class="col-md-3 col-sm-4">
-          <div class="footer-widget">
-            <div class="footer-menu no-padding">
-              <h4 id="footerh4"class="footer-widget-title">Soporte de ayuda</h4>
-              <ul id="footerul">
-                <li id="footerli">
-                  <a id="footera" href="#">Foro de soporte</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Terminos &amp; Condiciones</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">Politica de privacidad</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="voluntariado.jsp#fa1">FAQ voluntariado</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera" href="#">FAQ Donar</a>
-                </li>
-                <li id="footerli">
-                  <a id="footera"  href="#">FAQ Nosotros</a>
-                </li>
-              </ul>
-            </div>
-            <!-- end /.footer-menu -->
-          </div>
-          <!-- Ends: .footer-widget -->
-        </div>
-        <!-- Ends: .col-lg-3 -->
+						<div class="col-md-3 col-sm-4">
+							<div class="footer-widget">
+								<div class="footer-menu no-padding">
+									<h4 id="footerh4" class="footer-widget-title">Soporte de
+										ayuda</h4>
+									<ul id="footerul">
+										<li id="footerli"><a id="footera" href="#">Foro de
+												soporte</a></li>
+										<li id="footerli"><a id="footera" href="#">Terminos
+												&amp; Condiciones</a></li>
+										<li id="footerli"><a id="footera" href="#">Politica
+												de privacidad</a></li>
+										<li id="footerli"><a id="footera"
+											href="voluntariado.jsp#fa1">FAQ voluntariado</a></li>
+										<li id="footerli"><a id="footera" href="#">FAQ Donar</a>
+										</li>
+										<li id="footerli"><a id="footera" href="#">FAQ
+												Nosotros</a></li>
+									</ul>
+								</div>
+								<!-- end /.footer-menu -->
+							</div>
+							<!-- Ends: .footer-widget -->
+						</div>
+						<!-- Ends: .col-lg-3 -->
 
-      </div>
-      <!-- end /.row -->
-    </div>
-    <!-- end /.container -->
-  </div>
-  <!-- end /.footer-big -->
+					</div>
+					<!-- end /.row -->
+				</div>
+				<!-- end /.container -->
+			</div>
+			<!-- end /.footer-big -->
 
-  <div class="mini-footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="copyright-text">
-            <p id="footerp">© 2023	
-              <a id="footera" href="#">Renovando Vidas</a>. Todos los derechos reservados. Creado por
-              <a id="footera" href="#">J.José, Juan, Diego, Alex</a>
-            </p>
-          </div>
+			<div class="mini-footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="copyright-text">
+								<p id="footerp">
+									© 2023 <a id="footera" href="#">Renovando Vidas</a>. Todos los
+									derechos reservados. Creado por <a id="footera" href="#">J.José,
+										Juan, Diego, Alex</a>
+								</p>
+							</div>
 
-          
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
 	</main>
-	
-	
-<!-- libreria principal de JQUERY -->
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
-<!-- libreria JS de bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-	
-	<script  src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+	<!-- libreria principal de JQUERY -->
+	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+	<!-- libreria JS de bootstrap -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+		crossorigin="anonymous"></script>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -548,8 +559,9 @@ body.shimeji-select-ie {
 		src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.4.1/plugins/js/all.min.js"></script>
 	<script src="assets/js/voluntariado.js"></script>
 	<script src="assets/js/validacion.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
-	
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+
 	<script type="text/javascript">
 		{
 		}
@@ -561,356 +573,429 @@ body.shimeji-select-ie {
 	<oints.min.js"></script>
 	<script src="assets/js/browser.min.js"></script>
 	<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
 	<!-- libreria para validar (bootstrap validator) -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	
-	
-	<script>
 
-	
+
+	<script>
 		var navBar = document.querySelector('.js-nav-bar');
 		if (typeof navBar === 'object')
 			document.documentElement.style.setProperty('--nav-height',
 					navBar.offsetHeight + 'px');
 	</script>
-	
+
 	<script>
-	//invocar funcion
-	cargarCategoria();
-	//crear funcion para leer JSON
-	function cargarCategoria(){
-		 $.get("ServletEventosJSON", function(response) {
-		        // Obtener la fecha actual en formato ISO (YYYY-MM-DD)
-		        var fechaActual = new Date().toISOString().slice(0, 10);
+		//invocar funcion
+		cargarCategoria();
+		//crear funcion para leer JSON
+		function cargarCategoria() {
+			$
+					.get(
+							"ServletEventosJSON",
+							function(response) {
+								// Obtener la fecha actual en formato ISO (YYYY-MM-DD)
+								var fechaActual = new Date().toISOString()
+										.slice(0, 10);
 
-		        // Filtrar los eventos que no están llenos y están dentro del rango de fechas
-		        var eventosDisponibles = response.filter(function(evento) {
-		            // Convertir fechas a formato ISO
-		            var inicioInscripcion = convertirFecha(evento.inicio_inscripcion);
-		            var finalInscripcion = convertirFecha(evento.final_inscripcion);
+								// Filtrar los eventos que no están llenos y están dentro del rango de fechas
+								var eventosDisponibles = response
+										.filter(function(evento) {
+											// Convertir fechas a formato ISO
+											var inicioInscripcion = convertirFecha(evento.inicio_inscripcion);
+											var finalInscripcion = convertirFecha(evento.final_inscripcion);
 
-		            // Verificar si la fecha actual está dentro del rango de inicio y final de inscripción
-		            var estaDisponible = fechaActual >= inicioInscripcion && fechaActual <= finalInscripcion;
+											// Verificar si la fecha actual está dentro del rango de inicio y final de inscripción
+											var estaDisponible = fechaActual >= inicioInscripcion
+													&& fechaActual <= finalInscripcion;
 
-		            return estaDisponible && evento.inscritos < evento.vacantes;
-		        });
+											return estaDisponible
+													&& evento.inscritos < evento.vacantes;
+										});
 
-		        // Llenar el select con los eventos disponibles
-		        $.each(eventosDisponibles, function(index, item) {
-		            $("#id-evento").append("<option value='" + item.id_evento + "'>" + item.nombre + "</option");
-		        });
-		        console.log(response);
-		    });
-		
+								// Llenar el select con los eventos disponibles
+								$.each(eventosDisponibles,
+										function(index, item) {
+											$("#id-evento").append(
+													"<option value='" + item.id_evento + "'>"
+															+ item.nombre
+															+ "</option");
+										});
+								console.log(response);
+							});
 
-		// Función para convertir fechas a formato ISO
-		function convertirFecha(fecha) {
-		    var partes = fecha.split(' ');
-		    var mes = partes[0];
-		    var dia = partes[1].replace(',', '');
-		    var anio = partes[2];
-		    var meses = {
-		        "ene.": "01", "feb.": "02", "mar.": "03",
-		        "abr.": "04", "may.": "05", "jun.": "06",
-		        "jul.": "07", "ago.": "08", "sep.": "09",
-		        "oct.": "10", "nov.": "11", "dic.": "12"
-		    };
-		    var mesNumero = meses[mes];
-		    var fechaISO = anio + '-' + mesNumero + '-' + dia;
-		    return fechaISO;
-		}
-		
-		
-		$.get("ServletEspecialidadesJSON", function(response){
-			$.each(response, function(index,item){
-				$("#id-especialidad").append("<option value='"+item.IdEspecialidades+"'>"+item.nombre+"</option")
+			// Función para convertir fechas a formato ISO
+			function convertirFecha(fecha) {
+				var partes = fecha.split(' ');
+				var mes = partes[0];
+				var dia = partes[1].replace(',', '');
+				var anio = partes[2];
+				var meses = {
+					"ene." : "01",
+					"feb." : "02",
+					"mar." : "03",
+					"abr." : "04",
+					"may." : "05",
+					"jun." : "06",
+					"jul." : "07",
+					"ago." : "08",
+					"sep." : "09",
+					"oct." : "10",
+					"nov." : "11",
+					"dic." : "12"
+				};
+				var mesNumero = meses[mes];
+				var fechaISO = anio + '-' + mesNumero + '-' + dia;
+				return fechaISO;
+			}
+
+			$.get("ServletEspecialidadesJSON", function(response) {
+				$.each(response, function(index, item) {
+					$("#id-especialidad").append(
+							"<option value='"+item.IdEspecialidades+"'>"
+									+ item.nombre + "</option")
+				})
 			})
-		})
-		
-		
-	}	
+
+		}
 	</script>
-	
-	
-	
-	<script> //Script para cargar dinamicamente los select de Ciudad, Distrito y Provincia.
-    // Obtener una referencia a los elementos select
-    const ciudadSelect = document.getElementById('ciudad');
-    const provinciaSelect = document.getElementById('provincia');
-    const distritoSelect = document.getElementById('distrito');
 
-    // Realizar una solicitud AJAX para cargar el archivo JSON
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'assets/map.pe.json', true);
 
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            const data = JSON.parse(xhr.responseText);
 
-            // Llenar el select de ciudades
-            for (const ciudad in data) {
-                ciudadSelect.options.add(new Option(ciudad, ciudad));
-            }
+	<script>
+		//Script para cargar dinamicamente los select de Ciudad, Distrito y Provincia.
+		// Obtener una referencia a los elementos select
+		const ciudadSelect = document.getElementById('ciudad');
+		const provinciaSelect = document.getElementById('provincia');
+		const distritoSelect = document.getElementById('distrito');
 
-            // Manejar el cambio en el select de ciudades
-            ciudadSelect.addEventListener('change', function () {
-                // Obtener la provincia seleccionada
-                const selectedCiudad = ciudadSelect.value;
-                const provincias = data[selectedCiudad];
+		// Realizar una solicitud AJAX para cargar el archivo JSON
+		const xhr = new XMLHttpRequest();
+		xhr.open('GET', 'assets/map.pe.json', true);
 
-                // Limpiar y llenar el select de provincias
-                provinciaSelect.innerHTML = '<option value="">[Seleccione una provincia]</option>';
-                for (const provincia in provincias) {
-                    provinciaSelect.options.add(new Option(provincia, provincia));
-                }
-            });
-         	// Manejar el cambio en el select de provincias
-            provinciaSelect.addEventListener('change', function () {
-                // Obtener la provincia y ciudad seleccionadas
-                const selectedCiudad = ciudadSelect.value;
-                const selectedProvincia = provinciaSelect.value;
-                const distritos = data[selectedCiudad][selectedProvincia];
+		xhr.onload = function() {
+			if (xhr.status === 200) {
+				const data = JSON.parse(xhr.responseText);
 
-                // Limpiar y llenar el select de distritos
-                distritoSelect.innerHTML = '<option value="">[Seleccione un distrito]</option>';
-                for (const distrito in distritos) {
-                    // Debes acceder al valor del distrito en lugar de todo el objeto distritos
-                    distritoSelect.options.add(new Option(distrito, distritos[distrito]));
-                }
-            });
-        }
-    };
+				// Llenar el select de ciudades
+				for ( const ciudad in data) {
+					ciudadSelect.options.add(new Option(ciudad, ciudad));
+				}
 
-    xhr.send();
-</script>
+				// Manejar el cambio en el select de ciudades
+				ciudadSelect
+						.addEventListener(
+								'change',
+								function() {
+									// Obtener la provincia seleccionada
+									const selectedCiudad = ciudadSelect.value;
+									const provincias = data[selectedCiudad];
 
-<script>
-$(document).ready(function() {
-	  // Variable para controlar si se ha encontrado un DNI existente
-    var dniExistente = false;
-    // Variable para controlar si se ha encontrado un correo existente
-    var correoExistente = false;
+									// Limpiar y llenar el select de provincias
+									provinciaSelect.innerHTML = '<option value="">[Seleccione una provincia]</option>';
+									for ( const provincia in provincias) {
+										provinciaSelect.options.add(new Option(
+												provincia, provincia));
+									}
+								});
+				// Manejar el cambio en el select de provincias
+				provinciaSelect
+						.addEventListener(
+								'change',
+								function() {
+									// Obtener la provincia y ciudad seleccionadas
+									const selectedCiudad = ciudadSelect.value;
+									const selectedProvincia = provinciaSelect.value;
+									const distritos = data[selectedCiudad][selectedProvincia];
 
-    // Detecta cambios en el campo de DNI
-    $("#dni").on("input", function() {
-        console.log("Input event triggered."); // Para verificar si se dispara el evento
+									// Limpiar y llenar el select de distritos
+									distritoSelect.innerHTML = '<option value="">[Seleccione un distrito]</option>';
+									for ( const distrito in distritos) {
+										// Debes acceder al valor del distrito en lugar de todo el objeto distritos
+										distritoSelect.options.add(new Option(
+												distrito, distritos[distrito]));
+									}
+								});
+			}
+		};
 
-        // Obtén el valor del campo de DNI
-        var dni = $(this).val();
-        
-        // Realiza la solicitud AJAX solo si el DNI tiene 8 caracteres 
-        if (dni.length === 8) {
-            $.ajax({
-                type: "POST", // Método HTTP POST
-                url: "ServletVoluntario", // URL del servlet
-                data: {
-                    accion: "verificarDNI", // Acción para el servlet
-                    dni: dni // Valor del DNI
-                },
-                success: function(data) {
-                    // La solicitud fue exitosa, data c	ontiene la respuesta JSON del servlet
-                    console.log("Received JSON response: ", data); // Verifica la respuesta JSON
-                    
-                    if (data.status === "dni_existente") {
-                        // El DNI existe, muestra un SweetAlert
-                        Swal.fire({
-                        	 title: '¡Voluntario ya registrado!',
-                        	  text:'El DNI: '+ dni+' ya esta registrado, espera una respuesta en tu email',
-                        	  imageUrl: 'https://media0.giphy.com/media/AO5qaphTxRnyw/giphy.gif?cid=ecf05e47o1crybylqqrjk5k3v6ep6hiqcy37rvh85eqsiii2&ep=v1_gifs_related&rid=giphy.gif&ct=g',
-                        	  imageWidth: 400,
-                        	  imageHeight: 200,
-                        	  imageAlt: 'imgError',
+		xhr.send();
+	</script>
+
+	<script>
+		$(document)
+				.ready(
+						function() {
+							// Variable para controlar si se ha encontrado un DNI existente
+							var dniExistente = false;
+							// Variable para controlar si se ha encontrado un correo existente
+							var correoExistente = false;
+
+							// Detecta cambios en el campo de DNI
+							$("#dni")
+									.on(
+											"input",
+											function() {
+												console
+														.log("Input event triggered."); // Para verificar si se dispara el evento
+
+												// Obtén el valor del campo de DNI
+												var dni = $(this).val();
+
+												// Realiza la solicitud AJAX solo si el DNI tiene 8 caracteres 
+												if (dni.length === 8) {
+													$
+															.ajax({
+																type : "POST", // Método HTTP POST
+																url : "ServletVoluntario", // URL del servlet
+																data : {
+																	accion : "verificarDNI", // Acción para el servlet
+																	dni : dni
+																// Valor del DNI
+																},
+																success : function(
+																		data) {
+																	// La solicitud fue exitosa, data c	ontiene la respuesta JSON del servlet
+																	console
+																			.log(
+																					"Received JSON response: ",
+																					data); // Verifica la respuesta JSON
+
+																	if (data.status === "dni_existente") {
+																		// El DNI existe, muestra un SweetAlert
+																		Swal
+																				.fire({
+																					title : '¡Voluntario ya registrado!',
+																					text : 'El DNI: '
+																							+ dni
+																							+ ' ya esta registrado, espera una respuesta en tu email',
+																					imageUrl : 'https://media0.giphy.com/media/AO5qaphTxRnyw/giphy.gif?cid=ecf05e47o1crybylqqrjk5k3v6ep6hiqcy37rvh85eqsiii2&ep=v1_gifs_related&rid=giphy.gif&ct=g',
+																					imageWidth : 400,
+																					imageHeight : 200,
+																					imageAlt : 'imgError',
+																				});
+																		// Marca el DNI como existente
+																		dniExistente = true;
+
+																		// Deshabilita todos los campos excepto el DNI
+																		$(
+																				"#nombre, #paterno, #materno, #email, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito")
+																				.prop(
+																						"disabled",
+																						true);
+																	} else {
+																		// El DNI no existe, habilita todos los campos
+																		dniExistente = false;
+																		$(
+																				"#nombre, #paterno, #materno, #email, #telefono,#id-evento, #id-especialidad, #ciudad, #provincia, #distrito")
+																				.prop(
+																						"disabled",
+																						false);
+																	}
+
+																},
+																error : function() {
+																	// Ocurrió un error en la solicitud AJAX
+																	console
+																			.error("Error en la solicitud AJAX");
+																}
+															});
+												}
+											});
+
+							// Detecta cambios en el campo de correo electrónico
+							$("#email")
+									.on(
+											"input",
+											function() {
+												// Obtén el valor del campo de correo electrónico
+												var email = $(this).val();
+
+												// Realiza la solicitud AJAX solo si el correo electrónico tiene un formato válido
+												if (isValidEmail(email)) {
+													$
+															.ajax({
+																type : "POST",
+																url : "ServletVoluntario",
+																data : {
+																	accion : "verificarCorreo", // Acción para verificar el correo
+																	email : email
+																// Valor del correo electrónico
+																},
+																success : function(
+																		data) {
+																	if (data.status === "correo_existente") {
+																		// El correo ya está registrado, muestra un SweetAlert
+																		Swal
+																				.fire({
+																					title : '¡Correo ya registrado!',
+																					text : 'El correo '
+																							+ email
+																							+ ' ya está registrado, por favor utiliza otro correo.',
+																					icon : 'error',
+																				});
+																		// Marca el correo como existente
+																		correoExistente = true;
+
+																		// Deshabilita todos los campos excepto el correo
+																		$(
+																				"#nombre, #paterno, #materno, #dni, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito")
+																				.prop(
+																						"disabled",
+																						true);
+																	} else {
+																		// El correo no existe, habilita todos los campos
+																		correoExistente = false;
+																		$(
+																				"#nombre, #paterno, #materno, #email, #dni, #telefono,#id-evento, #id-especialidad, #ciudad, #provincia, #distrito")
+																				.prop(
+																						"disabled",
+																						false);
+																	}
+
+																},
+																error : function() {
+																	console
+																			.error("Error en la solicitud AJAX");
+																}
+															});
+												}
+											});
 						});
-                        // Marca el DNI como existente
-                        dniExistente = true;
 
-                        // Deshabilita todos los campos excepto el DNI
-                        $("#nombre, #paterno, #materno, #email, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", true);
-                    } else {
-                        // El DNI no existe, habilita todos los campos
-                        dniExistente = false;
-                        $("#nombre, #paterno, #materno, #email, #telefono,#id-evento, #id-especialidad, #ciudad, #provincia, #distrito").prop("disabled", false);
-                    }
-                    
-                },
-                error: function() {
-                    // Ocurrió un error en la solicitud AJAX
-                    console.error("Error en la solicitud AJAX");
-                }
-            });
-        }
-    });
-    
-    // Detecta cambios en el campo de correo electrónico
-    $("#email").on("input", function() {
-        // Obtén el valor del campo de correo electrónico
-        var email = $(this).val();
-        
-        // Realiza la solicitud AJAX solo si el correo electrónico tiene un formato válido
-        if (isValidEmail(email)) {
-            $.ajax({
-                type: "POST",
-                url: "ServletVoluntario",
-                data: {
-                    accion: "verificarCorreo", // Acción para verificar el correo
-                    email: email // Valor del correo electrónico
-                },
-                success: function(data) {
-                    if (data.status === "correo_existente") {
-                        // El correo ya está registrado, muestra un SweetAlert
-                        Swal.fire({
-                            title: '¡Correo ya registrado!',
-                            text: 'El correo ' + email + ' ya está registrado, por favor utiliza otro correo.',
-                            icon: 'error',
-                        });
-                        // Marca el correo como existente
-                        correoExistente = true;
+		//Función para verificar el formato del correo electrónico
+		function isValidEmail(email) {
 
-                        // Deshabilita todos los campos excepto el correo
-                        $("#nombre, #paterno, #materno, #dni, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", true);
-                    } else {
-                        // El correo no existe, habilita todos los campos
-                        correoExistente = false;
-                        $("#nombre, #paterno, #materno, #email, #dni, #telefono,#id-evento, #id-especialidad, #ciudad, #provincia, #distrito").prop("disabled", false);
-                    }
-                    
-                },
-                error: function() {
-                    console.error("Error en la solicitud AJAX");
-                }
-            });
-        }
-    });
-});
-
-//Función para verificar el formato del correo electrónico
-function isValidEmail(email) {
-   
-    return /.+@.+\..+/.test(email);
-}
-</script>
-
-
-	
-	<script type="text/javascript"> //validacion
-	$(document).ready(function() {
-	    $('#contact-form').bootstrapValidator({
-	        fields: {
-	            nombre: {
-	                validators: {
-	                    notEmpty: {
-	                        message: 'El campo nombre es obligatorio'
-	                    },
-	                    regexp: {
-	                        regexp: /^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ\.]{2,20}$/,
-	                        message: 'Campo nombre con errores (Letras, espacio, vocales con tilde)'
-	                    }
-	                }
-	            },
-	            paterno: {
-	                validators: {
-	                    notEmpty: {
-	                        message: 'El campo apellido paterno es obligatorio'
-	                    },
-	                    regexp: {
-	                        regexp: /^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ\.]{2,20}$/,
-	                        message: 'Campo apellido paterno con errores (Letras, espacio, vocales con tilde y .)'
-	                    }
-	                }
-	            },
-	            materno: {
-	                validators: {
-	                    notEmpty: {
-	                        message: 'El campo apellido materno es obligatorio'
-	                    },
-	                    regexp: {
-	                        regexp: /^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ\.]{2,20}$/,
-	                        message: 'Campo apellido materno con errores (Letras, espacio, vocales con tilde y .)'
-	                    }
-	                }
-	            },
-	            dni: {
-	                validators: {
-	                    notEmpty: {
-	                        message: 'El campo DNI es obligatorio'
-	                    },
-	                    regexp: {
-	                        regexp: /^[0-9]{8}$/,
-	                        message: 'Campo DNI con errores (8 dígitos numéricos)'
-	                    }
-	                }
-	            },
-	            email: {
-	                validators: {
-	                    notEmpty: {
-	                        message: 'El campo email es obligatorio'
-	                    },
-	                    emailAddress: {
-	                        message: 'El campo email no es válido'
-	                    }
-	                }
-	            },
-	            telefono: {
-	                validators: {
-	                    notEmpty: {
-	                        message: 'El campo teléfono es obligatorio'
-	                    },
-	                    regexp: {
-	                        regexp: /^9[0-9]{8}$/,
-	                        message: 'Campo teléfono con errores (9 dígitos numéricos)'
-	                    }
-	                }
-	            },
-	            evento: {
-	                validators: {
-	                    notEmpty: {
-	                        message: 'Por favor seleccione un evento'
-	                    }
-	                }
-	            },
-	            especialidad: {
-	                validators: {
-	                    notEmpty: {
-	                        message: 'Por favor seleccione una especialidad'
-	                    }
-	                }
-	            },
-	            ciudad: {
-	                validators: {
-	                    notEmpty: {
-	                        message: 'Por favor seleccione una ciudad'
-	                    }
-	                }
-	            },
-	            provincia: {
-	                validators: {
-	                    notEmpty: {
-	                        message: 'Por favor seleccione una provincia'
-	                    }
-	                }
-	            },
-	            distrito: {
-	                validators: {
-	                    notEmpty: {
-	                        message: 'Por favor seleccione un distrito'
-	                    }
-	                }
-	            },
-	            personal: {
-	                validators: {
-	                    notEmpty: {
-	                        message: 'Debe aceptar los términos y políticas'
-	                    }
-	                }
-	            }
-	        }
-	    });
-	});
+			return /.+@.+\..+/.test(email);
+		}
+	</script>
 
 
 
+	<script type="text/javascript">
+		//validacion
+		$(document)
+				.ready(
+						function() {
+							$('#contact-form')
+									.bootstrapValidator(
+											{
+												fields : {
+													nombre : {
+														validators : {
+															notEmpty : {
+																message : 'El campo nombre es obligatorio'
+															},
+															regexp : {
+																regexp : /^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ\.]{2,20}$/,
+																message : 'Campo nombre con errores (Letras, espacio, vocales con tilde)'
+															}
+														}
+													},
+													paterno : {
+														validators : {
+															notEmpty : {
+																message : 'El campo apellido paterno es obligatorio'
+															},
+															regexp : {
+																regexp : /^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ\.]{2,20}$/,
+																message : 'Campo apellido paterno con errores (Letras, espacio, vocales con tilde y .)'
+															}
+														}
+													},
+													materno : {
+														validators : {
+															notEmpty : {
+																message : 'El campo apellido materno es obligatorio'
+															},
+															regexp : {
+																regexp : /^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ\.]{2,20}$/,
+																message : 'Campo apellido materno con errores (Letras, espacio, vocales con tilde y .)'
+															}
+														}
+													},
+													dni : {
+														validators : {
+															notEmpty : {
+																message : 'El campo DNI es obligatorio'
+															},
+															regexp : {
+																regexp : /^[0-9]{8}$/,
+																message : 'Campo DNI con errores (8 dígitos numéricos)'
+															}
+														}
+													},
+													email : {
+														validators : {
+															notEmpty : {
+																message : 'El campo email es obligatorio'
+															},
+															emailAddress : {
+																message : 'El campo email no es válido'
+															}
+														}
+													},
+													telefono : {
+														validators : {
+															notEmpty : {
+																message : 'El campo teléfono es obligatorio'
+															},
+															regexp : {
+																regexp : /^9[0-9]{8}$/,
+																message : 'Campo teléfono con errores (9 dígitos numéricos)'
+															}
+														}
+													},
+													evento : {
+														validators : {
+															notEmpty : {
+																message : 'Por favor seleccione un evento'
+															}
+														}
+													},
+													especialidad : {
+														validators : {
+															notEmpty : {
+																message : 'Por favor seleccione una especialidad'
+															}
+														}
+													},
+													ciudad : {
+														validators : {
+															notEmpty : {
+																message : 'Por favor seleccione una ciudad'
+															}
+														}
+													},
+													provincia : {
+														validators : {
+															notEmpty : {
+																message : 'Por favor seleccione una provincia'
+															}
+														}
+													},
+													distrito : {
+														validators : {
+															notEmpty : {
+																message : 'Por favor seleccione un distrito'
+															}
+														}
+													},
+													personal : {
+														validators : {
+															notEmpty : {
+																message : 'Debe aceptar los términos y políticas'
+															}
+														}
+													}
+												}
+											});
+						});
 	</script>
 </body>
 </html>

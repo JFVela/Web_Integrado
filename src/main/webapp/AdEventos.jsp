@@ -1,151 +1,181 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>ADMIN | Eventos</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
+<link
+	href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
+	rel="stylesheet">
 <link rel="stylesheet" href="assets/css/table.css">
 
-<style >
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic,Inter");
+<style>
+@import
+	url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic,Inter")
+	;
 
 body {
-
-  height:95vh;
-  align-items: center;
-   background: linear-gradient(to bottom, #d4d4d4bd,#dedada5e, #ffffff, #ffffff);
-  font-family: 'Inter';
-  cursor: url(assets/img/arrow.png) 6 0, auto !important;
-
+	height: 95vh;
+	align-items: center;
+	background: linear-gradient(to bottom, #d4d4d4bd, #dedada5e, #ffffff, #ffffff);
+	font-family: 'Inter';
+	cursor: url(assets/img/arrow.png) 6 0, auto !important;
 }
-td{
-	font-size:14px
-}
-th{
-	font-size:18px
-}
-.modal-header{
-		color:#fff;
-		background: #428bca;
-		display: flex;
-  		justify-content: center;
-  		
-	}
-	.help-block {
-	  		color: red;
-	}
-	.form-group.has-error .form-control-label {
-	  color: red;
-	}
-	.form-group.has-error .form-control {
-	  border: 1px solid red;
-	  box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
-	}
 
+td {
+	font-size: 14px
+}
+
+th {
+	font-size: 18px
+}
+
+.modal-header {
+	color: #fff;
+	background: #428bca;
+	display: flex;
+	justify-content: center;
+}
+
+.help-block {
+	color: red;
+}
+
+.form-group.has-error .form-control-label {
+	color: red;
+}
+
+.form-group.has-error .form-control {
+	border: 1px solid red;
+	box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+}
 </style>
 
 </head>
 <body>
 
-<div class="container">
-  <h1 class="mt-5 text-center">Eventos</h1>
-  <hr class="my-4 pb-2">
-   <!-- Button trigger modal -->
-<button type="button" class="c__cta btn btn-rounded" 
-	data-bs-toggle="modal" data-bs-target="#exampleModal">Nuevo Evento</button>
-  
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-     <div class="modal-header">
-                <h5 class="modal-title form-head text-bold fs-4">Tabla de Eventos</h5>
-            </div>
-            
-            <div class="modal-body">
-                
-                <form id="contact-form" method="post" action="ServletEventos?accion=guardar" onsubmit="return validarFechas();">
-                	<div class="form-group"">
-					    <label for="dni" class="label-form font-weight-bold">ID</label>
-					    <input type="text" value="0" name="id" class="form-control dni-label" id="id" readonly>
-					</div>
-					<div class="form-group">
-					    <label for="nombre" class="label-form text-secondary">Nombre del Evento</label>
-					    <input type="text" class="form-control name-label" name="nombreEspecialidad" id="nombreEspecialidad" required>
-					</div>
-					<div class="form-group">
-					    <label for="ubicacion" class="label-form text-secondary">Ubicación</label>
-					    <input type="text" class="form-control name-label" name="ubicacion" id="ubicacion" required>
-					</div>
-					<div class="form-group">
-					    <label for="inicioInscripcion" class="label-form text-secondary">Inicio de Inscripción</label>
-					    <input type="date" class="form-control name-label" name="inicioInscripcion" id="inicioInscripcion" required>
-					</div>
-					<div class="form-group">
-					    <label for="finalInscripcion" class="label-form text-secondary">Final de Inscripción</label>
-					    <input type="date" class="form-control name-label" name="finalInscripcion" id="finalInscripcion" required>
-					</div>
-					<div class="form-group">
-					    <label for="inicioEvento" class="label-form text-secondary">Inicio de Evento</label>
-					    <input type="date" class="form-control name-label" name="inicioEvento" id="inicioEvento" required>
-					</div>
-					<div class="form-group">
-					    <label for="finalEvento" class="label-form text-secondary">Final de Evento</label>
-					    <input type="date" class="form-control name-label" name="finalEvento" id="finalEvento" required>
-					</div>
-					<div class="form-group">
-					    <label for="detalleEvento" class="label-form text-secondary">Detalle de Evento</label>
-					    <input type="text" class="form-control name-label" name="detalleEvento" id="detalleEvento" required>
-					</div>
-					<div class="form-group">
-					    <label for="vacantes" class="label-form text-secondary">Vacantes</label>
-					    <input type="text" class="form-control name-label" name="vacantes" id="vacantes" required 
-					    	data-bv-callback="true"
-						    data-bv-callback-message="Campo vacantes debe estar entre 1 y 500"
-						    data-bv-callback-callback="validarVacantes">
-					</div>
-                	
-                   <div class="modal-footer">
-			             <button type="submit" class="btn  btn-rounded-ed" >Grabar</button>
-			             <button type="button" class="btn  btn-cerrar" data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
-      				</div>
-                </form>
-            </div>
-    </div>
-  </div>
-</div>
+	<div class="container">
+		<h1 class="mt-5 text-center">Eventos</h1>
+		<hr class="my-4 pb-2">
+		<!-- Button trigger modal -->
+		<button type="button" class="c__cta btn btn-rounded"
+			data-bs-toggle="modal" data-bs-target="#exampleModal">Nuevo
+			Evento</button>
 
-  <div class="mt-3">
-  <table id="TableEventos" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Ubicación</th>
-                <th>Inicio Inscripción</th>
-                <th>Fin Inscripción </th>
-                <th>Inicio Evento</th>
-                <th>Fin Evento</th>
-                <th>Detalle</th>
-                <th>Vacantes</th>
-                <th>Inscritos</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        
-        </tbody>
-    </table>
-  </div>
-  
-</div>
+		<div class="modal fade" id="exampleModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title form-head text-bold fs-4">Tabla de
+							Eventos</h5>
+					</div>
+
+					<div class="modal-body">
+
+						<form id="contact-form" method="post"
+							action="ServletEventos?accion=guardar"
+							onsubmit="return validarFechas();">
+							<div class="form-group"">
+								<label for="dni" class="label-form font-weight-bold">ID</label>
+								<input type="text" value="0" name="id"
+									class="form-control dni-label" id="id" readonly>
+							</div>
+							<div class="form-group">
+								<label for="nombre" class="label-form text-secondary">Nombre
+									del Evento</label> <input type="text" class="form-control name-label"
+									name="nombreEspecialidad" id="nombreEspecialidad" required>
+							</div>
+							<div class="form-group">
+								<label for="ubicacion" class="label-form text-secondary">Ubicación</label>
+								<input type="text" class="form-control name-label"
+									name="ubicacion" id="ubicacion" required>
+							</div>
+							<div class="form-group">
+								<label for="inicioInscripcion" class="label-form text-secondary">Inicio
+									de Inscripción</label> <input type="date"
+									class="form-control name-label" name="inicioInscripcion"
+									id="inicioInscripcion" required>
+							</div>
+							<div class="form-group">
+								<label for="finalInscripcion" class="label-form text-secondary">Final
+									de Inscripción</label> <input type="date"
+									class="form-control name-label" name="finalInscripcion"
+									id="finalInscripcion" required>
+							</div>
+							<div class="form-group">
+								<label for="inicioEvento" class="label-form text-secondary">Inicio
+									de Evento</label> <input type="date" class="form-control name-label"
+									name="inicioEvento" id="inicioEvento" required>
+							</div>
+							<div class="form-group">
+								<label for="finalEvento" class="label-form text-secondary">Final
+									de Evento</label> <input type="date" class="form-control name-label"
+									name="finalEvento" id="finalEvento" required>
+							</div>
+							<div class="form-group">
+								<label for="detalleEvento" class="label-form text-secondary">Detalle
+									de Evento</label> <input type="text" class="form-control name-label"
+									name="detalleEvento" id="detalleEvento" required>
+							</div>
+							<div class="form-group">
+								<label for="vacantes" class="label-form text-secondary">Vacantes</label>
+								<input type="text" class="form-control name-label"
+									name="vacantes" id="vacantes" required data-bv-callback="true"
+									data-bv-callback-message="Campo vacantes debe estar entre 1 y 500"
+									data-bv-callback-callback="validarVacantes">
+							</div>
+
+							<div class="modal-footer">
+								<button type="submit" class="btn  btn-rounded-ed">Grabar</button>
+								<button type="button" class="btn  btn-cerrar"
+									data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="mt-3">
+			<table id="TableEventos" class="table table-striped"
+				style="width: 100%">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nombre</th>
+						<th>Ubicación</th>
+						<th>Inicio Inscripción</th>
+						<th>Fin Inscripción</th>
+						<th>Inicio Evento</th>
+						<th>Fin Evento</th>
+						<th>Detalle</th>
+						<th>Vacantes</th>
+						<th>Inscritos</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+
+	</div>
 
 
 </body>
@@ -155,18 +185,26 @@ th{
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- libreria JS de bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
 
 <!-- libreria JS de la tabla -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script
+	src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <!-- libreria para validar (bootstrap validator) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
 
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 <!-- validar si existe el atrubuto MENSAJE -->
 <c:if test="${sessionScope.MENSAJE!=null}">
@@ -179,9 +217,9 @@ th{
 	</script>
 </c:if>
 <!-- eliminar atributo de tipo sesión MENSAJE -->
-<c:remove var="MENSAJE" scope="session"/>
+<c:remove var="MENSAJE" scope="session" />
 
-	<script>
+<script>
 	// Función para validar las fechas
 	function validarFechas() {
     // Obtén los valores de las fechas desde los campos
@@ -414,6 +452,6 @@ th{
 
         return true;
     }
-</script>   
+</script>
 
 </html>
