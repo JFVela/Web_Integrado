@@ -55,12 +55,9 @@
 
 	<div class="container">
 		<h1 class="mt-5 text-center">Departamentos</h1>
-
-
 		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
 			data-bs-target="#exampleModal">Nuevo Docente</button>
-
 		<div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-labelledby="modalEmpleadoLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
@@ -73,66 +70,75 @@
 
 						<form id="FormularioEmpleado" method="post"
 							action="ServletEmpleados?accion=grabar">
-							<div class="form-group">
-								<label for="dni" class="">DNI</label> <input type="text"
-									class="form-control" name="dni" id="id-dni">
-							</div>
-							<div class="form-group">
-								<label for="login" class="form-label">Login</label> <input
-									type="text" class="form-control" name="login" id="id-login">
-							</div>
-							<div class="form-group">
-								<label for="contraseña" class="form-label">Contraseña</label> <input
-									type="password" class="form-control" name="contraseña"
-									id="id-contraseña">
-							</div>
-							<div class="form-group">
-								<label for="nombre" class="form-label">Nombre</label> <input
-									type="text" class="form-control" name="nombre" id="id-nombre">
-							</div>
-							<div class="form-group">
-								<label for="paterno" class="form-label">Apellido Paterno</label>
-								<input type="text" class="form-control" name="paterno"
-									id="id-paterno">
-							</div>
-							<div class="form-group">
-								<label for="materno" class="form-label">Apellido Materno</label>
-								<input type="text" class="form-control" name="materno"
-									id="id-materno">
-							</div>
-							<div class="form-group">
-								<label for="telefono" class="form-label">Teléfono</label> <input
-									type="text" class="form-control" name="telefono"
-									id="id-telefono">
-							</div>
-							<div class="form-group">
-								<label for="correo" class="form-label">Correo</label> <input
-									type="email" class="form-control" name="correo" id="id-correo">
-							</div>
-							<div class="form-group">
-								<label for="direccion" class="form-label">Dirección</label>
-								<textarea class="form-control" name="direccion"
-									id="id-direccion"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="sueldo" class="form-label">Sueldo</label> <input
-									type="text" class="form-control" name="sueldo" id="id-sueldo">
-							</div>
-							<div class="form-group">
-								<label for="rol" class="form-label">Rol</label> <select
-									class="form-control" name="rol" id="id-rol">
-									<!-- Aquí puedes cargar dinámicamente los roles desde la base de datos -->
-									<option value="1">Rol 1</option>
-									<option value="2">Rol 2</option>
-									<!-- Agrega las opciones necesarias -->
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="departamento" class="form-label">Departamento</label>
-								<select class="form-control" name="departamento"
-									id="id-departamento">
-									<option value="">[Seleccione un Departamento]</option>
-								</select>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="" class="form-label">Cod</label> <input
+											type="text" class="form-control" name="codigo" id="id-codigo"
+											value="0" readonly>
+									</div>
+									<div class="form-group">
+										<label for="dni" class="">DNI</label> <input type="text"
+											class="form-control" name="dni" id="id-dni">
+									</div>
+									<div class="form-group">
+										<label for="login" class="form-label">Login</label> <input
+											type="text" class="form-control" name="login" id="id-login">
+									</div>
+									<div class="form-group">
+										<label for="contraseña" class="form-label">Contraseña</label>
+										<input type="password" class="form-control" name="contrasena"
+											id="id-contraseña">
+									</div>
+									<div class="form-group">
+										<label for="nombre" class="form-label">Nombre</label> <input
+											type="text" class="form-control" name="nombre" id="id-nombre">
+									</div>
+									<div class="form-group">
+										<label for="paterno" class="form-label">Apellido
+											Paterno</label> <input type="text" class="form-control"
+											name="paterno" id="id-paterno">
+									</div>
+									<div class="form-group">
+										<label for="materno" class="form-label">Apellido
+											Materno</label> <input type="text" class="form-control"
+											name="materno" id="id-materno">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="telefono" class="form-label">Teléfono</label> <input
+											type="text" class="form-control" name="telefono"
+											id="id-telefono">
+									</div>
+									<div class="form-group">
+										<label for="correo" class="form-label">Correo</label> <input
+											type="email" class="form-control" name="correo"
+											id="id-correo">
+									</div>
+									<div class="form-group">
+										<label for="direccion" class="form-label">Dirección</label>
+										<textarea class="form-control" name="direccion"
+											id="id-direccion"></textarea>
+									</div>
+									<div class="form-group">
+										<label for="sueldo" class="form-label">Sueldo</label> <input
+											type="text" class="form-control" name="sueldo" id="id-sueldo">
+									</div>
+									<div class="form-group">
+										<label for="rol" class="form-label">Rol</label> <select
+											class="form-control" name="rol" id="id-rol">
+											<option value="">[Seleccione un Rol]</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="departamento" class="form-label">Departamento</label>
+										<select class="form-control" name="departamento"
+											id="id-departamento">
+											<option value="">[Seleccione un Departamento]</option>
+										</select>
+									</div>
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-primary">Guardar</button>
@@ -140,12 +146,11 @@
 									data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
 							</div>
 						</form>
+
 					</div>
 				</div>
 			</div>
 		</div>
-
-
 
 		<div class="mt-3">
 			<!-- CREAR TABLA -->
@@ -153,6 +158,7 @@
 				style="width: 100%">
 				<thead>
 					<tr>
+						<th>COD</th>
 						<th>DNI</th>
 						<th>Login</th>
 						<th>Nombre</th>
@@ -213,8 +219,11 @@
 <!-- eliminar atributo de tipo sesión MENSAJE -->
 <c:remove var="MENSAJE" scope="session" />
 <script>
+
+
     cargarEmpleados();
     cargarDepa();
+    cargarRol();
     
     function cargarDepa(){
 		$.get("ServletDepaJSON",function(response){	
@@ -224,20 +233,29 @@
 		})
 	}
     
+    function cargarRol(){
+		$.get("ServletRolJSON",function(response){	
+			$.each(response,function(index,item){
+				$("#id-rol").append("<option value='"+item.id+"'>"+item.nombre+"</option>");
+			})
+		})
+	}
+    
     function cargarEmpleados() {
         $.get("ServletEmpleadosJSON", function(response) {
             let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
             let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
             $.each(response, function(index, item) {
-                $("#TablaEmpleados").append("<tr><td>" + item.dni + "</td>" +
-                    "<td>" + item.login + "</td>" +
+                $("#TablaEmpleados").append("<tr><td>" + item.codigo + "</td>" +
+                        "<td>" + item.dni + "</td>" +
+                        "<td>" + item.login + "</td>" +
                     "<td>" + item.nombre + "</td><td>" + item.paterno + "</td>" +
                     "<td>" + item.materno + "</td><td>" + item.telefono + "</td>" +
                     "<td>" + item.correo + "</td><td>" + item.direccion + "</td>" +
-                    "<td>" + item.sueldo + "</td><td>" + item.nombreRol + "</td>" +
-                    "<td>" + item.nombreDepa + "</td><td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
+                    "<td>" + item.sueldo + "</td><td>" + item.nombre_rol + "</td>" +
+                    "<td>" + item.nombre_departamento + "</td><td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
             });
-    
+
             $(document).ready(function() {
                 $('#TablaEmpleados').DataTable({
                     "language": {
@@ -258,11 +276,13 @@
             });
         });
     }
+
     
     $(document).on("click", ".btn-editar", function() {
-        var dni;
-        dni = $(this).parents("tr").find("td")[0].innerHTML;
-        $.get("ServletFindEmpleadoJSON?dni=" + dni, function(response) {
+        var codigo;
+        codigo = $(this).parents("tr").find("td")[0].innerHTML;
+        $.get("ServletFindEmpleadosJSON?codigo=" + codigo, function(response) {
+            $("#id-codigo").val(response.codigo);
             $("#id-dni").val(response.dni);
             $("#id-login").val(response.login);
             $("#id-contraseña").val(response.contraseña);
@@ -279,9 +299,11 @@
     });
     
     $(document).on("click", ".btn-eliminar", function() {
+    	var codigo;
         var dni;
         var nombre;
-        dni = $(this).parents("tr").find("td")[0].innerHTML;
+        codigo= $(this).parents("tr").find("td")[0].innerHTML;
+        dni = $(this).parents("tr").find("td")[1].innerHTML;
         nombre = $(this).parents("tr").find("td")[3].innerHTML; // Obtener el nombre del empleado
     
         Swal.fire({
@@ -295,7 +317,7 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location = "http://localhost:8080/GitHub_ONG/ServletEmpleados?accion=eliminar&dni=" + dni;
+                window.location = "http://localhost:8080/GitHub_ONG/ServletEmpleados?accion=eliminar&codigo=" + codigo;
             }
         });
     });
@@ -303,10 +325,179 @@
     $(document).on("click", "#btn-cerrar", function() {
         $("#FormularioEmpleado").trigger("reset");
         $("#FormularioEmpleado").data("bootstrapValidator").resetForm(true);
-        $("#id-dni").val("0");
+        $("#id-codigo").val("0");
     });
 </script>
 
+<script>
+$(document).ready(function() {
+	 $('#FormularioEmpleado').bootstrapValidator({      
+    	 fields:{
+            dni: {
+                validators: {
+                    notEmpty: {
+                        message: 'El DNI es obligatorio'
+                    },
+                    stringLength: {
+                        min: 8,
+                        max: 8,
+                        message: 'El DNI debe tener 8 dígitos'
+                    },
+                    greaterThan: {
+                        value: 0,
+                        message: 'El DNI debe ser mayor que 0'
+                    }
+                }
+            },
+            login: {
+                validators: {
+                    notEmpty: {
+                        message: 'El Login es obligatorio'
+                    },
+                    stringLength: {
+                        max: 10,
+                        message: 'El Login no debe tener más de 10 caracteres'
+                    },
+                    regexp: {
+                        regexp: /^[A-Za-zñÑáéíóúÁÉÍÓÚüÜ]+$/,
+                        message: 'El Login solo puede contener letras y tildes'
+                    }
+                }
+            },
+            contrasena: {
+                validators: {
+                    notEmpty: {
+                        message: 'La Contraseña es obligatoria'
+                    },
+                    stringLength: {
+                        min: 10,
+                        message: 'La Contraseña debe tener al menos 10 caracteres'
+                    },
+                    regexp: {
+                        regexp: /^[A-Za-zñÑáéíóúÁÉÍÓÚüÜ0-9\s]+$/,
+                        message: 'La Contraseña solo puede contener letras, números, espacios y tildes'
+                    }
+                }
+            },
+            nombre: {
+                validators: {
+                    notEmpty: {
+                        message: 'El Nombre es obligatorio'
+                    },
+                    stringLength: {
+                        max: 15,
+                        message: 'El Nombre no debe tener más de 15 caracteres'
+                    },
+                    regexp: {
+                        regexp: /^[A-Za-zñÑáéíóúÁÉÍÓÚüÜ]+$/,
+                        message: 'El Nombre solo puede contener letras y tildes'
+                    }
+                }
+            },
+            paterno: {
+                validators: {
+                    notEmpty: {
+                        message: 'El Apellido Paterno es obligatorio'
+                    },
+                    stringLength: {
+                        max: 15,
+                        message: 'El Apellido Paterno no debe tener más de 15 caracteres'
+                    },
+                    regexp: {
+                        regexp: /^[A-Za-zñÑáéíóúÁÉÍÓÚüÜ]+$/,
+                        message: 'El Apellido Paterno solo puede contener letras y tildes'
+                    }
+                }
+            },
+            materno: {
+                validators: {
+                    notEmpty: {
+                        message: 'El Apellido Materno es obligatorio'
+                    },
+                    stringLength: {
+                        max: 15,
+                        message: 'El Apellido Materno no debe tener más de 15 caracteres'
+                    },
+                    regexp: {
+                        regexp: /^[A-Za-zñÑáéíóúÁÉÍÓÚüÜ]+$/,
+                        message: 'El Apellido Materno solo puede contener letras y tildes'
+                    }
+                }
+            },
+            telefono: {
+                validators: {
+                    notEmpty: {
+                        message: 'El Teléfono es obligatorio'
+                    },
+                    stringLength: {
+                        min: 9,
+                        max: 9,
+                        message: 'El Teléfono debe tener 9 dígitos'
+                    },
+                    regexp: {
+                        regexp: /^9\d{8}$/,
+                        message: 'El Teléfono debe comenzar con 9 y tener 9 dígitos'
+                    }
+                }
+            },
+            correo: {
+                validators: {
+                    notEmpty: {
+                        message: 'El Correo es obligatorio'
+                    },
+                    emailAddress: {
+                        message: 'El Correo no es válido'
+                    }
+                }
+            },
+            direccion: {
+                validators: {
+                    notEmpty: {
+                        message: 'La Dirección es obligatoria'
+                    },
+                    stringLength: {
+                        max: 20,
+                        message: 'La Dirección no debe tener más de 20 palabras'
+                    }
+                }
+            },
+            sueldo: {
+                validators: {
+                    notEmpty: {
+                        message: 'El Sueldo es obligatorio'
+                    },
+                    greaterThan: {
+                        value: 0,
+                        message: 'El Sueldo debe ser mayor que 0'
+                    },
+                    between: {
+                        min: 1500,
+                        max: 8000,
+                        message: 'El Sueldo debe estar entre 1500 y 8000'
+                    }
+                }
+            },
+            rol: {
+                validators: {
+                    notEmpty: {
+                        message: 'Seleccione un Rol'
+                    }
+                }
+            },
+            departamento: {
+                validators: {
+                    notEmpty: {
+                        message: 'Seleccione un Departamento'
+		 			}
+ 			
+		 		}
+		 	}
+		 
+	 }
+});   
+	
+});    
+</script>
 
 
 

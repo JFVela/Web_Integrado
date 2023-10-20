@@ -2,6 +2,7 @@ package Intranet.controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,25 +12,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import Intranet.dao.MySQL_Empleados;
-import Intranet.entidad.Empleados;
+import Intranet.dao.MySQL_Roles;
+import Intranet.entidad.Roles;
 
-@WebServlet("/ServletFindEmpleadosJSON")
-public class ServletFindEmpleadosJSON extends HttpServlet {
+@WebServlet("/ServletRolJSON")
+public class ServletRolJSON extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ServletFindEmpleadosJSON() {
+	public ServletRolJSON() {
 		super();
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String codigo = request.getParameter("codigo");
-		Empleados empleado = new MySQL_Empleados().findByCod(Integer.parseInt(codigo));
+		List<Roles> lista = new MySQL_Roles().findAll(); // Cambiado a MySQL_Roles para Roles
 		Gson gson = new Gson();
-		String json = gson.toJson(empleado);
+		String json = gson.toJson(lista);
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter pw = response.getWriter();
 		pw.print(json);
 	}
+
 }

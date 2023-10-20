@@ -1,6 +1,7 @@
 package Intranet.entidad;
 
 public class Empleados {
+	private int codigo;
 	private int dni;
 	private String login;
 	private String contraseña;
@@ -14,27 +15,19 @@ public class Empleados {
 	private int id_rol;
 	private int idONG;
 	private int id_depa;
-	private String nombreRol;
-	private String nombreDepa;
+	private String nombre_rol;
+	private String nombre_departamento;
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
 
 	public int getDni() {
 		return dni;
-	}
-
-	public String getNombreRol() {
-		return nombreRol;
-	}
-
-	public void setNombreRol(String nombreRol) {
-		this.nombreRol = nombreRol;
-	}
-
-	public String getNombreDepa() {
-		return nombreDepa;
-	}
-
-	public void setNombreDepa(String nombreDepa) {
-		this.nombreDepa = nombreDepa;
 	}
 
 	public void setDni(int dni) {
@@ -135,6 +128,22 @@ public class Empleados {
 
 	public void setId_depa(int id_depa) {
 		this.id_depa = id_depa;
+	}
+
+	public String getNombre_rol() {
+		return nombre_rol;
+	}
+
+	public void setNombre_rol(String nombre_rol) {
+		this.nombre_rol = nombre_rol;
+	}
+
+	public String getNombre_departamento() {
+		return nombre_departamento;
+	}
+
+	public void setNombre_departamento(String nombre_departamento) {
+		this.nombre_departamento = nombre_departamento;
 	}
 
 }

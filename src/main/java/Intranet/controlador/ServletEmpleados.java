@@ -20,6 +20,7 @@ public class ServletEmpleados extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String tipo = request.getParameter("accion");
 		if (tipo.equals("grabar"))
 			GuardarEmpleado(request, response);
@@ -30,8 +31,8 @@ public class ServletEmpleados extends HttpServlet {
 	}
 
 	private void EliminarEmpleado(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String dni = request.getParameter("dni");
-		int estado = new MySQL_Empleados().deleteDNI(Integer.parseInt(dni));
+		String codigo = request.getParameter("codigo");
+		int estado = new MySQL_Empleados().deleteCod(Integer.parseInt(codigo));
 		String tipoMensaje = "";
 
 		if (estado == 1) {
@@ -56,10 +57,11 @@ public class ServletEmpleados extends HttpServlet {
 
 	private void GuardarEmpleado(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String dni, login, contraseña, nombre, paterno, materno, telefono, correo, direccion, sueldo, id_rol, id_depa;
+		String dni,codigo, login, contraseña, nombre, paterno, materno, telefono, correo, direccion, sueldo, id_rol, id_depa;
 		dni = request.getParameter("dni");
+		codigo=request.getParameter("codigo");
 		login = request.getParameter("login");
-		contraseña = request.getParameter("contraseña");
+		contraseña = request.getParameter("contrasena");
 		nombre = request.getParameter("nombre");
 		paterno = request.getParameter("paterno");
 		materno = request.getParameter("materno");
@@ -67,12 +69,13 @@ public class ServletEmpleados extends HttpServlet {
 		correo = request.getParameter("correo");
 		direccion = request.getParameter("direccion");
 		sueldo = request.getParameter("sueldo");
-		id_rol = request.getParameter("id_rol");
-		id_depa = request.getParameter("id_depa");
+		id_rol = request.getParameter("rol");
+		id_depa = request.getParameter("departamento");
 		String tipoMensaje = "error";
 
 		Empleados empleado = new Empleados();
 		empleado.setDni(Integer.parseInt(dni));
+		empleado.setCodigo(Integer.parseInt(codigo));
 		empleado.setLogin(login);
 		empleado.setContraseña(contraseña);
 		empleado.setNombre(nombre);
@@ -85,7 +88,7 @@ public class ServletEmpleados extends HttpServlet {
 		empleado.setId_rol(Integer.parseInt(id_rol));
 		empleado.setId_depa(Integer.parseInt(id_depa));
 
-		if (empleado.getDni() == 0) {
+		if (empleado.getCodigo() == 0) {
 			int estado = new MySQL_Empleados().save(empleado);
 			if (estado == 1) {
 				tipoMensaje = "success";

@@ -8,9 +8,9 @@ public interface interfazEmpleados {
 
 	int update(Empleados empleado);
 
-	int deleteDNI(int dni);
+	int deleteCod(int codigo);
 
-	Empleados findByDNI(int dni);
+	Empleados findByCod(int codigo);
 
 	List<Empleados> findAll();
 }
