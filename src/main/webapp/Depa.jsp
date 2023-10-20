@@ -6,7 +6,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Depa</title>
+<title>Salario</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -83,11 +83,10 @@
 									id="id-nombre">
 							</div>
 							<div class="form-group">
-								<label for="" class="form-label">Descripción</label>
-								<textarea class="form-control" name="descripcion"
-									id="id-descrip"></textarea>
+								<label for="" class="form-label">Descripción</label> <input
+									type="text" class="form-control" name="descripcion"
+									id="id-descrip">
 							</div>
-
 
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-primary" action="">Guardar</button>
@@ -149,14 +148,12 @@
 <!-- validar si existe el atrubuto MENSAJE -->
 <c:if test="${sessionScope.MENSAJE!=null}">
 	<script>
-	  var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
-      toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
-					"timeOut": "2000",
-					"positionClass " : " toast-top-right ",
-				});
+	toastr.success("${sessionScope.MENSAJE}", toastr.options = {
+		    "timeOut": "2000",
+		    "positionClass": "toast-top-right",
+		});
 	</script>
 </c:if>
-
 <!-- eliminar atributo de tipo sesión MENSAJE -->
 <c:remove var="MENSAJE" scope="session" />
 
@@ -164,39 +161,17 @@
  cargarDepa();
  
  //crear función para leer JSON de Departamentos
-function cargarDepa() {
-	$.get("ServletDepaJSON", function (response) {
-		let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
-		let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
-		$.each(response, function (index, item) {
-			$("#TablaDepa").append("<tr><td>" + item.id + "</td>" +
-				"<td>" + item.nombre + "</td><td>" + item.descripcion + "</td>" +
-				"<td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
-		});
-
-		// Inicializar DataTable
-		$(document).ready(function () {
-			$('#TablaDepa').DataTable({
-				"language": {
-					"lengthMenu": "Mostrar _MENU_ registros por página",
-					"zeroRecords": "No se encontraron registros",
-					"info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-					"infoEmpty": "Mostrando 0 a 0 de 0 registros",
-					"infoFiltered": "(filtrados de un total de _MAX_ registros)",
-					"search": "Buscar:",
-					"paginate": {
-						"first": "Primero",
-						"previous": "Anterior",
-						"next": "Siguiente",
-						"last": "Último"
-					}
-				}
-			});
-		});
-
-	});
-}
-
+ function cargarDepa() {
+	 $.get("ServletDepaJSON", function(response) {
+		 let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+         let botonEliminar="<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+			$.each(response,function(index,item){
+				$("#TablaDepa").append("<tr><td>"+item.id+"</td>"+
+						 "<td>"+item.nombre+"</td><td>"+item.descripcion+"</td>"+
+						 "<td>"+botonEditar+"</td><td>"+botonEliminar+"</td></tr>");				})
+				new DataTable('#TablaDepa');
+			})
+		}
  
 //asignar evento click a todos los botones con nombre de clase btn-editar
  $(document).on("click",".btn-editar",function(){ var cod;
@@ -245,7 +220,7 @@ function cargarDepa() {
 
 
 <script>
-	$(document).ready(function() {
+	$(document).ready(}function() {
 						$('#FormularioDepa')
 								.bootstrapValidator(
 										{

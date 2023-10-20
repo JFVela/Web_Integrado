@@ -6,24 +6,23 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import Intranet.entidad.Departamento;
-import Intranet.entidad.Roles;
-import Intranet.interfaces.interfazRoles;
+import Intranet.entidad.Pago;
+import Intranet.interfaces.interfazPago;
 import Utils.MySQL_Conexion;
 
-public class MySQL_Roles implements interfazRoles {
+public class MySQL_Pago implements interfazPago {
 
 	@Override
-	public int save(Roles bean) {
+	public int save(Pago bean) {
 		int salida = -1;
 		Connection cn = null;
 		PreparedStatement pstm = null;
 		try {
 			cn = new MySQL_Conexion().getConnection();
-			String sql = "INSERT INTO roles VALUES(null,?,?)";
+			String sql = "INSERT INTO pago VALUES(?,?,?)";
 			pstm = cn.prepareStatement(sql);
-			pstm.setString(1, bean.getNombre());
-			pstm.setString(2, bean.getDescripcion());
+			pstm.setDouble(1, bean.getSueldo());
+			pstm.setString(2, bean.getDetalle());
 			salida = pstm.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,7 +40,7 @@ public class MySQL_Roles implements interfazRoles {
 	}
 
 	@Override
-	public int update(Roles bean) {
+	public int update(Pago bean) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -53,29 +52,29 @@ public class MySQL_Roles implements interfazRoles {
 	}
 
 	@Override
-	public Roles finById(int id) {
+	public Pago finById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Roles> findAll() {
-		List<Roles> lista = new ArrayList<Roles>();
+	public List<Pago> findAll() {
+		List<Pago> lista = new ArrayList<Pago>();
 		Connection cn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 
 		try {
 			cn = new MySQL_Conexion().getConnection();
-			String sql = "SELECT *FROM roles;";
+			String sql = "SELECT *FROM pago;";
 			pstm = cn.prepareStatement(sql);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				Roles R = new Roles();
-				R.setId(rs.getInt(1));
-				R.setNombre(rs.getNString(2));
-				R.setDescripcion(rs.getString(3));
-				lista.add(R);
+				Pago P = new Pago();
+				P.setId(rs.getInt(1));
+				P.setSueldo(rs.getDouble(2));
+				P.setDetalle(rs.getString(3));
+				lista.add(P);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
