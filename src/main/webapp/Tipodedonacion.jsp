@@ -142,8 +142,28 @@ body{
 				});
 	</script>
 </c:if>
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.MODIFICADO!=null}">
+	<script>
+			toastr.warning("${sessionScope.MODIFICADO}", toastr.options = {
+					"timeOut": "2000",
+					"positionClass " : " toast-top-right ",
+				});
+	</script>
+</c:if>
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.ERROR!=null}">
+	<script>
+			toastr.error("${sessionScope.ERROR}", toastr.options = {
+					"timeOut": "2000",
+					"positionClass " : " toast-top-right ",
+				});
+	</script>
+</c:if>
 <!-- eliminar atributo de tipo sesión MENSAJE -->
 <c:remove var="MENSAJE" scope="session"/>
+<c:remove var="MODIFICADO" scope="session"/>
+<c:remove var="ERROR" scope="session"/>
 
 <!-- JSON para mostrar la tabla creo -->
 <script>
@@ -230,7 +250,7 @@ body{
         					 message: 'Campo nombre es obligatorio'
         				 },
         				 regexp:{
-        					 regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,50}$/,
+        					 regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.\,\:\;]{2,50}$/,
         					 message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
         				 }
         			 }

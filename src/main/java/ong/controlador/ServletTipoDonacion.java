@@ -22,6 +22,7 @@ public class ServletTipoDonacion extends HttpServlet {
 
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String tipo = request.getParameter("accion");
 		if(tipo.equals("grabar"))
 			grabarTipoDonacion(request,response);
@@ -40,7 +41,7 @@ public class ServletTipoDonacion extends HttpServlet {
 			System.out.println("NO");
 		
 		//crear atributo de tipo sesion
-		request.getSession().setAttribute("MENSAJE","TipoDeDonacion eliminado");
+		request.getSession().setAttribute("ERROR","TipoDeDonacion eliminado");
 		//invocar metodo listardocente
 		//listarDocente(request, response);
 		response.sendRedirect("Tipodedonacion.jsp");
@@ -66,16 +67,16 @@ public class ServletTipoDonacion extends HttpServlet {
 			if(estado==1)
 				request.getSession().setAttribute("MENSAJE","TipodeDonacion registrado");
 			else
-				request.getSession().setAttribute("MENSAJE","Error en el Registro");
+				request.getSession().setAttribute("ERROR","Error en el Registro");
 			
 		}
 		else  {
 			int estado = new MySqlTipoDonacionDAO().update(bean);
 			
 			if(estado==1)
-				request.getSession().setAttribute("MENSAJE","TIPO Actualizado");
+				request.getSession().setAttribute("MODIFICADO","TIPO Actualizado");
 			else
-				request.getSession().setAttribute("MENSAJE","error en el Actualizado");
+				request.getSession().setAttribute("ERROR","error en el Actualizado");
 		}
 		
 		response.sendRedirect("Tipodedonacion.jsp");
