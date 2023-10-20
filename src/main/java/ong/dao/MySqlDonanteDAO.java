@@ -237,4 +237,42 @@ public class MySqlDonanteDAO implements DonanteDAO {
 		}
 	}
 
+
+
+	@Override
+	public boolean verificarDonacion(int dni) {
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		try {
+			cn = new MySqlConectar().getConectar();
+			String sentencia = "SELECT d.dni, d.nombre\r\n"
+					+ "FROM donantes d\r\n"
+					+ "WHERE d.dni = ?\r\n"
+					+ "AND (\r\n"
+					+ "    EXISTS (SELECT 1 FROM donacion_fisica f WHERE f.donantes_dni = d.dni AND f.estado = 1)\r\n"
+					+ "    OR\r\n"
+					+ "    EXISTS (SELECT 1 FROM donacion_virtual v WHERE v.donantes_dni = d.dni)\r\n"
+					+ ");\r\n"
+					+ "";
+			pstm=cn.prepareStatement(sentencia);
+			pstm.setInt(1, dni);
+			rs = pstm.executeQuery();
+			return rs.next();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (pstm != null)
+					pstm.close();
+				if (cn != null)
+					cn.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
 }

@@ -21,7 +21,7 @@
 						<div class="row g-0">
 							<div class="col-md-6 col-lg-5 d-none d-md-block">
 								<img
-									src="assets/img/imagenLogin.jpg"
+									src="https://www.ongvoluntariado.org/wp-content/uploads/2022/12/Miriam-Clemente-1.jpeg"
 									alt="login form" class="img-fluid"
 									style="border-radius: 1rem 0 0 1rem;" />
 							</div>

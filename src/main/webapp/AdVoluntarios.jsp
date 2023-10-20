@@ -22,6 +22,7 @@ body {
    background: linear-gradient(to bottom, #d4d4d4bd,#dedada5e, #ffffff, #ffffff);
   font-family: 'Inter';
      	cursor: url(assets/img/arrow.png) 6 0, auto !important;
+
 }
 
 </style>
@@ -161,7 +162,6 @@ body {
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-
 
 <!-- validar si existe el atrubuto MENSAJE -->
 <c:if test="${sessionScope.MENSAJE!=null}">

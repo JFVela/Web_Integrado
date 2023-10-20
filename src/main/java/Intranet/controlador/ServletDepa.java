@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Intranet.dao.MySQL_Departamento;
+import Intranet.dao.MySQL_Pago;
 import Intranet.entidad.Departamento;
+import Intranet.entidad.Pago;
 
 @WebServlet("/ServletDepa")
 public class ServletDepa extends HttpServlet {
@@ -33,20 +35,13 @@ public class ServletDepa extends HttpServlet {
 	private void EliminarDepa(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String id = request.getParameter("codigo");
 		int estado = new MySQL_Departamento().deleteID(Integer.parseInt(id));
-		String tipoMensaje = "";
+		if (estado == 1)
+			System.out.print("SI");
+		else
+			System.out.print("NO");
+		request.getSession().setAttribute("MENSAJE", "Departamento eliminado con éxito");
+		response.sendRedirect("Depa.jsp");
 
-		if (estado == 1) {
-			tipoMensaje = "error";
-			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE", "Departamento eliminado con éxito");
-			response.sendRedirect("Depa.jsp");
-		} else {
-			// Mostrar mensaje de error utilizando Toastr
-			tipoMensaje = "error";
-			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE", "No se puede eliminar el Departamento");
-			response.sendRedirect("Depa.jsp");
-		}
 	}
 
 	private void ListarDepa(HttpServletRequest request, HttpServletResponse response)
@@ -62,7 +57,6 @@ public class ServletDepa extends HttpServlet {
 		cod = request.getParameter("codigo");
 		nom = request.getParameter("nombre");
 		des = request.getParameter("descripcion");
-		String tipoMensaje = "error";
 
 		Departamento bean = new Departamento();
 		bean.setId(Integer.parseInt(cod));
@@ -71,28 +65,19 @@ public class ServletDepa extends HttpServlet {
 
 		if (Integer.parseInt(cod) == 0) {
 			int estado = new MySQL_Departamento().save(bean);
-			if (estado == 1) {
-				tipoMensaje = "success";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			if (estado == 1)
 				request.getSession().setAttribute("MENSAJE", "Departamento registrado");
-			} else {
-				tipoMensaje = "error";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			else
 				request.getSession().setAttribute("MENSAJE", "Error en el registro");
-			}
 		} else {
 			int estado = new MySQL_Departamento().update(bean);
-			if (estado == 1) {
-				tipoMensaje = "warning";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			if (estado == 1)
 				request.getSession().setAttribute("MENSAJE", "Departamento actualizado");
-			} else {
-				tipoMensaje = "error";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			else
 				request.getSession().setAttribute("MENSAJE", "Error en la actualización");
-			}
 		}
 		response.sendRedirect("Depa.jsp");
+
 	}
 
 }

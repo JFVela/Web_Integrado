@@ -11,4 +11,5 @@ public interface DonanteDAO {
 	int update(Donante bean,int dniActual);
 	int deleteById(int cod);
 	boolean verificarDNI(int dni);
+	boolean verificarDonacion(int dni);
 }
