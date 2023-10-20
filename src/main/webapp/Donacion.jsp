@@ -219,7 +219,7 @@ padding-bottom: 10px;
 					</div>
 					<!-- Modal -->
 					<div class="modal fade" id="donafisico" data-bs-backdrop="static"
-						data-bs-keyboard="false" tabindex="-1"
+						data-bs-keyboard="false" tabindex="-1" 
 						aria-labelledby="staticBackdropLabel" aria-hidden="true">
 						<div class="modal-dialog modal-lg">
 							<div class="modal-content">
@@ -1229,8 +1229,7 @@ $('.owl-carousel').owlCarousel({
 			var emailInput = $("#formDonante").find(".correo"); // Obtener el campo de correo
 		    emailInput.removeClass("error"); // Eliminar la clase de error
 		    emailInput.siblings(".mensajeEmail").text(""); 
-		    
-		    
+		   
 		    var celularInput = $("#formDonante").find(".numcel"); 
 		    celularInput.removeClass("error");
 		    celularInput.siblings(".mensajeCelular").text("");
@@ -1238,6 +1237,8 @@ $('.owl-carousel').owlCarousel({
 		$(document).on("click",".btn-cerrar2, .btn-cerrar3",function(){
 			$("#formDonante1").trigger("reset");
 			$("#formDonante1").data("bootstrapValidator").resetForm(true);
+			$("#numcuen, #cvv, #expirationMonth, #expirationYear").removeClass("success");
+			$("#mensajeValidacion").text("");
 			 var emailInput = $("#formDonante1").find(".correo"); // Obtener el campo de correo
 			    emailInput.removeClass("error"); // Eliminar la clase de error
 			    emailInput.siblings(".mensajeEmail").text("");

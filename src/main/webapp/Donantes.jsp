@@ -29,9 +29,10 @@
 <body>
 	<div class="container">
 		<h1 class="mt-5 text-center">Listado de Donantes</h1>
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Nuevo Donante</button>
 		<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" 
+		aria-hidden="true" data-bs-backdrop="static"
+		data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" >
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -144,13 +145,14 @@
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 
+<!-- validar si existe el atrubuto MENSAJE -->
 <c:if test="${sessionScope.MENSAJE!=null}">
 	<script>
-			toastr.success("${sessionScope.MENSAJE}", toastr.options = {
+	  var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
+      toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
 					"timeOut": "2000",
 					"positionClass " : " toast-top-right ",
 				});
-	
 	</script>
 </c:if>
 <c:remove var="MENSAJE" scope="session"/>
@@ -236,6 +238,9 @@ $(document).on("click",".boton-cerrar",function(){
 	        			 validators:{
 		        				notEmpty:{
 		        					message:'Este campo es obligatorio'
+		        				},regexp:{
+		        					regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,20}$/,
+		        					 message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
 		        				}
 		        			}
 	        		 },
@@ -243,6 +248,9 @@ $(document).on("click",".boton-cerrar",function(){
 	        			 validators:{
 		        				notEmpty:{
 		        					message:'Este campo es obligatorio'
+		        				},regexp:{
+		        					regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,20}$/,
+		        					 message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
 		        				}
 		        			} 
 	        		 },
@@ -250,6 +258,9 @@ $(document).on("click",".boton-cerrar",function(){
 	        			 validators:{
 		        				notEmpty:{
 		        					message:'Este campo es obligatorio'
+		        				},regexp:{
+		        					regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,20}$/,
+		        					 message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
 		        				}
 		        			}
 	        		 },
@@ -257,20 +268,47 @@ $(document).on("click",".boton-cerrar",function(){
 	        			 validators:{
 		        				notEmpty:{
 		        					message:'Este campo es obligatorio'
-		        				}
+		        				},
+		        		        stringLength: {
+		        		            min: 9,
+		        		            max: 9,
+		        		            message: 'El número de celular debe tener exactamente 9 dígitos'
+		        		        },
+		        		        regexp: {
+		        		            regexp: /^9[0-9]{8}$/, // Comienza con 9 seguido de 8 dígitos
+		        		            message: 'El número de celular debe comenzar con el primer dígito "9" y contener 9 dígitos en total'
+		        		        },
+		        		        callback: {
+		        		            message: 'El número de celular no puede ser negativo',
+		        		            callback: function(value, validator, $field) {
+		        		                // Convierte el valor a un número entero
+		        		                var celular = parseInt(value, 10);
+		        		                // Comprueba si el valor es negativo
+		        		                if (celular < 0) {
+		        		                    return false;
+		        		                }
+		        		                return true;
+		        		            }
+		        		        }
 		        			} 
 	        		 },
 	        		 email:{
 	        			 validators:{
 		        				notEmpty:{
 		        					message:'Este campo es obligatorio'
-		        				}
+		        				},
+		        				emailAddress: {
+		        		            message: 'El campo email debe contener una dirección de correo electrónico válida'
+		        		        }
 		        			}
 	        		 },
 	        		 ciudad:{
 	        			 validators:{
 		        				notEmpty:{
 		        					message:'Este campo es obligatorio'
+		        				},regexp:{
+		        					regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,20}$/,
+		        					 message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
 		        				}
 		        			}
 	        		 },
