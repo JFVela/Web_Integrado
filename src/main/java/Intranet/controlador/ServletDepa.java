@@ -34,13 +34,15 @@ public class ServletDepa extends HttpServlet {
 	private void EliminarDepa(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String id = request.getParameter("codigo");
 		int estado = new MySQL_Departamento().deleteID(Integer.parseInt(id));
-		if (estado == 1)
-			System.out.print("SI");
-		else
-			System.out.print("NO");
-		request.getSession().setAttribute("MENSAJE", "Departamento eliminado con éxito");
-		response.sendRedirect("Depa.jsp");
 
+		if (estado == 1) {
+			request.getSession().setAttribute("MENSAJE", "Departamento eliminado con éxito");
+			response.sendRedirect("Depa.jsp");
+		} else {
+			// Mostrar mensaje de error utilizando Toastr
+			request.getSession().setAttribute("MENSAJE", "No se puede eliminar el Departamento");
+			response.sendRedirect("Depa.jsp");
+		}
 	}
 
 	private void ListarDepa(HttpServletRequest request, HttpServletResponse response)

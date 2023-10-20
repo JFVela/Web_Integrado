@@ -35,6 +35,12 @@
 	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
 	rel="stylesheet">
 <link rel="stylesheet" href="assets/css/menu.css">
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <title>Donacion</title>
 <style>
@@ -63,10 +69,11 @@ body.shimeji-select-ie {
 .estilo-don {
 	margin-bottom: 10px;
 }
-.estilo-col2{
-background-color: #5cb9d4;
-border-radius: 30px; 
-padding-bottom: 10px;
+
+.estilo-col2 {
+	background-color: #5cb9d4;
+	border-radius: 30px;
+	padding-bottom: 10px;
 }
 
 .error {
@@ -165,18 +172,17 @@ padding-bottom: 10px;
 			<div class="navbar-collapse collapse" id="navbarSupportedContent"
 				style="">
 				<ul class="navbar-nav ms-auto">
-					<li class="nav-item"><a class="nav-link" href="menu.jsp">Inicio</a>
+					<li class="nav-item"><a class="nav-link" href="menu.html">Inicio</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="#!">Nosotros</a>
+					<li class="nav-item"><a class="nav-link" href="Nosotros.jsp">Nosotros</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="#!">Historias
+					<li class="nav-item"><a class="nav-link" href="HisExito.jsp">Historias
 							de éxito</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="voluntariado.jsp">Voluntariado</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">Blog</a></li>
 					<li class="nav-item"><a class="nav-link" href="#!">Eventos
 							y noticias</a></li>
-					<button type="button" class="btn btn-primary ms-3">Dona</button>
+					<a type="" class="btn btn-primary ms-3" href="Donacion.jsp">Dona</a>
 				</ul>
 			</div>
 		</div>
@@ -204,7 +210,7 @@ padding-bottom: 10px;
 	<div class="p-5 estilo-don" id="donaAqui">
 		<div class="container-fluid">
 			<div class="row">
-			<%--PRIMERA COLUMNA --%>
+				<%--PRIMERA COLUMNA --%>
 				<div class="col ">
 					<div class="text-center">
 						<h1>Donación Física</h1>
@@ -226,16 +232,16 @@ padding-bottom: 10px;
 								<div class="modal-header">
 									<h1 class="modal-title fs-5" id="staticBackdropLabel">Donación
 										Física</h1>
-									<button type="button" class="btn-close btn-cerrar" data-bs-dismiss="modal"
-										aria-label="Close"></button>
+									<button type="button" class="btn-close btn-cerrar"
+										data-bs-dismiss="modal" aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
 									<div class="container-fluid">
 										<div class="row">
-										<div class="col-md-6 ms-auto">
-										<form id="formDonante" method="post"
+											<div class="col-md-6 ms-auto">
+												<form id="formDonante" method="post"
 													action="ServletDonante?accion=insertarfi">
-											
+
 
 													<h1>Donación</h1>
 
@@ -244,8 +250,7 @@ padding-bottom: 10px;
 													<%--Locación --%>
 													<div id="location" class="form-group">
 														<label for="exampleInputEmail2" class="form-label">Lugar
-															de Entrega</label> 
-															<select class="form-select form-control"
+															de Entrega</label> <select class="form-select form-control"
 															aria-label="Default select example" id="id-location"
 															name="locacion">
 															<option value="" selected hidden="disable">Seleccione
@@ -256,8 +261,9 @@ padding-bottom: 10px;
 
 													<div id="textareaDes" class="form-group">
 														<label for="exampleInputEmail2" class="form-label">Descripción:</label>
-														<textarea type="text"  style="height: 100px" name="descrip"  class="form-control" 
-														placeholder="Donaré una caja llena de alimentos no perecederos, mantas y ropa abrigada para apoyar a las personas."></textarea>
+														<textarea type="text" style="height: 100px" name="descrip"
+															class="form-control"
+															placeholder="Donaré una caja llena de alimentos no perecederos, mantas y ropa abrigada para apoyar a las personas."></textarea>
 													</div>
 													<%--Final  Físico --%>
 
@@ -301,7 +307,7 @@ padding-bottom: 10px;
 																<label for="exampleInputPassword1" class="form-label">Celular</label>
 																<input type="text" class="form-control numcel"
 																	placeholder="Número Celular:" name="celular">
-																	<div class="mensajeCelular" style="text-align: left;"></div>
+																<div class="mensajeCelular" style="text-align: left;"></div>
 															</div>
 														</div>
 
@@ -318,7 +324,7 @@ padding-bottom: 10px;
 															<label for="exampleInputPassword1" class="form-label">Email</label>
 															<input type="text" class="form-control correo"
 																placeholder="usuario@gmail.com" name="email">
-																<div class="mensajeEmail" style="text-align: left;"></div>
+															<div class="mensajeEmail" style="text-align: left;"></div>
 														</div>
 
 														<div class="form-group">
@@ -326,10 +332,10 @@ padding-bottom: 10px;
 															<input type="text" class="form-control"
 																placeholder="Dirección:" name="direccion">
 														</div>
-													
+
 													</div>
 												</form>
-												
+
 											</div>
 											<div class="col-md-6 ms-auto">
 												<img src="img/ola.jpg" class="img-fluid">
@@ -347,8 +353,8 @@ padding-bottom: 10px;
 					</div>
 				</div>
 				<%--FIN DONACION FISICO --%>
-			
-			<%--SEGUNDA COLUMNA --%>
+
+				<%--SEGUNDA COLUMNA --%>
 				<%--DONACION VIRTUAL --%>
 				<div class="col estilo-col2">
 					<div class="text-center">
@@ -375,18 +381,18 @@ padding-bottom: 10px;
 								</div>
 								<div class="modal-body">
 									<div class="container-fluid">
-									<form id="formDonante1" method="post"
-													action="ServletDonante?accion=insertarvir">
-										<div class="row">
+										<form id="formDonante1" method="post"
+											action="ServletDonante?accion=insertarvir">
+											<div class="row">
 												<div class="col-md-6 ms-auto">
 													<img src="img/img-modal.jpg" class="img-fluid">
 												</div>
-										
-												
-											
+
+
+
 												<div class="col-md-6 ms-auto">
-												<%--Comienzo Formulario virtual --%>
-												
+													<%--Comienzo Formulario virtual --%>
+
 													<h1>Donación</h1>
 
 
@@ -471,93 +477,93 @@ padding-bottom: 10px;
 														</div>
 													</div>
 													<%--</form>--%>
-											</div>
-											<div class="row mt-3">
-												<h2>Información Personal</h2>
-												<div class="col-md-6 ms-auto">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="exampleInputPassword1" class="form-label">DNI</label>
+												</div>
+												<div class="row mt-3">
+													<h2>Información Personal</h2>
+													<div class="col-md-6 ms-auto">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="exampleInputPassword1" class="form-label">DNI</label>
+																<input type="text" class="form-control"
+																	placeholder="DNI:" name="dni">
+															</div>
+														</div>
+														<div class="form-group col-8">
+															<label for="exampleInputEmail1" class="form-label">Nombre</label>
 															<input type="text" class="form-control"
-																placeholder="DNI:" name="dni">
+																placeholder="Nombre:" name="nombre">
 														</div>
-													</div>
-													<div class="form-group col-8">
-														<label for="exampleInputEmail1" class="form-label">Nombre</label>
-														<input type="text" class="form-control"
-															placeholder="Nombre:" name="nombre">
-													</div>
 
 
-													<div class="form-group col-8">
-														<label for="exampleInputPassword1" class="form-label">Paterno</label>
-														<input type="text" class="form-control"
-															placeholder="Apelldio Paterno:" name="paterno">
-													</div>
-
-
-
-													<div class="form-group col-8">
-														<label for="exampleInputPassword1" class="form-label">Materno</label>
-														<input type="text" class="form-control"
-															placeholder="Apellido Materno:" name="materno">
-													</div>
-												</div>
-												<div class="col-md-6 ms-auto">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="exampleInputPassword1" class="form-label">Celular</label>
-															<input type="text" class="form-control numcel"
-																placeholder="Número Celular:" name="celular">
-															<div class="mensajeCelular" style="text-align: left;"></div>
-															
-														</div>
-													</div>
-
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="exampleInputPassword1" class="form-label">Ciudad</label>
+														<div class="form-group col-8">
+															<label for="exampleInputPassword1" class="form-label">Paterno</label>
 															<input type="text" class="form-control"
-																placeholder="Ciudad:" name="ciudad">
+																placeholder="Apelldio Paterno:" name="paterno">
+														</div>
+
+
+
+														<div class="form-group col-8">
+															<label for="exampleInputPassword1" class="form-label">Materno</label>
+															<input type="text" class="form-control"
+																placeholder="Apellido Materno:" name="materno">
 														</div>
 													</div>
+													<div class="col-md-6 ms-auto">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="exampleInputPassword1" class="form-label">Celular</label>
+																<input type="text" class="form-control numcel"
+																	placeholder="Número Celular:" name="celular">
+																<div class="mensajeCelular" style="text-align: left;"></div>
+
+															</div>
+														</div>
+
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="exampleInputPassword1" class="form-label">Ciudad</label>
+																<input type="text" class="form-control"
+																	placeholder="Ciudad:" name="ciudad">
+															</div>
+														</div>
 
 
-													<div class="form-group">
-														<label for="exampleInputPassword1" class="form-label">Email</label>
-														<input type="text" class="form-control correo"
-															placeholder="usuario@gmail.com" name="email">
-														<div class="mensajeEmail" style="text-align: left;"></div>
-															
+														<div class="form-group">
+															<label for="exampleInputPassword1" class="form-label">Email</label>
+															<input type="text" class="form-control correo"
+																placeholder="usuario@gmail.com" name="email">
+															<div class="mensajeEmail" style="text-align: left;"></div>
+
+														</div>
+
+														<div class="form-group">
+															<label for="exampleInputEmail1" class="form-label">Dirección</label>
+															<input type="text" class="form-control"
+																placeholder="Dirección:" name="direccion">
+														</div>
+
 													</div>
-
-													<div class="form-group">
-														<label for="exampleInputEmail1" class="form-label">Dirección</label>
-														<input type="text" class="form-control"
-															placeholder="Dirección:" name="direccion">
-													</div>
-													
-												</div>
 												</div>
 											</div>
-											</form>	
-											<%--ACA TERMINA --%>
-										</div>
+										</form>
+										<%--ACA TERMINA --%>
 									</div>
-									<div class="modal-footer">
+								</div>
+								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary btn-cerrar3"
 										data-bs-dismiss="modal">Cerrar</button>
 									<button id="donarexterno1" class="btn btn-primary">Donar</button>
 								</div>
-								</div>
-								
 							</div>
+
 						</div>
 					</div>
 				</div>
-			
 			</div>
+
 		</div>
+	</div>
 	<!-- Medios de Pago -->
 
 	<h6 class="text-center">Tu aporte hace la diferencia</h6>
@@ -1005,7 +1011,7 @@ padding-bottom: 10px;
 							<div class="widget-about">
 								<img src="assets/img/footerimg.jpg" alt="" class="img-fluid">
 								<p id="footerp">Organización sin fines de lucro creada para
-									ayudar a los mas neceesitados del Perú</p>
+									ayudar a los más neceesitados del Perú</p>
 								<ul class="contact-details">
 									<li id="footerli"><span class="icon-earphones"></span>
 										Telef: <a id="footera" href="tel:344-755-111">344-755-111</a>
@@ -1026,10 +1032,11 @@ padding-bottom: 10px;
 								<ul id="footerul">
 									<li id="footerli"><a id="footera" href="voluntariado.jsp">Voluntariado</a>
 									</li>
-									<li id="footerli"><a id="footera" href="#">Donar</a></li>
+									<li id="footerli"><a id="footera" href="Donacion.jsp">Donar</a>
+									</li>
 									<li id="footerli"><a id="footera"
 										href="voluntariado.jsp#howvol">¿Cómo ser voluntario?</a></li>
-									<li id="footerli"><a id="footera" href="MenuAdmin.jsp">Admin</a></li>
+									<li id="footerli"><a id="footera" href="#">Admin</a></li>
 								</ul>
 							</div>
 							<!-- end /.footer-menu -->
@@ -1043,16 +1050,16 @@ padding-bottom: 10px;
 							<div class="footer-menu">
 								<h4 id="footerh4" class="footer-widget-title">ONG</h4>
 								<ul id="footerul">
-									<li id="footerli"><a id="footera" href="#">Nosotros</a></li>
-									<li id="footerli"><a id="footera" href="#">Historias
-											de exito </a></li>
+									<li id="footerli"><a id="footera" href="Nosotros.jsp">Nosotros</a>
+									</li>
+									<li id="footerli"><a id="footera" href="HisExito.jsp">Historias
+											de éxito </a></li>
 									<li id="footerli"><a id="footera" href="voluntariado.jsp">Voluntariado</a>
 									</li>
-									<li id="footerli"><a id="footera" href="#">Contactanos</a>
+									<li id="footerli"><a id="footera" href="#">Contáctanos</a>
 									</li>
 									<li id="footerli"><a id="footera" href="#">Eventos
 											&amp; Noticiaas</a></li>
-									<li id="footerli"><a id="footera" href="#">Blog</a></li>
 								</ul>
 							</div>
 							<!-- end /.footer-menu -->
@@ -1113,23 +1120,29 @@ padding-bottom: 10px;
 	</footer>
 
 	<!-- Libreria principal de jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
-<!-- Libreria JS de bosstrap -->
+	<!-- Libreria JS de bosstrap -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous"></script>
 
-<!-- Libreria para validar (Bootstrap Validator) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<!-- Libreria para validar (Bootstrap Validator) -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
 
-<!-- Otras bibliotecas que puedas necesitar -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-
-
+	<!-- Otras bibliotecas que puedas necesitar -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+		integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 	<%--carrusel sea responsivo --%>
 	<script>
 	
@@ -1758,7 +1771,7 @@ $('.owl-carousel').owlCarousel({
 		
 	</script>
 
-	
+
 	<script>
     // Obtén una lista de todos los botones con la clase "scroll-to-formulario"
     var scrollButtons = document.querySelectorAll('.scroll-to-formulario');
