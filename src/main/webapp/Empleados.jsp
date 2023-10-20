@@ -78,7 +78,7 @@
 											value="0" readonly>
 									</div>
 									<div class="form-group">
-										<label for="dni" class="">DNI</label> <input type="text"
+										<label for="dni" class="">DNI</label> <input type="number"
 											class="form-control" name="dni" id="id-dni">
 									</div>
 									<div class="form-group">
@@ -108,7 +108,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="telefono" class="form-label">Teléfono</label> <input
-											type="text" class="form-control" name="telefono"
+											type="number" class="form-control" name="telefono"
 											id="id-telefono">
 									</div>
 									<div class="form-group">
@@ -123,7 +123,8 @@
 									</div>
 									<div class="form-group">
 										<label for="sueldo" class="form-label">Sueldo</label> <input
-											type="text" class="form-control" name="sueldo" id="id-sueldo">
+											type="number" class="form-control" name="sueldo"
+											id="id-sueldo">
 									</div>
 									<div class="form-group">
 										<label for="rol" class="form-label">Rol</label> <select
@@ -359,8 +360,8 @@ $(document).ready(function() {
                         message: 'El Login no debe tener más de 10 caracteres'
                     },
                     regexp: {
-                        regexp: /^[A-Za-zñÑáéíóúÁÉÍÓÚüÜ]+$/,
-                        message: 'El Login solo puede contener letras y tildes'
+                        regexp: /^[A-Za-zñÑáéíóúÁÉÍÓÚüÜ0-9\s]+$/,
+                        message: 'El Login solo puede contener letras, números, espacios y tildes'
                     }
                 }
             },
@@ -456,8 +457,8 @@ $(document).ready(function() {
                         message: 'La Dirección es obligatoria'
                     },
                     stringLength: {
-                        max: 20,
-                        message: 'La Dirección no debe tener más de 20 palabras'
+                        max: 40,
+                        message: 'La Dirección no debe tener más de 40 caracteres'
                     }
                 }
             },
