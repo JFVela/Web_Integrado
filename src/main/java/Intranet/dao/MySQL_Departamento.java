@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Intranet.entidad.Departamento;
-import Intranet.entidad.Pago;
 import Intranet.interfaces.interfazDepartamento;
 import Utils.MySQL_Conexion;
 
