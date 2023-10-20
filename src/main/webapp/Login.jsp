@@ -20,42 +20,43 @@
 					<div class="card" style="border-radius: 1rem;">
 						<div class="row g-0">
 							<div class="col-md-6 col-lg-5 d-none d-md-block">
-								<img
-									src="assets/img/imagenLogin.jpg"
-									alt="login form" class="img-fluid"
-									style="border-radius: 1rem 0 0 1rem;" />
+								<img src="assets/img/imagenLogin.jpg" alt="login form"
+									class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
 							</div>
 							<div class="col-md-6 col-lg-7 d-flex align-items-center">
 								<div class="card-body p-4 p-lg-5 text-black">
 
-									<form>
+									<form method="post" action="ServletEmpleados?accion=INICIAR">
 
 										<div class="d-flex align-items-center mb-3 pb-1">
 											<i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
 											<span class="h1 fw-bold mb-0">Logo</span>
 										</div>
 
-										<h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Iniciar Sesión</h5>
+										<h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Iniciar
+											Sesión</h5>
 
 										<div class="form-outline mb-4">
-											<input type="email" id="form2Example17"
-												class="form-control form-control-lg" /> <label
+											<input type="text" id="form2Example17"
+												class="form-control form-control-lg" name="login" /> <label
 												class="form-label" for="form2Example17">Usuario</label>
 										</div>
 
 										<div class="form-outline mb-4">
 											<input type="password" id="form2Example27"
-												class="form-control form-control-lg" /> <label
+												class="form-control form-control-lg" name="contrasena" /> <label
 												class="form-label" for="form2Example27">Contraseña</label>
 										</div>
 
 										<div class="pt-1 mb-4">
-											<button class="btn btn-dark btn-lg btn-block" type="button">Ingresar</button>
+											<button class="btn btn-dark btn-lg btn-block" type="submit">Ingresar</button>
 										</div>
 
-										<a class="small text-muted" href="#!">Olvidaste tu contraeña?</a>
+										<a class="small text-muted" href="#!">Olvidaste tu
+											contraseña?</a>
 										<p class="mb-5 pb-lg-2" style="color: #393f81;">
-											No estas registrado? <a href="#!" style="color: #393f81;">Regístrate aquí</a>
+											No estás registrado? <a href="#!" style="color: #393f81;">Regístrate
+												aquí</a>
 										</p>
 										<a href="#!" class="small text-muted">Terms of use.</a> <a
 											href="#!" class="small text-muted">Privacy policy</a>

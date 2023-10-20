@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import Intranet.entidad.Empleados;
+import Intranet.entidad.Enlace;
 import Intranet.interfaces.interfazEmpleados;
 import Utils.MySQL_Conexion;
 
@@ -207,6 +208,62 @@ public class MySQL_Empleados implements interfazEmpleados {
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
+		}
+		return lista;
+	}
+
+	@Override
+	public Empleados iniciarSesion(String login, String contraseña) {
+		Empleados bean = null;
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		try {
+			cn = new MySQL_Conexion().getConnection();
+			String sql = "SELECT codigo, login, nombre, id_rol FROM empleados WHERE login = ? AND contraseña = ?";
+			pstm = cn.prepareStatement(sql);
+			pstm.setString(1, login);
+			pstm.setString(2, contraseña);
+			rs = pstm.executeQuery();
+
+			if (rs.next()) {
+				bean = new Empleados();
+				bean.setCodigo(rs.getInt(1));
+				bean.setLogin(rs.getString(2));
+				bean.setNombre(rs.getString(3));
+				bean.setId_rol(rs.getInt(4));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bean;
+	}
+
+	@Override
+	public List<Enlace> traerEnlaceDelUsuario(int codRol) {
+		List<Enlace> lista = new ArrayList<Enlace>();
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		try {
+			cn = new MySQL_Conexion().getConnection();
+			String sql = "SELECT e.id_enlace, e.descripcion, e.ruta\r\n" + "FROM enlace e\r\n"
+					+ "JOIN roles_has_enlace re ON e.id_enlace = re.enlace_id_enlace\r\n" + "WHERE re.roles_id_rol = ?";
+			pstm = cn.prepareStatement(sql);
+			pstm.setInt(1, codRol);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				Enlace bean = new Enlace();
+				bean.setId_enlace(rs.getInt(1));
+				bean.setDescripcion(rs.getString(2));
+				bean.setRuta(rs.getString(3));
+				lista.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return lista;
 	}
