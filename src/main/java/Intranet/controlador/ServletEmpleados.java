@@ -1,33 +1,65 @@
 package Intranet.controlador;
-
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Intranet.dao.MySQL_Empleados;
 import Intranet.entidad.Empleados;
+import Intranet.entidad.Enlace;
 
 @WebServlet("/ServletEmpleados")
-public class ServletEmpleados extends HttpServlet {
+public class ServletEmpleados<Enlace> extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public ServletEmpleados() {
 		super();
 	}
-
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String tipo = request.getParameter("accion");
-		if (tipo.equals("grabar"))
+		if (tipo.equals("INICIAR"))
+			iniciarSesion(request, response);
+		else if (tipo.equals("CERRAR"))
+			cerrarSesion(request, response);
+		else if (tipo.equals("grabar"))
 			GuardarEmpleado(request, response);
 		else if (tipo.equals("listado"))
 			ListarEmpleados(request, response);
 		else if (tipo.equals("eliminar"))
 			EliminarEmpleado(request, response);
+	}
+
+	private void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		request.getSession().setAttribute("MENSAJE", "Sesión terminada");
+		response.sendRedirect("Login.jsp");
+	}
+
+	private void iniciarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String vLogin, vClave;
+		vLogin = request.getParameter("login");
+		vClave = request.getParameter("contrasena");
+
+		Empleados empleado = new MySQL_Empleados().iniciarSesion(vLogin, vClave);
+
+		if (empleado == null) {
+			request.getSession().setAttribute("MENSAJE", "Usuario y/o contraseña incorrectos");
+			response.sendRedirect("Login.jsp");
+		} else {
+			List<Intranet.entidad.Enlace> lista =new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getId_rol());
+			HttpSession session = request.getSession();
+			session.setAttribute("listaEnlaces", lista);
+			session.setAttribute("datosEmpleado", empleado.getLogin());
+			response.sendRedirect("intranet.jsp");
+		}
 	}
 
 	private void EliminarEmpleado(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -57,9 +89,10 @@ public class ServletEmpleados extends HttpServlet {
 
 	private void GuardarEmpleado(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String dni,codigo, login, contraseña, nombre, paterno, materno, telefono, correo, direccion, sueldo, id_rol, id_depa;
+		String dni, codigo, login, contraseña, nombre, paterno, materno, telefono, correo, direccion, sueldo, id_rol,
+				id_depa;
 		dni = request.getParameter("dni");
-		codigo=request.getParameter("codigo");
+		codigo = request.getParameter("codigo");
 		login = request.getParameter("login");
 		contraseña = request.getParameter("contrasena");
 		nombre = request.getParameter("nombre");
