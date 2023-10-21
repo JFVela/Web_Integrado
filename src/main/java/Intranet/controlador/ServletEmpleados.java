@@ -5,14 +5,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import Intranet.dao.MySQL_Empleados;
 import Intranet.entidad.Empleados;
 import Intranet.entidad.Enlace;
@@ -40,7 +38,7 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		else if (tipo.equals("listado"))
 			ListarEmpleados(request, response);
 		else if (tipo.equals("eliminar"))
-			EliminarEmpleado(request, response);	
+			EliminarEmpleado(request, response);
 	}
 
 	private void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -77,7 +75,7 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		// Comparar los hashes
 		if (hashIngresado.equals(empleado.getContraseña())) {
 			// Las contraseñas coinciden, el inicio de sesión es exitoso
-			 List<Intranet.entidad.Enlace> lista = new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getId_rol());
+			List<Intranet.entidad.Enlace> lista = new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getId_rol());
 			HttpSession session = request.getSession();
 			session.setAttribute("listaEnlaces", lista);
 			session.setAttribute("datosEmpleado", empleado.getLogin());
