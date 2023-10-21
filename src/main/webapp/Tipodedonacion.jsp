@@ -1,4 +1,4 @@
-<jsp:include page="intranet.jsp"></jsp:include>
+
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -46,8 +46,7 @@ body{
 
 <div class="container">
 
-<h1 class="mt-5 text-center">Tipos De Donaciones</h1>
-
+<h1 class="mt-5 text-center" style="color: #008f39;">Tipos De Donaciones</h1>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Agregar
