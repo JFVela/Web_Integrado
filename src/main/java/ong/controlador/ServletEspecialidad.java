@@ -32,6 +32,7 @@ public class ServletEspecialidad extends HttpServlet {
     
     
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		 String tipo = request.getParameter("accion");
 		    //validar tipo
 		    if (tipo.equals("guardar")) {

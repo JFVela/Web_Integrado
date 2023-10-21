@@ -44,6 +44,7 @@ public class ServletVoluntario extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 	    //recuperar el parametro accion
 	    String tipo = request.getParameter("accion");
 	    //validar tipo

@@ -29,6 +29,7 @@ public class ServletEventos extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
+
 	public ServletEventos() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -38,14 +39,15 @@ public class ServletEventos extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String tipo = request.getParameter("accion");
-		// validar tipo
-		if (tipo.equals("guardar")) {
-			grabarEventos(request, response);
-		} else if (tipo.equals("eliminar"))
-			eliminarEvento(request, response);
+
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		 String tipo = request.getParameter("accion");
+		    //validar tipo
+	  if (tipo.equals("guardar")) {
+		  grabarEventos(request, response);
+	  } else if(tipo.equals("eliminar"))
+		  eliminarEvento(request,response);
 	}
 
 	private void eliminarEvento(HttpServletRequest request, HttpServletResponse response) throws IOException {

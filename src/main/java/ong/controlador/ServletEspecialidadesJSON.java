@@ -36,6 +36,7 @@ public class ServletEspecialidadesJSON extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		//obtener lista de todos los colegios
 		List<Especialidad> lista = new MySqlEspecialidadesDAO().findAll();
 		//Crear objeto de la clase GSON

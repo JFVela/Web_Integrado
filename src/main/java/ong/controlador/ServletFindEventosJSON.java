@@ -34,6 +34,7 @@ public class ServletFindEventosJSON extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		//recuperar parámetro codigo
 		String id=request.getParameter("id");
 		Eventos bean=new MySqlEventosDAO().findById(Integer.parseInt(id));

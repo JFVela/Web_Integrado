@@ -33,6 +33,7 @@ public class ServletFindEspecialidadJSON extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		//recuperar parámetro codigo
 		String id=request.getParameter("id");
 		Especialidad bean=new MySqlEspecialidadesDAO().findById(Integer.parseInt(id));
