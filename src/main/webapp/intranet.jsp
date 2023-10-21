@@ -10,53 +10,90 @@
 	rel="stylesheet"
 	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
 	crossorigin="anonymous">
-<style>
-.navbar-toggler {
-	background-color: #007bff;
-	border-color: rgba(255, 0, 0, 0.85);
-}
+<link
+	href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
+	rel="stylesheet">
 
-a {
-	font-weight: bold !important;
-	margin-right: 50px;
-}
-</style>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg bg-dark">
+	<!-- NAVBAR -->
+	<nav class="navbar navbar-expand-lg bg-light">
 	<div class="container-fluid">
+		<a class="navbar-brand" href="intranet.jsp">INTRANET</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-			data-bs-target="#navbarTogglerDemo01"
-			aria-controls="navbarTogglerDemo01" aria-expanded="false"
+			data-bs-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-			<h3 class="text-white">SERPRODAT</h3>
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0"
-				style="padding-left: 30px;">
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<c:forEach items="${sessionScope.listaEnlaces}" var="row">
-					<li class="nav-item"><a class="nav-link text-white"
-						href="${row.ruta}">${row.descripcion}</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="${row.ruta}">${row.descripcion}</a></li>
 				</c:forEach>
 			</ul>
 			<div class="flex"
-				style="width: 200px !important; padding-top: 10px; font-weight: bold">
-				<p class="text-white">Usuario: ${sessionScope.datosEmpleado}</p>
+				style="width: 200px !important; padding-top: 10px; font-weight: bolder;">
+				<p style="color: black;">Bienvenido
+					${sessionScope.datosEmpleado}!</p>
 			</div>
 
-			<form class="d-flex" method="post"
+			<form id="FormularioInicioSesion" method="post"
 				action="ServletEmpleados?accion=CERRAR">
-				<button class="btn btn-outline-danger" type="submit" >Cerrar
-					Sesión</button>
+				<button class="btn btn-outline-success" type="submit">CERRAR
+					SESSION</button>
 			</form>
 		</div>
 	</div>
 	</nav>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+<!-- libreria principal de JQUERY -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<!-- libreria JS de bootstrap -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
+
+<!-- libreria JS de la tabla -->
+<script
+	src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- libreria para validar (bootstrap validator) -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.MENSAJE!=null}">
+	<script>
+		var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
+		toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
+			"timeOut" : "2000",
+			"positionClass " : " toast-top-right ",
+		});
+	</script>
+</c:if>
+
+<!-- eliminar atributo de tipo sesión MENSAJE -->
+<c:remove var="MENSAJE" scope="session" />
 </html>
 

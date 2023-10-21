@@ -1,4 +1,5 @@
 package Intranet.controlador;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 	public ServletEmpleados() {
 		super();
 	}
+
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -39,7 +41,9 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 	private void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		request.getSession().setAttribute("MENSAJE", "Sesión terminada");
+		String tipoMensaje = "error"; // Cambiar el tipo de mensaje a "success"
+		request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+		request.getSession().setAttribute("MENSAJE", "SESION CERRADA"); // Cambiar el mensaje
 		response.sendRedirect("Login.jsp");
 	}
 
@@ -47,18 +51,24 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		String vLogin, vClave;
 		vLogin = request.getParameter("login");
 		vClave = request.getParameter("contrasena");
+		String tipoMensaje = "success";
 
 		Empleados empleado = new MySQL_Empleados().iniciarSesion(vLogin, vClave);
 
 		if (empleado == null) {
-			request.getSession().setAttribute("MENSAJE", "Usuario y/o contraseña incorrectos");
+			tipoMensaje = "error";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE", "Usuario o Contraseña Inválida");
 			response.sendRedirect("Login.jsp");
 		} else {
-			List<Intranet.entidad.Enlace> lista =new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getId_rol());
+			List<Intranet.entidad.Enlace> lista = new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getId_rol());
 			HttpSession session = request.getSession();
 			session.setAttribute("listaEnlaces", lista);
 			session.setAttribute("datosEmpleado", empleado.getLogin());
 			response.sendRedirect("intranet.jsp");
+			tipoMensaje = "success";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE", "SESSION INGRESADA CORRECTAMENTE");
 		}
 	}
 

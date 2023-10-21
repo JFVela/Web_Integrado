@@ -85,77 +85,92 @@
 			</div>
 		</div>
 	</section>
-	<!-- libreria principal de JQUERY -->
-	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
-	<!-- libreria JS de bootstrap -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-		crossorigin="anonymous"></script>
+</body>
+<!-- libreria principal de JQUERY -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
-	<!-- libreria JS de la tabla -->
-	<script
-		src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-	<script
-		src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<!-- libreria JS de bootstrap -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
 
-	<!-- libreria para validar (bootstrap validator) -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+<!-- libreria JS de la tabla -->
+<script
+	src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<!-- libreria para validar (bootstrap validator) -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.MENSAJE!=null}">
 	<script>
-		$(document).ready(function() {
-			$('#FormularioInicioSesion').bootstrapValidator({
-				feedbackIcons : {
-					valid : 'fa fa-check',
-					invalid : 'fa fa-times',
-					validating : 'fa fa-refresh'
-				},
-				fields : {
-					login : {
-						validators : {
-							notEmpty : {
-								message : 'El usuario es obligatorio'
-							},
-							stringLength : {
-								min : 1,
-								max : 10,
-								message : 'No más de 10 caracteres'
-							},
-							regexp : {
-								regexp : /^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ]+$/,
-								message : 'No se aceptan espacios'
-							}
+		var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
+		toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
+			"timeOut" : "2000",
+			"positionClass " : " toast-top-right ",
+		});
+	</script>
+</c:if>
+
+<!-- eliminar atributo de tipo sesión MENSAJE -->
+<c:remove var="MENSAJE" scope="session" />
+
+<script>
+	$(document).ready(function() {
+		$('#FormularioInicioSesion').bootstrapValidator({
+			feedbackIcons : {
+				valid : 'fa fa-check',
+				invalid : 'fa fa-times',
+				validating : 'fa fa-refresh'
+			},
+			fields : {
+				login : {
+					validators : {
+						notEmpty : {
+							message : 'El usuario es obligatorio'
+						},
+						stringLength : {
+							min : 1,
+							max : 10,
+							message : 'No más de 10 caracteres'
+						},
+						regexp : {
+							regexp : /^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ]+$/,
+							message : 'No se aceptan espacios'
 						}
-					},
-					contrasena : {
-						validators : {
-							notEmpty : {
-								message : 'La contraseña es obligatoria'
-							},
-							stringLength : {
-								min : 10,
-								message : 'Complete la contraseña'
-							},
-							regexp : {
-								regexp : /^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/,
-								message : 'Solo se aceptan números y letras'
-							}
+					}
+				},
+				contrasena : {
+					validators : {
+						notEmpty : {
+							message : 'La contraseña es obligatoria'
+						},
+						stringLength : {
+							min : 10,
+							message : 'Complete la contraseña'
+						},
+						regexp : {
+							regexp : /^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/,
+							message : 'Solo se aceptan números y letras'
 						}
 					}
 				}
-			}).on('success.form.bv', function(e) {
-				// Prevent the form from submitting
-				e.preventDefault();
-			});
+			}
+		}).on('success.form.bv', function(e) {
+			// Prevent the form from submitting
+			e.preventDefault();
 		});
-	</script>
-</body>
+	});
+</script>
 </html>
