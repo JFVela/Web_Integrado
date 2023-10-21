@@ -1,5 +1,4 @@
 package Intranet.controlador;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import Intranet.dao.MySQL_Empleados;
 import Intranet.entidad.Empleados;
 import Intranet.entidad.Enlace;
 
-
 @WebServlet("/ServletEmpleados")
 public class ServletEmpleados<Enlace> extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -22,7 +20,6 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 	public ServletEmpleados() {
 		super();
 	}
-
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -60,7 +57,7 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 			List<Intranet.entidad.Enlace> lista =new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getId_rol());
 			HttpSession session = request.getSession();
 			session.setAttribute("listaEnlaces", lista);
-			session.setAttribute("datosEmpleado", empleado.getNombre() + " " + empleado.getPaterno());
+			session.setAttribute("datosEmpleado", empleado.getLogin());
 			response.sendRedirect("intranet.jsp");
 		}
 	}
