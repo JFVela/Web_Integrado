@@ -34,6 +34,7 @@ public class ServletVoluntarioJSON extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		//obtener lista de todos los docentes
 		List<Voluntario> lista=new MySqlVoluntarioDAO().findAll();
 		//crear objeto de la clase Gson

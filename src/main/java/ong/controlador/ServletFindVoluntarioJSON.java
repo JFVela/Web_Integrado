@@ -33,6 +33,7 @@ public class ServletFindVoluntarioJSON extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		//recuperar parámetro dni
 		String dni=request.getParameter("dni");
 		Voluntario bean=new MySqlVoluntarioDAO().findById(Integer.parseInt(dni));

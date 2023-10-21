@@ -17,6 +17,7 @@ public class Empleados {
 	private int id_depa;
 	private String nombre_rol;
 	private String nombre_departamento;
+	private byte[] salt;
 
 	public int getCodigo() {
 		return codigo;
@@ -144,6 +145,14 @@ public class Empleados {
 
 	public void setNombre_departamento(String nombre_departamento) {
 		this.nombre_departamento = nombre_departamento;
+	}
+
+	public byte[] getSalt() {
+		return salt;
+	}
+
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
 	}
 
 }

@@ -84,7 +84,7 @@
 											class="form-control" name="dni" id="id-dni">
 									</div>
 									<div class="form-group">
-										<label for="login" class="form-label">Login</label> <input
+										<label for="login" class="form-label">Username</label> <input
 											type="text" class="form-control" name="login" id="id-login">
 									</div>
 									<div class="form-group">
