@@ -228,10 +228,10 @@ body.shimeji-select-ie {
 				<%--PRIMERA COLUMNA --%>
 				<div class="col ">
 					<div class="text-center">
-						<h1>Donación Física</h1>
+						<h1><span style="color: green;">Donación </span>Física</h1>
 						<img src="img/R.png" class="img-fluid"
-							style="height: 300px; width: 450px;">
-						<p>Tu donación física tiene un impacto local. Al ofrecer
+							style="height: 300px; width: 450px; padding-top: 10px;padding-bottom: 10px;">
+						<p style="padding-left: 50px;padding-right: 50px;">Tu donación física tiene un impacto local. Al ofrecer
 							recursos tangibles, marcas la diferencia en comunidades cercanas</p>
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-primary"
@@ -373,10 +373,10 @@ body.shimeji-select-ie {
 				<%--DONACION VIRTUAL --%>
 				<div class="col estilo-col2">
 					<div class="text-center">
-						<h1>Donación Virtual</h1>
+						<h1><span style="color: white;">Donación </span>Virtual</h1>
 						<img src="img/asa.png" class="img-fluid"
 							style="height: 300px; width: 250px;">
-						<p>"Donar en línea es poderoso. Con tu ayuda virtual, apoyas
+						<p style="padding-left: 50px;padding-right: 50px;">"Donar en línea es poderoso. Con tu ayuda virtual, apoyas
 							causas en todo el mundo desde casa."</p>
 						<button type="button" class="btn btn-primary btn-cerrar2"
 							data-bs-toggle="modal" data-bs-target="#donavirtual">
