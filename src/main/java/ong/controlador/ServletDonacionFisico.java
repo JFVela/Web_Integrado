@@ -19,6 +19,7 @@ public class ServletDonacionFisico extends HttpServlet {
         super();
     }
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String tipo = request.getParameter("accion");
 
 		if (tipo.equals("insertar")) {
@@ -30,14 +31,19 @@ public class ServletDonacionFisico extends HttpServlet {
 	
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String dato=request.getParameter("dato");
+		String tipoMensaje;
 		//invocar al método deleteById y enviar la variable "cod"
 		int estado=new MySqlDonacionFiscaDAO().deleteById(Integer.parseInt(dato));
 		//validar estado
-		if(estado==1)
-			System.out.println("SI");
-		else
-			System.out.println("NO");
-		request.getSession().setAttribute("MENSAJE","Donacion fisica eliminado");
+		if(estado==1) {
+			tipoMensaje="error";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE","Donacion Fisica eliminado");
+		}else {
+			tipoMensaje="error";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE","Error al eliminar donación física");
+		}
 		//invocar método listarDocente
 		//listarDocente(request,response);
 		response.sendRedirect("Donacion_Fisica.jsp");			
@@ -47,7 +53,7 @@ public class ServletDonacionFisico extends HttpServlet {
 				request.getRequestDispatcher("/Donacion_Fisica.jsp").forward(request, response);		
 	}
 	private void insertarDonFisica(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String id,dnidon,idlocal,descrip,estadol;
+		String id,dnidon,idlocal,descrip,estadol,tipoMensaje;
 		id=request.getParameter("id");
 		dnidon=request.getParameter("dnidonante");
 		idlocal=request.getParameter("idlocal");
@@ -61,24 +67,35 @@ public class ServletDonacionFisico extends HttpServlet {
 		bean.setIdLocal(Integer.parseInt(idlocal));
 		bean.setDescripcion(descrip);
 		bean.setEstado(Boolean.parseBoolean(estadol));
+		System.out.print(id+" "+dnidon+" "+idlocal+" "+descrip+" "+estadol);
 		//validar variable cod
 		if(Integer.parseInt(id)==0){
 			//4.invocar al método save y enviar el objeto "bean"
 			int estado=new MySqlDonacionFiscaDAO().save(bean);
 			//validar estado
-			if(estado==1)
-				request.getSession().setAttribute("MENSAJE","Donacion Fisica registrado");
-			else
-				request.getSession().setAttribute("MENSAJE","Error en el registro");
+			if(estado==1) {
+				tipoMensaje="success";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE","Donacion Fisica registrada");
+			}else {
+				tipoMensaje="error";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE","Error al registrar donación");
+			}
 		}
 		else {
 			//4.invocar al método update y enviar el objeto "bean"
 			int estado=new MySqlDonacionFiscaDAO().update(bean);
 			//validar estado
-			if(estado==1)
+			if(estado==1) {
+				tipoMensaje="warning";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 				request.getSession().setAttribute("MENSAJE","Donacion Fisica actualizado");
-			else
+			}else {
+				tipoMensaje="error";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 				request.getSession().setAttribute("MENSAJE","Error en la actualización");
+			}
 		}		
 		response.sendRedirect("Donacion_Fisica.jsp");	
 		

@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -5,9 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Donación Física</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
 <style>
 .help-block {
@@ -20,14 +22,22 @@
 	  border: 1px solid red;
 	  box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
 	}
+	.campo-desactivado {
+    pointer-events: none;
+    background-color: #f4f4f4;
+}
+	
 </style>
 </head>
 <body>
 <div class="container">
 		<h1 class="mt-5 text-center">Listado de Donaciones Físicas</h1>
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Nuevo Donante</button>
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" 
+		data-bs-target="#exampleModal">Nuevo Donante</button>
 		<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" 
+	aria-hidden="true" data-bs-backdrop="static"
+		data-bs-keyboard="false" aria-labelledby="staticBackdropLabel">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -40,11 +50,15 @@
 		    <label for="exampleInputEmail1" class="form-label">ID</label>
 		    <input type="text" class="form-control" name="id" id="id-id" value="0" readonly>
 		  </div>
-		 <div class="form-group">
-		    <label for="exampleInputEmail1" class="form-label">DNI Donante</label>
-		    <input type="text" class="form-control" name="dnidonante" id="id-dnidonante" >
-		  </div>
 		  
+		  <div class="form-group">
+						<label for="exampleInputEmail2" class="form-label">DNI Donantes</label> 
+				<select class="form-select form-control" 
+						aria-label="Default select example" name="dnidonante" id="id-dnidonante">
+					<option value=""  readonly selected hidden="disable">Seleccione un DNI</option>
+				</select>
+		</div>
+		
 		  <div class="form-group">
 						<label for="exampleInputEmail2" class="form-label">Lugar de Entrega</label> 
 				<select class="form-select form-control"
@@ -55,14 +69,23 @@
 		</div>
 			
 		  <div class="form-group">
-		    <label for="exampleInputEmail1" class="form-label">Descripcion</label>
-		    <input type="text" class="form-control" name="descripcion" id="id-descripcion">
-		  </div>
-		<div class="form-group">
-		    <label for="exampleInputPassword1" class="form-label">Estado</label>
-		    <input type="text" class="form-control" name="estado" id="id-estado">
-		  </div>
-  
+		    <label for="id-descripcion" class="form-label">Descripcion</label>
+		    <textarea class="form-control" placeholder="Donaré una caja llena de alimentos no perecederos, mantas y ropa abrigada para apoyar a las personas." 
+		    name="descripcion" id="id-descripcion"></textarea>
+		</div>
+
+		  
+		  
+  		<div class="form-group">
+						<label for="exampleInputEmail2" class="form-label">Estado</label> 
+				<select class="form-select form-control"
+						aria-label="Default select example" name="estado" id="id-estado">
+					<option value="" selected hidden="disable">Seleccione el estado de la donación</option>
+					<option value="false">No Entregado</option>
+					<option value="true">Entregado</option>
+				</select>
+		</div>
+		
 		<div class="modal-footer">
               <button type="submit" class="btn btn-primary">Grabar</button>
              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-cerrar" >Cerrar</button>
@@ -82,7 +105,7 @@
 	            <tr>
 	                <th>ID</th>
 	                <th>DNI Donantes</th>
-	                <th>ID Local</th>
+	                <th>Sucursal</th>
 	                <th>Descripción</th>
 	                <th>Estados</th>
 	                <th></th>
@@ -108,18 +131,21 @@
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <c:if test="${sessionScope.MENSAJE!=null}">
 	<script>
-			toastr.success("${sessionScope.MENSAJE}", toastr.options = {
+	 		var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
+			toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
 					"timeOut": "2000",
 					"positionClass " : " toast-top-right ",
 				});
-	
 	</script>
 </c:if>
-<c:remove var="MENSAJE" scope="session"/>
-<script>
-cargarLocacion();
-CargarLocaciones();
 
+
+<c:remove var="MENSAJE" scope="session"/>
+
+<script>
+cargarDonacionesFisicas();
+CargarLocaciones();
+CargarDni();
 function CargarLocaciones(){
 	$.get("ServletLocacionJSON",function(response){
 		$.each(response,function(index,item){
@@ -127,15 +153,24 @@ function CargarLocaciones(){
 		})
 	})	
 }
-function cargarLocacion(){
+function CargarDni(){
+	$.get("ServletDonanteJSON",function(response){
+		$.each(response,function(index,item){
+			$("#id-dnidonante").append("<option value='"+item.dni+"'>"+item.dni+"</option>");
+		})
+	})	
+}
+function cargarDonacionesFisicas(){
 	$.get("ServletDonacionFisicoJSON",function(response){	
 		let botonEditar="<button type='button' class='btn btn-success btn-edit' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
         let botonEliminar="<button type='button' class='btn btn-danger btn-deleted'>Eliminar</button>";
 		$.each(response,function(index,item){
+            let estadoTexto = item.estado === false ? "No entregado" : "Entregado";
+
 			//llenar tabla
 			$("#tablaDonFisi").append("<tr><td>"+item.idFisico+"</td>"+
-				 "<td>"+item.dniDonantes+"</td>"+"<td>"+item.idLocal+"</td>"+
-				 "<td>"+item.descripcion+"</td>"+"<td>"+item.estado+"</td>"+
+				 "<td>"+item.dniDonantes+"</td>"+"<td>"+item.nombreLocal+"</td>"+
+				 "<td>"+item.descripcion+"</td>"+"<td>"+estadoTexto+"</td>"+
 				 "<td>"+botonEditar+"</td><td>"+botonEliminar+"</td></tr>");
 		})
 		new DataTable('#tablaDonFisi');
@@ -143,38 +178,67 @@ function cargarLocacion(){
 }
 
 	$(document).on("click",".btn-edit",function(){
+		$("#id-dnidonante").addClass("campo-desactivado");
+
 		var id;
 		id=$(this).parents("tr").find("td")[0].innerHTML;
-		console.log(id);
 		$.get("ServletFindDonacionFisicoJSON?id="+id,function(response){
 			$("#id-id").val(response.idFisico);
 			$("#id-dnidonante").val(response.dniDonantes);
 			$("#id-local").val(response.idLocal);
 			$("#id-descripcion").val(response.descripcion);
-			$("#id-estado").val(response.estado);
+			$("#id-estado").val(response.estado ? "true" : "false");
+
 		})
 	})
-	$(document).on("click",".btn-deleted",function(){
-		var id;
-		id=$(this).parents("tr").find("td")[0].innerHTML;
-			Swal.fire({
-				  title: 'Seguro de Eliminar?',
-				  text: "Locacion con ID: "+id,
-				  icon: 'warning',
-				  showCancelButton: true,
-				  confirmButtonColor: '#3085d6',
-				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Aceptar',
-				  cancelButtonText: 'Cancelar'
-				}).then((result) => {
-				  if (result.isConfirmed) {
-				    window.location="http://localhost:8080/GitHub_ONG/ServletDonacionFisico?accion=eliminar&dato="+id;
-				  }
-				})
-		})
+	
+	$(document).on("click", ".btn-deleted", function () {
+    var id = parseInt($(this).parents("tr").find("td")[0].innerHTML);
+
+    $.get("ServletDonacionFisicoJSON", function (response) {
+
+        var item = response.find(function (element) {
+            return element.idFisico === id;
+        });
+        console.log(item.estado);
+        if (item.estado === false) {
+        	Swal.fire({
+                title: 'Seguro de Eliminar?',
+                text: "Donación Física con ID: " + id,
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = "http://localhost:8080/GitHub_ONG/ServletDonacionFisico?accion=eliminar&dato=" + id;
+                }
+            });
+        } else {
+        	Swal.fire({
+                title: 'No se puede eliminar',
+                text: "Los aportes realizados no se pueden eliminar",
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Aceptar'
+            })
+        }
+    });
+});
+
+
+
+
+
+
+	
 	$(document).on("click","#btn-cerrar",function(){
 		$("#formDonFisi").trigger("reset");
 		$("#formDonFisi").data("bootstrapValidator").resetForm(true);
+		$("#id-id").val("0");
+		$("#id-dnidonante").removeClass("campo-desactivado");
 	})
 </script>
 <script>    
@@ -187,14 +251,7 @@ function cargarLocacion(){
      		 				message:'Campo DNI es obligatorio'
      		 			}
      		 		}
-     		 		}, 
-        		 	id:{
-        		 		validators:{
-        		 			notEmpty:{
-        		 				message:'Campo DNI es obligatorio'
-        		 			}
-        		 		}
-        		 	},
+     		 		},
         		 	idlocal:{
         		 		validators:{
         		 			notEmpty:{

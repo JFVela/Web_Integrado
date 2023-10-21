@@ -147,7 +147,8 @@
 <!-- validar si existe el atrubuto MENSAJE -->
 <c:if test="${sessionScope.MENSAJE!=null}">
 	<script>
-			toastr.success("${sessionScope.MENSAJE}", toastr.options = {
+	 		var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
+			toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
 					"timeOut": "2000",
 					"positionClass " : " toast-top-right ",
 				});
@@ -217,7 +218,7 @@ $(document).on("click",".boton-cerrar",function(){
 		                Swal.fire({
 		                    title: 'Seguro de Eliminar?',
 		                    text: "Donante con DNI: " + dni + " tiene donaciones asociadas.",
-		                    icon: 'warning',
+		                    icon: 'error',
 		                    showCancelButton: true,
 		                    confirmButtonColor: '#3085d6',
 		                    cancelButtonColor: '#d33',
@@ -232,7 +233,7 @@ $(document).on("click",".boton-cerrar",function(){
 		                Swal.fire({
 		                    title: 'No se puede realizar la eliminación',
 		                    text: 'La donación no se puede eliminar',
-		                    icon: 'error',
+		                    icon: 'warning',
 		                    confirmButtonColor: '#3085d6',
 		                    confirmButtonText: 'Aceptar'
 		                });

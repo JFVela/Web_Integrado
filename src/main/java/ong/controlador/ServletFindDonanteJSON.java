@@ -24,6 +24,7 @@ public class ServletFindDonanteJSON extends HttpServlet {
     }
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+				request.setCharacterEncoding("UTF-8");
 				String dni=request.getParameter("dni");
 				Donante bean=new MySqlDonanteDAO().findById(Integer.parseInt(dni));
 				Gson gson=new Gson();

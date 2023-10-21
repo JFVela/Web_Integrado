@@ -173,4 +173,33 @@ public class MySqlLocacionDAO implements LocacionDAO{
 		return salida;
 	}
 
+	@Override
+	public boolean verificarLocacion(int id) {
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		try {
+			cn = new MySqlConectar().getConectar();
+			String sentencia = "select * from local_donacion l inner join\r\n"
+					+ "donacion_fisica f where ?=f.local_donacion_id_local;";
+			pstm=cn.prepareStatement(sentencia);
+			pstm.setInt(1, id);
+			rs = pstm.executeQuery();
+			return rs.next();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (pstm != null)
+					pstm.close();
+				if (cn != null)
+					cn.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
 }

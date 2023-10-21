@@ -26,6 +26,7 @@ public class ServletFindTipoDonacionJSON extends HttpServlet {
 
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String cod=request.getParameter("codigo");
 		Tipo_Donacion bean = new MySqlTipoDonacionDAO().findById(Integer.parseInt(cod));
 		Gson gson=new Gson();

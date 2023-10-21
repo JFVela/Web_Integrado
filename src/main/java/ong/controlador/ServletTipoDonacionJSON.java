@@ -24,15 +24,11 @@ public class ServletTipoDonacionJSON extends HttpServlet {
     }
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//obtener lista de todos
+		request.setCharacterEncoding("UTF-8");
 		List<Tipo_Donacion> lista=new MySqlTipoDonacionDAO().findAll();
-		//crear objeto de la clase Gson
 		Gson gson=new Gson();
-		//convertir a JSON(STRING) el arreglo lista
 		String json=gson.toJson(lista);
-		//preparar salida en formato JSON
 		response.setContentType("application/json;charset=UTF-8");
-		//
 		PrintWriter pw=response.getWriter();
 		pw.print(json);	
 	}

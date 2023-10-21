@@ -29,6 +29,7 @@ public class ServletDonante extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String tipo = request.getParameter("accion");
 		
 		if (tipo.equals("insertarfi")) {
@@ -120,21 +121,29 @@ public class ServletDonante extends HttpServlet {
 
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String dato=request.getParameter("dato");
+		String tipoMensaje;
 		//invocar al método deleteById y enviar la variable "cod"
+		int id=new MySqlDonacionFiscaDAO().obtenerid(Integer.parseInt(dato));
+		int estado1=new MySqlDonacionFiscaDAO().deleteById(id);
 		int estado=new MySqlDonanteDAO().deleteById(Integer.parseInt(dato));
+		
 		//validar estado
-		if(estado==1)
-			System.out.println("SI");
-		else
-			System.out.println("NO");
-		request.getSession().setAttribute("MENSAJE","Docente eliminado");
+		if(estado==1) {
+			 tipoMensaje="error";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE", "Donante Eliminado");
+		}else {
+			 tipoMensaje="error";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE", "No se puedo eliminar");
+		}
 		//invocar método listarDocente
 		//listarDocente(request,response);
-		response.sendRedirect("Donantes.jsp");
-	}
+		response.sendRedirect("Donantes.jsp");}
+	
 
 	private void actualizar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String dni,nom, ma, pa, ciu, direc, cel, email;
+		String dni,nom,tipoMensaje, ma, pa, ciu, direc, cel, email;
 		
 		String dniAntiguo = request.getParameter("dniAntiguo");
 		dni=request.getParameter("dni");
@@ -156,11 +165,14 @@ public class ServletDonante extends HttpServlet {
 		bean.setEmail(email);
 		int estado = new MySqlDonanteDAO().update(bean,Integer.parseInt(dniAntiguo));		
 		if(estado==1) {
-
-			request.getSession().setAttribute("MENSAJE","asas");
+			tipoMensaje="warning";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE", "Donante Actualizado");
 
 		}else {
-			request.getSession().setAttribute("MENSAJE","Fallida");
+			tipoMensaje="error";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE", "Error al editar");
 		}
 	
 		response.sendRedirect("Donantes.jsp");
@@ -234,6 +246,7 @@ public class ServletDonante extends HttpServlet {
 		bean1.setDniDonantes(Integer.parseInt(dni));
 		bean1.setIdLocal(Integer.parseInt(local));
 		bean1.setDescripcion(des);
+		bean1.setEstado(false);
 		
 		boolean veri= new MySqlDonanteDAO().verificarDNI(Integer.parseInt(dni));
 		if(veri==true) {

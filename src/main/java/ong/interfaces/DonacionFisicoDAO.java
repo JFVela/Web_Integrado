@@ -10,4 +10,5 @@ public interface DonacionFisicoDAO {
 	DonacionFisica findById(int id);
 	int update(DonacionFisica bean);
 	int deleteById(int cod);
+	int obtenerid(int dni);
 }

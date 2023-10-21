@@ -21,6 +21,7 @@ public class ServletLocacion extends HttpServlet {
 
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String tipo = request.getParameter("accion");
 		
 		if (tipo.equals("insertar")) {
@@ -34,14 +35,19 @@ public class ServletLocacion extends HttpServlet {
 
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String dato=request.getParameter("dato");
+		String tipoMensaje;
 		//invocar al método deleteById y enviar la variable "cod"
 		int estado=new MySqlLocacionDAO().deleteById(Integer.parseInt(dato));
 		//validar estado
-		if(estado==1)
-			System.out.println("SI");
-		else
-			System.out.println("NO");
-		request.getSession().setAttribute("MENSAJE","Locacion eliminado");
+		if(estado==1) {
+			tipoMensaje="error";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE", "Locacion Eliminado");
+		}else {
+			tipoMensaje="error";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE", "Error al eliminar");
+		}
 		//invocar método listarDocente
 		//listarDocente(request,response);
 		response.sendRedirect("Locacion.jsp");		
@@ -58,7 +64,7 @@ public class ServletLocacion extends HttpServlet {
 	private void insertarLocacion(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		//1.recuperar los valores de los controles(cajas,select) del formulario 
 				//usar atributo name.
-				String id,nom,direc;
+				String id,nom,direc,tipoMensaje;
 				id=request.getParameter("id");
 				nom=request.getParameter("nombre");
 				direc=request.getParameter("direccion");
@@ -73,21 +79,30 @@ public class ServletLocacion extends HttpServlet {
 					//4.invocar al método save y enviar el objeto "bean"
 					int estado=new MySqlLocacionDAO().insertar(bean);
 					//validar estado
-					if(estado==1)
-						request.getSession().setAttribute("MENSAJE","Locacion registrado");
-					else
-						request.getSession().setAttribute("MENSAJE","Error en el registro");
+					if(estado==1) {
+						tipoMensaje="success";
+					request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+					request.getSession().setAttribute("MENSAJE", "Locación Registrada");
+					}else {
+						tipoMensaje="error";
+						request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+						request.getSession().setAttribute("MENSAJE", "Error al Registrar Locacion");
+					}
 				}
 				else {
 					//4.invocar al método update y enviar el objeto "bean"
 					int estado=new MySqlLocacionDAO().update(bean);
 					//validar estado
-					if(estado==1)
-						request.getSession().setAttribute("MENSAJE","Locacion actualizado");
-					else
-						request.getSession().setAttribute("MENSAJE","Error en la actualización");
-				}		
-				response.sendRedirect("Locacion.jsp");		
+					if(estado==1) {
+						tipoMensaje="warning";
+						request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+						request.getSession().setAttribute("MENSAJE", "Locación Actualizada");
+					}else {
+						tipoMensaje="error";
+						request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+						request.getSession().setAttribute("MENSAJE", "Error al Actualizar");
+					}
+				}			
+				response.sendRedirect("Locacion.jsp");	
 	}
-
 }

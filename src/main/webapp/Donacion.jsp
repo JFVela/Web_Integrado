@@ -93,7 +93,7 @@ body.shimeji-select-ie {
 }
 
 .padd {
-	padding: 100px;
+	padding: 40px 100px 100px 100px;
 }
 
 .contenedor {
@@ -145,6 +145,21 @@ body.shimeji-select-ie {
 	/* Establece la altura máxima según tus necesidades */
 	border-radius: 15px;
 }
+@media ( max-width : 1900px) {
+	.padd {
+		padding-top: 10px;
+	}
+}
+@media ( max-width : 1093px) {
+	.padd {
+		padding:0px;
+	}
+}
+@media ( max-width : 891px) {
+	.padd {
+		padding:0px;
+	}
+}
 
 .fondo {
 	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -193,7 +208,7 @@ body.shimeji-select-ie {
 		<div class="row padd">
 			<!-- Columna de la imagen -->
 			<div class="col-md-6 text-light"
-				style="padding-top: 190px; font-size: 50px">
+				style="padding-top: 170px; font-size: 50px">
 				<h1 class="display-3">
 					<strong>¡Un pequeño acto crea</strong>
 				</h1>

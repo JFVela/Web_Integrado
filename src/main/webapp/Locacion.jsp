@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -5,9 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Locacion</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
 <style>
 .help-block {
@@ -25,9 +27,10 @@
 <body>
 <div class="container">
 		<h1 class="mt-5 text-center">Listado de Locaciones</h1>
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Nuevo Donante</button>
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Nuevo Locacion</button>
 		<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true"
+data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel">>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -92,16 +95,18 @@
 <!-- libreria JS de la tabla -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
 <c:if test="${sessionScope.MENSAJE!=null}">
 	<script>
-			toastr.success("${sessionScope.MENSAJE}", toastr.options = {
+	 		var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
+			toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
 					"timeOut": "2000",
 					"positionClass " : " toast-top-right ",
 				});
-	
 	</script>
 </c:if>
 <c:remove var="MENSAJE" scope="session"/>
+
 <script>
 cargarLocacion();
 function cargarLocacion(){
@@ -127,39 +132,86 @@ function cargarLocacion(){
 			$("#id-direccion").val(response.direccion);
 		})
 	})
-	$(document).on("click",".btn-deleted",function(){
-		var id;
-		id=$(this).parents("tr").find("td")[0].innerHTML;
-			Swal.fire({
-				  title: 'Seguro de Eliminar?',
-				  text: "Locacion con ID: "+id,
-				  icon: 'warning',
-				  showCancelButton: true,
-				  confirmButtonColor: '#3085d6',
-				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Aceptar',
-				  cancelButtonText: 'Cancelar'
-				}).then((result) => {
-				  if (result.isConfirmed) {
-				    window.location="http://localhost:8080/GitHub_ONG/ServletLocacion?accion=eliminar&dato="+id;
-				  }
-				})
-		})
+	
+	
+	$(document).on("click", ".btn-deleted", function(){
+    var id;
+    id = $(this).parents("tr").find("td")[0].innerHTML;
+    function verificarLocacion(id) {
+        $.ajax({
+            type: "POST",
+            url: "ServletVerificarLocacionEntrega",
+            data: { id: id },
+            success: function(response) {
+                if (response === "false") {
+                    Swal.fire({
+                        title: 'Seguro de Eliminar?',
+                        text: "Locación: " + id,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Aceptar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location = "http://localhost:8080/GitHub_ONG/ServletLocacion?accion=eliminar&dato=" + id;
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'No se puede realizar la eliminación',
+                        text: "Este local ha sido el punto de interés de #numero de personas",
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    title: 'Error de servidor',
+                    text: 'No se pudo verificar la donación',
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        });
+    }
+
+    // Llamar la función verificarLocacion con el valor de id
+    verificarLocacion(id);
+	});
+		$(document).on("click", ".btn-deleted", function() {
+		    var dni;
+		    dni = $(this).parents("tr").find("td")[0].innerHTML;
+
+		    // Llamar la función verificarDonacion con el valor de dni
+		    verificarLocacion(id);
+		});
+		
+		
+		
 	$(document).on("click","#btn-cerrar",function(){
 		$("#formLocacion").trigger("reset");
 		$("#formLocacion").data("bootstrapValidator").resetForm(true);
+		$("#id-id").val("0");
 	})
 </script>
 <script>    
     $(document).ready(function(){     
         $('#formLocacion').bootstrapValidator({      
         	 fields:{
-        		
      		 		nombre:{
         		 		validators:{
         		 			notEmpty:{
         		 				message:'Campo DNI es obligatorio'
-        		 			}
+        		 			},
+	        				regexp:{
+	        					regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,20}$/,
+	        					 message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
+	        				}
         		 		}
         		 	},
         		 	direccion:{

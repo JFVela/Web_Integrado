@@ -25,6 +25,7 @@ public class ServletFindDonacionFisicoJSON extends HttpServlet {
     }
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String id=request.getParameter("id");
 		DonacionFisica bean=new MySqlDonacionFiscaDAO().findById(Integer.parseInt(id));
 		Gson gson=new Gson();

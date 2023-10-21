@@ -29,7 +29,7 @@ public class MySqlDonacionFiscaDAO implements DonacionFisicoDAO {
 			pstm.setInt(1, bean.getDniDonantes());
 			pstm.setInt(2, bean.getIdLocal());
 			pstm.setString(3, bean.getDescripcion());
-			pstm.setBoolean(4,false);
+			pstm.setBoolean(4,bean.isEstado());
 			
 			salida = pstm.executeUpdate();
 		} catch (Exception e) {
@@ -57,7 +57,9 @@ public class MySqlDonacionFiscaDAO implements DonacionFisicoDAO {
 		ResultSet rs=null;
 		try {
 			cn=new MySqlConectar().getConectar();
-			String sql="select *from ong_web.donacion_fisica;";
+			String sql="SELECT f.id_fisica,f.donantes_dni,f.local_donacion_id_local,f.descripcion,f.estado,l.nombre\r\n"
+						+ "FROM ong_web.donacion_fisica f\r\n"
+						+ "JOIN local_donacion l ON f.local_donacion_id_local = l.id_local;";
 			pstm=cn.prepareStatement(sql);
 			rs=pstm.executeQuery();
 			while(rs.next()){
@@ -67,6 +69,7 @@ public class MySqlDonacionFiscaDAO implements DonacionFisicoDAO {
 				bean.setIdLocal(rs.getInt(3));
 				bean.setDescripcion(rs.getString(4));
 				bean.setEstado(rs.getBoolean(5));
+				bean.setNombreLocal(rs.getString(6));
 				dato.add(bean);
 			}
 		}catch(Exception e) {
@@ -183,5 +186,44 @@ public class MySqlDonacionFiscaDAO implements DonacionFisicoDAO {
 		}
 		return salida;
 	}
+
+	@Override
+	public int obtenerid(int dni) {
+	    int id = 0;
+	    Connection cn = null;
+	    PreparedStatement pstm = null;
+	    ResultSet rs = null;
+
+	    try {
+	        // 1. Obtener conexión 
+	        cn = new MySqlConectar().getConectar();
+	        // 2. Sentencia SQL
+	        String sql = "SELECT id_fisica FROM donacion_fisica WHERE donantes_dni=?";
+	        // 3. Crear objeto "pstm" y enviar la variable "sql"
+	        pstm = cn.prepareStatement(sql);
+	        // 4. Parámetros
+	        pstm.setInt(1, dni);
+	        
+	        // 5. Ejecutar la consulta y obtener el resultado
+	        rs = pstm.executeQuery();
+
+	        if (rs.next()) {
+	            id = rs.getInt(1);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (pstm != null) pstm.close();
+	            if (cn != null) cn.close();
+	        } catch (Exception e2) {
+	            e2.printStackTrace();
+	        }
+	    }
+
+	    return id;
+	}
+
 
 }

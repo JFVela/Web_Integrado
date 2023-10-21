@@ -11,4 +11,5 @@ public interface LocacionDAO {
 	Locacion findById(int dni);
 	int update(Locacion bean);
 	int deleteById(int cod);
+	boolean verificarLocacion(int id);
 }

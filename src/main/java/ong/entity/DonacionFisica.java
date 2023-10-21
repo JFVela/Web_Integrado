@@ -4,6 +4,7 @@ public class DonacionFisica {
 	private int idFisico;
 	private int dniDonantes;
 	private int idLocal;
+	private String nombreLocal;
 	private String descripcion;
 	private boolean estado;
 	public int getDniDonantes() {
@@ -35,6 +36,12 @@ public class DonacionFisica {
 	}
 	public void setIdFisico(int idFisico) {
 		this.idFisico = idFisico;
+	}
+	public String getNombreLocal() {
+		return nombreLocal;
+	}
+	public void setNombreLocal(String nombreLocal) {
+		this.nombreLocal = nombreLocal;
 	}
 	
 	
