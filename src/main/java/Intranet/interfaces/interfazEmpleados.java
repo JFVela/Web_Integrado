@@ -5,7 +5,7 @@ import Intranet.entidad.Empleados;
 import Intranet.entidad.Enlace;
 
 public interface interfazEmpleados {
-	Empleados iniciarSesion(String login, String contraseña);
+	Empleados iniciarSesion(String login);
 	
 	int save(Empleados empleado);
 

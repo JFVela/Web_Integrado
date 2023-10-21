@@ -1,6 +1,9 @@
 package Intranet.controlador;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -46,22 +49,37 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 	}
 
 	private void iniciarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String vLogin, vClave;
-		vLogin = request.getParameter("login");
-		vClave = request.getParameter("contrasena");
-		Empleados empleado = new MySQL_Empleados().iniciarSesion(vLogin, vClave);
+		  String vLogin, vClave;
+	        vLogin = request.getParameter("login");
+	        vClave = request.getParameter("contrasena");
 
-		if (empleado == null) {
-			request.getSession().setAttribute("INVALIDO", "USUARIO O CONTRASEÑA INCORRECTA");
-			response.sendRedirect("Login.jsp");
-		} else {
-			List<Intranet.entidad.Enlace> lista = new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getId_rol());
-			HttpSession session = request.getSession();
-			session.setAttribute("listaEnlaces", lista);
-			session.setAttribute("datosEmpleado", empleado.getLogin());
-			response.sendRedirect("intranet.jsp");
-			request.getSession().setAttribute("INICIO", "BIENVENIDO");
-		}
+	        // Obtener el usuario por su nombre de usuario (login)
+	        Empleados empleado = new MySQL_Empleados().iniciarSesion(vLogin);
+
+	        if (empleado == null) {
+	            request.getSession().setAttribute("INVALIDO", "USUARIO O CONTRASEÑA INCORRECTA");
+	            response.sendRedirect("Login.jsp");
+	            return; // Terminar la función
+	        }
+
+	        // Generar el hash de la contraseña ingresada
+	        String hashIngresado = hashPassword(vClave, empleado.getSalt());
+
+	        // Comparar los hashes
+	        if (hashIngresado.equals(empleado.getContraseña())) {
+	            // Las contraseñas coinciden, el inicio de sesión es exitoso
+	            List<Intranet.entidad.Enlace> lista = new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getId_rol());
+		        HttpSession session = request.getSession();
+	            session.setAttribute("listaEnlaces", lista);
+	            session.setAttribute("datosEmpleado", empleado.getLogin());
+	            response.sendRedirect("intranet.jsp");
+	            request.getSession().setAttribute("INICIO", "BIENVENIDO");
+	        } else {
+	            // Las contraseñas no coinciden, inicio de sesión fallido
+	            request.getSession().setAttribute("INVALIDO", "USUARIO O CONTRASEÑA INCORRECTA");
+	            response.sendRedirect("Login.jsp");
+	        }
+
 	}
 
 	private void EliminarEmpleado(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -91,39 +109,48 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 
 	private void GuardarEmpleado(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String dni, codigo, login, contraseña, nombre, paterno, materno, telefono, correo, direccion, sueldo, id_rol,
-				id_depa;
-		dni = request.getParameter("dni");
-		codigo = request.getParameter("codigo");
-		login = request.getParameter("login");
-		contraseña = request.getParameter("contrasena");
-		nombre = request.getParameter("nombre");
-		paterno = request.getParameter("paterno");
-		materno = request.getParameter("materno");
-		telefono = request.getParameter("telefono");
-		correo = request.getParameter("correo");
-		direccion = request.getParameter("direccion");
-		sueldo = request.getParameter("sueldo");
-		id_rol = request.getParameter("rol");
-		id_depa = request.getParameter("departamento");
-		String tipoMensaje = "error";
+		  // Obtener datos del formulario
+        String dni, codigo, login, contraseña, nombre, paterno, materno, telefono, correo, direccion, sueldo, id_rol, id_depa;
+        dni = request.getParameter("dni");
+        codigo = request.getParameter("codigo");
+        login = request.getParameter("login");
+        contraseña = request.getParameter("contrasena"); // La contraseña en texto plano
+        nombre = request.getParameter("nombre");
+        paterno = request.getParameter("paterno");
+        materno = request.getParameter("materno");
+        telefono = request.getParameter("telefono");
+        correo = request.getParameter("correo");
+        direccion = request.getParameter("direccion");
+        sueldo = request.getParameter("sueldo");
+        id_rol = request.getParameter("rol");
+        id_depa = request.getParameter("departamento");
+        String tipoMensaje = "error";
 
-		Empleados empleado = new Empleados();
-		empleado.setDni(Integer.parseInt(dni));
-		empleado.setCodigo(Integer.parseInt(codigo));
-		empleado.setLogin(login);
-		empleado.setContraseña(contraseña);
-		empleado.setNombre(nombre);
-		empleado.setPaterno(paterno);
-		empleado.setMaterno(materno);
-		empleado.setTelefono(Integer.parseInt(telefono));
-		empleado.setCorreo(correo);
-		empleado.setDireccion(direccion);
-		empleado.setSueldo(Double.parseDouble(sueldo));
-		empleado.setId_rol(Integer.parseInt(id_rol));
-		empleado.setId_depa(Integer.parseInt(id_depa));
+        // Generar una sal (salt) aleatoria para la contraseña
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
 
-		if (empleado.getCodigo() == 0) {
+        // Encriptar la contraseña con sal
+        String contraseñaEncriptada = hashPassword(contraseña, salt);
+
+        Empleados empleado = new Empleados();
+        empleado.setDni(Integer.parseInt(dni));
+        empleado.setCodigo(Integer.parseInt(codigo));
+        empleado.setLogin(login);
+        empleado.setContraseña(contraseñaEncriptada); // Guardar la contraseña encriptada
+        empleado.setSalt(salt); // Guardar el salt
+        empleado.setNombre(nombre);
+        empleado.setPaterno(paterno);
+        empleado.setMaterno(materno);
+        empleado.setTelefono(Integer.parseInt(telefono));
+        empleado.setCorreo(correo);
+        empleado.setDireccion(direccion);
+        empleado.setSueldo(Double.parseDouble(sueldo));
+        empleado.setId_rol(Integer.parseInt(id_rol));
+        empleado.setId_depa(Integer.parseInt(id_depa));
+
+        if (empleado.getCodigo() == 0) {
 			int estado = new MySQL_Empleados().save(empleado);
 			if (estado == 1) {
 				tipoMensaje = "success";
@@ -148,5 +175,23 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 			}
 		}
 		response.sendRedirect("Empleados.jsp");
+		
 	}
+	
+	 private String hashPassword(String password, byte[] salt) {
+	        try {
+	            MessageDigest md = MessageDigest.getInstance("SHA-256");
+	            md.update(salt);
+	            byte[] hashedPassword = md.digest(password.getBytes());
+	            StringBuilder sb = new StringBuilder();
+	            for (byte b : hashedPassword) {
+	                sb.append(String.format("%02x", b));
+	            }
+	            return sb.toString();
+	        } catch (NoSuchAlgorithmException e) {
+	            // Maneja la excepción apropiadamente
+	            e.printStackTrace();
+	            return null;
+	        }
+	    }
 }
