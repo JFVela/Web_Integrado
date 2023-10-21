@@ -3,12 +3,15 @@ package ong.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import ong.entity.DonacionVirtual;
+import ong.entity.Tipo_Donacion;
 import ong.interfaces.DonacionVirtualDAO;
 import ong.utils.MySqlConectar;
 
-public class MySqlDonacionVIrtualDAO implements DonacionVirtualDAO{
+public class MySqlDonacionVirtualDAO implements DonacionVirtualDAO{
 
 	@Override
 	public int save(DonacionVirtual bean) {
@@ -43,6 +46,45 @@ public class MySqlDonacionVIrtualDAO implements DonacionVirtualDAO{
 		}
 
 		return salida;
+	}
+
+	@Override
+	public List<DonacionVirtual> findAll() {
+		List<DonacionVirtual> dato=new ArrayList<DonacionVirtual>();
+		DonacionVirtual bean=null;
+		Connection cn=null;
+		PreparedStatement pstm=null;
+		ResultSet rs=null;
+		try {
+			cn=new MySqlConectar().getConectar();
+			String sql="select *from donacion_virtual;";
+			pstm=cn.prepareStatement(sql);
+			rs=pstm.executeQuery();
+			while(rs.next()){
+				bean=new DonacionVirtual();
+				bean.setId(rs.getInt(1));
+				bean.setDniDonante(rs.getInt(2));
+				bean.setIdCampaña(rs.getInt(3));
+				bean.setTipoDonacion(rs.getInt(4));
+				bean.setIdMoneda(rs.getInt(5));
+				bean.setMonto(rs.getDouble(6));
+				bean.setNumCuenta(rs.getInt(7));
+				
+				
+				dato.add(bean);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstm!=null) pstm.close();
+				if(cn!=null) cn.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return dato;
 	}
 
 }
