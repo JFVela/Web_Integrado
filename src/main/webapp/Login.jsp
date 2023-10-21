@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Login</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -27,6 +27,8 @@
 </style>
 </head>
 <body>
+  <div id="message" style="display: none;"></div>
+    
 	<section class="vh-100" style="background-color: #9A616D;">
 		<div class="container py-5 h-100">
 			<div
@@ -46,7 +48,7 @@
 
 										<div class="d-flex align-items-center mb-3 pb-1">
 											<i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
-											<span class="h1 fw-bold mb-0">Logo</span>
+											<span class="h1 fw-bold mb-0">Login</span>
 										</div>
 
 										<h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Iniciar
@@ -69,7 +71,7 @@
 										<div class="pt-1 mb-4">
 											<button class="btn btn-dark btn-lg btn-block" type="submit">Ingresar</button>
 										</div>
-
+	
 										<a class="small text-muted" href="#!">Olvidaste tu
 											contraseña?</a>
 										<p class="mb-5 pb-lg-2" style="color: #393f81;">
@@ -133,11 +135,27 @@
 	</script>
 </c:if>
 
+
+
 <!-- eliminar atributo de tipo sesión MENSAJE -->
 <c:remove var="CERRAR" scope="session" />
 
 <c:remove var="INVALIDO" scope="session" />
+<script>
+        // Función para mostrar el mensaje si es necesario
+        function showMessage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("showMessage")) {
+                // Muestra el mensaje de "Debe iniciar sesión"
+                toastr.warning("Debe iniciar sesión");
+                // Elimina el parámetro de la URL para que el mensaje no aparezca nuevamente
+                window.history.replaceState({}, document.title, "Login.jsp");
+            }
+        }
 
+        // Llama a la función para mostrar el mensaje
+        showMessage();
+    </script>
 
 <script>
 	$(document).ready(function() {

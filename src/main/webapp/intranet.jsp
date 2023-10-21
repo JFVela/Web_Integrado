@@ -23,7 +23,7 @@
 	document.addEventListener("DOMContentLoaded", function() {
 		var datosEmpleado = "${sessionScope.datosEmpleado}";
 		if (!datosEmpleado) {
-			window.location.href = "Login.jsp";
+			window.location.href = "Login.jsp?showMessage";
 		}
 	});
 </script>
@@ -60,7 +60,7 @@
 		</div>
 	</div>
 	</nav>
-
+	
 
 </body>
 <!-- libreria principal de JQUERY -->

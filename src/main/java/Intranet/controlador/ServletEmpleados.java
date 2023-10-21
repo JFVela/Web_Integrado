@@ -28,24 +28,43 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		
 		String tipo = request.getParameter("accion");
+		
+		
 		if (tipo.equals("INICIAR"))
 			iniciarSesion(request, response);
-		else if (tipo.equals("CERRAR"))
-			cerrarSesion(request, response);
+		
 		else if (tipo.equals("grabar"))
 			GuardarEmpleado(request, response);
 		else if (tipo.equals("listado"))
 			ListarEmpleados(request, response);
 		else if (tipo.equals("eliminar"))
 			EliminarEmpleado(request, response);
+		
+		 boolean usuarioHaIniciadoSesion = usuarioHaIniciadoSesion(request);
+
+		    if (tipo != null && tipo.equals("CERRAR")) {
+		        HttpSession session = request.getSession(false);
+		        if (session != null) {
+		            session.invalidate();
+		            request.getSession().setAttribute("CERRAR", "SESSION CERRADA");
+		            usuarioHaIniciadoSesion = false; // Establece la variable a false al cerrar la sesión
+
+		        }
+		    }
+
+		    if (!usuarioHaIniciadoSesion) {
+		        // El usuario no ha iniciado sesión, redirige a la página de inicio de sesión
+		        response.sendRedirect("Login.jsp?showMessage=true");
+		        return;
+		    }
 	}
 
 	private void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		request.getSession().setAttribute("CERRAR", "SESSION CERRADA");
-		response.sendRedirect("Login.jsp");
 	}
 
 	private void iniciarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -194,4 +213,15 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 	            return null;
 	        }
 	    }
+	 
+	 private boolean usuarioHaIniciadoSesion(HttpServletRequest request) {
+		    HttpSession session = request.getSession(false); // Obtenemos la sesión actual, si existe
+
+		    if (session != null && session.getAttribute("datosEmpleado") != null) {
+		        // El usuario ha iniciado sesión si el atributo "datosEmpleado" existe en la sesión
+		        return true;
+		    } else {
+		        return false;
+		    }
+		}
 }
