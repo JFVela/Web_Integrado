@@ -30,7 +30,7 @@
 </head>
 <body>
 	<div class="container">
-		<h1 class="mt-5 text-center">Listado de Donantes</h1>
+		<h1 class="mt-5 p-3 display-2 text-center"><strong>Listado de <span style="color: green;">Donantes</span></strong></h1>
 		<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" 
 		aria-hidden="true" data-bs-backdrop="static"
@@ -95,7 +95,7 @@
 </div>
 		<%--Tabla --%>
 		<div class="mt-5">
-		  <table id="tablaDonante" class="table table-striped" style="width:100%">
+		  <table id="tablaDonante" class="table table-striped table-bordered" style="width:100%">
 	        <thead>
 	            <tr>
 	                <th>DNI</th>
@@ -209,6 +209,7 @@ $(document).on("click",".boton-cerrar",function(){
 	$(document).on("click",".btn-deleted",function(){
 		var dni;
 		dni=$(this).parents("tr").find("td")[0].innerHTML;
+		console.log(dni);
 		// Definir la función verificarDonacion fuera del controlador de clic
 		function verificarDonacion(dni) {
 		    $.ajax({

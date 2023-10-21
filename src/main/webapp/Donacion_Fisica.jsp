@@ -34,7 +34,7 @@
 </head>
 <body>
 <div class="container">
-		<h1 class="mt-5 text-center">Listado de Donaciones Físicas</h1>
+		<h1 class="mt-5 p-3 text-center display-2"><strong>Listado de <span style="color: green;">Donaciones Físicas</span></strong></h1>
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" 
 		data-bs-target="#exampleModal">Nuevo Donante</button>
 		<!-- Modal -->
@@ -103,7 +103,7 @@
 </div>
 		<%--Tabla --%>
 		<div class="mt-5">
-		  <table id="tablaDonFisi" class="table table-striped" style="width:100%">
+		  <table id="tablaDonFisi" class="table table-striped table-bordered" style="width:100%">
 	        <thead>
 	            <tr>
 	                <th>ID</th>

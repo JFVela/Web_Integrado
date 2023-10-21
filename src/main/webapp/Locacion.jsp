@@ -41,7 +41,7 @@
 </head>
 <body>
 	<div class="container">
-		<h1 class="mt-5 text-center">Listado de Locaciones</h1>
+		<h1 class="mt-5 text-center display-2 p-3"><strong>Listado de <span style="color: green;">Locaciones</span></strong></h1>
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
 			data-bs-target="#exampleModal">Nuevo Locacion</button>
 		<!-- Modal -->
@@ -90,7 +90,7 @@
 		</div>
 		<%--Tabla --%>
 		<div class="mt-5">
-			<table id="tablaLocacion" class="table table-striped"
+			<table id="tablaLocacion" class="table table-striped table-bordered"
 				style="width: 100%">
 				<thead>
 					<tr>
@@ -117,8 +117,8 @@
 	crossorigin="anonymous"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
 
