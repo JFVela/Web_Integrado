@@ -1,5 +1,4 @@
 <jsp:include page="intranet.jsp"></jsp:include>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -9,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Locacion</title>
+<link rel="icon" href="assets/img/health-monitoring-svgrepo-com.svg">
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -22,6 +23,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
 	rel="stylesheet">
+	<link rel="stylesheet" href="assets/css/EstiloBotones.css">
 <style>
 .help-block {
 	color: red;
@@ -141,8 +143,9 @@
 cargarLocacion();
 function cargarLocacion(){
 	$.get("ServletLocacionJSON",function(response){	
-		let botonEditar="<button type='button' class='btn btn-success btn-edit' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
-        let botonEliminar="<button type='button' class='btn btn-danger btn-deleted'>Eliminar</button>";
+		let botonEditar="<a class='btn-neon1 btn-edit'  data-bs-toggle='modal' data-bs-target='#exampleModal' data-operacion='actualizar' ><span id=span11></span><span id=span21></span><span id=span31></span><span id=span41></span>Editar</a>";
+        let botonEliminar="<a class='btn-neon btn-deleted'><span id=span1></span> <span id=span2></span> <span id=span3></span><span id=span4></span>Eliminar</a>";
+        
 		$.each(response,function(index,item){
 			//llenar tabla
 			$("#tablaLocacion").append("<tr><td>"+item.id+"</td>"+

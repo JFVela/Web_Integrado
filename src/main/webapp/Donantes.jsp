@@ -1,5 +1,4 @@
 <jsp:include page="intranet.jsp"></jsp:include>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -9,10 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Donantes</title>
+<link rel="icon" href="assets/img/health-monitoring-svgrepo-com.svg">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/EstiloBotones.css">
 <style>
 .help-block {
 		color: red;
@@ -39,14 +40,13 @@
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Donante</h1>
       </div>
-      <div class="modal-body">
+      <div class="modal-body ">
         
       <form id="formDonante" method="post" action="ServletDonante?accion=insertarModal">
 		  <div class="form-group">
 		    <label for="exampleInputEmail1" class="form-label">DNI</label>
 		    <input type="text" class="form-control" name="dni" id="id-dni" readonly>
 		  </div>
-		  
 		  <div class="form-group">
 		    <label for="exampleInputEmail1" class="form-label">Nombre</label>
 		    <input type="text" class="form-control" name="nombre" id="id-nombre">
@@ -162,9 +162,9 @@
 <script>
 cargarDonantes();
 function cargarDonantes(){
-	$.get("ServletDonanteJSON",function(response){	
-		let botonEditar="<button type='button' class='btn btn-success btn-edit' data-bs-toggle='modal' data-bs-target='#exampleModal'  data-operacion='actualizar'>Editar</button>";
-        let botonEliminar="<button type='button' class='btn btn-danger btn-deleted'>Eliminar</button>";
+	$.get("ServletDonanteJSON",function(response){
+		let botonEditar="<a class='btn-neon1 btn-edit'  data-bs-toggle='modal' data-bs-target='#exampleModal' data-operacion='actualizar' ><span id=span11></span><span id=span21></span><span id=span31></span><span id=span41></span>Editar</a>";
+        let botonEliminar="<a class='btn-neon btn-deleted'><span id=span1></span> <span id=span2></span> <span id=span3></span><span id=span4></span>Eliminar</a>";
 		$.each(response,function(index,item){
 			//llenar tabla
 			$("#tablaDonante").append("<tr><td>"+item.dni+"</td>"+
