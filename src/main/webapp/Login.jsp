@@ -27,8 +27,8 @@
 </style>
 </head>
 <body>
-  <div id="message" style="display: none;"></div>
-    
+	<div id="message" style="display: none;"></div>
+
 	<section class="vh-100" style="background-color: #9A616D;">
 		<div class="container py-5 h-100">
 			<div
@@ -71,13 +71,15 @@
 										<div class="pt-1 mb-4">
 											<button class="btn btn-dark btn-lg btn-block" type="submit">Ingresar</button>
 										</div>
-	
+										
 										<a class="small text-muted" href="#!">Olvidaste tu
 											contraseña?</a>
+											
+	
 										<p class="mb-5 pb-lg-2" style="color: #393f81;">
-											No estás registrado? <a href="#!" style="color: #393f81;">Regístrate
-												aquí</a>
+											Contacta al telf: <a href="#!" style="color: #393f81;">998187600</a>
 										</p>
+										 
 										<a href="#!" class="small text-muted">Terms of use.</a> <a
 											href="#!" class="small text-muted">Privacy policy</a>
 									</form>
@@ -142,20 +144,20 @@
 
 <c:remove var="INVALIDO" scope="session" />
 <script>
-        // Función para mostrar el mensaje si es necesario
-        function showMessage() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has("showMessage")) {
-                // Muestra el mensaje de "Debe iniciar sesión"
-                toastr.warning("Debe iniciar sesión");
-                // Elimina el parámetro de la URL para que el mensaje no aparezca nuevamente
-                window.history.replaceState({}, document.title, "Login.jsp");
-            }
-        }
+	// Función para mostrar el mensaje si es necesario
+	function showMessage() {
+		const urlParams = new URLSearchParams(window.location.search);
+		if (urlParams.has("showMessage")) {
+			// Muestra el mensaje de "Debe iniciar sesión"
+			toastr.warning("Debe iniciar sesión");
+			// Elimina el parámetro de la URL para que el mensaje no aparezca nuevamente
+			window.history.replaceState({}, document.title, "Login.jsp");
+		}
+	}
 
-        // Llama a la función para mostrar el mensaje
-        showMessage();
-    </script>
+	// Llama a la función para mostrar el mensaje
+	showMessage();
+</script>
 
 <script>
 	$(document).ready(function() {
