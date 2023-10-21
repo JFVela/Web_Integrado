@@ -18,7 +18,15 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
 	rel="stylesheet">
-
+<!-- JavaScript para redirigir a login.jsp si sessionScope.datosEmpleado es nulo -->
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function() {
+		var datosEmpleado = "${sessionScope.datosEmpleado}";
+		if (!datosEmpleado) {
+			window.location.href = "Login.jsp";
+		}
+	});
+</script>
 </head>
 <body>
 	<!-- NAVBAR -->
@@ -83,10 +91,9 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- validar si existe el atrubuto MENSAJE -->
-<c:if test="${sessionScope.MENSAJE!=null}">
+<c:if test="${sessionScope.INICIO!=null}">
 	<script>
-		var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
-		toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
+		toastr.success("${sessionScope.INICIO}", toastr.options = {
 			"timeOut" : "2000",
 			"positionClass " : " toast-top-right ",
 		});
@@ -94,6 +101,6 @@
 </c:if>
 
 <!-- eliminar atributo de tipo sesión MENSAJE -->
-<c:remove var="MENSAJE" scope="session" />
+<c:remove var="INICIO" scope="session" />
 </html>
 

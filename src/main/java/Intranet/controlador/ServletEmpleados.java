@@ -41,9 +41,7 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 	private void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		String tipoMensaje = "error"; // Cambiar el tipo de mensaje a "success"
-		request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-		request.getSession().setAttribute("MENSAJE", "SESION CERRADA"); // Cambiar el mensaje
+		request.getSession().setAttribute("CERRAR", "SESSION CERRADA");
 		response.sendRedirect("Login.jsp");
 	}
 
@@ -51,14 +49,10 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		String vLogin, vClave;
 		vLogin = request.getParameter("login");
 		vClave = request.getParameter("contrasena");
-		String tipoMensaje = "success";
-
 		Empleados empleado = new MySQL_Empleados().iniciarSesion(vLogin, vClave);
 
 		if (empleado == null) {
-			tipoMensaje = "error";
-			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE", "Usuario o Contraseña Inválida");
+			request.getSession().setAttribute("INVALIDO", "USUARIO O CONTRASEÑA INCORRECTA");
 			response.sendRedirect("Login.jsp");
 		} else {
 			List<Intranet.entidad.Enlace> lista = new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getId_rol());
@@ -66,9 +60,7 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 			session.setAttribute("listaEnlaces", lista);
 			session.setAttribute("datosEmpleado", empleado.getLogin());
 			response.sendRedirect("intranet.jsp");
-			tipoMensaje = "success";
-			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE", "SESSION INGRESADA CORRECTAMENTE");
+			request.getSession().setAttribute("INICIO", "BIENVENIDO");
 		}
 	}
 

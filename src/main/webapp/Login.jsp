@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +50,7 @@
 										</div>
 
 										<h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Iniciar
-											SesiÛn</h5>
+											Sesi√≥n</h5>
 
 										<div class="form-group">
 											<label for="form2Example17">Usuario</label> <input
@@ -57,7 +60,7 @@
 										</div>
 										<br>
 										<div class="form-group">
-											<label for="form2Example27">ContraseÒa</label> <input
+											<label for="form2Example27">Contrase√±a</label> <input
 												type="password" id="form2Example27"
 												class="form-control form-control-lg" name="contrasena"
 												required data-bv-field="contrasena" />
@@ -68,10 +71,10 @@
 										</div>
 
 										<a class="small text-muted" href="#!">Olvidaste tu
-											contraseÒa?</a>
+											contrase√±a?</a>
 										<p class="mb-5 pb-lg-2" style="color: #393f81;">
-											No est·s registrado? <a href="#!" style="color: #393f81;">RegÌstrate
-												aquÌ</a>
+											No est√°s registrado? <a href="#!" style="color: #393f81;">Reg√≠strate
+												aqu√≠</a>
 										</p>
 										<a href="#!" class="small text-muted">Terms of use.</a> <a
 											href="#!" class="small text-muted">Privacy policy</a>
@@ -113,18 +116,28 @@
 	src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 <!-- validar si existe el atrubuto MENSAJE -->
-<c:if test="${sessionScope.MENSAJE!=null}">
+<c:if test="${sessionScope.CERRAR!=null}">
 	<script>
-		var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
-		toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
+		toastr.error("${sessionScope.CERRAR}", toastr.options = {
+			"timeOut" : "2000",
+			"positionClass " : " toast-top-right ",
+		});
+	</script>
+</c:if>
+<c:if test="${sessionScope.INVALIDO!=null}">
+	<script>
+		toastr.warning("${sessionScope.INVALIDO}", toastr.options = {
 			"timeOut" : "2000",
 			"positionClass " : " toast-top-right ",
 		});
 	</script>
 </c:if>
 
-<!-- eliminar atributo de tipo sesiÛn MENSAJE -->
-<c:remove var="MENSAJE" scope="session" />
+<!-- eliminar atributo de tipo sesi√≥n MENSAJE -->
+<c:remove var="CERRAR" scope="session" />
+
+<c:remove var="INVALIDO" scope="session" />
+
 
 <script>
 	$(document).ready(function() {
@@ -143,10 +156,10 @@
 						stringLength : {
 							min : 1,
 							max : 10,
-							message : 'No m·s de 10 caracteres'
+							message : 'No m√°s de 10 caracteres'
 						},
 						regexp : {
-							regexp : /^[A-Za-z0-9Ò—·ÈÌÛ˙¡…Õ”⁄]+$/,
+							regexp : /^[A-Za-z0-9√±√ë√°√©√≠√≥√∫√Å√â√ç√ì√ö]+$/,
 							message : 'No se aceptan espacios'
 						}
 					}
@@ -154,15 +167,15 @@
 				contrasena : {
 					validators : {
 						notEmpty : {
-							message : 'La contraseÒa es obligatoria'
+							message : 'La contrase√±a es obligatoria'
 						},
 						stringLength : {
 							min : 10,
-							message : 'Complete la contraseÒa'
+							message : 'Complete la contrase√±a'
 						},
 						regexp : {
-							regexp : /^[A-Za-z0-9Ò—·ÈÌÛ˙¡…Õ”⁄\s]+$/,
-							message : 'Solo se aceptan n˙meros y letras'
+							regexp : /^[A-Za-z0-9√±√ë√°√©√≠√≥√∫√Å√â√ç√ì√ö\s]+$/,
+							message : 'Solo se aceptan n√∫meros y letras'
 						}
 					}
 				}

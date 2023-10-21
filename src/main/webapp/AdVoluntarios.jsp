@@ -30,7 +30,6 @@ body {
 
 </head>
 <body>
-
 <div class="container">
   <h1 class="mt-5 text-center">Voluntarios</h1>
     <hr class="my-4 pb-2">
