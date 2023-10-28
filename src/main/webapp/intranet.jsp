@@ -13,6 +13,7 @@
 <link
 	href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
 	rel="stylesheet">
+<link rel="icon" href="assets/img/health-monitoring-svgrepo-com.svg">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link
@@ -100,7 +101,7 @@
 	</script>
 </c:if>
 
-<!-- eliminar atributo de tipo sesión MENSAJE -->
+<!-- eliminar atributo de tipo sesiÃ³n MENSAJE -->
 <c:remove var="INICIO" scope="session" />
 </html>
 
