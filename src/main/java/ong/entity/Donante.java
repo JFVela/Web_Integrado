@@ -8,7 +8,7 @@ public class Donante {
 	private String materno;
 	private String email;
 	private String direccion;
-	private String ciudad;
+	private String distrito;
 	private int celular;
 	
 	
@@ -54,11 +54,11 @@ public class Donante {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	public String getCiudad() {
-		return ciudad;
+	public String getDistrito() {
+		return distrito;
 	}
-	public void setCiudad(String ciudad) {
-		this.ciudad = ciudad;
+	public void setDistrito(String distrito) {
+		this.distrito = distrito;
 	}
 	public int getCelular() {
 		return celular;

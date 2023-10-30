@@ -35,7 +35,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" 
 		aria-hidden="true" data-bs-backdrop="static"
 		data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" >
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Donante</h1>
@@ -71,11 +71,28 @@
     <label for="exampleInputPassword1" class="form-label">Correo Electrónico</label>
     <input type="text" class="form-control" name="email" id="id-email">
   </div>
-  
-    <div class="form-group">
-    <label for="exampleInputPassword1" class="form-label">Ciudad</label>
-    <input type="text" class="form-control" name="ciudad" id="id-ciudad">
-  </div>
+  	<div class="form-group">
+		<label for="departamento" class="label-form text-secondary">Departamento</label>
+		<select name="departamento" class="form-control departamento-label"
+			id="id-departamento" required>
+			<option value=" ">[Seleccione un Departamento]</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="provincia" class="label-form text-secondary">Provincia</label>
+		<select name="provincia"
+			class="form-control provincia-label" id="id-provincia"
+			required>
+			<option value=" ">[Seleccione una provincia]</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="distrito" class="label-form text-secondary">Distrito</label>
+		<select name="distrito" class="form-control distrito-label"
+			id="id-distrito" required>
+			<option value=" ">[Seleccione un distrito]</option>
+		</select>
+	</div>
   <div class="form-group">
     <label for="exampleInputPassword1" class="form-label">Dirección</label>
     <input type="text" class="form-control" name="direccion" id="id-direccion">
@@ -104,7 +121,7 @@
 	                <th>Materno</th>
 	                <th>Correo Electronico</th>
 	                <th>Celular</th>
-	                <th>Ciudad</th>
+	                <th>Distrito</th>
 	                <th>Dirección</th>
 	                <th></th>
 	                <th></th>
@@ -170,7 +187,7 @@ function cargarDonantes(){
 			$("#tablaDonante").append("<tr><td>"+item.dni+"</td>"+
 				 "<td>"+item.nombre+"</td>"+"<td>"+item.paterno+"</td>"+
 				 "<td>"+item.materno+"</td>"+"<td>"+item.email+"</td>"+
-				 "<td>"+item.celular+"</td>"+"<td>"+item.ciudad+"</td>"+"<td>"+item.direccion+"</td>"+
+				 "<td>"+item.celular+"</td>"+"<td>"+item.distrito+"</td>"+"<td>"+item.direccion+"</td>"+
 				 "<td>"+botonEditar+"</td><td>"+botonEliminar+"</td></tr>");
 		})
 		new DataTable('#tablaDonante');
@@ -182,30 +199,89 @@ $(document).on("click",".boton-cerrar",function(){
 	$("#formDonante").trigger("reset");
 	$("#formDonante").data("bootstrapValidator").resetForm(true);
 })
+$(document).on("click", ".btn-edit", function () {
+    var dni;
+    dni = $(this).parents("tr").find("td")[0].innerHTML;
 
-	$(document).on("click",".btn-edit",function(){
-		var dni;
-		dni=$(this).parents("tr").find("td")[0].innerHTML;
-		
-		var operacion = $(this).data("operacion");		 
-		$.get("ServletFindDonanteJSON?dni="+dni,function(response){
-			$("#id-dni").val(response.dni);
-			$("#id-nombre").val(response.nombre);
-			$("#id-paterno").val(response.paterno);
-			$("#id-materno").val(response.materno);
-			$("#id-celular").val(response.celular);
-			$("#id-email").val(response.email);
-			$("#id-ciudad").val(response.ciudad);
-			$("#id-direccion").val(response.direccion);
-		})
-		if (operacion === "actualizar") {
-		        // Configurar el modal para la actualización
-		        $("#exampleModal .modal-title").text("Editar Donante");
-		        $("#formDonante").attr("action", "ServletDonante?accion=actualizar&dniAntiguo="+dni);
-		        $("#id-dni-antiguo").val(dni);
-   
-		 }
-	})
+    var operacion = $(this).data("operacion");
+
+    // Realiza una solicitud AJAX para cargar el archivo JSON
+    $.get("assets/map.pe.json", function (data) {
+        $.get("ServletFindDonanteJSON?dni=" + dni, function (response) {
+            $("#id-dni").val(response.dni);
+            $("#id-nombre").val(response.nombre);
+            $("#id-paterno").val(response.paterno);
+            $("#id-materno").val(response.materno);
+            $("#id-celular").val(response.celular);
+            $("#id-email").val(response.email);
+            $("#id-direccion").val(response.direccion);
+
+            // Buscar la provincia y la ciudad del distrito
+            var selectedCiudad;
+            var selectedProvincia;
+
+            for (var ciudad in data) {
+                for (var provincia in data[ciudad]) {
+                    for (var distrito in data[ciudad][provincia]) {
+                        if (data[ciudad][provincia][distrito] === response.distrito) {
+                            selectedCiudad = ciudad;
+                            selectedProvincia = provincia;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Actualiza los campos de ciudad y provincia en el formulario
+            $("#id-departamento").val(selectedCiudad);
+
+            // Limpia el combo de provincia
+            $("#id-provincia").empty();
+
+            // Agrega las provincias correspondientes a la ciudad seleccionada
+            if (data[selectedCiudad]) {
+                var provinces = data[selectedCiudad];
+                for (var province in provinces) {
+                    $("#id-provincia").append($('<option>', {
+                        value: province,
+                        text: province
+                    }));
+                }
+            }
+
+            // Selecciona la provincia
+            $("#id-provincia").val(selectedProvincia);
+
+            // Limpia el combo de distrito
+            $("#id-distrito").empty();
+
+            // Actualiza el combo de distrito basado en la provincia seleccionada
+            if (data[selectedCiudad] && data[selectedCiudad][selectedProvincia]) {
+                var districts = data[selectedCiudad][selectedProvincia];
+                for (var district in districts) {
+                    $("#id-distrito").append($('<option>', {
+                        value: district,
+                        text: district
+                    }));
+                }
+            }
+
+            // Selecciona el distrito
+            $("#id-distrito").val(response.distrito);
+        })
+
+        if (operacion === "actualizar") {
+            // Configurar el modal para la actualización
+            $("#exampleModal .modal-title").text("Editar Donante");
+            $("#formDonante").attr("action", "ServletDonante?accion=actualizar&dniAntiguo=" + dni);
+            $("#id-dni-antiguo").val(dni);
+        }
+    });
+});
+
+
+
+
 	$(document).on("click",".btn-deleted",function(){
 		var dni;
 		dni=$(this).parents("tr").find("td")[0].innerHTML;
@@ -367,5 +443,64 @@ $(document).on("click",".boton-cerrar",function(){
 				
 	    });
 	    
+	</script>
+	<script>
+		//Script para cargar dinamicamente los select de Ciudad, Distrito y Provincia.
+		// Obtener una referencia a los elementos select
+		const ciudadSelect = document.getElementById('id-departamento');
+		const provinciaSelect = document.getElementById('id-provincia');
+		const distritoSelect = document.getElementById('id-distrito');
+
+		// Realizar una solicitud AJAX para cargar el archivo JSON
+		const xhr = new XMLHttpRequest();
+		xhr.open('GET', 'assets/map.pe.json', true);
+
+		xhr.onload = function() {
+			if (xhr.status === 200) {
+				const data = JSON.parse(xhr.responseText);
+
+				// Llenar el select de ciudades
+				for ( const ciudad in data) {
+					ciudadSelect.options.add(new Option(ciudad, ciudad));
+				}
+
+				// Manejar el cambio en el select de ciudades
+				ciudadSelect
+						.addEventListener(
+								'change',
+								function() {
+									// Obtener la provincia seleccionada
+									const selectedCiudad = ciudadSelect.value;
+									const provincias = data[selectedCiudad];
+
+									// Limpiar y llenar el select de provincias
+									provinciaSelect.innerHTML = '<option value="">[Seleccione una provincia]</option>';
+									for ( const provincia in provincias) {
+										provinciaSelect.options.add(new Option(
+												provincia, provincia));
+									}
+								});
+				// Manejar el cambio en el select de provincias
+				provinciaSelect
+						.addEventListener(
+								'change',
+								function() {
+									// Obtener la provincia y ciudad seleccionadas
+									const selectedCiudad = ciudadSelect.value;
+									const selectedProvincia = provinciaSelect.value;
+									const distritos = data[selectedCiudad][selectedProvincia];
+
+									// Limpiar y llenar el select de distritos
+									distritoSelect.innerHTML = '<option value="">[Seleccione un distrito]</option>';
+									for ( const distrito in distritos) {
+										// Debes acceder al valor del distrito en lugar de todo el objeto distritos
+										distritoSelect.options.add(new Option(
+												distrito, distritos[distrito]));
+									}
+								});
+			}
+		};
+
+		xhr.send();
 	</script>
 </html>

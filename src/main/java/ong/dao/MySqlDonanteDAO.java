@@ -20,7 +20,7 @@ public class MySqlDonanteDAO implements DonanteDAO {
 
 		try {
 			cn = new MySqlConectar().getConectar();
-			String sentencia = "INSERT INTO donantes (dni,nombre, paterno, materno, celular, email, ciudad, direccion) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
+			String sentencia = "INSERT INTO donantes (dni,nombre, paterno, materno, celular, email, Distrito, direccion) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
 			pstm=cn.prepareStatement(sentencia);
 			pstm.setInt(1, bean.getDni());
 			pstm.setString(2, bean.getNombre());
@@ -28,7 +28,7 @@ public class MySqlDonanteDAO implements DonanteDAO {
 			pstm.setString(4, bean.getMaterno());
 			pstm.setInt(5, bean.getCelular());
 			pstm.setString(6, bean.getEmail());
-			pstm.setString(7, bean.getCiudad());
+			pstm.setString(7, bean.getDistrito());
 			pstm.setString(8, bean.getDireccion());
 			salida = pstm.executeUpdate();
 
@@ -69,7 +69,7 @@ public class MySqlDonanteDAO implements DonanteDAO {
 				D.setMaterno(rs.getString(4));
 				D.setCelular(rs.getInt(5));
 				D.setEmail(rs.getString(6));
-				D.setCiudad(rs.getString(7));
+				D.setDistrito(rs.getString(7));
 				D.setDireccion(rs.getString(8));
 				lista.add(D);				
 			}
@@ -121,7 +121,7 @@ public class MySqlDonanteDAO implements DonanteDAO {
 				bean.setMaterno(rs.getString(4));
 				bean.setCelular(rs.getInt(5));
 				bean.setEmail(rs.getString(6));
-				bean.setCiudad(rs.getString(7));
+				bean.setDistrito(rs.getString(7));
 				bean.setDireccion(rs.getString(8));
 			}
 			
@@ -150,7 +150,7 @@ public class MySqlDonanteDAO implements DonanteDAO {
 			//1.Obtener conexión 
 			cn=new MySqlConectar().getConectar();
 			//2. sentencia SQL
-			String sql="update ong_web.donantes set dni=?,nombre=?,paterno=?,materno=?,celular=?,email=?,ciudad=?,direccion=? where dni=?";
+			String sql="update ong_web.donantes set dni=?,nombre=?,paterno=?,materno=?,celular=?,email=?,Distrito=?,direccion=? where dni=?";
 			//3. crear objeto "pstm" y enviar la variable "sql"
 			pstm=cn.prepareStatement(sql);
 			//4. parámetros
@@ -160,7 +160,7 @@ public class MySqlDonanteDAO implements DonanteDAO {
 			pstm.setString(4,bean.getMaterno());
 			pstm.setInt(5,bean.getCelular());
 			pstm.setString(6,bean.getEmail());
-			pstm.setString(7,bean.getCiudad());
+			pstm.setString(7,bean.getDistrito());
 			pstm.setString(8,bean.getDireccion());
 			pstm.setInt(9, dniActual);
 			salida=pstm.executeUpdate();

@@ -54,13 +54,13 @@ public class ServletDonante extends HttpServlet {
 		boolean respuesta=verficarSaldo(request,response);
 		
 		if(respuesta) {
-			String dni,nom, ma, pa, ciu, direc, cel, email,local, des,camp,tipdon,tpmon,monto,numcuen;
+			String dni,nom, ma, pa, dis, direc, cel, email,local, des,camp,tipdon,tpmon,monto,numcuen;
 			int estado=0,estado2=0;
 			dni=request.getParameter("dni");
 			nom = request.getParameter("nombre");
 			ma = request.getParameter("materno");
 			pa = request.getParameter("paterno");
-			ciu = request.getParameter("ciudad");
+			dis = request.getParameter("distrito");
 			direc = request.getParameter("direccion");
 			cel = request.getParameter("celular");
 			email = request.getParameter("email");
@@ -75,7 +75,7 @@ public class ServletDonante extends HttpServlet {
 			bean.setNombre(nom);
 			bean.setMaterno(ma);
 			bean.setPaterno(pa);
-			bean.setCiudad(ciu);
+			bean.setDistrito(dis);
 			bean.setCelular(Integer.parseInt(cel));
 			bean.setDireccion(direc);
 			bean.setEmail(email);
@@ -143,14 +143,14 @@ public class ServletDonante extends HttpServlet {
 	
 
 	private void actualizar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String dni,nom,tipoMensaje, ma, pa, ciu, direc, cel, email;
+		String dni,nom,tipoMensaje, ma, pa, dis, direc, cel, email;
 		
 		String dniAntiguo = request.getParameter("dniAntiguo");
 		dni=request.getParameter("dni");
 		nom = request.getParameter("nombre");
 		ma = request.getParameter("materno");
 		pa = request.getParameter("paterno");
-		ciu = request.getParameter("ciudad");
+		dis = request.getParameter("distrito");
 		direc = request.getParameter("direccion");
 		cel = request.getParameter("celular");
 		email = request.getParameter("email");
@@ -159,7 +159,7 @@ public class ServletDonante extends HttpServlet {
 		bean.setNombre(nom);
 		bean.setMaterno(ma);
 		bean.setPaterno(pa);
-		bean.setCiudad(ciu);
+		bean.setDistrito(dis);
 		bean.setCelular(Integer.parseInt(cel));
 		bean.setDireccion(direc);
 		bean.setEmail(email);
@@ -179,13 +179,13 @@ public class ServletDonante extends HttpServlet {
 	}
 
 	private void insertarDonanteMo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String dni,nom, ma, pa, ciu, direc, cel, email;
+		String dni,nom, ma, pa, dis, direc, cel, email;
 		
 		dni=request.getParameter("dni");
 		nom = request.getParameter("nombre");
 		ma = request.getParameter("materno");
 		pa = request.getParameter("paterno");
-		ciu = request.getParameter("ciudad");
+		dis = request.getParameter("distrito");
 		direc = request.getParameter("direccion");
 		cel = request.getParameter("celular");
 		email = request.getParameter("email");
@@ -194,7 +194,7 @@ public class ServletDonante extends HttpServlet {
 		bean.setNombre(nom);
 		bean.setMaterno(ma);
 		bean.setPaterno(pa);
-		bean.setCiudad(ciu);
+		bean.setDistrito(dis);
 		bean.setCelular(Integer.parseInt(cel));
 		bean.setDireccion(direc);
 		bean.setEmail(email);
@@ -219,14 +219,14 @@ public class ServletDonante extends HttpServlet {
 
 
 	private void insertarDonante(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String dni,nom, ma, pa, ciu, direc, cel, email,local, des;
+		String dni,nom, ma, pa, dis, direc, cel, email,local, des;
 		int estado=0,estado1=0;
 		
 		dni=request.getParameter("dni");
 		nom = request.getParameter("nombre");
 		ma = request.getParameter("materno");
 		pa = request.getParameter("paterno");
-		ciu = request.getParameter("ciudad");
+		dis = request.getParameter("distrito");
 		direc = request.getParameter("direccion");
 		cel = request.getParameter("celular");
 		email = request.getParameter("email");
@@ -237,7 +237,7 @@ public class ServletDonante extends HttpServlet {
 		bean.setNombre(nom);
 		bean.setMaterno(ma);
 		bean.setPaterno(pa);
-		bean.setCiudad(ciu);
+		bean.setDistrito(dis);;
 		bean.setCelular(Integer.parseInt(cel));
 		bean.setDireccion(direc);
 		bean.setEmail(email);

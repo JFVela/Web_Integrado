@@ -207,13 +207,13 @@ body.shimeji-select-ie {
 	<div class="container-fluid fondo tam">
 		<div class="row padd">
 			<!-- Columna de la imagen -->
-			<div class="col-md-6 text-light"
+			<div class="col-md-9 text-light"
 				style="padding-top: 170px; font-size: 50px">
-				<h1 class="display-3">
-					<strong>¡Un pequeño acto crea</strong>
+				<h1 class="display-2">
+					<strong>¡Un pequeño acto</strong>
 				</h1>
-				<h1 class="display-3">
-					<strong>un gran impacto!</strong>
+				<h1 class="display-2">
+					<strong>crea un gran impacto!</strong>
 				</h1>
 			</div>
 		</div>
@@ -242,7 +242,7 @@ body.shimeji-select-ie {
 					<div class="modal fade" id="donafisico" data-bs-backdrop="static"
 						data-bs-keyboard="false" tabindex="-1" 
 						aria-labelledby="staticBackdropLabel" aria-hidden="true">
-						<div class="modal-dialog modal-lg">
+						<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
 							<div class="modal-content">
 								<div class="modal-header">
 									<h1 class="modal-title fs-5" id="staticBackdropLabel">Donación
@@ -326,15 +326,29 @@ body.shimeji-select-ie {
 															</div>
 														</div>
 
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="exampleInputPassword1" class="form-label">Ciudad</label>
-																<input type="text" class="form-control"
-																	placeholder="Ciudad:" name="ciudad">
-															</div>
+														
+														<div class="form-group">
+															<label for="departamento" class="label-form text-secondary">Departamento</label>
+															<select name="departamento" class="form-control departamento-label"
+																id="id-departamento" required>
+																<option value=" ">[Seleccione un Departamento]</option>
+															</select>
 														</div>
-
-
+														<div class="form-group">
+															<label for="provincia" class="label-form text-secondary">Provincia</label>
+															<select name="provincia"
+																class="form-control provincia-label" id="id-provincia"
+																required>
+																<option value=" ">[Seleccione una provincia]</option>
+															</select>
+														</div>
+														<div class="form-group">
+															<label for="distrito" class="label-form text-secondary">Distrito</label>
+															<select name="distrito" class="form-control distrito-label"
+																id="id-distrito" required>
+																<option value=" ">[Seleccione un distrito]</option>
+															</select>
+														</div>
 														<div class="form-group">
 															<label for="exampleInputPassword1" class="form-label">Email</label>
 															<input type="text" class="form-control correo"
@@ -386,7 +400,7 @@ body.shimeji-select-ie {
 					<div class="modal fade" id="donavirtual" data-bs-backdrop="static"
 						data-bs-keyboard="false" tabindex="-1"
 						aria-labelledby="staticBackdropLabel" aria-hidden="true">
-						<div class="modal-dialog modal-lg">
+						<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
 							<div class="modal-content">
 								<div class="modal-header">
 									<h1 class="modal-title fs-5" id="staticBackdropLabel">Donación
@@ -535,12 +549,27 @@ body.shimeji-select-ie {
 															</div>
 														</div>
 
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="exampleInputPassword1" class="form-label">Ciudad</label>
-																<input type="text" class="form-control"
-																	placeholder="Ciudad:" name="ciudad">
-															</div>
+														<div class="form-group">
+															<label for="departamento" class="label-form text-secondary">Departamento</label>
+															<select name="departamento" class="form-control departamento-label"
+																id="id-departamento-1" required>
+																<option value=" ">[Seleccione un Departamento]</option>
+															</select>
+														</div>
+														<div class="form-group">
+															<label for="provincia" class="label-form text-secondary">Provincia</label>
+															<select name="provincia-1"
+																class="form-control provincia-label" id="id-provincia-1"
+																required>
+																<option value=" ">[Seleccione una provincia]</option>
+															</select>
+														</div>
+														<div class="form-group">
+															<label for="distrito" class="label-form text-secondary">Distrito</label>
+															<select name="distrito" class="form-control distrito-label"
+																id="id-distrito-1" required>
+																<option value=" ">[Seleccione un distrito]</option>
+															</select>
 														</div>
 
 
@@ -1802,7 +1831,78 @@ $('.owl-carousel').owlCarousel({
             });
         });
     });
-</script>
+	</script>
+	<%--SCRIPT PARA LLENAR LOS COMBOBOX DE DEPARTAMENTO,DISTRITO Y PROVINCIA --%>
+	<script>
+
+    function cargarDatosYManejarCambios(ciudadSelect, provinciaSelect, distritoSelect) {
+    	// Realizar una solicitud AJAX para cargar el archivo JSON
+    	const xhr = new XMLHttpRequest();
+    	xhr.open('GET', 'assets/map.pe.json', true);
+
+    	xhr.onload = function() {
+    		if (xhr.status === 200) {
+    			const data = JSON.parse(xhr.responseText);
+
+    			// Llenar el select de ciudades
+    			for ( const ciudad in data) {
+    				ciudadSelect.options.add(new Option(ciudad, ciudad));
+    			}
+
+    			// Manejar el cambio en el select de ciudades
+    			ciudadSelect
+    					.addEventListener(
+    							'change',
+    							function() {
+    								// Obtener la provincia seleccionada
+    								const selectedCiudad = ciudadSelect.value;
+    								const provincias = data[selectedCiudad];
+
+    								// Limpiar y llenar el select de provincias
+    								provinciaSelect.innerHTML = '<option value="">[Seleccione una provincia]</option>';
+    								for ( const provincia in provincias) {
+    									provinciaSelect.options.add(new Option(
+    											provincia, provincia));
+    								}
+    							});
+    			// Manejar el cambio en el select de provincias
+    			provinciaSelect
+    					.addEventListener(
+    							'change',
+    							function() {
+    								// Obtener la provincia y ciudad seleccionadas
+    								const selectedCiudad = ciudadSelect.value;
+    								const selectedProvincia = provinciaSelect.value;
+    								const distritos = data[selectedCiudad][selectedProvincia];
+
+    								// Limpiar y llenar el select de distritos
+    								distritoSelect.innerHTML = '<option value="">[Seleccione un distrito]</option>';
+    								for ( const distrito in distritos) {
+    									// Debes acceder al valor del distrito en lugar de todo el objeto distritos
+    									distritoSelect.options.add(new Option(
+    											distrito, distritos[distrito]));
+    								}
+    							});
+    		}
+    	};
+
+    	xhr.send();
+    }
+
+    // Llama a la función para el primer formulario
+    const ciudadSelect1 = document.getElementById('id-departamento');
+    const provinciaSelect1 = document.getElementById('id-provincia');
+    const distritoSelect1 = document.getElementById('id-distrito');
+    cargarDatosYManejarCambios(ciudadSelect1, provinciaSelect1, distritoSelect1);
+
+    // Llama a la función para el segundo formulario
+    const ciudadSelect2 = document.getElementById('id-departamento-1');
+    const provinciaSelect2 = document.getElementById('id-provincia-1');
+    const distritoSelect2 = document.getElementById('id-distrito-1');
+    cargarDatosYManejarCambios(ciudadSelect2, provinciaSelect2, distritoSelect2);
+
+
+	</script>
 
 </body>
 </html>
