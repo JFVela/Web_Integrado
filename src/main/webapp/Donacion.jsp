@@ -43,6 +43,8 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <title>Donacion</title>
+
+<%--ESTILOS --%>
 <style>
 body.shimeji-pinned iframe {
 	pointer-events: none;
@@ -68,6 +70,9 @@ body.shimeji-select-ie {
 <style>
 .estilo-don {
 	margin-bottom: 10px;
+}
+.custom-modal-dialog {
+  border-radius: 40px;
 }
 
 .estilo-col2 {
@@ -101,6 +106,22 @@ body.shimeji-select-ie {
 	margin: 0 auto;
 	border-radius: 25px;
 }
+.linea-azul {
+  border: none; /* Elimina el borde predeterminado */
+  height: 1px; /* Altura de la línea */
+  background-color: #7da2b2; /* Color de fondo azul */
+  width: 100%; /* Ocupa todo el ancho disponible */
+}
+.linea-vertical{
+  border-right: 1px solid #7da2b2; /* Establece un borde izquierdo */
+  margin: 0 auto 0 0; /* Elimina el margen derecho, centra horizontalmente y evita márgenes superior e inferior */
+  width: 1px;
+}
+.modal-body {
+  margin-left:0;margin-right:0;
+  padding-left: 0;padding-right: 0;
+}
+
 
 .help-block {
 	color: red;
@@ -134,9 +155,19 @@ body.shimeji-select-ie {
 .ra {
 	padding: 20px
 }
-
+.spa{
+	margin-left: 5px;
+}
+.custom-modal-row {
+  max-width: 100%; /* Establece un ancho máximo para la fila */
+  margin: 0 auto; /* Centra la fila horizontalmente en el modal */
+}
 .espace {
 	margin-left: 20px;
+}
+.custom-modal-dialog {
+  max-width: 750px; /* Establece el ancho máximo deseado */
+  width: 90%; /* Puedes ajustar este valor según tus necesidades */
 }
 
 .scrollable-form {
@@ -197,13 +228,13 @@ body.shimeji-select-ie {
 						href="voluntariado.jsp">Voluntariado</a></li>
 					<li class="nav-item"><a class="nav-link" href="#!">Eventos
 							y noticias</a></li>
-					<a type="" class="btn btn-primary ms-3" href="Donacion.jsp">Dona</a>
+					<a type="#" class="btn btn-primary ms-3" href="Donacion.jsp">Dona</a>
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<!-- Navbar -->
-
+	
 	<div class="container-fluid fondo tam">
 		<div class="row padd">
 			<!-- Columna de la imagen -->
@@ -220,29 +251,162 @@ body.shimeji-select-ie {
 	</div>
 
 
+	<!-- Modal de verificación -->
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered custom-modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #7ca1b1;"></div>
+				<div class="modal-body text-center">
+
+					<div class="linea-azul"></div>
+					<h1 class="p-4" style="color: #1f4145;">
+						<strong>¿Ya tienes una cuenta?</strong>
+					</h1>
+					<div class="linea-azul"></div>
+					<div class="row custom-modal-row">
+						<div class="col">
+							<div class="d-grid gap-2 col-6 mx-auto">
+							  <button id="id-si" class="btn btn-primary" type="button">SI</button>
+							  <button id="id-no" class="btn btn-primary" type="button">NO</button>
+							</div>
+						</div>
+						<div class="linea-vertical" style="margin-top: 15px;"></div>
+						<div class="col">
+							<div class="col-12 p-4">
+								<form id="formEmail" method="post" action="ServletDonacionEmail">
+									<label>Email</label>
+									<input name="correo-receptor">
+									<button type="submit" class="btn btn-outline-success">Enviar</button>
+									
+									<label>Código de confirmación</label>
+									<input>
+									<button type="button" class="btn btn-outline-success">Confirmar</button>
+									
+								</form>
+							</div>
+							<form id="formRegistro" method="post"
+								action="ServletDonante?accion=insertarModal">
+								<div class="col-12 p-4">
+									<div class="d-flex">
+										<div class="form-group">
+											<label for="exampleInputPassword1" class="form-label">DNI</label>
+											<input type="text" class="form-control" placeholder="DNI:"
+												name="dni">
+										</div>
+
+										<div class="form-group spa">
+											<label for="exampleInputEmail1" class="form-label">Nombre</label>
+											<input type="text" class="form-control" placeholder="Nombre:"
+												name="nombre">
+										</div>
+									</div>
+									<div class="d-flex">
+										<div class="form-group">
+											<label for="exampleInputPassword1" class="form-label">Paterno</label>
+											<input type="text" class="form-control"
+												placeholder="Apelldio Paterno:" name="paterno">
+										</div>
 
 
+
+										<div class="form-group spa">
+											<label for="exampleInputPassword1" class="form-label">Materno</label>
+											<input type="text" class="form-control"
+												placeholder="Apellido Materno:" name="materno">
+										</div>
+									</div>
+
+									<div class="d-flex">
+										<div class="form-group">
+											<label for="exampleInputPassword1" class="form-label">Celular</label>
+											<input type="text" class="form-control numcel"
+												placeholder="Número Celular:" name="celular">
+											<div class="mensajeCelular" style="text-align: left;"></div>
+										</div>
+
+
+
+										<div class="form-group spa">
+											<label for="departamento" class="label-form text-secondary">Departamento</label>
+											<select name="departamento"
+												class="form-control departamento-label" id="id-departamento"
+												required>
+												<option value=" ">[Seleccione un Departamento]</option>
+											</select>
+										</div>
+									</div>
+									<div class="d-flex">
+										<div class="form-group">
+											<label for="provincia" class="label-form text-secondary">Provincia</label>
+											<select name="provincia" class="form-control provincia-label"
+												id="id-provincia" required>
+												<option value=" ">[Seleccione una provincia]</option>
+											</select>
+										</div>
+										<div class="form-group spa">
+											<label for="distrito" class="label-form text-secondary">Distrito</label>
+											<select name="distrito" class="form-control distrito-label"
+												id="id-distrito" required>
+												<option value=" ">[Seleccione un distrito]</option>
+											</select>
+										</div>
+									</div>
+									<div class="d-flex">
+										<div class="form-group">
+											<label for="exampleInputPassword1" class="form-label">Email</label>
+											<input type="text" class="form-control correo"
+												placeholder="usuario@gmail.com" name="email">
+											<div class="mensajeEmail" style="text-align: left;"></div>
+										</div>
+
+										<div class="form-group spa">
+											<label for="exampleInputEmail1" class="form-label">Dirección</label>
+											<input type="text" class="form-control"
+												placeholder="Dirección:" name="direccion">
+										</div>
+									</div>
+									<button type="submit" class="btn btn-outline-success">Registrar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+      <div class="modal-footer">
+        <button id="id-cerrar" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+			</div>
+		</div>
+	</div>
+
+<%--TIPOS DE DONACIONES --%>
 	<div class="p-5 estilo-don" id="donaAqui">
 		<div class="container-fluid">
 			<div class="row">
 				<%--PRIMERA COLUMNA --%>
 				<div class="col ">
 					<div class="text-center">
-						<h1><span style="color: green;">Donación </span>Física</h1>
+						<h1>
+							<span style="color: green;">Donación </span>Física
+						</h1>
 						<img src="img/R.png" class="img-fluid"
-							style="height: 300px; width: 450px; padding-top: 10px;padding-bottom: 10px;">
-						<p style="padding-left: 50px;padding-right: 50px;">Tu donación física tiene un impacto local. Al ofrecer
-							recursos tangibles, marcas la diferencia en comunidades cercanas</p>
+							style="height: 300px; width: 450px; padding-top: 10px; padding-bottom: 10px;">
+						<p style="padding-left: 50px; padding-right: 50px;">Tu
+							donación física tiene un impacto local. Al ofrecer recursos
+							tangibles, marcas la diferencia en comunidades cercanas</p>
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-primary"
-							data-bs-toggle="modal" data-bs-target="#donafisico">
+							 id="donar-fisico" >
 							Donar en Físico</button>
 					</div>
 					<!-- Modal -->
 					<div class="modal fade" id="donafisico" data-bs-backdrop="static"
-						data-bs-keyboard="false" tabindex="-1" 
+						data-bs-keyboard="false" tabindex="-1"
 						aria-labelledby="staticBackdropLabel" aria-hidden="true">
-						<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+						<div
+							class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
 							<div class="modal-content">
 								<div class="modal-header">
 									<h1 class="modal-title fs-5" id="staticBackdropLabel">Donación
@@ -326,10 +490,12 @@ body.shimeji-select-ie {
 															</div>
 														</div>
 
-														
+
 														<div class="form-group">
-															<label for="departamento" class="label-form text-secondary">Departamento</label>
-															<select name="departamento" class="form-control departamento-label"
+															<label for="departamento"
+																class="label-form text-secondary">Departamento</label> <select
+																name="departamento"
+																class="form-control departamento-label"
 																id="id-departamento" required>
 																<option value=" ">[Seleccione un Departamento]</option>
 															</select>
@@ -344,8 +510,9 @@ body.shimeji-select-ie {
 														</div>
 														<div class="form-group">
 															<label for="distrito" class="label-form text-secondary">Distrito</label>
-															<select name="distrito" class="form-control distrito-label"
-																id="id-distrito" required>
+															<select name="distrito"
+																class="form-control distrito-label" id="id-distrito"
+																required>
 																<option value=" ">[Seleccione un distrito]</option>
 															</select>
 														</div>
@@ -387,20 +554,24 @@ body.shimeji-select-ie {
 				<%--DONACION VIRTUAL --%>
 				<div class="col estilo-col2">
 					<div class="text-center">
-						<h1><span style="color: white;">Donación </span>Virtual</h1>
+						<h1>
+							<span style="color: white;">Donación </span>Virtual
+						</h1>
 						<img src="img/asa.png" class="img-fluid"
 							style="height: 300px; width: 250px;">
-						<p style="padding-left: 50px;padding-right: 50px;">"Donar en línea es poderoso. Con tu ayuda virtual, apoyas
-							causas en todo el mundo desde casa."</p>
+						<p style="padding-left: 50px; padding-right: 50px;">"Donar en
+							línea es poderoso. Con tu ayuda virtual, apoyas causas en todo el
+							mundo desde casa."</p>
 						<button type="button" class="btn btn-primary btn-cerrar2"
-							data-bs-toggle="modal" data-bs-target="#donavirtual">
+							 id="donar-virtual">
 							Donar en Virtual</button>
 					</div>
 					<!-- Modal -->
 					<div class="modal fade" id="donavirtual" data-bs-backdrop="static"
 						data-bs-keyboard="false" tabindex="-1"
 						aria-labelledby="staticBackdropLabel" aria-hidden="true">
-						<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+						<div
+							class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
 							<div class="modal-content">
 								<div class="modal-header">
 									<h1 class="modal-title fs-5" id="staticBackdropLabel">Donación
@@ -550,8 +721,10 @@ body.shimeji-select-ie {
 														</div>
 
 														<div class="form-group">
-															<label for="departamento" class="label-form text-secondary">Departamento</label>
-															<select name="departamento" class="form-control departamento-label"
+															<label for="departamento"
+																class="label-form text-secondary">Departamento</label> <select
+																name="departamento"
+																class="form-control departamento-label"
 																id="id-departamento-1" required>
 																<option value=" ">[Seleccione un Departamento]</option>
 															</select>
@@ -566,8 +739,9 @@ body.shimeji-select-ie {
 														</div>
 														<div class="form-group">
 															<label for="distrito" class="label-form text-secondary">Distrito</label>
-															<select name="distrito" class="form-control distrito-label"
-																id="id-distrito-1" required>
+															<select name="distrito"
+																class="form-control distrito-label" id="id-distrito-1"
+																required>
 																<option value=" ">[Seleccione un distrito]</option>
 															</select>
 														</div>
@@ -608,6 +782,9 @@ body.shimeji-select-ie {
 
 		</div>
 	</div>
+
+
+
 	<!-- Medios de Pago -->
 
 	<h6 class="text-center">Tu aporte hace la diferencia</h6>
@@ -771,6 +948,7 @@ body.shimeji-select-ie {
 
 
 			</div>
+			
 			<div class="tab-pane fade" id="tab2" role="tabpanel"
 				aria-labelledby="tab2-tab">
 				<!-- Contenido de la pestaña 2 -->
@@ -1903,6 +2081,51 @@ $('.owl-carousel').owlCarousel({
 
 
 	</script>
+<script>
+$(document).ready(function() {
+    let botonOrigen = "";  
 
+    //clic en "Donar en Físico"
+    $("#donar-fisico").click(function() {
+        botonOrigen = "fisico";  
+        $("#staticBackdrop").modal("show");
+    });
+
+    //clic en "Donar en Virtual"
+    $("#donar-virtual").click(function() {
+        botonOrigen = "virtual";  
+        $("#staticBackdrop").modal("show");
+    });
+    
+    $("#id-cerrar").click(function() {
+        $("#staticBackdrop").modal("hide");
+        if (botonOrigen === "fisico") {
+            // Modal de donación física
+            $("#donafisico").modal("show");
+        } else if (botonOrigen === "virtual") {
+            // Modal de donación virtual
+            $("#donavirtual").modal("show");
+        }
+    });
+});
+
+
+$(document).ready(function() {
+  // Oculta el formulario al principio
+  $('#formRegistro').hide();
+  $('#formEmail').hide();
+
+  // Muestra u oculta el formulario al hacer clic en "SI" o "NO"
+  $('#id-no').click(function() {
+    $('#formRegistro').show();
+    $('#formEmail').hide();
+  });
+
+  $('#id-si').click(function() {
+	  $('#formEmail').show();
+    $('#formRegistro').hide();
+  });
+});
+</script>
 </body>
 </html>

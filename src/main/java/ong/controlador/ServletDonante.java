@@ -207,7 +207,7 @@ public class ServletDonante extends HttpServlet {
 				request.getSession().setAttribute("MENSAJE","Fallida");
 			}
 		
-		listarDonante(request,response);
+			response.sendRedirect("Donacion.jsp");
 	}
 
 	private void listarDonante(HttpServletRequest request, HttpServletResponse response)
