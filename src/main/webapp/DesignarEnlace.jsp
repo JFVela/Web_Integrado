@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Designar Enlaces</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -93,32 +93,24 @@ fieldset, legend {
 										<div class="row mt-3">
 											<label for="inputEmail3" class="col-sm-2">Rol</label>
 											<div class="form-group col-sm-6">
-												<select class="form-select" id="idTipoBien">
+												<select class="form-select" id="idRol">
 													<option value=" ">[Seleccione Rol]</option>
 												</select>
 											</div>
 										</div>
-										<table id="tableBienes" class="table table-striped mt-4"
+										<br>
+										<table id="tableEnlaces" class="table table-striped mt-4"
 											style="width: 100%">
 											<thead>
 												<tr>
-													<th>ID-Enlace</th>
+													<th>ID</th>
 													<th>Descripcion</th>
+													<th>Ruta</th>
 													<th></th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td></td>
-													<td></td>
-													<td>
-														<button type="button"
-															class="btn btn-warning btn-adicionar">
-															<i class="fa-solid fa-plus"></i>
-														</button>
-													</td>
-												</tr>
-
+												<!-- LISTA DE ENLACES -->
 											</tbody>
 										</table>
 									</fieldset>
@@ -161,19 +153,19 @@ fieldset, legend {
 
 
 		<div class="mt-3">
-			<!-- CREAR TABLA -->
-			<table id="TablaDepa" class="table table-striped" style="width: 100%">
+			<table id="TablaAsignarEnlace" class="table table-striped" style="width: 100%">
 				<thead>
 					<tr>
 						<th>ID-Rol</th>
-						<th>Nom.Rol</th>
+						<th>Nombre del Rol</th>
 						<th>ID-Enlace</th>
-						<th>Nom.Enlace</th>
+						<th>Nombre del Enlace</th>
 						<th></th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
+					<!--Se genera la tabla-->
 				</tbody>
 			</table>
 		</div>
@@ -191,5 +183,81 @@ fieldset, legend {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous"></script>
+	<script>
+		cargarRol();
+		cargarEnlaces();
+		cargarAsignarEnlace();
+		function cargarRol() {
+			$.get("ServletRolJSON", function(response) {
+				$.each(response, function(index, item) {
+					$("#idRol").append(
+							"<option value='"+item.id+"'>" + item.nombre
+									+ "</option>");
+				})
+			})
+		}
+	    function cargarEnlaces() {
+	        $.get("ServletEnlaceJSON", function(response) {
+				let botonAgregar = "<button type='button' class='btn btn-warning btn-adicionar'><i class='fa-solid fa-plus'></i></button>";
+	            $.each(response, function(index, item) {
+	                $("#tableEnlaces").append("<tr><td>" + item.id_enlace + "</td>" +
+	                        "<td>" + item.descripcion + "</td>" +
+	                        "<td>" + item.ruta + "</td>" +
+	                        "<td>" + botonAgregar + "</td></tr>");
+	            });
+
+	            $(document).ready(function() {
+	                $('#tableEnlaces').DataTable({
+	                    "language": {
+	                        "lengthMenu": "Mostrar _MENU_ registros por página",
+	                        "zeroRecords": "No se encontraron registros",
+	                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+	                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+	                        "infoFiltered": "(filtrados de un total de _MAX_ registros)",
+	                        "search": "Buscar:",
+	                        "paginate": {
+	                            "first": "Primero",
+	                            "previous": "Anterior",
+	                            "next": "Siguiente",
+	                            "last": "Último"
+	                        }
+	                    }
+	                });
+	            });
+	        });
+	    }
+	    function cargarAsignarEnlace() {
+	        $.get("ServletAsignarEnlaceJSON", function(response) {
+	            $.each(response, function(index, item) {
+	                let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+	                let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+	                $("#TablaAsignarEnlace").append("<tr><td>" + item.roles_id_rol + "</td>" +
+	                    "<td>" + item.nombreRol + "</td>" +
+	                    "<td>" + item.enlace_id_enlace + "</td>" +
+	                    "<td>" + item.nombreEnlace + "</td>" +
+	                    "<td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
+	            });
+
+	            $(document).ready(function() {
+	                $('#TablaAsignarEnlace').DataTable({
+	                    "language": {
+	                        "lengthMenu": "Mostrar _MENU_ registros por página",
+	                        "zeroRecords": "No se encontraron registros",
+	                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+	                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+	                        "infoFiltered": "(filtrados de un total de _MAX_ registros)",
+	                        "search": "Buscar:",
+	                        "paginate": {
+	                            "first": "Primero",
+	                            "previous": "Anterior",
+	                            "next": "Siguiente",
+	                            "last": "Último"
+	                        }
+	                    }
+	                });
+	            });
+	        });
+	    }
+	</script>
 </body>
 </html>
