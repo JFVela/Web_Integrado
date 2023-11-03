@@ -118,13 +118,14 @@ fieldset, legend {
 								<div class="col-lg-6">
 									<fieldset class="reset">
 										<legend class="reset">Enlace/Rol</legend>
-										<table id="tableBienesSolicitados"
+										<table id="tableAsignacionesRolesyEnlaces"
 											class="table table-striped mt-4" style="width: 100%">
 											<thead>
 												<tr>
-													<th>ID-Enlace</th>
-													<th>Descripcion</th>
+													<th>ID</th>
 													<th>Rol</th>
+													<th>ID</th>
+													<th>Enlace</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -187,15 +188,22 @@ fieldset, legend {
 		cargarRol();
 		cargarEnlaces();
 		cargarAsignarEnlace();
+		
 		function cargarRol() {
-			$.get("ServletRolJSON", function(response) {
-				$.each(response, function(index, item) {
-					$("#idRol").append(
-							"<option value='"+item.id+"'>" + item.nombre
-									+ "</option>");
-				})
-			})
+		    $.get("ServletRolJSON", function(response) {
+		        $.each(response, function(index, item) {
+		            // Agrega el atributo nombreRol a la opción
+		            const option = $("<option>")
+		                .attr("value", item.id)
+		                .attr("nombreRol", item.nombre)
+		                .text(item.nombre);
+
+		            // Agrega la opción al elemento select
+		            $("#idRol").append(option);
+		        })
+		    })
 		}
+		
 	    function cargarEnlaces() {
 	        $.get("ServletEnlaceJSON", function(response) {
 				let botonAgregar = "<button type='button' class='btn btn-warning btn-adicionar'><i class='fa-solid fa-plus'></i></button>";
@@ -226,8 +234,9 @@ fieldset, legend {
 	            });
 	        });
 	    }
+	    
 	    function cargarAsignarEnlace() {
-	        $.get("ServletAsignarEnlaceJSON", function(response) {
+	        $.get("ServletAsignarEnlaceJSON?accion=TABLA", function(response) {
 	            $.each(response, function(index, item) {
 	                let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
 	                let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
@@ -258,6 +267,44 @@ fieldset, legend {
 	            });
 	        });
 	    }
+	    function listaEnlacesSeleccionados() {
+			let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button>";
+			$.get("ServletRequerimiento?accion=LISTAR", function(response) {
+				$.each(response, function(index, item) {
+					$("#tableAsignacionesRolesyEnlaces").append(
+							"<tr><td>" + item.codigo + "</td>" + "<td>"
+									+ item.descripcion + "</td><td>"
+									+ item.cantidad + "</td><td>"
+									+ botonEliminar + "</td></tr>");
+				})
+			})
+		}
+	    
+	    $(document).on("click", ".btn-adicionar", function() {
+	        // Obtener los valores
+	        let IdEnlace, nombreEnlace, IdRol, nombreRol;
+	        IdRol = $("#idRol").val();
+	        nombreRol = $("#idRol option:selected").attr("nombreRol");
+	        IdEnlace = $(this).parents("tr").find("td")[0].innerHTML;
+	        nombreEnlace = $(this).parents("tr").find("td")[1].innerHTML;
+
+	        // Crear la fila para la tabla
+	        let newRow = "<tr><td>" + IdRol + "</td>" +
+	            "<td>" + nombreRol+ "</td>" +
+	            "<td>" + IdEnlace + "</td>" +
+	            "<td>" + nombreEnlace + "</td>" +
+	            "<td><button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button></td></tr>";
+
+	        // Agregar la fila a la tabla de Bienes Solicitados
+	        $("#tableAsignacionesRolesyEnlaces tbody").append(newRow);
+	        // Hacer la llamada AJAX si es necesario
+	        $.get("ServletRequerimiento?accion=ADICIONAR&IdRol=" + IdRol + "&IdEnlace" +IdEnlace , function(response) {
+	            console.log(response);
+	            // Puedes procesar la respuesta si es necesario
+	        });
+	    });
+
+
 	</script>
 </body>
 </html>

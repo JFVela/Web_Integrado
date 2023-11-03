@@ -3,6 +3,8 @@ package Intranet.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,4 +61,41 @@ public class MySQL_AsignarEnlace implements interfazAsignarEnlace {
 		}
 		return lista;
 	}
+
+	@Override
+	public int saveAsignacion(Asignar_Enlace asignacion) throws Exception {
+		int salida = -1;
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		try {
+			cn = new MySQL_Conexion().getConnection();
+			String sqlAsignacion = "INSERT INTO roles_has_enlace (roles_id_rol, enlace_id_enlace) VALUES (?, ?)";
+			pstm = cn.prepareStatement(sqlAsignacion);
+
+			pstm.setInt(1, asignacion.getRoles_id_rol());
+			pstm.setInt(2, asignacion.getEnlace_id_enlace());
+
+			int result = pstm.executeUpdate();
+
+			if (result > 0) {
+				salida = result;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			salida = -1;
+		} finally {
+			try {
+				if (pstm != null) {
+					pstm.close();
+				}
+				if (cn != null) {
+					cn.close();
+				}
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return salida;
+	}
+
 }
