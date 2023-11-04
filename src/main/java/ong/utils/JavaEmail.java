@@ -1,4 +1,5 @@
 package ong.utils;
+import java.security.SecureRandom;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +18,7 @@ public class JavaEmail {
 		pr.put("mail.smtp.port", "587");
 		
 		String miCuenta="diego.bautistamlp@gmail.com";
-		String contraseña="c";
+		String contraseña="ccc";
 		Session session=Session.getInstance(pr,new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -42,4 +43,22 @@ public class JavaEmail {
 		}
 		return null;
 	}
+	
+	//GENERAR CODIGO DE 8 CARACTERES 
+	 private static final String CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	    private static final int CODE_LENGTH = 8;
+
+	    public static String GenerarCodigo() {
+	        SecureRandom random = new SecureRandom();
+	        StringBuilder code = new StringBuilder(CODE_LENGTH);
+
+	        for (int i = 0; i < CODE_LENGTH; i++) {
+	            int randomIndex = random.nextInt(CHARACTERS.length());
+	            char randomChar = CHARACTERS.charAt(randomIndex);
+	            code.append(randomChar);
+	        }
+
+	        return code.toString().toUpperCase();
+	    }
+
 }

@@ -71,8 +71,9 @@ body.shimeji-select-ie {
 .estilo-don {
 	margin-bottom: 10px;
 }
+
 .custom-modal-dialog {
-  border-radius: 40px;
+	border-radius: 40px;
 }
 
 .estilo-col2 {
@@ -106,22 +107,27 @@ body.shimeji-select-ie {
 	margin: 0 auto;
 	border-radius: 25px;
 }
+
 .linea-azul {
-  border: none; /* Elimina el borde predeterminado */
-  height: 1px; /* Altura de la línea */
-  background-color: #7da2b2; /* Color de fondo azul */
-  width: 100%; /* Ocupa todo el ancho disponible */
-}
-.linea-vertical{
-  border-right: 1px solid #7da2b2; /* Establece un borde izquierdo */
-  margin: 0 auto 0 0; /* Elimina el margen derecho, centra horizontalmente y evita márgenes superior e inferior */
-  width: 1px;
-}
-.modal-body {
-  margin-left:0;margin-right:0;
-  padding-left: 0;padding-right: 0;
+	border: none; /* Elimina el borde predeterminado */
+	height: 1px; /* Altura de la línea */
+	background-color: #7da2b2; /* Color de fondo azul */
+	width: 100%; /* Ocupa todo el ancho disponible */
 }
 
+.linea-vertical {
+	border-right: 1px solid #7da2b2; /* Establece un borde izquierdo */
+	margin: 0 auto 0 0;
+	/* Elimina el margen derecho, centra horizontalmente y evita márgenes superior e inferior */
+	width: 1px;
+}
+
+.modal-body {
+	margin-left: 0;
+	margin-right: 0;
+	padding-left: 0;
+	padding-right: 0;
+}
 
 .help-block {
 	color: red;
@@ -155,19 +161,23 @@ body.shimeji-select-ie {
 .ra {
 	padding: 20px
 }
-.spa{
+
+.spa {
 	margin-left: 5px;
 }
+
 .custom-modal-row {
-  max-width: 100%; /* Establece un ancho máximo para la fila */
-  margin: 0 auto; /* Centra la fila horizontalmente en el modal */
+	max-width: 100%; /* Establece un ancho máximo para la fila */
+	margin: 0 auto; /* Centra la fila horizontalmente en el modal */
 }
+
 .espace {
 	margin-left: 20px;
 }
+
 .custom-modal-dialog {
-  max-width: 750px; /* Establece el ancho máximo deseado */
-  width: 90%; /* Puedes ajustar este valor según tus necesidades */
+	max-width: 750px; /* Establece el ancho máximo deseado */
+	width: 90%; /* Puedes ajustar este valor según tus necesidades */
 }
 
 .scrollable-form {
@@ -176,19 +186,22 @@ body.shimeji-select-ie {
 	/* Establece la altura máxima según tus necesidades */
 	border-radius: 15px;
 }
+
 @media ( max-width : 1900px) {
 	.padd {
 		padding-top: 10px;
 	}
 }
+
 @media ( max-width : 1093px) {
 	.padd {
-		padding:0px;
+		padding: 0px;
 	}
 }
+
 @media ( max-width : 891px) {
 	.padd {
-		padding:0px;
+		padding: 0px;
 	}
 }
 
@@ -234,7 +247,7 @@ body.shimeji-select-ie {
 		</div>
 	</nav>
 	<!-- Navbar -->
-	
+
 	<div class="container-fluid fondo tam">
 		<div class="row padd">
 			<!-- Columna de la imagen -->
@@ -268,23 +281,28 @@ body.shimeji-select-ie {
 					<div class="row custom-modal-row">
 						<div class="col">
 							<div class="d-grid gap-2 col-6 mx-auto">
-							  <button id="id-si" class="btn btn-primary" type="button">SI</button>
-							  <button id="id-no" class="btn btn-primary" type="button">NO</button>
+								<button id="id-si" class="btn btn-primary" type="button">SI</button>
+								<button id="id-no" class="btn btn-primary" type="button">NO</button>
 							</div>
 						</div>
 						<div class="linea-vertical" style="margin-top: 15px;"></div>
 						<div class="col">
 							<div class="col-12 p-4">
-								<form id="formEmail" method="post" action="ServletDonacionEmail">
-									<label>Email</label>
-									<input name="correo-receptor">
-									<button type="submit" class="btn btn-outline-success">Enviar</button>
-									
-									<label>Código de confirmación</label>
-									<input>
-									<button type="button" class="btn btn-outline-success">Confirmar</button>
-									
-								</form>
+									<label id="id-emailEnvio">Email</label>
+									 <input
+										id="id-ingresoCorreo">
+									<button id="startCountdown" type="submit"
+										class="btn btn-outline-success">Enviar</button>
+									<div id="countdown" style="display: none;"></div>
+
+									<label class="mx-auto" id="confirmationLabel"
+										style="display: none">Código de confirmación</label> 
+										<input
+										class="mx-auto" id="confirmationInput" style="display: none">
+									<button class="mx-auto" id="confirmationButton"
+										style="display: none" type="button"
+										class="btn btn-outline-success">Confirmar</button>
+
 							</div>
 							<form id="formRegistro" method="post"
 								action="ServletDonante?accion=insertarModal">
@@ -373,15 +391,16 @@ body.shimeji-select-ie {
 						</div>
 					</div>
 				</div>
-      <div class="modal-footer">
-        <button id="id-cerrar" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
+				<div class="modal-footer">
+					<button id="id-cerrar" type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Understood</button>
+				</div>
 			</div>
 		</div>
 	</div>
 
-<%--TIPOS DE DONACIONES --%>
+	<%--TIPOS DE DONACIONES --%>
 	<div class="p-5 estilo-don" id="donaAqui">
 		<div class="container-fluid">
 			<div class="row">
@@ -397,8 +416,7 @@ body.shimeji-select-ie {
 							donación física tiene un impacto local. Al ofrecer recursos
 							tangibles, marcas la diferencia en comunidades cercanas</p>
 						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary"
-							 id="donar-fisico" >
+						<button type="button" class="btn btn-primary" id="donar-fisico">
 							Donar en Físico</button>
 					</div>
 					<!-- Modal -->
@@ -563,8 +581,7 @@ body.shimeji-select-ie {
 							línea es poderoso. Con tu ayuda virtual, apoyas causas en todo el
 							mundo desde casa."</p>
 						<button type="button" class="btn btn-primary btn-cerrar2"
-							 id="donar-virtual">
-							Donar en Virtual</button>
+							id="donar-virtual">Donar en Virtual</button>
 					</div>
 					<!-- Modal -->
 					<div class="modal fade" id="donavirtual" data-bs-backdrop="static"
@@ -948,7 +965,7 @@ body.shimeji-select-ie {
 
 
 			</div>
-			
+
 			<div class="tab-pane fade" id="tab2" role="tabpanel"
 				aria-labelledby="tab2-tab">
 				<!-- Contenido de la pestaña 2 -->
@@ -1386,7 +1403,7 @@ $('.owl-carousel').owlCarousel({
 })
 </script>
 
-	<script>
+<script>
    const tabs = document.querySelectorAll('.nav-link[data-bs-toggle="tab"]');
 
    tabs.forEach(tab => {
@@ -2081,7 +2098,9 @@ $('.owl-carousel').owlCarousel({
 
 
 	</script>
-<script>
+	<script>
+
+//MOSTRAR DATOS SEGÚN OPCIÓN
 $(document).ready(function() {
     let botonOrigen = "";  
 
@@ -2107,6 +2126,12 @@ $(document).ready(function() {
             $("#donavirtual").modal("show");
         }
     });
+    $(document).on("click","#id-cerrar",function(){
+    	$("#formRegistro").trigger("reset");
+    	$("#formRegistro").data("bootstrapValidator").resetForm(true);
+    	$('#id-no').prop("checked", false);
+        $('#id-si').prop("checked", false);
+    })
 });
 
 
@@ -2126,6 +2151,76 @@ $(document).ready(function() {
     $('#formRegistro').hide();
   });
 });
+
+//ACCION AL ENVIAR CODIGO AL CORREO ELECTRONICO
+document.getElementById("startCountdown").addEventListener("click", function () {
+    var countdownElement = document.getElementById("countdown");
+    var confirmationLabel = document.getElementById("confirmationLabel");
+    var confirmationInput = document.getElementById("confirmationInput");
+    var confirmationButton = document.getElementById("confirmationButton");
+    var botonenviar = document.getElementById("startCountdown");
+    var emailEnvio = document.getElementById("id-emailEnvio");
+    var ingresoCorreo = document.getElementById("id-ingresoCorreo");
+
+    // Muestra el contador y comienza el temporizador
+    countdownElement.style.display = "block";
+    
+    var seconds = 5;
+    var countdownInterval = setInterval(function () {
+        countdownElement.innerText = seconds;
+        seconds--;
+
+        if (seconds < 0) {
+            clearInterval(countdownInterval);
+            countdownElement.style.display = "none";
+            ingresoCorreo.style.display = "none";
+            emailEnvio.style.display = "none";
+            botonenviar.style.display = "none";
+            confirmationLabel.style.display = "block";
+            confirmationInput.style.display = "block";
+            confirmationButton.style.display = "block";
+        }
+    }, 1000);
+});
+
+</script>
+<script>
+document.getElementById("startCountdown").addEventListener("click", function() {
+    var correo = document.getElementById("id-ingresoCorreo").value;
+	$.ajax({
+	    type: "POST",
+	    url: "ServletDonacionEmail",
+	    data: {
+	    	tipo:"tipo1",
+	        correo: correo
+	    },
+	    success: function(response) {   
+	    },
+	    error: function() {
+	    }
+	});
+})
+document.getElementById("confirmationButton").addEventListener("click", function() {
+	var codigo =document.getElementById("confirmationInput").value;
+	$.ajax({
+		type: "POST",
+	    url: "ServletDonacionEmail",
+	    data: {
+	    	tipo:"tipo2",
+	    	codigo: codigo
+	    },
+	    success: function(response) {
+		       if(response==="valido"){
+		    	   console.log("valido");
+		       }else{
+		    	   console.log("invalido");
+		       }
+		    },
+		    error: function() {
+		    }
+	});
+})
+
 </script>
 </body>
 </html>
