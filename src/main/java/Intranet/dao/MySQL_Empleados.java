@@ -15,51 +15,12 @@ public class MySQL_Empleados implements interfazEmpleados {
 
 	@Override
 	public int save(Empleados empleado) {
-		  int salida = -1;
-		    Connection cn = null;
-		    PreparedStatement pstm = null;
-		    try {
-		        cn = new MySQL_Conexion().getConnection();
-		        String sql = "INSERT INTO empleados(dni, login, contraseña, nombre, paterno, materno, telefono, correo, direccion, sueldo, id_rol, id_depa, salt) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		        pstm = cn.prepareStatement(sql);
-		        pstm.setInt(1, empleado.getDni());
-		        pstm.setString(2, empleado.getLogin());
-		        pstm.setString(3, empleado.getContraseña());
-		        pstm.setString(4, empleado.getNombre());
-		        pstm.setString(5, empleado.getPaterno());
-		        pstm.setString(6, empleado.getMaterno());
-		        pstm.setInt(7, empleado.getTelefono());
-		        pstm.setString(8, empleado.getCorreo());
-		        pstm.setString(9, empleado.getDireccion());
-		        pstm.setDouble(10, empleado.getSueldo());
-		        pstm.setInt(11, empleado.getId_rol());
-		        pstm.setInt(12, empleado.getId_depa());
-		        pstm.setBytes(13, empleado.getSalt()); // Insertar el valor de salt como un arreglo de bytes
-
-		        salida = pstm.executeUpdate();
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		    } finally {
-		        try {
-		            if (pstm != null)
-		                pstm.close();
-		            if (cn != null)
-		                cn.close();
-		        } catch (Exception e2) {
-		            e2.printStackTrace();
-		        }
-		    }
-		    return salida;
-	}
-
-	@Override
-	public int update(Empleados empleado) {
 		int salida = -1;
 		Connection cn = null;
 		PreparedStatement pstm = null;
 		try {
 			cn = new MySQL_Conexion().getConnection();
-			String sql = "UPDATE empleados SET dni=?, login=?, contraseña=?, nombre=?, paterno=?, materno=?, telefono=?, correo=?, direccion=?, sueldo=?, id_rol=?, id_depa=? WHERE codigo=?";
+			String sql = "INSERT INTO empleados(dni, login, contraseña, nombre, paterno, materno, telefono, correo, direccion, sueldo, id_rol, id_depa, salt) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			pstm = cn.prepareStatement(sql);
 			pstm.setInt(1, empleado.getDni());
 			pstm.setString(2, empleado.getLogin());
@@ -73,7 +34,47 @@ public class MySQL_Empleados implements interfazEmpleados {
 			pstm.setDouble(10, empleado.getSueldo());
 			pstm.setInt(11, empleado.getId_rol());
 			pstm.setInt(12, empleado.getId_depa());
-			pstm.setInt(13, empleado.getCodigo());
+			pstm.setBytes(13, empleado.getSalt()); // Insertar el valor de salt como un arreglo de bytes
+
+			salida = pstm.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstm != null)
+					pstm.close();
+				if (cn != null)
+					cn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return salida;
+	}
+
+	@Override
+	public int update(Empleados empleado) {
+		int salida = -1;
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		try {
+			cn = new MySQL_Conexion().getConnection();
+			String sql = "UPDATE empleados SET dni=?, login=?, contraseña=?, nombre=?, paterno=?, materno=?, telefono=?, correo=?, direccion=?, sueldo=?, id_rol=?, id_depa=?, salt=? WHERE codigo=?";
+			pstm = cn.prepareStatement(sql);
+			pstm.setInt(1, empleado.getDni());
+			pstm.setString(2, empleado.getLogin());
+			pstm.setString(3, empleado.getContraseña());
+			pstm.setString(4, empleado.getNombre());
+			pstm.setString(5, empleado.getPaterno());
+			pstm.setString(6, empleado.getMaterno());
+			pstm.setInt(7, empleado.getTelefono());
+			pstm.setString(8, empleado.getCorreo());
+			pstm.setString(9, empleado.getDireccion());
+			pstm.setDouble(10, empleado.getSueldo());
+			pstm.setInt(11, empleado.getId_rol());
+			pstm.setInt(12, empleado.getId_depa());
+			pstm.setBytes(13, empleado.getSalt()); // Insertar el valor de salt como un arreglo de bytes
+			pstm.setInt(14, empleado.getCodigo());
 
 			salida = pstm.executeUpdate();
 		} catch (Exception e) {
@@ -214,8 +215,6 @@ public class MySQL_Empleados implements interfazEmpleados {
 		return lista;
 	}
 
-	
-
 	@Override
 	public List<Enlace> traerEnlaceDelUsuario(int codRol) {
 		List<Enlace> lista = new ArrayList<Enlace>();
@@ -246,31 +245,31 @@ public class MySQL_Empleados implements interfazEmpleados {
 
 	@Override
 	public Empleados iniciarSesion(String login) {
-		 Empleados empleado = null;
-		    Connection conn = null;
-		    PreparedStatement pstmt = null;
-		    ResultSet rs = null;
+		Empleados empleado = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
-		    try {
-		        conn = new MySQL_Conexion().getConnection(); // Reemplaza con tu método de conexión
-		        String sql = "SELECT codigo, login, nombre, id_rol, contraseña, salt FROM empleados WHERE login = ?";
-		        pstmt = conn.prepareStatement(sql);
-		        pstmt.setString(1, login);
-		        rs = pstmt.executeQuery();
-		        if (rs.next()) {
-		            empleado = new Empleados();
-		            empleado.setCodigo(rs.getInt("codigo"));
-		            empleado.setLogin(rs.getString("login"));
-		            empleado.setNombre(rs.getString("nombre"));
-		            empleado.setId_rol(rs.getInt("id_rol"));
-		            empleado.setContraseña(rs.getString("contraseña"));
-			        byte[] salt = rs.getBytes("salt"); // Obtener el salt como un arreglo de bytes
-			        empleado.setSalt(salt);
-		        }
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		    }
-		    return empleado;
+		try {
+			conn = new MySQL_Conexion().getConnection(); // Reemplaza con tu método de conexión
+			String sql = "SELECT codigo, login, nombre, id_rol, contraseña, salt FROM empleados WHERE login = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, login);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				empleado = new Empleados();
+				empleado.setCodigo(rs.getInt("codigo"));
+				empleado.setLogin(rs.getString("login"));
+				empleado.setNombre(rs.getString("nombre"));
+				empleado.setId_rol(rs.getInt("id_rol"));
+				empleado.setContraseña(rs.getString("contraseña"));
+				byte[] salt = rs.getBytes("salt"); // Obtener el salt como un arreglo de bytes
+				empleado.setSalt(salt);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return empleado;
 	}
 
 }

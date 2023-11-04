@@ -286,7 +286,7 @@
             $("#id-codigo").val(response.codigo);
             $("#id-dni").val(response.dni);
             $("#id-login").val(response.login);
-            $("#id-contraseña").val(response.contraseña);
+            $("#id-contraseña").val("*****");
             $("#id-nombre").val(response.nombre);
             $("#id-paterno").val(response.paterno);
             $("#id-materno").val(response.materno);

@@ -37,7 +37,6 @@ public class MySQL_Rol_Enlace implements interfazRol_Enlace {
 				asignar.setID_Enlace(rs.getInt(3));
 				asignar.setNombre_Enlace(rs.getString(4));
 				lista.add(asignar);
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
