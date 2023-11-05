@@ -184,127 +184,129 @@ fieldset, legend {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous"></script>
-	<script>
-		cargarRol();
-		cargarEnlaces();
-		cargarAsignarEnlace();
-		
-		function cargarRol() {
-		    $.get("ServletRolJSON", function(response) {
-		        $.each(response, function(index, item) {
-		            // Agrega el atributo nombreRol a la opción
-		            const option = $("<option>")
-		                .attr("value", item.id)
-		                .attr("nombreRol", item.nombre)
-		                .text(item.nombre);
+<script>
+    // Cargar datos al cargar la página
+    cargarRol();
+    cargarEnlaces();
+    cargarAsignarEnlace();
 
-		            // Agrega la opción al elemento select
-		            $("#idRol").append(option);
-		        })
-		    })
-		}
-		
-	    function cargarEnlaces() {
-	        $.get("ServletEnlaceJSON", function(response) {
-				let botonAgregar = "<button type='button' class='btn btn-warning btn-adicionar'><i class='fa-solid fa-plus'></i></button>";
-	            $.each(response, function(index, item) {
-	                $("#tableEnlaces").append("<tr><td>" + item.id_enlace + "</td>" +
-	                        "<td>" + item.descripcion + "</td>" +
-	                        "<td>" + item.ruta + "</td>" +
-	                        "<td>" + botonAgregar + "</td></tr>");
-	            });
+    // Cargar opciones de roles en el select
+    function cargarRol() {
+        $.get("ServletRolJSON", function(response) {
+            $.each(response, function(index, item) {
+                // Agrega el atributo nombreRol a la opción
+                const option = $("<option>")
+                    .attr("value", item.id)
+                    .attr("nombreRol", item.nombre)
+                    .text(item.nombre);
 
-	            $(document).ready(function() {
-	                $('#tableEnlaces').DataTable({
-	                    "language": {
-	                        "lengthMenu": "Mostrar _MENU_ registros por página",
-	                        "zeroRecords": "No se encontraron registros",
-	                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-	                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-	                        "infoFiltered": "(filtrados de un total de _MAX_ registros)",
-	                        "search": "Buscar:",
-	                        "paginate": {
-	                            "first": "Primero",
-	                            "previous": "Anterior",
-	                            "next": "Siguiente",
-	                            "last": "Último"
-	                        }
-	                    }
-	                });
-	            });
-	        });
-	    }
-	    
-	    function cargarAsignarEnlace() {
-	        $.get("ServletAsignarEnlaceJSON?accion=TABLA", function(response) {
-	            $.each(response, function(index, item) {
-	                let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
-	                let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
-	                $("#TablaAsignarEnlace").append("<tr><td>" + item.roles_id_rol + "</td>" +
-	                    "<td>" + item.nombreRol + "</td>" +
-	                    "<td>" + item.enlace_id_enlace + "</td>" +
-	                    "<td>" + item.nombreEnlace + "</td>" +
-	                    "<td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
-	            });
+                // Agrega la opción al elemento select
+                $("#idRol").append(option);
+            });
+        });
+    }
 
-	            $(document).ready(function() {
-	                $('#TablaAsignarEnlace').DataTable({
-	                    "language": {
-	                        "lengthMenu": "Mostrar _MENU_ registros por página",
-	                        "zeroRecords": "No se encontraron registros",
-	                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-	                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-	                        "infoFiltered": "(filtrados de un total de _MAX_ registros)",
-	                        "search": "Buscar:",
-	                        "paginate": {
-	                            "first": "Primero",
-	                            "previous": "Anterior",
-	                            "next": "Siguiente",
-	                            "last": "Último"
-	                        }
-	                    }
-	                });
-	            });
-	        });
-	    }
-	    function listaEnlacesSeleccionados() {
-			let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button>";
-			$.get("ServletRequerimiento?accion=LISTAR", function(response) {
-				$.each(response, function(index, item) {
-					$("#tableAsignacionesRolesyEnlaces").append(
-							"<tr><td>" + item.codigo + "</td>" + "<td>"
-									+ item.descripcion + "</td><td>"
-									+ item.cantidad + "</td><td>"
-									+ botonEliminar + "</td></tr>");
-				})
-			})
-		}
-	    
-	    $(document).on("click", ".btn-adicionar", function() {
-	        // Obtener los valores
-	        let IdEnlace, nombreEnlace, IdRol, nombreRol;
-	        IdRol = $("#idRol").val();
-	        nombreRol = $("#idRol option:selected").attr("nombreRol");
-	        IdEnlace = $(this).parents("tr").find("td")[0].innerHTML;
-	        nombreEnlace = $(this).parents("tr").find("td")[1].innerHTML;
+    // Cargar datos de enlaces
+    function cargarEnlaces() {
+        $.get("ServletEnlaceJSON", function(response) {
+            let botonAgregar = "<button type='button' class='btn btn-warning btn-adicionar'><i class='fa-solid fa-plus'></i></button>";
+            $.each(response, function(index, item) {
+                $("#tableEnlaces").append("<tr><td>" + item.id_enlace + "</td>" +
+                    "<td>" + item.descripcion + "</td>" +
+                    "<td>" + item.ruta + "</td>" +
+                    "<td>" + botonAgregar + "</td></tr>");
+            });
 
-	        // Crear la fila para la tabla
-	        let newRow = "<tr><td>" + IdRol + "</td>" +
-	            "<td>" + nombreRol+ "</td>" +
-	            "<td>" + IdEnlace + "</td>" +
-	            "<td>" + nombreEnlace + "</td>" +
-	            "<td><button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button></td></tr>";
+            // Inicializar la tabla DataTable
+            $(document).ready(function() {
+                $('#tableEnlaces').DataTable({
+                    "language": {
+                        "lengthMenu": "Mostrar _MENU_ registros por página",
+                        "zeroRecords": "No se encontraron registros",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                        "infoFiltered": "(filtrados de un total de _MAX_ registros)",
+                        "search": "Buscar:",
+                        "paginate": {
+                            "first": "Primero",
+                            "previous": "Anterior",
+                            "next": "Siguiente",
+                            "last": "Último"
+                        }
+                    }
+                });
+            });
+        });
+    }
 
-	        // Agregar la fila a la tabla de Bienes Solicitados
-	        $("#tableAsignacionesRolesyEnlaces tbody").append(newRow);
-	        // Hacer la llamada AJAX si es necesario
-	        $.get("ServletRequerimiento?accion=ADICIONAR&IdRol=" + IdRol + "&IdEnlace" +IdEnlace , function(response) {
-	            console.log(response);
-	            // Puedes procesar la respuesta si es necesario
-	        });
-	    });
+    // Cargar datos de asignación de enlaces
+    function cargarAsignarEnlace() {
+        $.get("ServletAsignarEnlaceJSON?accion=TABLA", function(response) {
+            $.each(response, function(index, item) {
+                let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+                let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+                $("#TablaAsignarEnlace").append("<tr><td>" + item.roles_id_rol + "</td>" +
+                    "<td>" + item.nombreRol + "</td>" +
+                    "<td>" + item.enlace_id_enlace + "</td>" +
+                    "<td>" + item.nombreEnlace + "</td>" +
+                    "<td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
+            });
 
+            // Inicializar la tabla DataTable
+            $(document).ready(function() {
+                $('#TablaAsignarEnlace').DataTable({
+                    "language": {
+                        "lengthMenu": "Mostrar _MENU_ registros por página",
+                        "zeroRecords": "No se encontraron registros",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                        "infoFiltered": "(filtrados de un total de _MAX_ registros)",
+                        "search": "Buscar:",
+                        "paginate": {
+                            "first": "Primero",
+                            "previous": "Anterior",
+                            "next": "Siguiente",
+                            "last": "Último"
+                        }
+                    }
+                });
+            });
+        });
+    }
 
-	</script>
+    // Listar enlaces seleccionados
+    function listaEnlacesSeleccionados() {
+        let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button>";
+        $.get("ServletRequerimiento?accion=LISTAR", function(response) {
+            $.each(response, function(index, item) {
+                $("#tableAsignacionesRolesyEnlaces").append("<tr><td>" + item.ROL + "</td>" +
+                    "<td>" + item.nombreRol + "</td><td>" + item.ENLACE + "</td><td>" + item.nombreEnlace + "</td><td>" + botonEliminar + "</td></tr>");
+            });
+        });
+    }
+
+    // Manejar evento al hacer clic en un botón de adición
+    $(document).on("click", ".btn-adicionar", function() {
+        let IdRol = $("#idRol").val();
+        console.log(IdRol);
+        let IdEnlace = $(this).parents("tr").find("td")[0].innerHTML;
+        console.log(IdEnlace);
+
+        let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button>";
+        $.get("ServletAsignarEnlaceJSON?accion=ADICIONAR&ROL=" + IdRol + "&ENLACE=" + IdEnlace, function(response) {
+            console.log(response);
+            $.each(response, function(index, item) {
+                $("#tableAsignacionesRolesyEnlaces").append("<tr><td>" + item.ROL + "</td>" +
+                    "<td>" + item.nombreRol + "</td><td>" + item.ENLACE + "</td><td>" + item.nombreEnlace + "</td><td>" + botonEliminar + "</td></tr>");
+            });
+        });
+    });
+
+</script>
+
+		<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+		crossorigin="anonymous"></script>
 </body>
 </html>
