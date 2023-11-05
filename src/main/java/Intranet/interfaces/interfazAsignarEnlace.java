@@ -5,6 +5,5 @@ import Intranet.entidad.Asignar_Enlace;
 
 public interface interfazAsignarEnlace {
     List<Asignar_Enlace> findAll();
-    int saveAsignacion(Asignar_Enlace asignacion) throws Exception;
-
+    int saveAsignaciones(List<Asignar_Enlace> asignaciones);
 }

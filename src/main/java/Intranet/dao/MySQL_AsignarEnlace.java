@@ -63,22 +63,35 @@ public class MySQL_AsignarEnlace implements interfazAsignarEnlace {
 	}
 
 	@Override
-	public int saveAsignacion(Asignar_Enlace asignacion) throws Exception {
+	public int saveAsignaciones(List<Asignar_Enlace> asignaciones) {
 		int salida = -1;
 		Connection cn = null;
 		PreparedStatement pstm = null;
+
 		try {
 			cn = new MySQL_Conexion().getConnection();
+			cn.setAutoCommit(false);
+
 			String sqlAsignacion = "INSERT INTO roles_has_enlace (roles_id_rol, enlace_id_enlace) VALUES (?, ?)";
 			pstm = cn.prepareStatement(sqlAsignacion);
 
-			pstm.setInt(1, asignacion.getRoles_id_rol());
-			pstm.setInt(2, asignacion.getEnlace_id_enlace());
+			for (Asignar_Enlace asignacion : asignaciones) {
+				pstm.setInt(1, asignacion.getRoles_id_rol());
+				pstm.setInt(2, asignacion.getEnlace_id_enlace());
+				int result = pstm.executeUpdate();
 
-			int result = pstm.executeUpdate();
+				if (result > 0) {
+					salida++;
+				} else {
+					salida = -1;
+					break; 
+				}
+			}
 
-			if (result > 0) {
-				salida = result;
+			if (salida >= 0) {
+				cn.commit();
+			} else {
+				cn.rollback();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

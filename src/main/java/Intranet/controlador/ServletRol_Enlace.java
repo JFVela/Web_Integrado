@@ -1,6 +1,7 @@
 package Intranet.controlador;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import Intranet.entidad.Rol_Enlace;
 import Intranet.entidad.Detalle_Rol_Enlace;
@@ -45,15 +48,19 @@ public class ServletRol_Enlace extends HttpServlet {
 	}
 
 	private void grabar(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
-	private void listar(HttpServletRequest request, HttpServletResponse response) {
-
+	private void listar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		List<Detalle_Rol_Enlace> lista = (List<Detalle_Rol_Enlace>) request.getSession().getAttribute("LISTAS");
+		Gson gson = new Gson();
+		String json = gson.toJson(lista);
+		response.setContentType("application/json;charset=UTF-8");
+		PrintWriter pw = response.getWriter();
+		pw.print(json);
 	}
 
-	private void adicionar(HttpServletRequest request, HttpServletResponse response) {
+	private void adicionar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String IdR = request.getParameter("IdRol");
 		String IdE = request.getParameter("IdEnlace");
 		List<Detalle_Rol_Enlace> lista = null;
@@ -61,8 +68,17 @@ public class ServletRol_Enlace extends HttpServlet {
 			lista = new ArrayList<Detalle_Rol_Enlace>();
 		} else {
 			lista = (List<Detalle_Rol_Enlace>) request.getSession().getAttribute("LISTAS");
-Detalle_Rol_Enlace det = new Detalle_Rol_Enlace();
-det.
+			Detalle_Rol_Enlace det = new Detalle_Rol_Enlace();
+			det.setIDrol(Integer.parseInt(IdR));
+			det.setIDEnlace(Integer.parseInt(IdE));
+			lista.add(det);
+			request.getSession().setAttribute("LISTAS", lista);
+			Gson gson = new Gson();
+			String json = gson.toJson(lista);
+			response.setContentType("application/json;charset=UTF-8");
+			PrintWriter pw = response.getWriter();
+			pw.print(json);
+
 		}
 
 	}
