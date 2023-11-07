@@ -55,22 +55,30 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 
 	private void correo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String correo = request.getParameter("correo");
-		System.out.println("Verificando Correo: " + correo);
-		MySQL_Empleados sql = new MySQL_Empleados();
-		Empleados empre = sql.findCorreo(correo);
 		Gson gson = new Gson();
 		JsonObject jsonObject = new JsonObject();
-		if (empre != null) {
-			jsonObject.addProperty("status", "correo_existente");
-			System.out.println("Correo existente en la base de datos.");
-		} else {
-			System.out.println("Correo no encontrado en la base de datos.");
+
+		try {
+			MySQL_Empleados sql = new MySQL_Empleados();
+			Empleados empre = sql.findCorreo(correo);
+
+			if (empre != null) {
+				jsonObject.addProperty("status", "correo_existente");
+				jsonObject.addProperty("message", "Correo existente en la base de datos.");
+			} else {
+				jsonObject.addProperty("status", "correo_no_existente");
+				jsonObject.addProperty("message", "Correo no encontrado en la base de datos.");
+			}
+		} catch (Exception e) {
+			jsonObject.addProperty("status", "error");
+			jsonObject.addProperty("message", "Error al procesar la solicitud.");
+			e.printStackTrace();
 		}
+
 		String jsonString = gson.toJson(jsonObject);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(jsonString);
-
 	}
 
 	private void telefono(HttpServletRequest request, HttpServletResponse response) throws IOException {

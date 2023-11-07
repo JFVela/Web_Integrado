@@ -338,11 +338,36 @@
         var telefonoExistente = false;
 
         $("#id-dni").on("input", function() {
-            // ... (código existente para verificar el DNI)
-        });
-
-        $("#id-correo").on("input", function() {
-            // ... (código existente para verificar el correo)
+            var dni = $(this).val();
+            if (dni.length === 8) {
+                $.ajax({
+                    type: "POST",
+                    url: "ServletEmpleados?accion=verificarDNI", // Cambiar la URL según la estructura de tu servlet
+                    data: {
+                        dni: dni
+                    },
+                    success: function(data) {
+                        if (data.status === "dni_existente") {
+                            Swal.fire({
+                                title: '¡Empleado ya registrado!',
+                                text: 'El DNI: ' + dni + ' ya está registrado en la base de datos.',
+                                imageUrl: 'assets/img/dni.gif', // Reemplazar con la URL de tu imagen
+                                imageWidth: 400,
+                                imageHeight: 205,
+                                imageAlt: 'imgError',
+                            });
+                            dniExistente = true;
+                            $("#id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", true);
+                        } else {
+                            dniExistente = false;
+                            $("#id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", false);
+                        }
+                    },
+                    error: function() {
+                        console.error("Error en la solicitud AJAX");
+                    }
+                });
+            }
         });
 
         $("#id-login").on("input", function() {
@@ -358,16 +383,16 @@
                         Swal.fire({
                             title: '¡Nombre de usuario existente!',
                             text: 'El nombre de usuario ' + login + ' ya está registrado en la base de datos.',
-                            imageUrl: 'URL_DE_TU_IMAGEN', // Reemplazar con la URL de tu imagen
+                            imageUrl: 'assets/img/spiderman.gif', // Reemplazar con la URL de tu imagen
                             imageWidth: 400,
-                            imageHeight: 200,
+                            imageHeight: 223,
                             imageAlt: 'imgError',
                         });
                         loginExistente = true;
-                        // Deshabilitar campos si es necesario
+                        $("#id-dni, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", true);
                     } else {
                         loginExistente = false;
-                        // Habilitar campos si es necesario
+                        $("#id-dni, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", false);
                     }
                 },
                 error: function() {
@@ -390,16 +415,16 @@
                             Swal.fire({
                                 title: '¡Número de teléfono existente!',
                                 text: 'El número de teléfono ' + telefono + ' ya está registrado en la base de datos.',
-                                imageUrl: 'URL_DE_TU_IMAGEN', // Reemplazar con la URL de tu imagen
+                                imageUrl: 'assets/img/telefono.gif', // Reemplazar con la URL de tu imagen
                                 imageWidth: 400,
-                                imageHeight: 200,
+                                imageHeight: 400,
                                 imageAlt: 'imgError',
                             });
                             telefonoExistente = true;
-                            // Deshabilitar campos si es necesario
+                            $("#id-dni, #id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", true);
                         } else {
                             telefonoExistente = false;
-                            // Habilitar campos si es necesario
+                            $("#id-dni, #id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", false);
                         }
                     },
                     error: function() {
@@ -408,11 +433,45 @@
                 });
             }
         });
-    });
+        
+        $("#id-correo").on("input", function() {
+            var correo = $(this).val();
+            if (isValidEmail(correo)) {
+                $.ajax({
+                    type: "POST",
+                    url: "ServletEmpleados",
+                    data: {
+                        accion: "verificarCorreo",
+                        correo: correo
+                    },
+                    success: function(data) {
+                        if (data.status === "correo_existente") {
+                            Swal.fire({
+                                title: '¡Correo ya registrado!',
+                                text: 'El correo ' + correo + ' ya está registrado en la base de datos. Por favor, utiliza otro correo.',
+                                imageUrl: 'assets/img/correo.gif', // Reemplazar con la URL de tu imagen
+                                imageWidth: 400,
+                                imageHeight: 275,
+                                imageAlt: 'imgError',                            });
+                            correoExistente = true;
+                            $("#id-dni, #id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", true);
+                        } else {
+                            correoExistente = false;
+                            $("#id-dni, #id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", false);
+                        }
+                    },
+                    error: function() {
+                        console.error("Error en la solicitud AJAX");
+                    }
+                });
+            }
+        });
 
-    function isValidEmail(email) {
-        return /.+@.+\..+/.test(email);
-    }
+        function isValidEmail(email) {
+            return /.+@.+\..+/.test(email);
+        }
+
+    });
 </script>
 
 
