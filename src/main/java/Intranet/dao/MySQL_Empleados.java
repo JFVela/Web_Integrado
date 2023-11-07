@@ -3,6 +3,7 @@ package Intranet.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -10,6 +11,7 @@ import Intranet.entidad.Empleados;
 import Intranet.entidad.Enlace;
 import Intranet.interfaces.interfazEmpleados;
 import Utils.MySQL_Conexion;
+import ong.utils.MySqlConectar;
 
 public class MySQL_Empleados implements interfazEmpleados {
 
@@ -270,6 +272,139 @@ public class MySQL_Empleados implements interfazEmpleados {
 			e.printStackTrace();
 		}
 		return empleado;
+	}
+
+	@Override
+	public Empleados findDNI(int dni) {
+		Empleados empre = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = new MySqlConectar().getConectar();
+			String sql = "Select dni from empleados where dni=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, dni);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				empre = new Empleados();
+				empre.setDni(rs.getInt("dni"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+
+		return empre;
+	}
+
+	@Override
+	public Empleados findLogin(String login) {
+		Empleados empre = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = new MySqlConectar().getConectar();
+			String sql = "SELECT login FROM empleados WHERE login=?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, login);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				empre = new Empleados();
+				empre.setLogin(rs.getString("login"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return empre;
+	}
+
+	@Override
+	public Empleados findTelefono(int telefono) {
+		Empleados empre = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = new MySqlConectar().getConectar();
+			String sql = "SELECT telefono FROM empleados WHERE telefono=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, telefono);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				empre = new Empleados();
+				empre.setTelefono(rs.getInt("telefono"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return empre;
+	}
+
+	@Override
+	public Empleados findCorreo(String correo) {
+		Empleados empre = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = new MySqlConectar().getConectar();
+			String sql = "SELECT correo FROM empleados WHERE correo=?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, correo);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				empre = new Empleados();
+				empre.setCorreo(rs.getString("correo"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return empre;
 	}
 
 }

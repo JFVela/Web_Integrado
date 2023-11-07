@@ -728,151 +728,79 @@ body.shimeji-select-ie {
 	</script>
 
 	<script>
-		$(document)
-				.ready(
-						function() {
-							// Variable para controlar si se ha encontrado un DNI existente
-							var dniExistente = false;
-							// Variable para controlar si se ha encontrado un correo existente
-							var correoExistente = false;
+	$(document).ready(function() {
+	    var dniExistente = false;
+	    var correoExistente = false;
 
-							// Detecta cambios en el campo de DNI
-							$("#dni")
-									.on(
-											"input",
-											function() {
-												console
-														.log("Input event triggered."); // Para verificar si se dispara el evento
+	    $("#dni").on("input", function() {
+	        var dni = $(this).val();
+	        if (dni.length === 8) {
+	            $.ajax({
+	                type: "POST",
+	                url: "ServletVoluntario",
+	                data: {
+	                    accion: "verificarDNI",
+	                    dni: dni
+	                },
+	                success: function(data) {
+	                    if (data.status === "dni_existente") {
+	                        Swal.fire({
+	                            title: '¡Voluntario ya registrado!',
+	                            text: 'El DNI: ' + dni + ' ya está registrado, espera una respuesta en tu email',
+	                            imageUrl: 'https://media0.giphy.com/media/AO5qaphTxRnyw/giphy.gif?cid=ecf05e47o1crybylqqrjk5k3v6ep6hiqcy37rvh85eqsiii2&ep=v1_gifs_related&rid=giphy.gif&ct=g',
+	                            imageWidth: 400,
+	                            imageHeight: 200,
+	                            imageAlt: 'imgError',
+	                        });
+	                        dniExistente = true;
+	                        $("#nombre, #paterno, #materno, #email, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", true);
+	                    } else {
+	                        dniExistente = false;
+	                        $("#nombre, #paterno, #materno, #email, #telefono, #id-evento, #id-especialidad, #ciudad, #provincia, #distrito").prop("disabled", false);
+	                    }
+	                },
+	                error: function() {
+	                    console.error("Error en la solicitud AJAX");
+	                }
+	            });
+	        }
+	    });
 
-												// Obtén el valor del campo de DNI
-												var dni = $(this).val();
+	    $("#email").on("input", function() {
+	        var email = $(this).val();
+	        if (isValidEmail(email)) {
+	            $.ajax({
+	                type: "POST",
+	                url: "ServletVoluntario",
+	                data: {
+	                    accion: "verificarCorreo",
+	                    email: email
+	                },
+	                success: function(data) {
+	                    if (data.status === "correo_existente") {
+	                        Swal.fire({
+	                            title: '¡Correo ya registrado!',
+	                            text: 'El correo ' + email + ' ya está registrado, por favor utiliza otro correo.',
+	                            icon: 'error',
+	                        });
+	                        correoExistente = true;
+	                        $("#nombre, #paterno, #materno, #dni, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", true);
+	                    } else {
+	                        correoExistente = false;
+	                        $("#nombre, #paterno, #materno, #email, #dni, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", false);
+	                    }
+	                },
+	                error: function() {
+	                    console.error("Error en la solicitud AJAX");
+	                }
+	            });
+	        }
+	    });
 
-												// Realiza la solicitud AJAX solo si el DNI tiene 8 caracteres 
-												if (dni.length === 8) {
-													$
-															.ajax({
-																type : "POST", // Método HTTP POST
-																url : "ServletVoluntario", // URL del servlet
-																data : {
-																	accion : "verificarDNI", // Acción para el servlet
-																	dni : dni
-																// Valor del DNI
-																},
-																success : function(
-																		data) {
-																	// La solicitud fue exitosa, data c	ontiene la respuesta JSON del servlet
-																	console
-																			.log(
-																					"Received JSON response: ",
-																					data); // Verifica la respuesta JSON
-
-																	if (data.status === "dni_existente") {
-																		// El DNI existe, muestra un SweetAlert
-																		Swal
-																				.fire({
-																					title : '¡Voluntario ya registrado!',
-																					text : 'El DNI: '
-																							+ dni
-																							+ ' ya esta registrado, espera una respuesta en tu email',
-																					imageUrl : 'https://media0.giphy.com/media/AO5qaphTxRnyw/giphy.gif?cid=ecf05e47o1crybylqqrjk5k3v6ep6hiqcy37rvh85eqsiii2&ep=v1_gifs_related&rid=giphy.gif&ct=g',
-																					imageWidth : 400,
-																					imageHeight : 200,
-																					imageAlt : 'imgError',
-																				});
-																		// Marca el DNI como existente
-																		dniExistente = true;
-
-																		// Deshabilita todos los campos excepto el DNI
-																		$(
-																				"#nombre, #paterno, #materno, #email, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito")
-																				.prop(
-																						"disabled",
-																						true);
-																	} else {
-																		// El DNI no existe, habilita todos los campos
-																		dniExistente = false;
-																		$(
-																				"#nombre, #paterno, #materno, #email, #telefono,#id-evento, #id-especialidad, #ciudad, #provincia, #distrito")
-																				.prop(
-																						"disabled",
-																						false);
-																	}
-
-																},
-																error : function() {
-																	// Ocurrió un error en la solicitud AJAX
-																	console
-																			.error("Error en la solicitud AJAX");
-																}
-															});
-												}
-											});
-
-							// Detecta cambios en el campo de correo electrónico
-							$("#email")
-									.on(
-											"input",
-											function() {
-												// Obtén el valor del campo de correo electrónico
-												var email = $(this).val();
-
-												// Realiza la solicitud AJAX solo si el correo electrónico tiene un formato válido
-												if (isValidEmail(email)) {
-													$
-															.ajax({
-																type : "POST",
-																url : "ServletVoluntario",
-																data : {
-																	accion : "verificarCorreo", // Acción para verificar el correo
-																	email : email
-																// Valor del correo electrónico
-																},
-																success : function(
-																		data) {
-																	if (data.status === "correo_existente") {
-																		// El correo ya está registrado, muestra un SweetAlert
-																		Swal
-																				.fire({
-																					title : '¡Correo ya registrado!',
-																					text : 'El correo '
-																							+ email
-																							+ ' ya está registrado, por favor utiliza otro correo.',
-																					icon : 'error',
-																				});
-																		// Marca el correo como existente
-																		correoExistente = true;
-
-																		// Deshabilita todos los campos excepto el correo
-																		$(
-																				"#nombre, #paterno, #materno, #dni, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito")
-																				.prop(
-																						"disabled",
-																						true);
-																	} else {
-																		// El correo no existe, habilita todos los campos
-																		correoExistente = false;
-																		$(
-																				"#nombre, #paterno, #materno, #email, #dni, #telefono,#id-evento, #id-especialidad, #ciudad, #provincia, #distrito")
-																				.prop(
-																						"disabled",
-																						false);
-																	}
-
-																},
-																error : function() {
-																	console
-																			.error("Error en la solicitud AJAX");
-																}
-															});
-												}
-											});
-						});
-
-		//Función para verificar el formato del correo electrónico
-		function isValidEmail(email) {
-
-			return /.+@.+\..+/.test(email);
-		}
+	    function isValidEmail(email) {
+	        return /.+@.+\..+/.test(email);
+	    }
+	});
 	</script>
 
 

@@ -331,6 +331,92 @@
 </script>
 
 <script>
+    $(document).ready(function() {
+        var dniExistente = false;
+        var correoExistente = false;
+        var loginExistente = false;
+        var telefonoExistente = false;
+
+        $("#id-dni").on("input", function() {
+            // ... (código existente para verificar el DNI)
+        });
+
+        $("#id-correo").on("input", function() {
+            // ... (código existente para verificar el correo)
+        });
+
+        $("#id-login").on("input", function() {
+            var login = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: "ServletEmpleados?accion=verificarLogin", // Cambiar la URL según la estructura de tu servlet
+                data: {
+                    login: login
+                },
+                success: function(data) {
+                    if (data.status === "login_existente") {
+                        Swal.fire({
+                            title: '¡Nombre de usuario existente!',
+                            text: 'El nombre de usuario ' + login + ' ya está registrado en la base de datos.',
+                            imageUrl: 'URL_DE_TU_IMAGEN', // Reemplazar con la URL de tu imagen
+                            imageWidth: 400,
+                            imageHeight: 200,
+                            imageAlt: 'imgError',
+                        });
+                        loginExistente = true;
+                        // Deshabilitar campos si es necesario
+                    } else {
+                        loginExistente = false;
+                        // Habilitar campos si es necesario
+                    }
+                },
+                error: function() {
+                    console.error("Error en la solicitud AJAX");
+                }
+            });
+        });
+
+        $("#id-telefono").on("input", function() {
+            var telefono = $(this).val();
+            if (/^\d{9}$/.test(telefono)) { // Verifica si el teléfono tiene 9 dígitos
+                $.ajax({
+                    type: "POST",
+                    url: "ServletEmpleados?accion=verificarTelefono", // Cambiar la URL según la estructura de tu servlet
+                    data: {
+                        telefono: telefono
+                    },
+                    success: function(data) {
+                        if (data.status === "telefono_existente") {
+                            Swal.fire({
+                                title: '¡Número de teléfono existente!',
+                                text: 'El número de teléfono ' + telefono + ' ya está registrado en la base de datos.',
+                                imageUrl: 'URL_DE_TU_IMAGEN', // Reemplazar con la URL de tu imagen
+                                imageWidth: 400,
+                                imageHeight: 200,
+                                imageAlt: 'imgError',
+                            });
+                            telefonoExistente = true;
+                            // Deshabilitar campos si es necesario
+                        } else {
+                            telefonoExistente = false;
+                            // Habilitar campos si es necesario
+                        }
+                    },
+                    error: function() {
+                        console.error("Error en la solicitud AJAX");
+                    }
+                });
+            }
+        });
+    });
+
+    function isValidEmail(email) {
+        return /.+@.+\..+/.test(email);
+    }
+</script>
+
+
+<script>
 $(document).ready(function() {
 	 $('#FormularioEmpleado').bootstrapValidator({      
     	 fields:{

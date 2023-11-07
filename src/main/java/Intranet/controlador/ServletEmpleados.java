@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import Intranet.dao.MySQL_Empleados;
 import Intranet.entidad.Empleados;
 import Intranet.entidad.Enlace;
@@ -39,6 +43,117 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 			ListarEmpleados(request, response);
 		else if (tipo.equals("eliminar"))
 			EliminarEmpleado(request, response);
+		else if (tipo.equals("verificarDNI"))
+			DNI(request, response);
+		else if (tipo.equals("verificarLogin"))
+			login(request, response);
+		else if (tipo.equals("verificarTelefono"))
+			telefono(request, response);
+		else if (tipo.equals("verificarCorreo"))
+			correo(request, response);
+	}
+
+	private void correo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String correo = request.getParameter("correo");
+		System.out.println("Verificando Correo: " + correo);
+		MySQL_Empleados sql = new MySQL_Empleados();
+		Empleados empre = sql.findCorreo(correo);
+		Gson gson = new Gson();
+		JsonObject jsonObject = new JsonObject();
+		if (empre != null) {
+			jsonObject.addProperty("status", "correo_existente");
+			System.out.println("Correo existente en la base de datos.");
+		} else {
+			System.out.println("Correo no encontrado en la base de datos.");
+		}
+		String jsonString = gson.toJson(jsonObject);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(jsonString);
+
+	}
+
+	private void telefono(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String telefonoStr = request.getParameter("telefono");
+		System.out.println("Verificando Teléfono: " + telefonoStr);
+
+		int telefono = -1;
+		try {
+			telefono = Integer.parseInt(telefonoStr);
+		} catch (NumberFormatException e) {
+			System.out.println("Número de teléfono no válido.");
+		}
+
+		MySQL_Empleados sql = new MySQL_Empleados();
+		Empleados empre = sql.findTelefono(telefono);
+
+		Gson gson = new Gson();
+		JsonObject jsonObject = new JsonObject();
+
+		if (empre != null) {
+			jsonObject.addProperty("status", "telefono_existente");
+			System.out.println("Número de teléfono existente en la base de datos.");
+		} else {
+			System.out.println("Número de teléfono no encontrado en la base de datos.");
+		}
+
+		String jsonString = gson.toJson(jsonObject);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(jsonString);
+	}
+
+	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String login = request.getParameter("login");
+		System.out.println("Verificando Login: " + login);
+
+		MySQL_Empleados sql = new MySQL_Empleados();
+		Empleados empre = sql.findLogin(login);
+
+		Gson gson = new Gson();
+		JsonObject jsonObject = new JsonObject();
+
+		if (empre != null) {
+			jsonObject.addProperty("status", "login_existente");
+			System.out.println("Nombre de usuario existente en la base de datos.");
+		} else {
+			System.out.println("Nombre de usuario no encontrado en la base de datos.");
+		}
+
+		String jsonString = gson.toJson(jsonObject);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(jsonString);
+	}
+
+	private void DNI(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String dniStr = request.getParameter("dni");
+		System.out.println("Verificando DNI: " + dniStr);
+
+		int dni = -1;
+		try {
+			dni = Integer.parseInt(dniStr);
+		} catch (NumberFormatException e) {
+			System.out.println("Número de DNI no válido.");
+		}
+
+		MySQL_Empleados sql = new MySQL_Empleados();
+		Empleados empre = sql.findDNI(dni);
+
+		Gson gson = new Gson();
+		JsonObject jsonObject = new JsonObject();
+
+		if (empre != null) {
+			jsonObject.addProperty("status", "dni_existente");
+			System.out.println("Número de DNI existente en la base de datos.");
+		} else {
+			System.out.println("Número de DNI no encontrado en la base de datos.");
+		}
+
+		String jsonString = gson.toJson(jsonObject);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(jsonString);
 	}
 
 	private void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {

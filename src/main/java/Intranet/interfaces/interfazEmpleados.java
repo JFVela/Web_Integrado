@@ -17,4 +17,9 @@ public interface interfazEmpleados {
 
 	List<Empleados> findAll();
 	List<Enlace> traerEnlaceDelUsuario(int codRol);
+	
+	Empleados findDNI(int dni);
+	Empleados findLogin(String login);
+	Empleados findTelefono(int telefono);
+	Empleados findCorreo(String Correo);
 }
