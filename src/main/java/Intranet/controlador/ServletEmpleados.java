@@ -33,24 +33,26 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 
 		String tipo = request.getParameter("accion");
 
-		if (tipo.equals("INICIAR"))
-			iniciarSesion(request, response);
-		else if (tipo.equals("CERRAR"))
-			cerrarSesion(request, response);
-		else if (tipo.equals("grabar"))
-			GuardarEmpleado(request, response);
-		else if (tipo.equals("listado"))
-			ListarEmpleados(request, response);
-		else if (tipo.equals("eliminar"))
-			EliminarEmpleado(request, response);
-		else if (tipo.equals("verificarDNI"))
-			DNI(request, response);
-		else if (tipo.equals("verificarLogin"))
-			login(request, response);
-		else if (tipo.equals("verificarTelefono"))
-			telefono(request, response);
-		else if (tipo.equals("verificarCorreo"))
-			correo(request, response);
+		if (tipo != null) {
+			if (tipo.equals("INICIAR"))
+				iniciarSesion(request, response);
+			else if (tipo.equals("CERRAR"))
+				cerrarSesion(request, response);
+			else if (tipo.equals("grabar"))
+				GuardarEmpleado(request, response);
+			else if (tipo.equals("listado"))
+				ListarEmpleados(request, response);
+			else if (tipo.equals("eliminar"))
+				EliminarEmpleado(request, response);
+			else if (tipo.equals("verificarDNI"))
+				DNI(request, response);
+			else if (tipo.equals("verificarLogin"))
+				login(request, response);
+			else if (tipo.equals("verificarTelefono"))
+				telefono(request, response);
+			else if (tipo.equals("verificarCorreo"))
+				correo(request, response);
+		}
 	}
 
 	private void correo(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -85,7 +85,7 @@ fieldset, legend {
 							Enlaces a un Rol</h1>
 					</div>
 					<div class="modal-body">
-						<form action="ServletRequerimiento?accion=GRABAR" method="POST">
+						<form action="ServletAsignarEnlaceJSON?accion=GRABAR" method="POST">
 							<div class="row mt-3">
 								<div class="col-lg-6">
 									<fieldset class="reset">
@@ -154,7 +154,8 @@ fieldset, legend {
 
 
 		<div class="mt-3">
-			<table id="TablaAsignarEnlace" class="table table-striped" style="width: 100%">
+			<table id="TablaAsignarEnlace" class="table table-striped"
+				style="width: 100%">
 				<thead>
 					<tr>
 						<th>ID-Rol</th>
@@ -184,27 +185,25 @@ fieldset, legend {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous"></script>
-<script>
+	<script>
     // Cargar datos al cargar la página
     cargarRol();
     cargarEnlaces();
     cargarAsignarEnlace();
+    var rolesData = {};
 
     // Cargar opciones de roles en el select
-    function cargarRol() {
-        $.get("ServletRolJSON", function(response) {
-            $.each(response, function(index, item) {
-                // Agrega el atributo nombreRol a la opción
-                const option = $("<option>")
-                    .attr("value", item.id)
-                    .attr("nombreRol", item.nombre)
-                    .text(item.nombre);
-
-                // Agrega la opción al elemento select
-                $("#idRol").append(option);
-            });
+   function cargarRol() {
+    $.get("ServletRolJSON", function(response) {
+        $.each(response, function(index, item) {
+            rolesData[item.id] = item.nombre; // Almacena el nombre del rol en el objeto
+            const option = $("<option>")
+                .attr("value", item.id)
+                .text(item.nombre);
+            $("#idRol").append(option);
         });
-    }
+    });
+}
 
     // Cargar datos de enlaces
     function cargarEnlaces() {
@@ -288,23 +287,21 @@ fieldset, legend {
     // Manejar evento al hacer clic en un botón de adición
     $(document).on("click", ".btn-adicionar", function() {
         let IdRol = $("#idRol").val();
-        console.log(IdRol);
+        let nombreRol = rolesData[IdRol];
         let IdEnlace = $(this).parents("tr").find("td")[0].innerHTML;
-        console.log(IdEnlace);
+        let nombreE = $(this).parents("tr").find("td")[1].innerHTML;
 
         let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button>";
         $.get("ServletAsignarEnlaceJSON?accion=ADICIONAR&ROL=" + IdRol + "&ENLACE=" + IdEnlace, function(response) {
             console.log(response);
-            $.each(response, function(index, item) {
-                $("#tableAsignacionesRolesyEnlaces").append("<tr><td>" + item.ROL + "</td>" +
-                    "<td>" + item.nombreRol + "</td><td>" + item.ENLACE + "</td><td>" + item.nombreEnlace + "</td><td>" + botonEliminar + "</td></tr>");
-            });
+            $("#tableAsignacionesRolesyEnlaces").append("<tr><td>" + response.roles_id_rol + "</td>" +
+                "<td>" + nombreRol + "</td><td>" + response.enlace_id_enlace + "</td><td>" + nombreE + "</td><td>" + botonEliminar + "</td></tr>");
         });
     });
 
 </script>
 
-		<script
+	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous"></script>
