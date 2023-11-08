@@ -30,7 +30,7 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 			throws ServletException, IOException {
 		String tipo = request.getParameter("accion");
 		if (tipo.equals("ADICIONAR")) {
-			adicionar(request,response);
+			adicionar(request, response);
 		} else if (tipo.equals("LISTAR")) {
 			listar(request, response);
 		} else if (tipo.equals("GRABAR")) {
@@ -44,8 +44,11 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 		String IdRol = request.getParameter("ROL");
 		String IdEnlace = request.getParameter("ENLACE");
 		List<Asignar_Enlace> lista = null;
-		lista= new ArrayList<Asignar_Enlace>();
-
+		if (request.getSession().getAttribute("carrito") == null) {
+			lista = new ArrayList<Asignar_Enlace>();
+		} else {
+			lista = (List<Asignar_Enlace>) request.getSession().getAttribute("carrito");
+		}
 		Asignar_Enlace asignacion = new Asignar_Enlace();
 		asignacion.setRoles_id_rol(Integer.parseInt(IdRol));
 		asignacion.setEnlace_id_enlace(Integer.parseInt(IdEnlace));
@@ -55,22 +58,15 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 		String json = gson.toJson(asignacion);
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter pw = response.getWriter();
-		pw.print(json);		
+		pw.print(new Gson().toJson(asignacion));
+
 	}
 
 	private void grabar(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-		String IdRol = request.getParameter("IdRol");
-		String IdEnlace = request.getParameter("IdEnlace");
-		Asignar_Enlace asignacion = new Asignar_Enlace();
-		asignacion.setRoles_id_rol(Integer.parseInt(IdRol));
-		asignacion.setEnlace_id_enlace(Integer.parseInt(IdEnlace));
-		List<Asignar_Enlace> asignaciones = new ArrayList<>();
-		asignaciones.add(asignacion);
 		List<Asignar_Enlace> datos = (List<Asignar_Enlace>) request.getSession().getAttribute("carrito");
-		int resultado = new MySQL_AsignarEnlace().saveAsignaciones(asignaciones);
+		int resultado = new MySQL_AsignarEnlace().saveAsignaciones(datos);
 		if (resultado >= 0) {
-			asignaciones.clear();
+			datos.clear();
 			request.getSession().setAttribute("MENSAJE", "Asignación guardada");
 		} else {
 			request.getSession().setAttribute("MENSAJE", "Error al guardar la asignación");
@@ -97,6 +93,5 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 		PrintWriter pw = response.getWriter();
 		pw.print(json);
 	}
-
 
 }
