@@ -416,6 +416,12 @@ body.shimeji-select-ie {
 				</ul>
 			</div>
 		</div>
+		
+		<!-- grafico -->
+		<canvas id="grafico-de-barras-eventos"></canvas>
+		<canvas id="grafico-de-barras-especialidades"></canvas>
+  
+  
 
 		<!-- Footer -->
 		<footer class="footer-area footer--light">
@@ -537,6 +543,9 @@ body.shimeji-select-ie {
 			</div>
 		</footer>
 	</main>
+	
+	<!-- graficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 	<!-- libreria principal de JQUERY -->
@@ -844,6 +853,80 @@ body.shimeji-select-ie {
 	    });
 
 	});
+	</script>
+	
+	
+	<script>
+	//GRAFICOS
+	
+	$(document).ready(function() {
+	    $.get("ServletVoluntarioJSON", function(response) {
+	        // Obtener los datos de voluntarios
+	        var voluntariosJSON = response;
+
+	        // Obtener los eventos únicos
+	        var eventosUnicos = [...new Set(voluntariosJSON.map((voluntario) => voluntario.eventoNombre))];
+
+	        // Contar la cantidad de voluntarios por evento
+	        var voluntariosPorEvento = [];
+	        eventosUnicos.forEach(function(evento) {
+	            var cantidadVoluntarios = voluntariosJSON.filter((voluntario) => voluntario.eventoNombre === evento).length;
+	            voluntariosPorEvento.push({
+	                evento: evento,
+	                cantidad: cantidadVoluntarios
+	            });
+	        });
+
+	        // Obtener las especialidades únicas
+	        var especialidadesUnicas = [...new Set(voluntariosJSON.map((voluntario) => voluntario.EspecialidadNombre))];
+
+	        // Contar la cantidad de voluntarios por especialidad
+	        var voluntariosPorEspecialidad = [];
+	        especialidadesUnicas.forEach(function(especialidad) {
+	            var cantidadVoluntarios = voluntariosJSON.filter((voluntario) => voluntario.EspecialidadNombre === especialidad).length;
+	            voluntariosPorEspecialidad.push({
+	                especialidad: especialidad,
+	                cantidad: cantidadVoluntarios
+	            });
+	        });
+
+	        // Generar el gráfico de barras de voluntarios por evento
+	        generarGraficoDeBarras('grafico-de-barras-eventos', eventosUnicos, voluntariosPorEvento);
+
+	        // Generar el gráfico de barras de voluntarios por especialidad
+	        generarGraficoDeBarras('grafico-de-barras-especialidades', especialidadesUnicas, voluntariosPorEspecialidad);
+	    });
+
+	    function generarGraficoDeBarras(idCanvas, etiquetas, datos) {
+	        var data = {
+	            labels: etiquetas,	
+	            datasets: [{
+	                label: 'Cantidad de Voluntarios',
+	                data: datos.map((item) => item.cantidad),
+	                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+	                borderColor: 'rgba(54, 162, 235, 1)',
+	                borderWidth: 1
+	            }]
+	        };
+
+	        var options = {
+	            scales: {
+	                y: {
+	                    beginAtZero: true
+	                }
+	            }
+	        };
+
+	        var ctx = document.getElementById(idCanvas).getContext('2d');
+	        new Chart(ctx, {
+	            type: 'bar',
+	            data: data,
+	            options: options
+	        });
+	    }
+	});
+
+	
 	</script>
 
 
