@@ -77,6 +77,7 @@ body.shimeji-select-ie {
 #shimeji-contextMenu::-webkit-scrollbar-thumb:hover {
 	background: #555;
 }
+
 </style>
 </head>
 <body>
@@ -418,8 +419,36 @@ body.shimeji-select-ie {
 		</div>
 		
 		<!-- grafico -->
-		<canvas id="grafico-de-barras-eventos"></canvas>
-		<canvas id="grafico-de-barras-especialidades"></canvas>
+		
+		<section class="canvasSec">
+		
+			<h2 class="text-center">Voluntarios inscritos en eventos</h2>
+			<hr class="my-4">
+		<div class="canvas1 pt-5">
+				<canvas id="grafico-de-barras-eventos"></canvas>
+		
+		</div>
+		</section>
+		
+		<section class="canvasSec2">
+		
+			<h2 class="text-center">Voluntarios inscritos en especialidades</h2>
+			<hr class="my-4">
+		<div class="canvas2 pt-5">
+			<canvas id="grafico-de-barras-especialidades"></canvas>		
+		</div>
+		</section>
+		
+		
+		<section class="canvasSec3">
+		
+			<h2 class="text-center">Voluntarios por ciudad</h2>
+			<hr class="my-4">
+		<div class="canvas3 pt-5">
+		 <canvas id="doughnut-chart"></canvas>
+		</div>
+		</section>
+		
   
   
 
@@ -898,14 +927,31 @@ body.shimeji-select-ie {
 	    });
 
 	    function generarGraficoDeBarras(idCanvas, etiquetas, datos) {
+	        // Define un conjunto de colores para las barras
+	       var colores = [
+			    '#FF6F61', // Rojo pasión
+			    '#FFD700', // Amarillo intenso
+			    '#4196E1', // Azul cielo
+			    '#DAA520', // Amarillo ocre
+			    '#9C8C7F', // Gris piedra
+			    '#91A7D0', // Azul suave
+			    '#FF9A8B', // Rosa melocotón
+			    '#008080', // Verde petróleo
+			    '#A85D38', // Marrón tierra
+			    '#674D3C'  // Marrón café
+			];
+
+
 	        var data = {
-	            labels: etiquetas,	
+	            labels: etiquetas,
 	            datasets: [{
 	                label: 'Cantidad de Voluntarios',
 	                data: datos.map((item) => item.cantidad),
-	                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-	                borderColor: 'rgba(54, 162, 235, 1)',
-	                borderWidth: 1
+	                backgroundColor: colores, // Asigna los colores al fondo de las barras
+	                borderColor: 'rgb(26, 26, 26)',
+	                borderWidth: 2,
+	                borderRadius: 20,
+	                borderSkipped: false
 	            }]
 	        };
 
@@ -928,6 +974,65 @@ body.shimeji-select-ie {
 
 	
 	</script>
+	
+	<script>
+	 $(document).ready(function() {
+         $.get("ServletVoluntarioJSON", function(response) {
+             var jsonData = response;
+
+             // Procesa los datos para contar la cantidad de voluntarios por ciudad y provincia
+             var data = {};
+             jsonData.forEach(function(voluntario) {
+                 var ciudadProvincia = voluntario.ciudad + ', ' + voluntario.provincia;
+                 if (data[ciudadProvincia]) {
+                     data[ciudadProvincia]++;
+                 } else {
+                     data[ciudadProvincia] = 1;
+                 }
+             });
+
+             // Convierte los datos en un formato adecuado para Chart.js
+             var labels = Object.keys(data);
+             var valores = Object.values(data);
+
+             // Configuración del gráfico
+             var config = {
+                 type: 'doughnut',
+                 data: {
+                     labels: labels,
+                     datasets: [{
+                         data: valores,
+                         backgroundColor: [
+                        	    '#FFADAD',
+                        	    '#FFD6A5',
+                        	    '#FDFFB6',
+                        	    '#CAFFBF',
+                        	    '#9BF6FF',
+                        	    '#A0C4FF',
+                        	    '#BDB2FF',
+                        	    '#FFC3A0',
+                        	    '#FF677D',
+                        	    '#D4A5A5',
+                        	    '#FCBCB8',
+                        	    '#F0E68C',
+                        	    '#98FB98',
+                        	    '#C6E2FF',
+                        	    '#FFD700',
+                        	    '#DE3163',
+                        	    '#96BB7C',
+                        	    '#FF69B4',
+                        	    '#FFD700',
+                        	    '#E7D3B8'
+                        	]
+                     }]
+                 }
+             };
+
+             var ctx = document.getElementById('doughnut-chart').getContext('2d');
+             var myDoughnutChart = new Chart(ctx, config);
+         });
+     });
+    </script>
 
 
 

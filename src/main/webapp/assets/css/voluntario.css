@@ -654,7 +654,62 @@ section.faq {
 }
 
 
-	
-	
-	/*Validacion */
-	
+.canvasSec{
+    padding: 30px 100px;
+}
+#grafico-de-barras-eventos{
+	height: 760px!important;
+	}
+
+.canvas1{
+	align-items: center;
+    background-color: rgb(63, 63, 63);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    border-radius: 25px;
+    box-sizing: border-box;
+    justify-content: center;
+   
+}
+
+.canvasSec2{
+	    background-color: rgb(26, 26, 26);
+    padding: 30px 100px;
+}
+
+#grafico-de-barras-especialidades{
+	height: 760px!important;
+	}
+
+.canvas2{
+	align-items: center;
+    background-color: rgb(242, 230, 255);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    border-radius: 25px;
+    box-sizing: border-box;
+    justify-content: center;
+   
+}
+.canvasSec3{
+	    background-color: rgb(26, 26, 26);
+    padding: 50px 150px;
+}
+
+
+
+.canvas3{
+	align-items: center;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    border-radius: 25px;
+    box-sizing: border-box;
+    justify-content: center;
+    height: 800px;
+    
+   
+}
