@@ -54,7 +54,9 @@ public class ServletVoluntario extends HttpServlet {
 	        verificarDNI(request, response);
 	    } else if (tipo.equals("verificarCorreo")) {
 	        verificarCorreo(request, response);
-	    }else if(tipo.equals("listado"))
+	    }else if (tipo.equals("verificarNumero")) {
+	        verificarNumero(request, response);
+	    } else if(tipo.equals("listado"))
 			listarVoluntario(request,response);
 		else if(tipo.equals("eliminar"))
 			eliminarVoluntario(request,response);	
@@ -62,6 +64,38 @@ public class ServletVoluntario extends HttpServlet {
 
 
 	
+
+	private void verificarNumero(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		 // Recuperar el telefono del formulario
+	    String telefono = request.getParameter("telefono");
+
+	    System.out.println("Verificando Telefono: " + telefono); // Para verificar si se ejecuta esta parte
+
+	    MySqlVoluntarioDAO voluntarioDAO = new MySqlVoluntarioDAO(); 
+	    Voluntario voluntario = voluntarioDAO.findNumero(Integer.parseInt(telefono));
+
+	    Gson gson = new Gson();
+	    JsonObject jsonObject = new JsonObject();
+
+	    if (voluntario != null) {
+	        // Si el voluntario existe, agrega una propiedad al objeto JSON
+	        jsonObject.addProperty("status", "telefono_existente");
+	        System.out.println("Telefono existente en la base de datos.");
+	    } else {
+	        System.out.println("Telefono no encontrado en la base de datos.");
+	    }
+
+	    // Convierte el objeto JSON a una cadena JSON
+	    String jsonString = gson.toJson(jsonObject);
+
+	    // Configura la respuesta HTTP
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+
+	    // Escribe la cadena JSON en la respuesta
+	    response.getWriter().write(jsonString);
+	
+	}
 
 	private void verificarCorreo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		 // Recuperar el email del formulario

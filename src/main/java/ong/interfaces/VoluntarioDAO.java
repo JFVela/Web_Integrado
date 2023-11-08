@@ -22,6 +22,8 @@ public interface VoluntarioDAO {
 	
 	Voluntario findCorreo(String email);
 	
+	Voluntario findNumero(int num);
+	
 	int deleteByEventId(int cod);
 	
 	int deleteByEspecialidad(int especialidadId);

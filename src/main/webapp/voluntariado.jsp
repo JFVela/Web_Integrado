@@ -591,68 +591,63 @@ body.shimeji-select-ie {
 	</script>
 
 	<script>
-		//invocar funcion
-		cargarCategoria();
-		//crear funcion para leer JSON
-		function cargarCategoria() {
-			$
-					.get(
-							"ServletEventosJSON",
-							function(response) {
-								// Obtener la fecha actual en formato ISO (YYYY-MM-DD)
-								var fechaActual = new Date().toISOString()
-										.slice(0, 10);
+	// Invocar función
+	cargarCategoria();
 
-								// Filtrar los eventos que no están llenos y están dentro del rango de fechas
-								var eventosDisponibles = response
-										.filter(function(evento) {
-											// Convertir fechas a formato ISO
-											var inicioInscripcion = convertirFecha(evento.inicio_inscripcion);
-											var finalInscripcion = convertirFecha(evento.final_inscripcion);
+	// Crear función para leer JSON
+	function cargarCategoria() {
+	    $.get("ServletEventosJSON", function(response) {
+	        // Obtener la fecha actual en formato ISO (YYYY-MM-DD)
+	        var fechaActual = new Date().toISOString().slice(0, 10);
+	        var estaDisponible;
+	        var inicioInscripcion;
+	        // Filtrar los eventos que no están llenos y están dentro del rango de fechas
+	        var eventosDisponibles = response.filter(function(evento) {
+	            // Convertir fechas a formato ISO
+	             inicioInscripcion = convertirFecha(evento.inicio_inscripcion);
+	            var finalInscripcion = convertirFecha(evento.final_inscripcion);
 
-											// Verificar si la fecha actual está dentro del rango de inicio y final de inscripción
-											var estaDisponible = fechaActual >= inicioInscripcion
-													&& fechaActual <= finalInscripcion;
+	            // Verificar si la fecha actual está dentro del rango de inicio y final de inscripción
+	             estaDisponible = fechaActual >= inicioInscripcion && fechaActual <= finalInscripcion;
 
-											return estaDisponible
-													&& evento.inscritos < evento.vacantes;
-										});
+	            return estaDisponible && evento.inscritos < evento.vacantes;
+	        });
 
-								// Llenar el select con los eventos disponibles
-								$.each(eventosDisponibles,
-										function(index, item) {
-											$("#id-evento").append(
-													"<option value='" + item.id_evento + "'>"
-															+ item.nombre
-															+ "</option");
-										});
-								console.log(response);
-							});
+	        // Llenar el select con los eventos disponibles
+	        $.each(eventosDisponibles, function(index, item) {
+	            $("#id-evento").append("<option value='" + item.id_evento + "'>" + item.nombre + "</option");
+	        });
+	        console.log(response);
+	        console.log(estaDisponible +"es mayor al incio");
+	        console.log(fechaActual);
+	        
+	        console.log(inicioInscripcion);
+	        
+	    });
+	
 
-			// Función para convertir fechas a formato ISO
-			function convertirFecha(fecha) {
-				var partes = fecha.split(' ');
-				var mes = partes[0];
-				var dia = partes[1].replace(',', '');
-				var anio = partes[2];
-				var meses = {
-					"ene." : "01",
-					"feb." : "02",
-					"mar." : "03",
-					"abr." : "04",
-					"may." : "05",
-					"jun." : "06",
-					"jul." : "07",
-					"ago." : "08",
-					"sep." : "09",
-					"oct." : "10",
-					"nov." : "11",
-					"dic." : "12"
-				};
-				var mesNumero = meses[mes];
-				var fechaISO = anio + '-' + mesNumero + '-' + dia;
-				return fechaISO;
-			}
+	// Función para convertir fechas a formato ISO
+	function convertirFecha(fecha) {
+    var partes = fecha.split(' ');
+    var mes = partes[0];
+    var dia = partes[1].replace(',', '');
+    // Agregar un cero adelante si el día tiene un solo dígito
+    if (dia.length === 1) {
+        dia = '0' + dia;
+    }
+    var anio = partes[2];
+    var meses = {
+        "ene.": "01", "feb.": "02", "mar.": "03",
+        "abr.": "04", "may.": "05", "jun.": "06",
+        "jul.": "07", "ago.": "08", "sep.": "09",
+        "oct.": "10", "nov.": "11", "dic.": "12"
+    };
+    var mesNumero = meses[mes];
+    var fechaISO = anio + '-' + mesNumero + '-' + dia;
+    return fechaISO;
+}
+
+
 
 			$.get("ServletEspecialidadesJSON", function(response) {
 				$.each(response, function(index, item) {
@@ -731,6 +726,9 @@ body.shimeji-select-ie {
 	$(document).ready(function() {
 	    var dniExistente = false;
 	    var correoExistente = false;
+	    
+	    var telefonoExistente = false;
+
 
 	    $("#dni").on("input", function() {
 	        var dni = $(this).val();
@@ -747,7 +745,7 @@ body.shimeji-select-ie {
 	                        Swal.fire({
 	                            title: '¡Voluntario ya registrado!',
 	                            text: 'El DNI: ' + dni + ' ya está registrado, espera una respuesta en tu email',
-	                            imageUrl: 'https://media0.giphy.com/media/AO5qaphTxRnyw/giphy.gif?cid=ecf05e47o1crybylqqrjk5k3v6ep6hiqcy37rvh85eqsiii2&ep=v1_gifs_related&rid=giphy.gif&ct=g',
+	                            imageUrl: 'https://64.media.tumblr.com/25a2c195d83c33abaf26c26928989eeb/tumblr_odq5bh1RpR1un96evo1_540.pnj',
 	                            imageWidth: 400,
 	                            imageHeight: 200,
 	                            imageAlt: 'imgError',
@@ -781,7 +779,10 @@ body.shimeji-select-ie {
 	                        Swal.fire({
 	                            title: '¡Correo ya registrado!',
 	                            text: 'El correo ' + email + ' ya está registrado, por favor utiliza otro correo.',
-	                            icon: 'error',
+	                            imageUrl: 'https://64.media.tumblr.com/b0c29818fc90aa78d453145b0c90e559/tumblr_odq5bh1RpR1un96evo2_540.pnj',
+	                            imageWidth: 400,
+	                            imageHeight: 200,
+	                            imageAlt: 'imgError',
 	                        });
 	                        correoExistente = true;
 	                        $("#nombre, #paterno, #materno, #dni, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", true);
@@ -800,6 +801,48 @@ body.shimeji-select-ie {
 	    function isValidEmail(email) {
 	        return /.+@.+\..+/.test(email);
 	    }
+	    
+	    
+
+	    $("#telefono").on("input", function() {
+	        var numero = $(this).val();
+	        if (numero.length === 9) {
+	            $.ajax({
+	                type: "POST",
+	                url: "ServletVoluntario",
+	                data: {
+	                    accion: "verificarNumero",
+	                    telefono: numero
+	                },
+	                success: function(data) {
+	                    if (data.status === "telefono_existente") {
+	                        Swal.fire({
+	                            title: '¡Teléfono ya registrado!',
+	                            text: 'El teléfono: ' + numero + ' ya está en uso, por favor escribe uno diferente',
+	                            imageUrl: 'https://64.media.tumblr.com/3f485ceef096e50b810b62fe4a00b306/tumblr_odq5bh1RpR1un96evo3_540.pnj',
+	                            imageWidth: 400,
+	                            imageHeight: 200,
+	                            imageAlt: 'imgError',
+	                        });
+	                        telefonoExistente = true;
+	                        // Bloquear campos si el teléfono existe
+	                        $("#nombre, #paterno, #materno, #email, #dni, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", true);
+	                    } else {
+	                        telefonoExistente = false;
+	                        // Desbloquear campos si el teléfono no existe
+	                        $("#nombre, #paterno, #materno, #email, #telefono, #id-evento, #id-especialidad, #ciudad, #provincia, #distrito").prop("disabled", false);
+	                    }
+	                },
+	                error: function() {
+	                    console.error("Error en la solicitud AJAX");
+	                }
+	            });
+	        } else {
+	            // Si la longitud del número no es 9, desbloquear los campos
+	            $("#nombre, #paterno,#dni, #materno, #email, #telefono, #id-evento, #id-especialidad, #ciudad, #provincia, #distrito").prop("disabled", false);
+	        }
+	    });
+
 	});
 	</script>
 

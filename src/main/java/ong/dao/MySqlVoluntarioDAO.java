@@ -299,7 +299,7 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 	        if (rs.next()) {
 	            // Si hay un resultado, crea un objeto Voluntario y establece el correo
 	            voluntario = new Voluntario();
-	            voluntario.setEmail(rs.getString("email"));
+	            voluntario.setEmail(rs.getString("correo"));
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -474,6 +474,49 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 		    }
 
 		    return result;
+	}
+
+	@Override
+	public Voluntario findNumero(int num) {
+		Voluntario voluntario = null;
+	    Connection con = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+
+	    try {
+	        // 1. Obtener Conexion
+	        con = new MySqlConectar().getConectar();
+	        // 2. Sentencia SQL para obtener el DNI por código 
+	        String sql = "SELECT telefono FROM voluntario WHERE telefono = ?";
+	        // 3. Crear objeto "ps" y enviar la variable "sql"
+	        ps = con.prepareStatement(sql);
+	        ps.setInt(1, num); // Setea el parámetro con el ID del voluntario
+
+	        // 4. Ejecutar la consulta
+	        rs = ps.executeQuery();
+
+	        // 5. Procesar el resultado
+	        if (rs.next()) {
+	            // Si hay un resultado, crea un objeto Voluntario y establece el DNI
+	            voluntario = new Voluntario();
+	            voluntario.setTelefono(rs.getInt("telefono"));
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null)
+	                rs.close();
+	            if (ps != null)
+	                ps.close();
+	            if (con != null)
+	                con.close();
+	        } catch (SQLException e2) {
+	            e2.printStackTrace();
+	        }
+	    }
+
+	    return voluntario;
 	}
 	
 
