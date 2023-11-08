@@ -938,7 +938,7 @@ body.shimeji-select-ie {
 			    '#FF9A8B', // Rosa melocotón
 			    '#008080', // Verde petróleo
 			    '#A85D38', // Marrón tierra
-			    '#674D3C'  // Marrón café
+			    '#674D3C'  // Marrón café c:
 			];
 
 
