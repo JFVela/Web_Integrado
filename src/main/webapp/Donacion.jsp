@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <link rel="icon" href="assets/img/health-monitoring-svgrepo-com.svg">
 <link
 	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
@@ -66,8 +67,7 @@ body.shimeji-select-ie {
 #shimeji-contextMenu::-webkit-scrollbar-thumb:hover {
 	background: #555;
 }
-</style>
-<style>
+
 .estilo-don {
 	margin-bottom: 10px;
 }
@@ -77,7 +77,7 @@ body.shimeji-select-ie {
 }
 
 .estilo-col2 {
-	background-color: #5cb9d4;
+	background-color: #faf3eb;
 	border-radius: 30px;
 	padding-bottom: 10px;
 }
@@ -92,6 +92,10 @@ body.shimeji-select-ie {
 	border: 1px solid green;
 	box-shadow: 0 0 0 0.2rem rgba(0, 128, 0, 0.18); /* Cambiado a verde */
 	color: green; /* Texto en verde */
+}
+
+.desaparecer {
+	display: none;
 }
 
 .tam {
@@ -212,6 +216,31 @@ body.shimeji-select-ie {
 	background-repeat: no-repeat;
 	background-position: center top;
 }
+
+.loader {
+	width: 50px; /* Cambia el valor a tu preferencia */
+	height: 50px; /* Ajusta la altura proporcionalmente */
+	border: 6px solid #3498db; /* Ajusta el grosor del borde */
+	border-top: 6px solid transparent;
+	/* Ajusta el grosor del borde superior */
+	border-radius: 50%;
+	animation: spin 2s linear infinite;
+}
+
+@
+keyframes spin { 0% {
+	transform: rotate(0deg);
+}
+100
+%
+{
+transform
+:
+rotate(
+360deg
+);
+}
+}
 </style>
 </head>
 <body>
@@ -288,21 +317,31 @@ body.shimeji-select-ie {
 						<div class="linea-vertical" style="margin-top: 15px;"></div>
 						<div class="col">
 							<div class="col-12 p-4">
-									<label id="id-emailEnvio">Email</label>
-									 <input
-										id="id-ingresoCorreo">
+								
+								<div class="desaparecer" id="email-correo" >
+								  <label id="id-emailEnvio" >Correo Electrónico</label>
+								  <div class="input-group m-2">
+								  	<input type="text" class="form-control" id="id-ingresoCorreo" 
+									  placeholder="nombre del correo" aria-label="Recipient's username" 
+									  aria-describedby="basic-addon2">
+									  <span class="input-group-text" id="basic-addon2">@gmail.com</span>
+								  </div>
 									<button id="startCountdown" type="submit"
 										class="btn btn-outline-success">Enviar</button>
 									<div id="countdown" style="display: none;"></div>
+								</div>
+								
+								
 
-									<label class="mx-auto" id="confirmationLabel"
-										style="display: none">Código de confirmación</label> 
-										<input
-										class="mx-auto" id="confirmationInput" style="display: none">
-									<button class="mx-auto" id="confirmationButton"
-										style="display: none" type="button"
-										class="btn btn-outline-success">Confirmar</button>
-
+								<label class="mx-auto" id="confirmationLabel"
+									style="display: none">Código de confirmación</label> <input
+									class="mx-auto" id="confirmationInput" style="display: none">
+								<button class="mx-auto" id="confirmationButton"
+									style="display: none" type="button"
+									class="btn btn-outline-success">Confirmar</button>
+								<div class="loader desaparecer">
+									<div class="spinner"></div>
+								</div>
 							</div>
 							<form id="formRegistro" method="post"
 								action="ServletDonante?accion=insertarModal">
@@ -405,7 +444,7 @@ body.shimeji-select-ie {
 		<div class="container-fluid">
 			<div class="row">
 				<%--PRIMERA COLUMNA --%>
-				<div class="col ">
+				<div class="col estilo-col2" style="margin-right: 40px;">
 					<div class="text-center">
 						<h1>
 							<span style="color: green;">Donación </span>Física
@@ -463,91 +502,6 @@ body.shimeji-select-ie {
 															placeholder="Donaré una caja llena de alimentos no perecederos, mantas y ropa abrigada para apoyar a las personas."></textarea>
 													</div>
 													<%--Final  Físico --%>
-
-
-													<h2>Información Personal</h2>
-
-
-													<div class="row">
-
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="exampleInputPassword1" class="form-label">DNI</label>
-																<input type="text" class="form-control"
-																	placeholder="DNI:" name="dni">
-															</div>
-														</div>
-														<div class="form-group">
-															<label for="exampleInputEmail1" class="form-label">Nombre</label>
-															<input type="text" class="form-control"
-																placeholder="Nombre:" name="nombre">
-														</div>
-
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="exampleInputPassword1" class="form-label">Paterno</label>
-																<input type="text" class="form-control"
-																	placeholder="Apelldio Paterno:" name="paterno">
-															</div>
-														</div>
-
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="exampleInputPassword1" class="form-label">Materno</label>
-																<input type="text" class="form-control"
-																	placeholder="Apellido Materno:" name="materno">
-															</div>
-														</div>
-
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="exampleInputPassword1" class="form-label">Celular</label>
-																<input type="text" class="form-control numcel"
-																	placeholder="Número Celular:" name="celular">
-																<div class="mensajeCelular" style="text-align: left;"></div>
-															</div>
-														</div>
-
-
-														<div class="form-group">
-															<label for="departamento"
-																class="label-form text-secondary">Departamento</label> <select
-																name="departamento"
-																class="form-control departamento-label"
-																id="id-departamento" required>
-																<option value=" ">[Seleccione un Departamento]</option>
-															</select>
-														</div>
-														<div class="form-group">
-															<label for="provincia" class="label-form text-secondary">Provincia</label>
-															<select name="provincia"
-																class="form-control provincia-label" id="id-provincia"
-																required>
-																<option value=" ">[Seleccione una provincia]</option>
-															</select>
-														</div>
-														<div class="form-group">
-															<label for="distrito" class="label-form text-secondary">Distrito</label>
-															<select name="distrito"
-																class="form-control distrito-label" id="id-distrito"
-																required>
-																<option value=" ">[Seleccione un distrito]</option>
-															</select>
-														</div>
-														<div class="form-group">
-															<label for="exampleInputPassword1" class="form-label">Email</label>
-															<input type="text" class="form-control correo"
-																placeholder="usuario@gmail.com" name="email">
-															<div class="mensajeEmail" style="text-align: left;"></div>
-														</div>
-
-														<div class="form-group">
-															<label for="exampleInputEmail1" class="form-label">Dirección</label>
-															<input type="text" class="form-control"
-																placeholder="Dirección:" name="direccion">
-														</div>
-
-													</div>
 												</form>
 
 											</div>
@@ -695,92 +649,7 @@ body.shimeji-select-ie {
 													</div>
 													<%--</form>--%>
 												</div>
-												<div class="row mt-3">
-													<h2>Información Personal</h2>
-													<div class="col-md-6 ms-auto">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="exampleInputPassword1" class="form-label">DNI</label>
-																<input type="text" class="form-control"
-																	placeholder="DNI:" name="dni">
-															</div>
-														</div>
-														<div class="form-group col-8">
-															<label for="exampleInputEmail1" class="form-label">Nombre</label>
-															<input type="text" class="form-control"
-																placeholder="Nombre:" name="nombre">
-														</div>
-
-
-														<div class="form-group col-8">
-															<label for="exampleInputPassword1" class="form-label">Paterno</label>
-															<input type="text" class="form-control"
-																placeholder="Apelldio Paterno:" name="paterno">
-														</div>
-
-
-
-														<div class="form-group col-8">
-															<label for="exampleInputPassword1" class="form-label">Materno</label>
-															<input type="text" class="form-control"
-																placeholder="Apellido Materno:" name="materno">
-														</div>
-													</div>
-													<div class="col-md-6 ms-auto">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="exampleInputPassword1" class="form-label">Celular</label>
-																<input type="text" class="form-control numcel"
-																	placeholder="Número Celular:" name="celular">
-																<div class="mensajeCelular" style="text-align: left;"></div>
-
-															</div>
-														</div>
-
-														<div class="form-group">
-															<label for="departamento"
-																class="label-form text-secondary">Departamento</label> <select
-																name="departamento"
-																class="form-control departamento-label"
-																id="id-departamento-1" required>
-																<option value=" ">[Seleccione un Departamento]</option>
-															</select>
-														</div>
-														<div class="form-group">
-															<label for="provincia" class="label-form text-secondary">Provincia</label>
-															<select name="provincia-1"
-																class="form-control provincia-label" id="id-provincia-1"
-																required>
-																<option value=" ">[Seleccione una provincia]</option>
-															</select>
-														</div>
-														<div class="form-group">
-															<label for="distrito" class="label-form text-secondary">Distrito</label>
-															<select name="distrito"
-																class="form-control distrito-label" id="id-distrito-1"
-																required>
-																<option value=" ">[Seleccione un distrito]</option>
-															</select>
-														</div>
-
-
-														<div class="form-group">
-															<label for="exampleInputPassword1" class="form-label">Email</label>
-															<input type="text" class="form-control correo"
-																placeholder="usuario@gmail.com" name="email">
-															<div class="mensajeEmail" style="text-align: left;"></div>
-
-														</div>
-
-														<div class="form-group">
-															<label for="exampleInputEmail1" class="form-label">Dirección</label>
-															<input type="text" class="form-control"
-																placeholder="Dirección:" name="direccion">
-														</div>
-
-													</div>
-												</div>
-											</div>
+											</div>	
 										</form>
 										<%--ACA TERMINA --%>
 									</div>
@@ -1357,64 +1226,64 @@ body.shimeji-select-ie {
 			</div>
 		</div>
 	</footer>
-
-	<!-- Libreria principal de jQuery -->
-	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
-	<!-- Libreria JS de bosstrap -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-		crossorigin="anonymous"></script>
-
-	<!-- Libreria para validar (Bootstrap Validator) -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-
-	<!-- Otras bibliotecas que puedas necesitar -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
-		integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
-		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-	<%--carrusel sea responsivo --%>
-	<script>
 	
-$('.owl-carousel').owlCarousel({
-    loop:true,
-    margin:10,
-    nav:true,
-    responsive:{
-        0:{
-            items:1
-        },
-        600:{
-            items:3
-        },
-        1000:{
-            items:5
-        }
-    }
-})
-</script>
+	<%--LIBRERIAS --%>
+		<!-- Libreria principal de jQuery -->
+		<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+	
+		<!-- Libreria JS de bosstrap -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+			crossorigin="anonymous"></script>
+	
+		<!-- Libreria para validar (Bootstrap Validator) -->
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"></script>
+	
+		<!-- Otras bibliotecas que puedas necesitar -->
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+			integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+	<%--FIN DE LAS LIBRERIAS--%>
+	
+	
+	<%--ESTILO PARA EL NAV --%>
+	<script>
+		var navBar = document.querySelector('.js-nav-bar');
+		if (typeof navBar === 'object')
+			document.documentElement.style.setProperty('--nav-height',
+					navBar.offsetHeight +'px';)
+	</script>
+	
+	<%--Carrusel responsivo --%>
+	<script>
+	$('.owl-carousel').owlCarousel({
+	    loop:true,
+	    margin:10,
+	    nav:true,
+	    responsive:{
+	        0:{
+	            items:1
+	        },
+	        600:{
+	            items:3
+	        },
+	        1000:{
+	            items:5
+	        }
+	    }
+	})
+	</script>
 
-<script>
-   const tabs = document.querySelectorAll('.nav-link[data-bs-toggle="tab"]');
-
-   tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-         tabs.forEach(t => t.classList.remove('active'));
-         tab.classList.add('active');
-      });
-   });
-</script>
-
-
+	<%--ALERTAS CON TOAST --%>
 	<c:if test="${sessionScope.MENSAJE!=null}">
 		<script>
 		    var mensaje = "${sessionScope.MENSAJE}";
@@ -1435,11 +1304,12 @@ $('.owl-carousel').owlCarousel({
 		            });
 		        }
 		    }
-</script>
-
+		</script>
 	</c:if>
+	<%--REMOVER LAS ALERTAS --%>
 	<c:remove var="MENSAJE" scope="session" />
-
+	
+	<%--SCRIPT PARA CARGAR LOS JSON AL COMBOBOX --%>
 	<script>
 		CargarLocaciones();
 		CargarCampaña();
@@ -1474,172 +1344,70 @@ $('.owl-carousel').owlCarousel({
 				})
 			})
 		}
-		//resetar al cerrar el modal
-		$(document).on("click",".btn-cerrar, .btn-cerrar1",function(){
-			$("#formDonante").trigger("reset");
-			$("#formDonante").data("bootstrapValidator").resetForm(true);
-			var emailInput = $("#formDonante").find(".correo"); // Obtener el campo de correo
-		    emailInput.removeClass("error"); // Eliminar la clase de error
-		    emailInput.siblings(".mensajeEmail").text(""); 
-		   
-		    var celularInput = $("#formDonante").find(".numcel"); 
-		    celularInput.removeClass("error");
-		    celularInput.siblings(".mensajeCelular").text("");
-		})
-		$(document).on("click",".btn-cerrar2, .btn-cerrar3",function(){
-			$("#formDonante1").trigger("reset");
-			$("#formDonante1").data("bootstrapValidator").resetForm(true);
-			$("#numcuen, #cvv, #expirationMonth, #expirationYear").removeClass("success");
-			$("#mensajeValidacion").text("");
-			 var emailInput = $("#formDonante1").find(".correo"); // Obtener el campo de correo
-			    emailInput.removeClass("error"); // Eliminar la clase de error
-			    emailInput.siblings(".mensajeEmail").text("");
-			    
-			    var celularInput = $("#formDonante1").find(".numcel"); // Obtener el campo de número de celular
-			    celularInput.removeClass("error"); // Eliminar la clase de error
-			    celularInput.siblings(".mensajeCelular").text("");
-		})
-		// Verificar si los correos ya existen con JSON
-		$(".correo").on("input", function () {
-		    var emailObtenido = $(this).val().trim();
-		    var mensajeEmail = $(".mensajeEmail");
-		    var elementoActual = $(this);
-		
-		    // Obtén los botones externos de ambos formularios
-		    var botonExternoForm1 = document.getElementById('botonexterno');
-		    var botonExternoForm2 = document.getElementById('donarexterno1');
-		
-		    $.get("ServletDonanteJSON", function (response) {
-		        var emailExistente = false; // Variable para rastrear si el correo ya existe
-		
-		        // Recorre los datos del JSON obtenidos
-		        $.each(response, function (index, item) {
-		            var jsonEmail = item.email;
-		
-		            // Comparar el valor del campo email en el JSON con el valor del campo de entrada
-		            if (emailObtenido === jsonEmail) {
-		                mensajeEmail.text("La dirección de correo electrónico ya está en uso");
-		                $(elementoActual).addClass("error");
-		                mensajeEmail.css("color", "red");
-		                emailExistente = true;
-		            }
-		            
-		        });
-		
-		        // Habilitar o deshabilitar los botones según si el correo existe en cualquiera de los formularios
-		        if (emailExistente) {
-		            botonExternoForm1.disabled = true;
-		            botonExternoForm2.disabled = true;
-		        } else {
-		            botonExternoForm1.disabled = false;
-		            botonExternoForm2.disabled = false;
-		            $(elementoActual).removeClass("error");
-		            mensajeEmail.text("");
-		        }
-		    });
-		});
+	</script><%--FIN DE LA CARGA DE DATOS --%>
 
-
-		//Verificar si los celulares ya existen con JSON
-		$(".numcel").on("input", function () {
-		    var celObtenido = $(this).val().trim();
-		    var mensajeCelular = $(".mensajeCelular");
-		    var elementoActual = $(this);
-		    var botonExternoForm1 = document.getElementById('botonexterno');
-		    var botonExternoForm2 = document.getElementById('donarexterno1');
-		    $.get("ServletDonanteJSON", function (response) {
-		    	var emailExistente = false;
-		        // Recorre los datos del JSON obtenidos
-		        $.each(response, function (index, item) {
-		            var jsoncel = item.celular;
-		            
-		            // Comparar el valor del campo email en el JSON con el valor del campo de entrada
-		            if (parseInt(celObtenido) === jsoncel) {
-		            	mensajeCelular.text("La número de celular ya ha sido registrado");
-			                $(elementoActual).addClass("error");
-			                mensajeCelular.css("color", "red");
-			                emailExistente = true;
-		            }
-		        });
-		        if (emailExistente) {
-		            botonExternoForm1.disabled = true;
-		            botonExternoForm2.disabled = true;
-		        } else {
-		            botonExternoForm1.disabled = false;
-		            botonExternoForm2.disabled = false;
-		            $(elementoActual).removeClass("error");
-	            	mensajeCelular.text("");
-		        }
-		    });
-		});
-
-	</script>
-
-	<%--VERIFIACR SI LOS DATOS DE LA TARJETA COINCIDEN--%>
+	<%--VERIFICAR SI LOS DATOS DE LA TARJETA COINCIDEN--%>
 	<script>
-	$(document).ready(function () {
-   	 var enableCustomValidations = true; 
- 
-    $("#monto").prop("disabled", true);
-    
-    $("#numcuen, #cvv, #expirationMonth, #expirationYear").on("keyup", function () {
-        if (enableCustomValidations) {
-            validarTarjeta();
-        }
-    });
-  
-    function validarTarjeta() {
-        // valores de los campos de la tarjeta
-        var numcuen = $("#numcuen").val();
-        var cvv = $("#cvv").val();
-        var expirationMonth = $("#expirationMonth").val();
-        var expirationYear = $("#expirationYear").val();
-        var mensajeElemento = $("#mensajeValidacion"); // Obtén el elemento para mostrar el mensaje
-        var tmone = $("#id-moneda").val();
-        
-        if (!numcuen || !cvv || !expirationMonth || !expirationYear) {
-            mensajeElemento.text(""); 
-            return;
-        }
-		
+		$(document).ready(function () {
+	   	 var enableCustomValidations = true; 
+	 
+	    $("#monto").prop("disabled", true);
+	    
+	    $("#numcuen, #cvv, #expirationMonth, #expirationYear").on("keyup", function () {
+	        if (enableCustomValidations) {
+	            validarTarjeta();
+	        }
+	    });
+	  
+	    function validarTarjeta() {
+	        // valores de los campos de la tarjeta
+	        var numcuen = $("#numcuen").val();
+	        var cvv = $("#cvv").val();
+	        var expirationMonth = $("#expirationMonth").val();
+	        var expirationYear = $("#expirationYear").val();
+	        var mensajeElemento = $("#mensajeValidacion"); // Obtén el elemento para mostrar el mensaje
+	        var tmone = $("#id-moneda").val();
+	        
+	        if (!numcuen || !cvv || !expirationMonth || !expirationYear) {
+	            mensajeElemento.text(""); 
+	            return;
+	        }
+		  <%--AJAX PARA VALIDAR LA TARJETA--%>
+	        $.ajax({
+	            type: "POST",
+	            url: "ServletTarjetaVerificacion", 
+	            data: {
+	                numcuen: numcuen,
+	                cvv: cvv,
+	                expirationMonth: expirationMonth,
+	                expirationYear: expirationYear
+	            },
+	            success: function (response) {
+	                if (response === "valido") {
+	                    mensajeElemento.text("Tarjeta válida"); // Actualiza el contenido con el mensaje de tarjeta válida
+	                    $("#numcuen, #cvv, #expirationMonth, #expirationYear").removeClass("error");
+	                    $("#numcuen, #cvv, #expirationMonth, #expirationYear").addClass("success");
+	                    mensajeElemento.css("color", "green");
+	                    $("#monto").prop("disabled", false);
+	                    $("#formDonante").off('submit');
+	                } else {
+	                    mensajeElemento.text("Tarjeta no válida"); // Actualiza el contenido con el mensaje de tarjeta no válida
+	                    $("#numcuen, #cvv, #expirationMonth, #expirationYear").removeClass("success");
+	                    $("#numcuen, #cvv, #expirationMonth, #expirationYear").addClass("error");
+	                    mensajeElemento.css("color", "red");
+	                    $("#monto").prop("disabled", true);
+	                    $("#formDonante").on('submit', function (e) {
+	                        e.preventDefault();
+	                        $("#numcuen").focus();
+	                    });
+	                }
+	            }
+	        });
+	    }
+	});
+	</script><%--FIN DEL AJAX --%>
 
-        $.ajax({
-            type: "POST",
-            url: "ServletTarjetaVerificacion", 
-            data: {
-                numcuen: numcuen,
-                cvv: cvv,
-                expirationMonth: expirationMonth,
-                expirationYear: expirationYear
-            },
-            success: function (response) {
-                if (response === "valido") {
-                    mensajeElemento.text("Tarjeta válida"); // Actualiza el contenido con el mensaje de tarjeta válida
-                    $("#numcuen, #cvv, #expirationMonth, #expirationYear").removeClass("error");
-                    $("#numcuen, #cvv, #expirationMonth, #expirationYear").addClass("success");
-                    mensajeElemento.css("color", "green");
-                    $("#monto").prop("disabled", false);
-                    $("#formDonante").off('submit');
-                } else {
-                    mensajeElemento.text("Tarjeta no válida"); // Actualiza el contenido con el mensaje de tarjeta no válida
-                    $("#numcuen, #cvv, #expirationMonth, #expirationYear").removeClass("success");
-                    $("#numcuen, #cvv, #expirationMonth, #expirationYear").addClass("error");
-                    mensajeElemento.css("color", "red");
-                    $("#monto").prop("disabled", true);
-                    $("#formDonante").on('submit', function (e) {
-                        e.preventDefault();
-                        $("#numcuen").focus();
-                    });
-                }
-            }
-        });
-    }
-
-});
-
-</script>
-
-	<%--bootrap validator --%>
+	<%--PLUGIN BOOTSTRAP VALIDATOR --%>
 	<script>    
 	    $(document).ready(function(){     
 	        $('#formDonante').bootstrapValidator({      
@@ -1656,81 +1424,7 @@ $('.owl-carousel').owlCarousel({
 		        					message:'Este campo es obligatorio'
 		        				}
 		        			}
-	        		 },dni:{
-	        			 validators:{
-		        				notEmpty:{
-		        					message:'Este campo es obligatorio'
-		        				},
-		        				regexp: {
-		        				      regexp: /^[0-9]+$/, // Expresión regular para aceptar solo números
-		        				      message: 'Este campo debe contener solo números'
-		        				},
-		        				stringLength: {
-		        		            min: 6,
-		        		            max: 9,
-		        		            message: 'Rango de 6-9'
-		        		        }
-		        			}
-	        		 },nombre:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Campo nombre es obligatorio'
-	        				},
-	        				regexp:{
-	        					regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,20}$/,
-	        					 message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
-	        				}
-	        			}
-	        		},paterno:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Campo paterno es obligatorio'
-	        				}
-	        			}
-	        		},
-	        		materno:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Campo materno es obligatorio'
-	        				}
-	        			}
-	        		},celular:{
-	        			validators:{
-	        				notEmpty: {
-	        		            message: 'El campo celular es obligatorio'
-	        		        },
-	        		        stringLength: {
-	        		            min: 9,
-	        		            max: 9,
-	        		            message: 'El número de celular debe tener exactamente 9 dígitos'
-	        		        },
-	        		        regexp: {
-	        		            regexp: /^9[0-9]{8}$/, // Comienza con 9 seguido de 8 dígitos
-	        		            message: 'El número de celular debe comenzar con el primer dígito "9" y contener 9 dígitos en total'
-	        		        },
-	        		        callback: {
-	        		            message: 'El número de celular no puede ser negativo',
-	        		            callback: function(value, validator, $field) {
-	        		                // Convierte el valor a un número entero
-	        		                var celular = parseInt(value, 10);
-	        		                // Comprueba si el valor es negativo
-	        		                if (celular < 0) {
-	        		                    return false;
-	        		                }
-	        		                return true;
-	        		            }
-	        		        }
-	        			}
-	        		},email:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Campo email es obligatorio'
-	        				},
-	        				emailAddress: {
-	        		            message: 'El campo email debe contener una dirección de correo electrónico válida'
-	        		        }
-	        			}
-	        		},descrip:{
+	        		 },descrip:{
 	        			validators:{
 	        				notEmpty:{
 	        					message:'Este campo es obligatorio'
@@ -1746,18 +1440,6 @@ $('.owl-carousel').owlCarousel({
 	        			validators:{
 	        				notEmpty:{
 	        					message:'Este campo es obligatorio'
-	        				}
-	        			}
-	        		},direccion:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Campo direccion es obligatorio'
-	        				}
-	        			}
-	        		},ciudad:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Campo ciudad es obligatorio'
 	        				}
 	        			}
 	        		},monto:{
@@ -1785,8 +1467,9 @@ $('.owl-carousel').owlCarousel({
 	        });   
 				
 	    });
-	    
-	</script>
+	</script><%--FIN DE LA VALIDACIÓN CON EL PLUGIN --%>
+	
+	<%--PLUGIN BOOTSTRAP VALIDATOR --%>
 	<script>    
 	    $(document).ready(function(){     
 	        $('#formDonante1').bootstrapValidator({      
@@ -1797,81 +1480,7 @@ $('.owl-carousel').owlCarousel({
 		        					message:'Este campo es obligatorio'
 		        				}
 		        			}
-	        		 },dni:{
-	        			 validators:{
-		        				notEmpty:{
-		        					message:'Este campo es obligatorio'
-		        				},
-		        				regexp: {
-		        				      regexp: /^[0-9]+$/, // Expresión regular para aceptar solo números
-		        				      message: 'Este campo debe contener solo números'
-		        				},
-		        				stringLength: {
-		        		            min: 6,
-		        		            max: 9,
-		        		            message: 'Rango de 6-9'
-		        		        }
-		        			}
-	        		 },nombre:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Campo nombre es obligatorio'
-	        				},
-	        				regexp:{
-	        					regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,20}$/,
-	        					 message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
-	        				}
-	        			}
-	        		},paterno:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Campo paterno es obligatorio'
-	        				}
-	        			}
-	        		},
-	        		materno:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Campo materno es obligatorio'
-	        				}
-	        			}
-	        		},celular:{
-	        			validators:{
-	        				notEmpty: {
-	        		            message: 'El campo celular es obligatorio'
-	        		        },
-	        		        stringLength: {
-	        		            min: 9,
-	        		            max: 9,
-	        		            message: 'El número de celular debe tener exactamente 9 dígitos'
-	        		        },
-	        		        regexp: {
-	        		            regexp: /^9[0-9]{8}$/, // Comienza con 9 seguido de 8 dígitos
-	        		            message: 'El número de celular debe comenzar con el primer dígito "9" y contener 9 dígitos en total'
-	        		        },
-	        		        callback: {
-	        		            message: 'El número de celular no puede ser negativo',
-	        		            callback: function(value, validator, $field) {
-	        		                // Convierte el valor a un número entero
-	        		                var celular = parseInt(value, 10);
-	        		                // Comprueba si el valor es negativo
-	        		                if (celular < 0) {
-	        		                    return false;
-	        		                }
-	        		                return true;
-	        		            }
-	        		        }
-	        			}
-	        		},email:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Campo email es obligatorio'
-	        				},
-	        				emailAddress: {
-	        		            message: 'El campo email debe contener una dirección de correo electrónico válida'
-	        		        }
-	        			}
-	        		},numcuen:{
+	        		 },numcuen:{
 	        			validators:{
 	        				notEmpty:{
 	        					message:'Este campo es obligatorio'
@@ -1945,18 +1554,6 @@ $('.owl-carousel').owlCarousel({
 	        					message:'Este campo es obligatorio'
 	        				}
 	        			}
-	        		},direccion:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Campo direccion es obligatorio'
-	        				}
-	        			}
-	        		},ciudad:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Campo ciudad es obligatorio'
-	        				}
-	        			}
 	        		},monto:{
 	        			validators: {
 	        		        notEmpty: {
@@ -1983,10 +1580,10 @@ $('.owl-carousel').owlCarousel({
 				
 	    });
 	    
-	</script>
+	</script><%--FIN DE LA VALIDACIÓN CON EL PLUGIN --%>
 
 
-	<%--ESTILO NAV --%>
+	<%--ACCIONES DEL BOTON QUE ESTA AFUERA DEL "FORM" --%>
 	<script>
 		document.getElementById('botonexterno').addEventListener('click', function () {
 		    var formDonante = $('#formDonante').bootstrapValidator();
@@ -2004,223 +1601,237 @@ $('.owl-carousel').owlCarousel({
 		        document.getElementById('formDonante1').submit(); // Envía el formulario si es válido
 		    }
 		});
-		var navBar = document.querySelector('.js-nav-bar');
-		if (typeof navBar === 'object')
-			document.documentElement.style.setProperty('--nav-height',
-					navBar.offsetHeight +'px');
-		
 	</script>
-
-
+	
+	<%--DESPLAZAMIENTO AUTOMATICO--%>
 	<script>
-    // Obtén una lista de todos los botones con la clase "scroll-to-formulario"
-    var scrollButtons = document.querySelectorAll('.scroll-to-formulario');
-    var formularioSection = document.getElementById('donaAqui');
-
-    // Agrega un evento de clic a cada botón
-    scrollButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            // Desplázate suavemente hacia la sección del formulario
-            formularioSection.scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
+	    // Obtén una lista de todos los botones con la clase "scroll-to-formulario"
+	    var scrollButtons = document.querySelectorAll('.scroll-to-formulario');
+	    var formularioSection = document.getElementById('donaAqui');
+	
+	    // Agrega un evento de clic a cada botón
+	    scrollButtons.forEach(function(button) {
+	        button.addEventListener('click', function() {
+	            // Desplázate suavemente hacia la sección del formulario
+	            formularioSection.scrollIntoView({
+	                behavior: 'smooth'
+	            });
+	        });
+	    });
 	</script>
-	<%--SCRIPT PARA LLENAR LOS COMBOBOX DE DEPARTAMENTO,DISTRITO Y PROVINCIA --%>
+	
+	<%--SCRIPT PARA LLENAR LOS COMBOBOX DE DEPARTAMENTO,DISTRITO Y PROVINCIA 
+		DEL ARCHIVO MAP.PE.JSON--%>
 	<script>
-
-    function cargarDatosYManejarCambios(ciudadSelect, provinciaSelect, distritoSelect) {
-    	// Realizar una solicitud AJAX para cargar el archivo JSON
-    	const xhr = new XMLHttpRequest();
-    	xhr.open('GET', 'assets/map.pe.json', true);
-
-    	xhr.onload = function() {
-    		if (xhr.status === 200) {
-    			const data = JSON.parse(xhr.responseText);
-
-    			// Llenar el select de ciudades
-    			for ( const ciudad in data) {
-    				ciudadSelect.options.add(new Option(ciudad, ciudad));
-    			}
-
-    			// Manejar el cambio en el select de ciudades
-    			ciudadSelect
-    					.addEventListener(
-    							'change',
-    							function() {
-    								// Obtener la provincia seleccionada
-    								const selectedCiudad = ciudadSelect.value;
-    								const provincias = data[selectedCiudad];
-
-    								// Limpiar y llenar el select de provincias
-    								provinciaSelect.innerHTML = '<option value="">[Seleccione una provincia]</option>';
-    								for ( const provincia in provincias) {
-    									provinciaSelect.options.add(new Option(
-    											provincia, provincia));
-    								}
-    							});
-    			// Manejar el cambio en el select de provincias
-    			provinciaSelect
-    					.addEventListener(
-    							'change',
-    							function() {
-    								// Obtener la provincia y ciudad seleccionadas
-    								const selectedCiudad = ciudadSelect.value;
-    								const selectedProvincia = provinciaSelect.value;
-    								const distritos = data[selectedCiudad][selectedProvincia];
-
-    								// Limpiar y llenar el select de distritos
-    								distritoSelect.innerHTML = '<option value="">[Seleccione un distrito]</option>';
-    								for ( const distrito in distritos) {
-    									// Debes acceder al valor del distrito en lugar de todo el objeto distritos
-    									distritoSelect.options.add(new Option(
-    											distrito, distritos[distrito]));
-    								}
-    							});
-    		}
-    	};
-
-    	xhr.send();
-    }
-
-    // Llama a la función para el primer formulario
-    const ciudadSelect1 = document.getElementById('id-departamento');
-    const provinciaSelect1 = document.getElementById('id-provincia');
-    const distritoSelect1 = document.getElementById('id-distrito');
-    cargarDatosYManejarCambios(ciudadSelect1, provinciaSelect1, distritoSelect1);
-
-    // Llama a la función para el segundo formulario
-    const ciudadSelect2 = document.getElementById('id-departamento-1');
-    const provinciaSelect2 = document.getElementById('id-provincia-1');
-    const distritoSelect2 = document.getElementById('id-distrito-1');
-    cargarDatosYManejarCambios(ciudadSelect2, provinciaSelect2, distritoSelect2);
-
-
-	</script>
-	<script>
-
-//MOSTRAR DATOS SEGÚN OPCIÓN
-$(document).ready(function() {
-    let botonOrigen = "";  
-
-    //clic en "Donar en Físico"
-    $("#donar-fisico").click(function() {
-        botonOrigen = "fisico";  
-        $("#staticBackdrop").modal("show");
-    });
-
-    //clic en "Donar en Virtual"
-    $("#donar-virtual").click(function() {
-        botonOrigen = "virtual";  
-        $("#staticBackdrop").modal("show");
-    });
-    
-    $("#id-cerrar").click(function() {
-        $("#staticBackdrop").modal("hide");
-        if (botonOrigen === "fisico") {
-            // Modal de donación física
-            $("#donafisico").modal("show");
-        } else if (botonOrigen === "virtual") {
-            // Modal de donación virtual
-            $("#donavirtual").modal("show");
-        }
-    });
-    $(document).on("click","#id-cerrar",function(){
-    	$("#formRegistro").trigger("reset");
-    	$("#formRegistro").data("bootstrapValidator").resetForm(true);
-    	$('#id-no').prop("checked", false);
-        $('#id-si').prop("checked", false);
-    })
-});
-
-
-$(document).ready(function() {
-  // Oculta el formulario al principio
-  $('#formRegistro').hide();
-  $('#formEmail').hide();
-
-  // Muestra u oculta el formulario al hacer clic en "SI" o "NO"
-  $('#id-no').click(function() {
-    $('#formRegistro').show();
-    $('#formEmail').hide();
-  });
-
-  $('#id-si').click(function() {
-	  $('#formEmail').show();
-    $('#formRegistro').hide();
-  });
-});
-
-//ACCION AL ENVIAR CODIGO AL CORREO ELECTRONICO
-document.getElementById("startCountdown").addEventListener("click", function () {
-    var countdownElement = document.getElementById("countdown");
-    var confirmationLabel = document.getElementById("confirmationLabel");
-    var confirmationInput = document.getElementById("confirmationInput");
-    var confirmationButton = document.getElementById("confirmationButton");
-    var botonenviar = document.getElementById("startCountdown");
-    var emailEnvio = document.getElementById("id-emailEnvio");
-    var ingresoCorreo = document.getElementById("id-ingresoCorreo");
-
-    // Muestra el contador y comienza el temporizador
-    countdownElement.style.display = "block";
-    
-    var seconds = 5;
-    var countdownInterval = setInterval(function () {
-        countdownElement.innerText = seconds;
-        seconds--;
-
-        if (seconds < 0) {
-            clearInterval(countdownInterval);
-            countdownElement.style.display = "none";
-            ingresoCorreo.style.display = "none";
-            emailEnvio.style.display = "none";
-            botonenviar.style.display = "none";
-            confirmationLabel.style.display = "block";
-            confirmationInput.style.display = "block";
-            confirmationButton.style.display = "block";
-        }
-    }, 1000);
-});
-
-</script>
-<script>
-document.getElementById("startCountdown").addEventListener("click", function() {
-    var correo = document.getElementById("id-ingresoCorreo").value;
-	$.ajax({
-	    type: "POST",
-	    url: "ServletDonacionEmail",
-	    data: {
-	    	tipo:"tipo1",
-	        correo: correo
-	    },
-	    success: function(response) {   
-	    },
-	    error: function() {
+	    function cargarDatosYManejarCambios(ciudadSelect, provinciaSelect, distritoSelect) {
+	    	// Realizar una solicitud AJAX para cargar el archivo JSON
+	    	const xhr = new XMLHttpRequest();
+	    	xhr.open('GET', 'assets/map.pe.json', true);
+	
+	    	xhr.onload = function() {
+	    		if (xhr.status === 200) {
+	    			const data = JSON.parse(xhr.responseText);
+	
+	    			// Llenar el select de ciudades
+	    			for ( const ciudad in data) {
+	    				ciudadSelect.options.add(new Option(ciudad, ciudad));
+	    			}
+	
+	    			// Manejar el cambio en el select de ciudades
+	    			ciudadSelect
+	    					.addEventListener(
+	    							'change',
+	    							function() {
+	    								// Obtener la provincia seleccionada
+	    								const selectedCiudad = ciudadSelect.value;
+	    								const provincias = data[selectedCiudad];
+	
+	    								// Limpiar y llenar el select de provincias
+	    								provinciaSelect.innerHTML = '<option value="">[Seleccione una provincia]</option>';
+	    								for ( const provincia in provincias) {
+	    									provinciaSelect.options.add(new Option(
+	    											provincia, provincia));
+	    								}
+	    							});
+	    			// Manejar el cambio en el select de provincias
+	    			provinciaSelect
+	    					.addEventListener(
+	    							'change',
+	    							function() {
+	    								// Obtener la provincia y ciudad seleccionadas
+	    								const selectedCiudad = ciudadSelect.value;
+	    								const selectedProvincia = provinciaSelect.value;
+	    								const distritos = data[selectedCiudad][selectedProvincia];
+	
+	    								// Limpiar y llenar el select de distritos
+	    								distritoSelect.innerHTML = '<option value="">[Seleccione un distrito]</option>';
+	    								for ( const distrito in distritos) {
+	    									// Debes acceder al valor del distrito en lugar de todo el objeto distritos
+	    									distritoSelect.options.add(new Option(
+	    											distrito, distritos[distrito]));
+	    								}
+	    							});
+	    		}
+	    	};
+	
+	    	xhr.send();
 	    }
-	});
-})
-document.getElementById("confirmationButton").addEventListener("click", function() {
-	var codigo =document.getElementById("confirmationInput").value;
-	$.ajax({
-		type: "POST",
-	    url: "ServletDonacionEmail",
-	    data: {
-	    	tipo:"tipo2",
-	    	codigo: codigo
-	    },
-	    success: function(response) {
-		       if(response==="valido"){
-		    	   console.log("valido");
-		       }else{
-		    	   console.log("invalido");
-		       }
-		    },
-		    error: function() {
-		    }
-	});
-})
+		<%--CARGAMOS LOS DATOS OBTENIDOS--%>
+	    // Llama a la función para el primer formulario
+	    const ciudadSelect1 = document.getElementById('id-departamento');
+	    const provinciaSelect1 = document.getElementById('id-provincia');
+	    const distritoSelect1 = document.getElementById('id-distrito');
+	    cargarDatosYManejarCambios(ciudadSelect1, provinciaSelect1, distritoSelect1);
+	
+	    // Llama a la función para el segundo formulario
+	    const ciudadSelect2 = document.getElementById('id-departamento-1');
+	    const provinciaSelect2 = document.getElementById('id-provincia-1');
+	    const distritoSelect2 = document.getElementById('id-distrito-1');
+	    cargarDatosYManejarCambios(ciudadSelect2, provinciaSelect2, distritoSelect2);
+	</script><%--FIN DE LA SCRIPT DEL CARGADO DE DATOS --%>
+	
+	<%--MUESTRA DATOS SEGÚN LAS OPCIONES--%>
+	<script>
+		$(document).ready(function() {
+		  // Oculta el formulario al principio
+		  $('#formRegistro').hide();
+		  $('#email-correo').hide();
+		
+		  // Muestra u oculta el formulario al hacer clic en "SI" o "NO"
+		  $('#id-no').click(function() {
+		    $('#formRegistro').show();
+		    $('#email-correo').hide();
+		  });
+		
+		  $('#id-si').click(function() {
+			  $('#email-correo').show();
+		    $('#formRegistro').hide();
+		  });
+		});
+		
+		$(document).ready(function() {
+		    let botonOrigen = "";  
 
-</script>
+		    //clic en "Donar en Físico"
+		    $("#donar-fisico").click(function() {
+		        botonOrigen = "fisico";  
+		        $("#staticBackdrop").modal("show");
+		    });
+
+		    //clic en "Donar en Virtual"
+		    $("#donar-virtual").click(function() {
+		        botonOrigen = "virtual";  
+		        $("#staticBackdrop").modal("show");
+		    });
+		    
+		    $("#id-cerrar").click(function() {
+		        $("#staticBackdrop").modal("hide");
+		        if (botonOrigen === "fisico") {
+		            // Modal de donación física
+		            $("#donafisico").modal("show");
+		        } else if (botonOrigen === "virtual") {
+		            // Modal de donación virtual
+		            $("#donavirtual").modal("show");
+		        }
+		    });
+		});
+	</script>
+	
+	<%--ACCION DE OCULTAR CAMPOS Y MOSTRAR EL CONTADOR AL ENVIAR AL EMAIL --%>
+	<script>
+		//ACCION AL ENVIAR CODIGO AL CORREO ELECTRONICO
+		document.getElementById("startCountdown").addEventListener("click", function () {
+		    var countdownElement = document.getElementById("countdown");
+		    var confirmationLabel = document.getElementById("confirmationLabel");
+		    var confirmationInput = document.getElementById("confirmationInput");
+		    var confirmationButton = document.getElementById("confirmationButton");
+		    var botonenviar = document.getElementById("startCountdown");
+		    var emailEnvio = document.getElementById("id-emailEnvio");
+		    var ingresoCorreo = document.getElementById("id-ingresoCorreo");
+			var span=document.getElementById("basic-addon2");
+		    // Muestra el contador y comienza el temporizador
+		    countdownElement.style.display = "block";
+		    
+		    var seconds = 5;
+		    var countdownInterval = setInterval(function () {
+		        countdownElement.innerText = seconds;
+		        seconds--;
+		
+		        if (seconds < 0) {
+		            clearInterval(countdownInterval);
+		            countdownElement.style.display = "none";
+		            ingresoCorreo.style.display = "none";
+		            emailEnvio.style.display = "none";
+		            botonenviar.style.display = "none";
+		            span.style.display = "none";
+		            confirmationLabel.style.display = "block";
+		            confirmationInput.style.display = "block";
+		            confirmationButton.style.display = "block";
+		        }
+		    }, 1000);
+		});
+	</script>
+	
+	<%--AJAX PARA EL ENVIO DE CORREOS ELECTRONICOS--%>
+	<script>
+		<%--ENVIA EL CODIGO AL EMAIL--%>
+		document.getElementById("startCountdown").addEventListener("click", function() {
+		    var correo = document.getElementById("id-ingresoCorreo").value;
+			$.ajax({
+			    type: "POST",
+			    url: "ServletDonacionEmail",
+			    data: {
+			    	tipo:"tipo1",
+			        correo: correo
+			    },
+			    success: function(response) {   
+			    },
+			    error: function() {
+			    }
+			});
+		})
+		
+		<%--VERIFICA SI EL CODIGO ES VALIDO--%>
+		document.getElementById("confirmationButton").addEventListener("click", function() {
+			var codigo =document.getElementById("confirmationInput").value;
+			$.ajax({
+				type: "POST",
+			    url: "ServletDonacionEmail",
+			    data: {
+			    	tipo:"tipo2",
+			    	codigo: codigo
+			    },
+			    success: function(response) {
+				       if(response==="valido"){
+				    	// Obtén el elemento con la clase "loader"
+				    	   const loaderElement = document.querySelector(".loader");
+		
+				    	   // Quita la clase "desaparecer" del elemento
+				    	   loaderElement.classList.remove("desaparecer");
+		
+				       }else{
+				    	   console.log("invalido");
+				       }
+				    },
+				 error: function() {
+				 }
+			});
+		})
+	</script><%--FIN DE LA SCRIPT DEL AJAX --%>
+
+	<%--No se para que sirve, acciones de pestañas?
+	<script>
+	   const tabs = document.querySelectorAll('.nav-link[data-bs-toggle="tab"]');
+	
+	   tabs.forEach(tab => {
+	      tab.addEventListener('click', () => {
+	         tabs.forEach(t => t.classList.remove('active'));
+	         tab.classList.add('active');
+	      });
+	   });
+	</script> --%>
+	
+
 </body>
+
 </html>

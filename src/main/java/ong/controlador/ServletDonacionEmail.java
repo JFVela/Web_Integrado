@@ -34,6 +34,7 @@ public class ServletDonacionEmail extends HttpServlet {
 		
 		response.setContentType("text/plain");
 		PrintWriter out = response.getWriter();
+		
 		if(campoConfirmacion.equals(codigo)) {
 			out.print("valido");
 		}else {

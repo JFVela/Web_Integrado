@@ -17,8 +17,8 @@ public class JavaEmail {
 		pr.put("mail.smtp.host", "smtp.gmail.com");
 		pr.put("mail.smtp.port", "587");
 		
-		String miCuenta="diego.bautistamlp@gmail.com";
-		String contraseña="ccc";
+		String miCuenta="renovandovidas.ong@gmail.com";
+		String contraseña="hazuhttuuyzxtlkd";
 		Session session=Session.getInstance(pr,new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -35,8 +35,25 @@ public class JavaEmail {
 			Message message=new MimeMessage(session);
 			message.setFrom(new InternetAddress(miCuenta));
 			message.setRecipient(Message.RecipientType.TO, new InternetAddress(receptor));
-			message.setSubject("dede");
-			message.setText(mensaje);
+			message.setSubject("Código de Verificación para Donación");
+			String htmlcode="<section style=\"background-color: #7ca1b1;align-items: center;color: white;padding: 5px;;\">\r\n"
+					+ "        <div style=\"text-align: center; font-size: 18px;\">\r\n"
+					+ "            <p style=\"color: white;\">Gracias por tu interés en apoyar nuestra causa. Hemos generado un código de verificación exclusivo para que\r\n"
+					+ "                puedas completar tu donación. A continuación, encontrarás el código que necesitas:</p>\r\n"
+					+ "           <h1 style=\"color: white;\">Código de Verificación: "+mensaje+"</h1>\r\n"
+					+ "           <img src=\"https://live.staticflickr.com/65535/53309313117_b757d25132_c.jpg\" width=\"300\"\r\n"
+					+ "             height=\"300\" alt=\"Quiero-donar-foto-lateral-Dona\"/>\r\n"
+					+ "        </div>        \r\n"
+					+ "        <div style=\"font-size: 18px;color: white;\">\r\n"
+					+ "            <p>Gracias por tu generosidad y por ser parte de nuestro esfuerzo. Tu donación hará una diferencia real en nuestras causas.</p>\r\n"
+					+ "\r\n"
+					+ "            <p>Atentamente,<br>\r\n"
+					+ "                Equipo de Desarrollo<br>\r\n"
+					+ "                Renovando Vidas<br>\r\n"
+					+ "            </p>\r\n"
+					+ "        </div>\r\n"
+					+ "    </section>";
+			message.setContent(htmlcode,"text/html");
 			return message;
 		}catch(Exception ex) {
 			Logger.getLogger(JavaEmail.class.getName()).log(Level.SEVERE,null,ex);
