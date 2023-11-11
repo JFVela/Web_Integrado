@@ -188,7 +188,6 @@ fieldset, legend {
 	<script>
     // Cargar datos al cargar la página
     cargarRol();
-    cargarEnlaces();
     cargarAsignarEnlace();
     var rolesData = {};
 
@@ -204,39 +203,50 @@ fieldset, legend {
         });
     });
 }
+    
+   $(document).ready(function() {
+	    // Inicializar la tabla DataTable para los enlaces
+	    $('#tableEnlaces').DataTable({
+	        "language": {
+	            "lengthMenu": "Mostrar _MENU_ registros por página",
+	            "zeroRecords": "No se encontraron registros",
+	            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+	            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+	            "infoFiltered": "(filtrados de un total de _MAX_ registros)",
+	            "search": "Buscar:",
+	            "paginate": {
+	                "first": "Primero",
+	                "previous": "Anterior",
+	                "next": "Siguiente",
+	                "last": "Último"
+	            }
+	        }
+	    });
+
+	    // Agregar evento de cambio al select
+	    $("#idRol").change(function() {
+	        var idRolSeleccionado = $(this).val();
+	        console.log(idRolSeleccionado);
+	        cargarEnlaces(idRolSeleccionado);
+	    });
+	});
 
     // Cargar datos de enlaces
-    function cargarEnlaces() {
-        $.get("ServletEnlaceJSON", function(response) {
-            let botonAgregar = "<button type='button' class='btn btn-warning btn-adicionar'><i class='fa-solid fa-plus'></i></button>";
-            $.each(response, function(index, item) {
-                $("#tableEnlaces").append("<tr><td>" + item.id_enlace + "</td>" +
-                    "<td>" + item.descripcion + "</td>" +
-                    "<td>" + item.ruta + "</td>" +
-                    "<td>" + botonAgregar + "</td></tr>");
-            });
-
-            // Inicializar la tabla DataTable
-            $(document).ready(function() {
-                $('#tableEnlaces').DataTable({
-                    "language": {
-                        "lengthMenu": "Mostrar _MENU_ registros por página",
-                        "zeroRecords": "No se encontraron registros",
-                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                        "infoFiltered": "(filtrados de un total de _MAX_ registros)",
-                        "search": "Buscar:",
-                        "paginate": {
-                            "first": "Primero",
-                            "previous": "Anterior",
-                            "next": "Siguiente",
-                            "last": "Último"
-                        }
-                    }
-                });
-            });
+    function cargarEnlaces(idRolSeleccionado) {
+    $.get("ServletEnlaceJSON", { idRolSeleccionado: idRolSeleccionado }, function(response) {
+        let botonAgregar = "<button type='button' class='btn btn-warning btn-adicionar'><i class='fa-solid fa-plus'></i></button>";
+        // Limpiar la tabla antes de agregar nuevos datos
+        $('#tableEnlaces').DataTable().clear().draw();
+        $.each(response, function(index, item) {
+            $('#tableEnlaces').DataTable().row.add([
+                item.id_enlace,
+                item.descripcion,
+                item.ruta,
+                botonAgregar
+            ]).draw(false);
         });
-    }
+    });
+}
 
     // Cargar datos de asignación de enlaces
     function cargarAsignarEnlace() {

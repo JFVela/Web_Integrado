@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import Intranet.dao.MySQL_Enlace;
 import Intranet.entidad.Enlace;
 
+// Importa las clases necesarias
+
 @WebServlet("/ServletEnlaceJSON")
 public class ServletEnlaceJSON extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,12 +27,19 @@ public class ServletEnlaceJSON extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<Enlace> lista = new MySQL_Enlace().findAll();
+		// Obtiene el ID del rol seleccionado desde la interfaz
+		String idRolSeleccionado = request.getParameter("idRolSeleccionado");
+
+		// Realiza la consulta con el nuevo método
+		List<Enlace> lista = new MySQL_Enlace().findAll(idRolSeleccionado);
+
+		// Convierte la lista a JSON
 		Gson gson = new Gson();
 		String json = gson.toJson(lista);
+
+		// Configura la respuesta
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter pw = response.getWriter();
 		pw.print(json);
 	}
-
 }

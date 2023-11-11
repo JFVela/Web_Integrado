@@ -13,7 +13,7 @@ import Utils.MySQL_Conexion;
 public class MySQL_Enlace implements interfazEnlace {
 
 	@Override
-	public List<Enlace> findAll() {
+	public List<Enlace> findAll(String rol_selecionado) {
 		List<Enlace> lista = new ArrayList<Enlace>();
 		Enlace enlace;
 		Connection cn = null;
@@ -21,8 +21,10 @@ public class MySQL_Enlace implements interfazEnlace {
 		ResultSet rs = null;
 		try {
 			cn = new MySQL_Conexion().getConnection();
-			String sql = "SELECT *FROM enlace";
+			String sql = "SELECT * FROM enlace " + "WHERE id_enlace NOT IN (" + "  SELECT enlace_id_enlace "
+					+ "  FROM roles_has_enlace " + "  WHERE roles_id_rol = ?" + ")";
 			pstm = cn.prepareStatement(sql);
+			pstm.setString(1, rol_selecionado);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				enlace = new Enlace();
@@ -31,7 +33,6 @@ public class MySQL_Enlace implements interfazEnlace {
 				enlace.setRuta(rs.getNString(3));
 				lista.add(enlace);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -4,9 +4,18 @@ public class Enlace {
 	private int id_enlace;
 	private String descripcion;
 	private String ruta;
+	private String rol_selecionado;
 
 	public int getId_enlace() {
 		return id_enlace;
+	}
+
+	public String getRol_selecionado() {
+		return rol_selecionado;
+	}
+
+	public void setRol_selecionado(String rol_selecionado) {
+		this.rol_selecionado = rol_selecionado;
 	}
 
 	public void setId_enlace(int id_enlace) {
