@@ -59,7 +59,6 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter pw = response.getWriter();
 		pw.print(new Gson().toJson(asignacion));
-
 	}
 
 	private void grabar(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -71,9 +70,7 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 		} else {
 			request.getSession().setAttribute("MENSAJE", "Error al guardar la asignación");
 		}
-
 		response.sendRedirect("DesignarEnlace.jsp"); // Redirige a la página deseada
-
 	}
 
 	private void tabla(HttpServletRequest request, HttpServletResponse response) throws IOException {
