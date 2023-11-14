@@ -1768,8 +1768,8 @@ body.shimeji-select-ie {
 	        				},
 	        				between:{
         		 				min:1,
-        		 				max:300,
-        		 				message:'Campo hijos solo números rango 1 - 300'
+        		 				max:9000,
+        		 				message:'Campo MONTO acepta solo números rango 1 - 9000'
         		 			}
         		 			
 	        		    }
