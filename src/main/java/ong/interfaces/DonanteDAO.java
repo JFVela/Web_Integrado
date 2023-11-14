@@ -12,4 +12,5 @@ public interface DonanteDAO {
 	int deleteById(int cod);
 	boolean verificarDNI(int dni);
 	boolean verificarDonacion(int dni);
+	int obtenerDNI(String correo);
 }

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
 import ong.dao.MySqlTarjetaDAO;
@@ -54,47 +55,37 @@ public class ServletDonante extends HttpServlet {
 		boolean respuesta=verficarSaldo(request,response);
 		
 		if(respuesta) {
-			String dni,nom, ma, pa, dis, direc, cel, email,local, des,camp,tipdon,tpmon,monto,numcuen;
+			String email,camp,tipdon,tpmon,monto,numcuen;
 			int estado=0,estado2=0;
-			dni=request.getParameter("dni");
-			nom = request.getParameter("nombre");
-			ma = request.getParameter("materno");
-			pa = request.getParameter("paterno");
-			dis = request.getParameter("distrito");
-			direc = request.getParameter("direccion");
-			cel = request.getParameter("celular");
+			
+			HttpSession session = request.getSession(false);
+
+			//recuperamos el correo ingresado
+			String correo = (String) session.getAttribute("codigo");
+			int dniObtenido=new MySqlDonanteDAO().obtenerDNI(correo);
+
 			email = request.getParameter("email");
 			camp=request.getParameter("camp");
 			tipdon=request.getParameter("tdon");
 			tpmon=request.getParameter("tmone");
 			monto=request.getParameter("monto");
 			numcuen=request.getParameter("numcuen");
-			
-			Donante bean = new Donante();
-			bean.setDni(Integer.parseInt(dni));
-			bean.setNombre(nom);
-			bean.setMaterno(ma);
-			bean.setPaterno(pa);
-			bean.setDistrito(dis);
-			bean.setCelular(Integer.parseInt(cel));
-			bean.setDireccion(direc);
-			bean.setEmail(email);
-			
+					
 			DonacionVirtual bean2=new DonacionVirtual();
-			bean2.setDniDonante(Integer.parseInt(dni));
+			bean2.setDniDonante(dniObtenido);
 			bean2.setIdCampaña(Integer.parseInt(camp));
 			bean2.setIdMoneda(Integer.parseInt(tpmon));
 			bean2.setMonto(Double.parseDouble(monto));
 			bean2.setTipoDonacion(Integer.parseInt(tipdon));
 			bean2.setNumCuenta(Integer.parseInt(numcuen));
 			
-			boolean veri= new MySqlDonanteDAO().verificarDNI(Integer.parseInt(dni));
+			boolean veri= new MySqlDonanteDAO().verificarDNI(dniObtenido);
 			if(veri) {
 				 estado2 = new MySqlDonacionVirtualDAO().save(bean2);
-			}else {
+			}/*else {
 				 estado = new MySqlDonanteDAO().insertar(bean);
 				 estado2 = new MySqlDonacionVirtualDAO().save(bean2);
-			}
+			}*/
 			
 			//Actualiza la tarjeta
 			Tarjeta bean3=new Tarjeta();
@@ -179,7 +170,7 @@ public class ServletDonante extends HttpServlet {
 	}
 
 	private void insertarDonanteMo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String dni,nom, ma, pa, dis, direc, cel, email;
+		String dni,nom, ma, pa, dis, direc, cel, email,tipoMensaje;
 		
 		dni=request.getParameter("dni");
 		nom = request.getParameter("nombre");
@@ -201,10 +192,10 @@ public class ServletDonante extends HttpServlet {
 		
 			int estado = new MySqlDonanteDAO().insertar(bean);		
 			if(estado==1) {
-				request.getSession().setAttribute("MENSAJE","Exitosa");
+				request.getSession().setAttribute("MENSAJE","donante");
 
 			}else {
-				request.getSession().setAttribute("MENSAJE","Fallida");
+				request.getSession().setAttribute("MENSAJE","error");
 			}
 		
 			response.sendRedirect("Donacion.jsp");
@@ -219,42 +210,30 @@ public class ServletDonante extends HttpServlet {
 
 
 	private void insertarDonante(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String dni,nom, ma, pa, dis, direc, cel, email,local, des;
+		String email,local, des;
 		int estado=0,estado1=0;
+		HttpSession session = request.getSession(false);
+
+		//recuperamos el correo ingresado
+		String correo = (String) session.getAttribute("codigo");
 		
-		dni=request.getParameter("dni");
-		nom = request.getParameter("nombre");
-		ma = request.getParameter("materno");
-		pa = request.getParameter("paterno");
-		dis = request.getParameter("distrito");
-		direc = request.getParameter("direccion");
-		cel = request.getParameter("celular");
-		email = request.getParameter("email");
 		local = request.getParameter("locacion");
 		des = request.getParameter("descrip");
-		Donante bean = new Donante();
-		bean.setDni(Integer.parseInt(dni));
-		bean.setNombre(nom);
-		bean.setMaterno(ma);
-		bean.setPaterno(pa);
-		bean.setDistrito(dis);;
-		bean.setCelular(Integer.parseInt(cel));
-		bean.setDireccion(direc);
-		bean.setEmail(email);
+		int dniObtenido=new MySqlDonanteDAO().obtenerDNI(correo);
 		
 		DonacionFisica bean1 = new DonacionFisica();
-		bean1.setDniDonantes(Integer.parseInt(dni));
+		bean1.setDniDonantes(dniObtenido);
 		bean1.setIdLocal(Integer.parseInt(local));
 		bean1.setDescripcion(des);
 		bean1.setEstado(false);
 		
-		boolean veri= new MySqlDonanteDAO().verificarDNI(Integer.parseInt(dni));
+		boolean veri= new MySqlDonanteDAO().verificarDNI(dniObtenido);
 		if(veri==true) {
 			 estado1 = new MySqlDonacionFiscaDAO().save(bean1);
-		}else {
+		}/*else {
 			 estado = new MySqlDonanteDAO().insertar(bean);
 			 estado1 = new MySqlDonacionFiscaDAO().save(bean1);
-		}
+		}*/
 			if(estado1==1 || (estado==1 && estado1==1)) {
 				request.getSession().setAttribute("MENSAJE","Donacion Exitosa");
 			}else {

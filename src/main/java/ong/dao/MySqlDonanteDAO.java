@@ -275,4 +275,43 @@ public class MySqlDonanteDAO implements DonanteDAO {
 		}
 	}
 
+
+
+	@Override
+	public int obtenerDNI(String correo) {
+		Donante bean=null;
+		Connection cn=null;
+		PreparedStatement pstm=null;
+		ResultSet rs=null;
+		int dni=0;
+		try {
+			//1.Obtener conexión 
+			cn=new MySqlConectar().getConectar();
+			//2. sentencia SQL
+			String sql="select dni from ong_web.donantes where email=?";
+			//3. crear objeto "pstm" y enviar la variable "sql"
+			pstm=cn.prepareStatement(sql); 
+			//4. parámetros
+			pstm.setString(1,correo);
+			//5. ejecutar pstm
+			rs=pstm.executeQuery();
+			//6. bucle
+			if(rs.next()){
+				dni=rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				if(rs!=null) rs.close();
+				if(pstm!=null) pstm.close();
+				if(cn!=null) cn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return dni;
+	}
+
 }
