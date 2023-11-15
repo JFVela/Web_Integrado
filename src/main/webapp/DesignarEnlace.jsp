@@ -206,20 +206,6 @@ fieldset, legend {
 	<script
 		src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
-	<!-- validar si existe el atrubuto MENSAJE -->
-	<c:if test="${sessionScope.MENSAJE!=null}">
-		<script>
-			var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
-			toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
-				"timeOut" : "2000",
-				"positionClass " : " toast-top-right ",
-			});
-		</script>
-	</c:if>
-
-	<!-- eliminar atributo de tipo sesión MENSAJE -->
-	<c:remove var="MENSAJE" scope="session" />
-
 	<script>
     // Cargar datos al cargar la página
     cargarRol();
@@ -355,33 +341,11 @@ fieldset, legend {
 	    });
 	}
 
-        
-	// Manejar evento al hacer clic en un botón de eliminación en la lista
-	$(document).on("click", ".btn-eliminar", function() {
-	    var fila = $(this).closest("tr");
-	    var idRol = fila.find("td:eq(0)").text();
-	    var idEnlace = fila.find("td:eq(2)").text();
-	    quitarDeLista(idRol, idEnlace);
-	    fila.remove();
+    
+    //Quitar Enlace del Rol
+    $(document).on("click", ".btn-eliminar", function() {
+    $(this).closest('tr').remove();
 	});
-
-	function quitarDeLista(idRol, idEnlace) {
-	    // Obtener la lista actualizada del servidor
-	    $.get("ServletAsignarEnlaceJSON?accion=LISTAR", function(response) {
-	        // Actualizar la variable lista en la sesión
-	        lista = response;
-	        
-	        // Filtrar la lista para eliminar el elemento correspondiente
-	        lista = lista.filter(function(asignacion) {
-	            return asignacion.roles_id_rol !== parseInt(idRol) || asignacion.enlace_id_enlace !== parseInt(idEnlace);
-	        });
-	        
-	        // Actualizar la variable lista en la sesión
-	        $.post("ServletAsignarEnlaceJSON?accion=GRABAR", { data: JSON.stringify(lista) }, function(response) {
-	            // Puedes manejar la respuesta del servidor si es necesario
-	        });
-	    });
-	}
 
 
     // Manejar evento al hacer clic en un botón de adición

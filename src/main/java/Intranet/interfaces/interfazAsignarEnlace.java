@@ -9,6 +9,4 @@ public interface interfazAsignarEnlace {
 	int saveAsignaciones(List<Asignar_Enlace> asignaciones);
 
 	void deleteAsignacion(int idRol, int idEnlace);
-
-	boolean existeAsignacion(int idRol, int idEnlace);
 }

@@ -64,10 +64,6 @@ public class MySQL_AsignarEnlace implements interfazAsignarEnlace {
 
 	@Override
 	public int saveAsignaciones(List<Asignar_Enlace> asignaciones) {
-
-		if (asignaciones == null) {
-			return -1;
-		}
 		int salida = -1;
 		Connection cn = null;
 		PreparedStatement pstm = null;
@@ -80,21 +76,15 @@ public class MySQL_AsignarEnlace implements interfazAsignarEnlace {
 			pstm = cn.prepareStatement(sqlAsignacion);
 
 			for (Asignar_Enlace asignacion : asignaciones) {
-				if (!existeAsignacion(asignacion.getRoles_id_rol(), asignacion.getEnlace_id_enlace())) {
+				pstm.setInt(1, asignacion.getRoles_id_rol());
+				pstm.setInt(2, asignacion.getEnlace_id_enlace());
+				int result = pstm.executeUpdate();
 
-					pstm.setInt(1, asignacion.getRoles_id_rol());
-					pstm.setInt(2, asignacion.getEnlace_id_enlace());
-					int result = pstm.executeUpdate();
-
-					if (result > 0) {
-						salida++;
-					} else {
-						salida = -1;
-						break;
-					}
+				if (result > 0) {
+					salida++;
 				} else {
-					System.out.println("La asignación ya existe: " + asignacion);
-
+					salida = -1;
+					break;
 				}
 			}
 
@@ -155,41 +145,6 @@ public class MySQL_AsignarEnlace implements interfazAsignarEnlace {
 					cn.close();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	@Override
-	public boolean existeAsignacion(int idRol, int idEnlace) {
-		Connection cn = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-
-		try {
-			cn = new MySQL_Conexion().getConnection();
-			String sql = "SELECT * FROM roles_has_enlace WHERE roles_id_rol = ? AND enlace_id_enlace = ?";
-			pstm = cn.prepareStatement(sql);
-			pstm.setInt(1, idRol);
-			pstm.setInt(2, idEnlace);
-			rs = pstm.executeQuery();
-			return rs.next(); // Devuelve true si encuentra al menos una asignación con esos valores
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false; // En caso de error, asumimos que la asignación no existe
-		} finally {
-			// Cerrar los recursos
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstm != null) {
-					pstm.close();
-				}
-				if (cn != null) {
-					cn.close();
-				}
-			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
