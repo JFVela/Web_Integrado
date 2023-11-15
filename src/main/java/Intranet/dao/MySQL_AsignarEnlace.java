@@ -84,7 +84,7 @@ public class MySQL_AsignarEnlace implements interfazAsignarEnlace {
 					salida++;
 				} else {
 					salida = -1;
-					break;
+					break; 
 				}
 			}
 
@@ -109,45 +109,6 @@ public class MySQL_AsignarEnlace implements interfazAsignarEnlace {
 			}
 		}
 		return salida;
-	}
-
-	@Override
-	public void deleteAsignacion(int idRol, int idEnlace) {
-		Connection cn = null;
-		PreparedStatement pstm = null;
-
-		try {
-			// Obtener la conexión a la base de datos
-			cn = new MySQL_Conexion().getConnection();
-
-			// Sentencia SQL para eliminar la asignación por IDs de roles y enlaces
-			String sql = "DELETE FROM roles_has_enlace WHERE roles_id_rol = ? AND enlace_id_enlace = ?";
-
-			// Crear la declaración preparada
-			pstm = cn.prepareStatement(sql);
-
-			// Establecer los valores de los parámetros
-			pstm.setInt(1, idRol);
-			pstm.setInt(2, idEnlace);
-
-			// Ejecutar la sentencia SQL de eliminación
-			pstm.executeUpdate();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			// Cerrar los recursos en un bloque finally
-			try {
-				if (pstm != null) {
-					pstm.close();
-				}
-				if (cn != null) {
-					cn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 }

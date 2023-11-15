@@ -35,31 +35,9 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 			listar(request, response);
 		} else if (tipo.equals("GRABAR")) {
 			grabar(request, response);
-		} else if (tipo.equals("QUITAR")) {
-			quitar(request, response);
 		} else if (tipo.equals("TABLA")) {
 			tabla(request, response);
-		} else if (tipo.equals("ELIMINAR")) {
-			eliminar(request, response);
 		}
-	}
-
-	private void quitar(HttpServletRequest request, HttpServletResponse response) {
-		String idRol = request.getParameter("ROL");
-		String idEnlace = request.getParameter("ENLACE");		
-	}
-
-	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String idRol = request.getParameter("ROL");
-		String idEnlace = request.getParameter("ENLACE");
-
-		// Lógica para eliminar la asignación por IDs de roles y enlaces
-		MySQL_AsignarEnlace asignarEnlaceDAO = new MySQL_AsignarEnlace();
-		asignarEnlaceDAO.deleteAsignacion(Integer.parseInt(idRol), Integer.parseInt(idEnlace));
-
-		// Devolver la lista actualizada después de la eliminación
-		listar(request, response);
-		response.sendRedirect("DesignarEnlace.jsp");
 	}
 
 	private void adicionar(HttpServletRequest request, HttpServletResponse response) throws IOException {
