@@ -44,9 +44,26 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 		}
 	}
 
-	private void quitar(HttpServletRequest request, HttpServletResponse response) {
+	private void quitar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String idRol = request.getParameter("ROL");
-		String idEnlace = request.getParameter("ENLACE");		
+		String idEnlace = request.getParameter("ENLACE");
+		quitarDeListaEnServidor(idRol, idEnlace, request);
+		listar(request, response);
+
+	}
+
+	private void quitarDeListaEnServidor(String idRol, String idEnlace, HttpServletRequest request) {
+		List<Asignar_Enlace> lista = (List<Asignar_Enlace>) request.getSession().getAttribute("carrito");
+
+		System.out.println("Antes de eliminar - Lista en servidor: " + lista);
+
+		lista.removeIf(asignacion -> asignacion.getRoles_id_rol() == Integer.parseInt(idRol)
+				&& asignacion.getEnlace_id_enlace() == Integer.parseInt(idEnlace));
+
+		System.out.println("Después de eliminar - Lista en servidor: " + lista);
+
+		request.getSession().setAttribute("carrito", lista);
+		new MySQL_AsignarEnlace().saveAsignaciones(lista);
 	}
 
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -86,11 +103,15 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 	private void grabar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		List<Asignar_Enlace> datos = (List<Asignar_Enlace>) request.getSession().getAttribute("carrito");
 		int resultado = new MySQL_AsignarEnlace().saveAsignaciones(datos);
+		String tipoMensaje = "error";
 		if (resultado >= 0) {
 			datos.clear();
+			tipoMensaje = "success";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 			request.getSession().setAttribute("MENSAJE", "Asignación guardada");
 		} else {
-			request.getSession().setAttribute("MENSAJE", "Error al guardar la asignación");
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE", "Error, No hizo ninguna Asignación");
 		}
 		response.sendRedirect("DesignarEnlace.jsp"); // Redirige a la página deseada
 	}
@@ -105,7 +126,8 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 	}
 
 	private void listar(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		List<Asignar_Enlace> lista = (List<Asignar_Enlace>) request.getSession().getAttribute("carrito");
+		// Obtiene datos de la base de datos antes de enviar la respuesta
+		List<Asignar_Enlace> lista = new MySQL_AsignarEnlace().findAll();
 		Gson gson = new Gson();
 		String json = gson.toJson(lista);
 		response.setContentType("application/json;charset=UTF-8");
