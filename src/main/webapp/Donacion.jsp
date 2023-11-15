@@ -39,14 +39,19 @@
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <title>Donacion</title>
 
 <%--ESTILOS --%>
 <style>
+.navbar-nav .nav-link {
+	transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+	color: red;
+}
+
 body.shimeji-pinned iframe {
 	pointer-events: none;
 }
@@ -227,19 +232,10 @@ body.shimeji-select-ie {
 	animation: spin 2s linear infinite;
 }
 
-@
-keyframes spin { 0% {
+@keyframes spin { 0% {
 	transform: rotate(0deg);
 }
-100
-%
-{
-transform
-:
-rotate(
-360deg
-);
-}
+	100%{transform:rotate(360deg);}
 }
 </style>
 </head>
@@ -317,24 +313,25 @@ rotate(
 						<div class="linea-vertical" style="margin-top: 15px;"></div>
 						<div class="col">
 							<div class="col-12 p-4">
-								
 								<div class="desaparecer" id="email-correo" >
 								  <label id="id-emailEnvio" >Correo Electrónico</label>
-								  <div class="input-group m-2">
-								  	<input type="text" class="form-control" id="id-ingresoCorreo" 
-									  placeholder="nombre del correo" aria-label="Recipient's username" 
-									  aria-describedby="basic-addon2">
-									  <span class="input-group-text" id="basic-addon2">@gmail.com</span>
-								  </div>
-									<button id="startCountdown" type="submit"
-										class="btn btn-outline-success">Enviar</button>
-									<div id="countdown" style="display: none;"></div>
+								  <form id="formInputCorreo">
+									  <div class="input-group m-2 ">
+									  	 <span class="input-group-text" id="basic-addon1">@</span>
+ 										 <input type="text" class="form-control"
+ 										  placeholder="@.com" aria-label="Username" 
+ 										  id="id-ingresoCorreo" aria-describedby="basic-addon1" name="ingresoCorreo">
+									  </div>
+									      <div id="countdown"></div>
+									  
+									  <div id=msg-error></div>
+										<button id="startCountdown"	class="btn btn-outline-success">Enviar</button>
+								</form>
 								</div>
 								
-								
-
 								<label class="mx-auto" id="confirmationLabel"
-									style="display: none">Código de confirmación</label> <input
+									style="display: none">Código de confirmación</label>
+									<input
 									class="mx-auto" id="confirmationInput" style="display: none">
 								<button class="mx-auto" id="confirmationButton"
 									style="display: none" type="button"
@@ -403,13 +400,13 @@ rotate(
 											</select>
 										</div>
 										<div class="form-group spa">
-											<label for="distrito" class="label-form text-secondary">Distrito</label>
-											<select name="distrito" class="form-control distrito-label"
-												id="id-distrito" required>
-												<option value=" ">[Seleccione un distrito]</option>
-											</select>
+												<label for="distrito" class="label-form text-secondary">Distrito</label>
+												<select name="distrito" class="form-control distrito-label"
+													id="id-distrito" required>
+													<option value=" ">[Seleccione un distrito]</option>
+												</select>
+											</div>
 										</div>
-									</div>
 									<div class="d-flex">
 										<div class="form-group">
 											<label for="exampleInputPassword1" class="form-label">Email</label>
@@ -656,7 +653,7 @@ rotate(
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary btn-cerrar3"
-										data-bs-dismiss="modal">Cerrar</button>
+										>Cerrar</button>
 									<button id="donarexterno1" class="btn btn-primary">Donar</button>
 								</div>
 							</div>
@@ -1236,6 +1233,10 @@ rotate(
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 			crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	
 		<!-- Libreria para validar (Bootstrap Validator) -->
 		<script
@@ -1260,7 +1261,7 @@ rotate(
 		var navBar = document.querySelector('.js-nav-bar');
 		if (typeof navBar === 'object')
 			document.documentElement.style.setProperty('--nav-height',
-					navBar.offsetHeight +'px';)
+					navBar.offsetHeight + 'px');
 	</script>
 	
 	<%--Carrusel responsivo --%>
@@ -1299,6 +1300,20 @@ rotate(
 		            Swal.fire({
 		                title: "Donación Fallida",
 		                text: "Tu donación ha fallado debido a saldo insuficiente. Por favor, verifica tu saldo e inténtalo de nuevo.",
+		                icon: "error",
+		                confirmButtonText: "Cerrar"
+		            });
+		        }else if (mensaje.includes("donante")) {
+		            Swal.fire({
+		                title: "Registro Existoso",
+		                text: "Has sido registrado exitosamente.",
+		                icon: "success",
+		                confirmButtonText: "Cerrar"
+		            });
+		        }else if (mensaje.includes("error")) {
+		            Swal.fire({
+		                title: "Registro Fallido",
+		                text: "Hubo un error en el proceso del registro",
 		                icon: "error",
 		                confirmButtonText: "Cerrar"
 		            });
@@ -1418,58 +1433,242 @@ rotate(
 		        					message:'Este campo es obligatorio'
 		        				}
 		        			} 
-	        		 },tipodedonao:{
-	        			 validators:{
-		        				notEmpty:{
-		        					message:'Este campo es obligatorio'
-		        				}
-		        			}
 	        		 },descrip:{
 	        			validators:{
 	        				notEmpty:{
 	        					message:'Este campo es obligatorio'
 	        				}
 	        			} 
-	        		},tdon:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Este campo es obligatorio'
-	        				}
-	        			}
-	        		},camp:{
-	        			validators:{
-	        				notEmpty:{
-	        					message:'Este campo es obligatorio'
-	        				}
-	        			}
-	        		},monto:{
-	        			validators: {
-	        		        notEmpty: {
-	        		            message: 'El campo monto es obligatorio'
-	        		        },
-	        		        greaterThan: {
-	        		            value: 0,
-	        		            inclusive: false,
-	        		            message: 'El monto debe ser un número positivo'
-	        		        },regexp: {
-	        				      regexp: /^[0-9]+$/, // Expresión regular para aceptar solo números
-	        				      message: 'Este campo debe contener solo números'
-	        				},
-	        				between:{
-        		 				min:1,
-        		 				max:300,
-        		 				message:'Campo hijos solo números rango 1 - 300'
-        		 			}
-        		 			
-	        		    }
 	        		}
 	        	 }	        	 
 	        });   
 				
 	    });
-	</script><%--FIN DE LA VALIDACIÓN CON EL PLUGIN --%>
+	    </script>
+	    
+	    <script>
+    $(document).ready(function() {
+        $('#formRegistro').bootstrapValidator({
+            fields: {
+                dni: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Este campo es obligatorio'
+                        },
+                        regexp: {
+                            regexp: /^[0-9]+$/, // Expresión regular para aceptar solo números
+                            message: 'Este campo debe contener solo números'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 9,
+                            message: 'Rango de 6-9'
+                        }
+                    }
+                },
+                nombre: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Campo nombre es obligatorio'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,20}$/,
+                            message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
+                        }
+                    }
+                },
+                paterno: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Campo paterno es obligatorio'
+                        }
+                    }
+                },
+                materno: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Campo materno es obligatorio'
+                        }
+                    }
+                },
+                celular: {
+                    validators: {
+                        notEmpty: {
+                            message: 'El campo celular es obligatorio'
+                        },
+                        stringLength: {
+                            min: 9,
+                            max: 9,
+                            message: 'El número de celular debe tener exactamente 9 dígitos'
+                        },
+                        regexp: {
+                            regexp: /^9[0-9]{8}$/, // Comienza con 9 seguido de 8 dígitos
+                            message: 'El número de celular debe comenzar con el primer dígito "9" y contener 9 dígitos en total'
+                        },
+                        callback: {
+                            message: 'El número de celular no puede ser negativo',
+                            callback: function(value, validator, $field) {
+                                // Convierte el valor a un número entero
+                                var celular = parseInt(value, 10);
+                                // Comprueba si el valor es negativo
+                                if (celular < 0) {
+                                    return false;
+                                }
+                                return true;
+                            }
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Campo email es obligatorio'
+                        },
+                        emailAddress: {
+                            message: 'El campo email debe contener una dirección de correo electrónico válida'
+                        }
+                    }
+                },
+                direccion: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Campo direccion es obligatorio'
+                        }
+                    }
+                },
+                departamento: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Campo ciudad es obligatorio'
+                        }
+                    }
+                },
+                distrito: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Campo ciudad es obligatorio'
+                        }
+                    }
+                },
+                provincia: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Campo ciudad es obligatorio'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+
+	<script>
+	jQuery(document).ready(function ($) {
+	    $('#id-ingresoCorreo').on('input', function () {
+	        // Limpia los mensajes de error
+	        clearErrorMessages();
+
+	        // Ejecuta la validación y la verificación de existencia del correo
+	        validateAndCheckEmail();
+	    });
+
+	    $('#formInputCorreo').validate({
+	        rules: {
+	            name: "required",
+	            ingresoCorreo: {
+	                required: true,
+	                email: true
+	            }
+	        },
+	        messages: {
+	            name: "Por favor, escriba su nombre",
+	            ingresoCorreo: {
+	                required: "Por favor, ingresa el correo electrónico",
+	                email: "Por favor, introduce un correo electrónico válido"
+	            }
+	        },
+	        errorPlacement: function (error, element) {
+	            error.insertAfter(element.closest('div'));
+	        },
+	        errorClass: "error", // La clase CSS que se añadirá a los elementos con errores
+	        submitHandler: function (form, event) {
+	            event.preventDefault(); // Evita la recarga de la página por defecto
+
+	            var emailObtenido = $("#id-ingresoCorreo").val().trim();
 	
-	<%--PLUGIN BOOTSTRAP VALIDATOR --%>
+	            // Verifica si el correo existe
+	            checkEmailExistence(emailObtenido, function (emailExistente) {
+	                if (emailExistente) {
+	                    // Si el correo existe, envía el formulario
+	                   enviarCorreo();
+	                   enviarCodigoCorreo();
+	                } else {
+	                    // Si el correo no existe, aplica estilos de error manualmente
+	                    $("#id-ingresoCorreo").addClass("error");
+	                    $("#msg-error").text("El correo ingresado no existe");
+	                    $("#msg-error").addClass("error");
+	                }
+	            });
+	        }
+
+	    });
+
+	    // Función para ejecutar la validación y la verificación de existencia del correo
+	    function validateAndCheckEmail() {
+	        // Obtiene el valor del campo de entrada de correo electrónico
+	        var emailValue = $("#id-ingresoCorreo").val().trim();
+
+	        // Ejecuta la validación del formulario solo si el campo tiene datos
+	        if (emailValue) {
+	            // Validación del formulario
+	            $('#formInputCorreo').validate().element("#id-ingresoCorreo");
+
+	            // Verifica la existencia del correo solo si el campo tiene datos y la validación es exitosa
+	            if ($('#formInputCorreo').valid()) {
+	                checkEmailExistence(emailValue, function (emailExistente) {
+	                    if (!emailExistente) {
+	                        // Si el correo no existe, muestra el mensaje de error
+	                        $("#id-ingresoCorreo").addClass("error");
+	                        $("#msg-error").text("El correo ingresado no existe");
+	                        $("#msg-error").addClass("error");
+	                    }
+	                });
+	            }
+	        }
+	    }
+
+	    // Función para limpiar los mensajes de error
+	    function clearErrorMessages() {
+	        $("#id-ingresoCorreo").removeClass("error");
+	        $("#msg-error").text("");
+	        $("#msg-error").removeClass("error");
+	    }
+
+	    function checkEmailExistence(email, callback) {
+	        // Tu función actual para verificar la existencia del correo
+	        $.get("ServletDonanteJSON", function (response) {
+	            var emailExistente = false;
+
+	            $.each(response, function (index, item) {
+	                var jsonEmail = item.email;
+	                if (email === jsonEmail) {
+	                    emailExistente = true;
+	                }
+	            });
+
+	            callback(emailExistente);
+	        });
+	    }
+	});
+
+	</script>
+
+
+
+
+
+
 	<script>    
 	    $(document).ready(function(){     
 	        $('#formDonante1').bootstrapValidator({      
@@ -1569,8 +1768,8 @@ rotate(
 	        				},
 	        				between:{
         		 				min:1,
-        		 				max:300,
-        		 				message:'Campo hijos solo números rango 1 - 300'
+        		 				max:9000,
+        		 				message:'Campo MONTO acepta solo números rango 1 - 9000'
         		 			}
         		 			
 	        		    }
@@ -1683,11 +1882,6 @@ rotate(
 	    const distritoSelect1 = document.getElementById('id-distrito');
 	    cargarDatosYManejarCambios(ciudadSelect1, provinciaSelect1, distritoSelect1);
 	
-	    // Llama a la función para el segundo formulario
-	    const ciudadSelect2 = document.getElementById('id-departamento-1');
-	    const provinciaSelect2 = document.getElementById('id-provincia-1');
-	    const distritoSelect2 = document.getElementById('id-distrito-1');
-	    cargarDatosYManejarCambios(ciudadSelect2, provinciaSelect2, distritoSelect2);
 	</script><%--FIN DE LA SCRIPT DEL CARGADO DE DATOS --%>
 	
 	<%--MUESTRA DATOS SEGÚN LAS OPCIONES--%>
@@ -1709,114 +1903,115 @@ rotate(
 		  });
 		});
 		
-		$(document).ready(function() {
-		    let botonOrigen = "";  
+	</script>
+	<script>
+	$(document).ready(function() {
+	    let botonOrigen = "";
 
-		    //clic en "Donar en Físico"
-		    $("#donar-fisico").click(function() {
-		        botonOrigen = "fisico";  
-		        $("#staticBackdrop").modal("show");
-		    });
+	    // Código para manejar el clic en "Donar en Físico"
+	    $("#donar-fisico").click(function() {
+	        botonOrigen = "fisico";
+	        $("#staticBackdrop").modal("show");
+	    });
 
-		    //clic en "Donar en Virtual"
-		    $("#donar-virtual").click(function() {
-		        botonOrigen = "virtual";  
-		        $("#staticBackdrop").modal("show");
-		    });
-		    
-		    $("#id-cerrar").click(function() {
-		        $("#staticBackdrop").modal("hide");
-		        if (botonOrigen === "fisico") {
-		            // Modal de donación física
-		            $("#donafisico").modal("show");
-		        } else if (botonOrigen === "virtual") {
-		            // Modal de donación virtual
-		            $("#donavirtual").modal("show");
-		        }
-		    });
-		});
+	    // Código para manejar el clic en "Donar en Virtual"
+	    $("#donar-virtual").click(function() {
+	        botonOrigen = "virtual";
+	        $("#staticBackdrop").modal("show");
+	    });
+
+	    // Función para manejar el clic en el botón de confirmación
+	    function handleConfirmationButtonClick() {
+	        var codigo = $("#confirmationInput").val();
+	        $.ajax({
+	            type: "POST",
+	            url: "ServletDonacionEmail",
+	            data: {
+	                tipo: "tipo2",
+	                codigo: codigo
+	            },
+	            success: function(response) {
+	                if (response === "valido") {
+	                    // Abrir el modal según el botón original presionado
+	                    if (botonOrigen === "fisico") {
+	                        $("#donafisico").modal("show");
+	                        $('#staticBackdrop').modal("hide");
+	                    } else if (botonOrigen === "virtual") {
+	                        $("#donavirtual").modal("show");
+	                        $('#staticBackdrop').modal("hide");
+	                    }
+	                } else {
+	                    console.log("invalido");
+	                }
+	            },
+	            error: function() {
+	                console.error("Error en la solicitud AJAX");
+	            }
+	        });
+	    }
+
+	    // Asociar el evento de clic al botón de confirmación
+	    $("#confirmationButton").click(handleConfirmationButtonClick);
+	});
+
 	</script>
 	
 	<%--ACCION DE OCULTAR CAMPOS Y MOSTRAR EL CONTADOR AL ENVIAR AL EMAIL --%>
 	<script>
-		//ACCION AL ENVIAR CODIGO AL CORREO ELECTRONICO
-		document.getElementById("startCountdown").addEventListener("click", function () {
-		    var countdownElement = document.getElementById("countdown");
-		    var confirmationLabel = document.getElementById("confirmationLabel");
-		    var confirmationInput = document.getElementById("confirmationInput");
-		    var confirmationButton = document.getElementById("confirmationButton");
-		    var botonenviar = document.getElementById("startCountdown");
-		    var emailEnvio = document.getElementById("id-emailEnvio");
-		    var ingresoCorreo = document.getElementById("id-ingresoCorreo");
-			var span=document.getElementById("basic-addon2");
-		    // Muestra el contador y comienza el temporizador
-		    countdownElement.style.display = "block";
-		    
-		    var seconds = 5;
-		    var countdownInterval = setInterval(function () {
-		        countdownElement.innerText = seconds;
-		        seconds--;
-		
-		        if (seconds < 0) {
-		            clearInterval(countdownInterval);
-		            countdownElement.style.display = "none";
-		            ingresoCorreo.style.display = "none";
-		            emailEnvio.style.display = "none";
-		            botonenviar.style.display = "none";
-		            span.style.display = "none";
-		            confirmationLabel.style.display = "block";
-		            confirmationInput.style.display = "block";
-		            confirmationButton.style.display = "block";
-		        }
-		    }, 1000);
-		});
-	</script>
+    function enviarCodigoCorreo() {
+        var countdownElement = document.getElementById("countdown");
+        var confirmationLabel = document.getElementById("confirmationLabel");
+        var confirmationInput = document.getElementById("confirmationInput");
+        var confirmationButton = document.getElementById("confirmationButton");
+        var botonenviar = document.getElementById("startCountdown");
+        var emailEnvio = document.getElementById("id-emailEnvio");
+        var ingresoCorreo = document.getElementById("id-ingresoCorreo");
+        var span = document.getElementById("basic-addon1");
+
+        // Muestra el contador y comienza el temporizador
+        countdownElement.style.display = "block";
+
+        var seconds = 5;
+        var countdownInterval = setInterval(function () {
+            countdownElement.innerText = seconds;
+            seconds--;
+
+            if (seconds < 0) {
+                clearInterval(countdownInterval);
+                countdownElement.style.display = "none";
+                ingresoCorreo.style.display = "none";
+                emailEnvio.style.display = "none";
+                botonenviar.style.display = "none";
+                span.style.display = "none";
+                confirmationLabel.style.display = "block";
+                confirmationInput.style.display = "block";
+                confirmationButton.style.display = "block";
+            }
+        }, 1000);
+    }
+</script>
+
 	
 	<%--AJAX PARA EL ENVIO DE CORREOS ELECTRONICOS--%>
 	<script>
 		<%--ENVIA EL CODIGO AL EMAIL--%>
-		document.getElementById("startCountdown").addEventListener("click", function() {
+		function enviarCorreo() {
 		    var correo = document.getElementById("id-ingresoCorreo").value;
-			$.ajax({
-			    type: "POST",
-			    url: "ServletDonacionEmail",
-			    data: {
-			    	tipo:"tipo1",
-			        correo: correo
-			    },
-			    success: function(response) {   
-			    },
-			    error: function() {
-			    }
-			});
-		})
-		
-		<%--VERIFICA SI EL CODIGO ES VALIDO--%>
-		document.getElementById("confirmationButton").addEventListener("click", function() {
-			var codigo =document.getElementById("confirmationInput").value;
-			$.ajax({
-				type: "POST",
-			    url: "ServletDonacionEmail",
-			    data: {
-			    	tipo:"tipo2",
-			    	codigo: codigo
-			    },
-			    success: function(response) {
-				       if(response==="valido"){
-				    	// Obtén el elemento con la clase "loader"
-				    	   const loaderElement = document.querySelector(".loader");
-		
-				    	   // Quita la clase "desaparecer" del elemento
-				    	   loaderElement.classList.remove("desaparecer");
-		
-				       }else{
-				    	   console.log("invalido");
-				       }
-				    },
-				 error: function() {
-				 }
-			});
-		})
+		    $.ajax({
+		        type: "POST",
+		        url: "ServletDonacionEmail",
+		        data: {
+		            tipo: "tipo1",
+		            correo: correo
+		        },
+		        success: function(response) {
+		            // Puedes manejar la respuesta aquí si es necesario
+		        },
+		        error: function() {
+		            // Puedes manejar el error aquí si es necesario
+		        }
+		    });
+		}
 	</script><%--FIN DE LA SCRIPT DEL AJAX --%>
 
 	<%--No se para que sirve, acciones de pestañas?

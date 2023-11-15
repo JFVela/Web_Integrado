@@ -420,8 +420,27 @@ $(document).on("click", ".btn-edit", function () {
 		        		            message: 'El campo email debe contener una dirección de correo electrónico válida'
 		        		        }
 		        			}
+	        		 },departamento:{
+	        			 validators:{
+		        				notEmpty:{
+		        					message:'Este campo es obligatorio'
+		        				},regexp:{
+		        					regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,20}$/,
+		        					 message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
+		        				}
+		        			}
 	        		 },
-	        		 ciudad:{
+	        		 provincia:{
+	        			 validators:{
+		        				notEmpty:{
+		        					message:'Este campo es obligatorio'
+		        				},regexp:{
+		        					regexp:/^[a-zA-Z\s\ñ\Ñ\á\é\í\ó\ú\Á\É\Í\Ó\Ú\.]{2,20}$/,
+		        					 message: 'Campo nombre valores errores(letras,espacios,vocales con tilde y.)'
+		        				}
+		        			}
+	        		 },
+	        		 distrito:{
 	        			 validators:{
 		        				notEmpty:{
 		        					message:'Este campo es obligatorio'

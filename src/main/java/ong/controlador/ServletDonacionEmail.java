@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ong.utils.JavaEmail;
 
@@ -45,7 +46,8 @@ public class ServletDonacionEmail extends HttpServlet {
 	private void enviarEmail(HttpServletRequest request, HttpServletResponse response) {
 		String receptor=request.getParameter("correo");
 		try {
-			
+			HttpSession ses=request.getSession(true);
+			ses.setAttribute("codigo", receptor);
 			JavaEmail.enviarMail(receptor,codigo);
 			
 		} catch (Exception e) {
