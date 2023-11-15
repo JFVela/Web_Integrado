@@ -284,15 +284,22 @@ fieldset, legend {
     }
 
     // Listar enlaces seleccionados
-    function listaEnlacesSeleccionados() {
-        let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button>";
-        $.get("ServletRequerimiento?accion=LISTAR", function(response) {
-            $.each(response, function(index, item) {
-                $("#tableAsignacionesRolesyEnlaces").append("<tr><td>" + item.ROL + "</td>" +
-                    "<td>" + item.nombreRol + "</td><td>" + item.ENLACE + "</td><td>" + item.nombreEnlace + "</td><td>" + botonEliminar + "</td></tr>");
-            });
-        });
-    }
+	function listaEnlacesSeleccionados() {
+	    $.get("ServletRequerimiento?accion=LISTAR", function(response) {
+	        $.each(response, function(index, item) {
+	            let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button>";
+	            $("#tableAsignacionesRolesyEnlaces").append("<tr><td>" + item.ROL + "</td>" +
+	                "<td>" + item.nombreRol + "</td><td>" + item.ENLACE + "</td><td>" + item.nombreEnlace + "</td><td>" + botonEliminar + "</td></tr>");
+	        });
+	    });
+	}
+
+    
+    //Quitar Enlace del Rol
+    $(document).on("click", ".btn-eliminar", function() {
+    $(this).closest('tr').remove();
+	});
+
 
     // Manejar evento al hacer clic en un botón de adición
     $(document).on("click", ".btn-adicionar", function() {
