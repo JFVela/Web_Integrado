@@ -206,6 +206,19 @@ fieldset, legend {
 	<script
 		src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
+	<!-- validar si existe el atrubuto MENSAJE -->
+	<c:if test="${sessionScope.MENSAJE!=null}">
+		<script>
+		var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
+		toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
+			"timeOut" : "2000",
+			"positionClass " : " toast-top-right ",
+		});
+	</script>
+	</c:if>
+
+	<!-- eliminar atributo de tipo sesión MENSAJE -->
+	<c:remove var="MENSAJE" scope="session" />
 	<script>
     // Cargar datos al cargar la página
     cargarRol();
@@ -340,13 +353,6 @@ fieldset, legend {
 	        });
 	    });
 	}
-
-    
-    //Quitar Enlace del Rol
-    $(document).on("click", ".btn-eliminar", function() {
-    $(this).closest('tr').remove();
-	});
-
 
     // Manejar evento al hacer clic en un botón de adición
     $(document).on("click", ".btn-adicionar", function() {

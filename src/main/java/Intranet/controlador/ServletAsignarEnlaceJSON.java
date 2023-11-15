@@ -44,9 +44,10 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 		}
 	}
 
+
 	private void quitar(HttpServletRequest request, HttpServletResponse response) {
-		String idRol = request.getParameter("ROL");
-		String idEnlace = request.getParameter("ENLACE");		
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -59,6 +60,8 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 
 		// Devolver la lista actualizada después de la eliminación
 		listar(request, response);
+		request.getSession().setAttribute("TIPO_MENSAJE", "warning");
+		request.getSession().setAttribute("MENSAJE", "Eliminado correctamente");
 		response.sendRedirect("DesignarEnlace.jsp");
 	}
 
@@ -86,10 +89,15 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 	private void grabar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		List<Asignar_Enlace> datos = (List<Asignar_Enlace>) request.getSession().getAttribute("carrito");
 		int resultado = new MySQL_AsignarEnlace().saveAsignaciones(datos);
+		String tipoMensaje = "error";
+
 		if (resultado >= 0) {
 			datos.clear();
+			tipoMensaje = "success";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 			request.getSession().setAttribute("MENSAJE", "Asignación guardada");
 		} else {
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 			request.getSession().setAttribute("MENSAJE", "Error al guardar la asignación");
 		}
 		response.sendRedirect("DesignarEnlace.jsp"); // Redirige a la página deseada
