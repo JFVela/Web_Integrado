@@ -1,3 +1,4 @@
+<jsp:include page="intranet.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -11,6 +12,14 @@
 	rel="stylesheet"
 	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
 	crossorigin="anonymous">
+<link
+	href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
+	rel="stylesheet">
 <style>
 body {
 	font-family: verdana;
@@ -64,8 +73,6 @@ fieldset, legend {
 	href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
 	crossorigin="anonymous">
 <link rel="stylesheet"
-	href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body>
@@ -85,7 +92,8 @@ fieldset, legend {
 							Enlaces a un Rol</h1>
 					</div>
 					<div class="modal-body">
-						<form action="ServletAsignarEnlaceJSON?accion=GRABAR" method="POST">
+						<form action="ServletAsignarEnlaceJSON?accion=GRABAR"
+							method="POST">
 							<div class="row mt-3">
 								<div class="col-lg-6">
 									<fieldset class="reset">
@@ -173,18 +181,31 @@ fieldset, legend {
 		</div>
 	</div>
 
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<!-- libreria principal de JQUERY -->
+	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+	<!-- libreria JS de bootstrap -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous"></script>
+
+	<!-- libreria JS de la tabla -->
+	<script
+		src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+	<script
+		src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+	<!-- libreria para validar (bootstrap validator) -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
 	<script>
     // Cargar datos al cargar la página
     cargarRol();
@@ -207,18 +228,18 @@ fieldset, legend {
    $(document).ready(function() {
 	    // Inicializar la tabla DataTable para los enlaces
 	    $('#tableEnlaces').DataTable({
-	        "language": {
-	            "lengthMenu": "Mostrar _MENU_ registros por página",
-	            "zeroRecords": "No se encontraron registros",
-	            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-	            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-	            "infoFiltered": "(filtrados de un total de _MAX_ registros)",
-	            "search": "Buscar:",
-	            "paginate": {
-	                "first": "Primero",
-	                "previous": "Anterior",
-	                "next": "Siguiente",
-	                "last": "Último"
+	    	"language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontraron registros",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                "infoFiltered": "(filtrados de un total de _MAX_ registros)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "previous": "Anterior",
+                    "next": "Siguiente",
+                    "last": "Último"
 	            }
 	        }
 	    });
@@ -253,7 +274,7 @@ fieldset, legend {
         $.get("ServletAsignarEnlaceJSON?accion=TABLA", function(response) {
             $.each(response, function(index, item) {
                 let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
-                let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+                let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar-db'>Eliminar</button>";
                 $("#TablaAsignarEnlace").append("<tr><td>" + item.roles_id_rol + "</td>" +
                     "<td>" + item.nombreRol + "</td>" +
                     "<td>" + item.enlace_id_enlace + "</td>" +
@@ -264,7 +285,7 @@ fieldset, legend {
             // Inicializar la tabla DataTable
             $(document).ready(function() {
                 $('#TablaAsignarEnlace').DataTable({
-                    "language": {
+                	"language": {
                         "lengthMenu": "Mostrar _MENU_ registros por página",
                         "zeroRecords": "No se encontraron registros",
                         "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
@@ -282,6 +303,32 @@ fieldset, legend {
             });
         });
     }
+    
+    
+ // Manejar evento al hacer clic en un botón de eliminación
+    $(document).on("click", ".btn-eliminar-db", function() {
+    	var roles_id_rol =$(this).parents("tr").find("td")[0].innerHTML;
+    	var nombreRol =$(this).parents("tr").find("td")[1].innerHTML;
+    	var enlace_id_enlace =$(this).parents("tr").find("td")[2].innerHTML;
+    	var nombreEnlace =$(this).parents("tr").find("td")[3].innerHTML;
+        console.log(roles_id_rol);
+        console.log(enlace_id_enlace);
+
+        Swal.fire({
+            title: '¿Seguro de eliminar?',
+            text: '¿Desea eliminarle el enlace: "' + nombreEnlace + '" al rol "' + nombreRol + '"?', // Usar el nombre y el DNI en el mensaje
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = "http://localhost:8080/GitHub_ONG/ServletAsignarEnlaceJSON?accion=ELIMINAR&ROL=" + roles_id_rol+ "&ENLACE=" + enlace_id_enlace;
+            }
+        });
+    });
 
     // Listar enlaces seleccionados
 	function listaEnlacesSeleccionados() {
@@ -315,12 +362,6 @@ fieldset, legend {
                 "<td>" + nombreRol + "</td><td>" + response.enlace_id_enlace + "</td><td>" + nombreE + "</td><td>" + botonEliminar + "</td></tr>");
         });
     });
-
 </script>
-
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-		crossorigin="anonymous"></script>
 </body>
 </html>
