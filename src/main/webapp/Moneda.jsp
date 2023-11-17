@@ -48,7 +48,7 @@
       </div>
       <div class="modal-body">
         
-      <form id="formDocente" method="post" action="ServletDocente?accion=grabar">
+      <form id="formMoneda" method="post" action="ServletDocente?accion=grabar">
 	      	
 	      	<div class="form-group">
 			    <label for="exampleInputEmail1" class="form-label">Código</label>
@@ -150,6 +150,16 @@
 				$("#id-valor").val(response.valor);
 			})
 			
+		});
+		//reiniciar formulario con el boton cerrar
+		$(document).on("click","#btn-cerrar",function(){
+			//resetear formulario
+			$("#formMoneda").trigger("reset");
+			//resetar validación
+			$("#formMoneda").data("bootstrapValidator").resetForm(true);
+			//
+			$("#id-codigo").val("0");
 		})
+			
 </script>
 </html>
