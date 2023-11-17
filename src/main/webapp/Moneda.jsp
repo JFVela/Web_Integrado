@@ -162,4 +162,38 @@
 		})
 			
 </script>
+
+<!-- boostrap validator -->
+<script>
+$(document).ready(function(){     
+    $('#formMoneda').bootstrapValidator({
+        fields: {
+            nombre: {
+                validators: {
+                    notEmpty: {
+                        message: 'El campo nombre es obligatorio'
+                    }
+                }
+            },
+            valor: {
+                validators: {
+                    notEmpty: {
+                        message: 'El campo valor es obligatorio'
+                    },
+                    regexp: {
+                        regexp: /^\d+(\.\d{1,2})?$/, // Expresión regular para números positivos con hasta dos decimales
+                        message: 'El campo valor debe ser un número positivo con dos decimales como máximo'
+                    },
+                    between: {
+                        min: 1,
+                        max: 10,
+                        message: 'El campo valor debe estar entre 1 y 10'
+                    }
+                }
+            }
+        }
+    });
+});
+
+</script>
 </html>
