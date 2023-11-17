@@ -11,6 +11,8 @@
 <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
+<!--iconos-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <style >
 .modal-header{
 		color:#fff;
@@ -38,14 +40,14 @@
   
   <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" 
-	data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar</button>
+	data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar <i class="bi bi-plus-circle"></i></button>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">MONEDAS</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">MONEDAS <i class="bi bi-coin"></i></h1>
       </div>
       <div class="modal-body">
         
@@ -159,8 +161,8 @@
 	function cargarMoneda(){
 			$.get("ServletMonedaJSON",function(response){	
 				console.log(response)
-				let botonEditar= "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
-	            let botonEliminar= "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+				let botonEditar= "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'><i class='bi bi-pencil'></i></button>";
+	            let botonEliminar= "<button type='button' class='btn btn-danger btn-eliminar'><i class='bi bi-trash'></i></button>";
 				
 				$.each(response,function(index,item){
 					//llenar tabla
