@@ -90,21 +90,7 @@
             </tr>
         </thead>
         <tbody>
-        <!-- 
-        	<c:forEach items="${requestScope.docentes}" var="row">
-	            <tr>
-	                <td>${row.codigo}</td>
-	                <td>${row.nombre}</td>
-	                <td>${row.paterno}</td>
-	                <td>${row.materno}</td>
-	                <td>${row.sexo}</td>
-	                <td>${row.hijos}</td>
-	                <td>${row.sueldo}</td>
-	                <td><button type="button" class="btn btn-success btn-editar" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button></td>
-	                <td><button type="button" class="btn btn-danger btn-eliminar">Eliminar</button></td>
-	            </tr>
-            </c:forEach>
-             -->
+        
         </tbody>
     </table>
   </div>
@@ -151,6 +137,19 @@
 				});
 				new DataTable('#TableMoneda');
 			})
-		}
+		};
+		//asignar evento click a todos los botones con nombre de clase btn-editar
+		$(document).on("click",".btn-editar",function(){
+			var cod;
+			cod=$(this).parents("tr").find("td")[0].innerHTML;
+			$.get("ServletFindMonedaJSON?codigo="+cod, function(response){
+				//console.log(response);
+				//mostrar valores en las cajas
+				$("#id-codigo").val(response.id);
+				$("#id-nombre").val(response.nombre);
+				$("#id-valor").val(response.valor);
+			})
+			
+		})
 </script>
 </html>

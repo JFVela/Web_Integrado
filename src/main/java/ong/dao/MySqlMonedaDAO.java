@@ -47,4 +47,42 @@ public class MySqlMonedaDAO implements MonedaDAO {
 		
 	}
 
+	@Override
+	public Moneda findById(int id) {
+		Moneda bean = null;
+		Connection cn=null;
+		PreparedStatement pstm=null;
+		ResultSet rs=null;
+		
+		try {
+			cn = new MySqlConectar().getConectar();
+			String sql="SELECT * FROM moneda WHERE id_moneda=?";
+			
+			pstm=cn.prepareStatement(sql);
+			pstm.setInt(1,id);
+			rs=pstm.executeQuery();
+			
+			if(rs.next()){
+				bean = new Moneda();
+				bean.setId(rs.getInt(1));
+				bean.setNombre(rs.getString(2));
+				bean.setValor(rs.getDouble(3));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstm!=null) pstm.close();
+				if(cn!=null) cn.close();
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return bean;
+	}
+
 }
