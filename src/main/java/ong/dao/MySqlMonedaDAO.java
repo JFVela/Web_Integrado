@@ -29,6 +29,7 @@ public class MySqlMonedaDAO implements MonedaDAO {
 				bean=new Moneda();
 				bean.setId(rs.getInt(1));
 				bean.setNombre(rs.getString(2));
+				bean.setValor(rs.getDouble(3));
 				dato.add(bean);
 			}
 		}catch(Exception e) {
