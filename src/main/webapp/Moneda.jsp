@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -48,7 +49,7 @@
       </div>
       <div class="modal-body">
         
-      <form id="formMoneda" method="post" action="ServletDocente?accion=grabar">
+      <form id="formMoneda" method="post" action="ServletMoneda?accion=grabar">
 	      	
 	      	<div class="form-group">
 			    <label for="exampleInputEmail1" class="form-label">Código</label>
@@ -114,6 +115,40 @@
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.MENSAJE!=null}">
+	<script>
+			toastr.success("${sessionScope.MENSAJE}", toastr.options = {
+					"timeOut": "2000",
+					"positionClass " : " toast-top-right ",
+				});
+	</script>
+</c:if>
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.MODIFICADO!=null}">
+	<script>
+			toastr.warning("${sessionScope.MODIFICADO}", toastr.options = {
+					"timeOut": "2000",
+					"positionClass " : " toast-top-right ",
+				});
+	</script>
+</c:if>
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.ERROR!=null}">
+	<script>
+			toastr.error("${sessionScope.ERROR}", toastr.options = {
+					"timeOut": "2000",
+					"positionClass " : " toast-top-right ",
+				});
+	</script>
+</c:if>
+<!-- eliminar atributo de tipo sesión MENSAJE -->
+<c:remove var="MENSAJE" scope="session"/>
+<c:remove var="MODIFICADO" scope="session"/>
+<c:remove var="ERROR" scope="session"/>
+
+
 
 <!-- funciones Script -->
 <script>
