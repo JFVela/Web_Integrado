@@ -92,7 +92,6 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 		String tipoMensaje = "error";
 
 		if (resultado >= 0) {
-			datos.clear();
 			tipoMensaje = "success";
 			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 			request.getSession().setAttribute("MENSAJE", "Asignación guardada");
@@ -100,6 +99,8 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 			request.getSession().setAttribute("MENSAJE", "Error al guardar la asignación");
 		}
+		datos.clear();
+
 		response.sendRedirect("DesignarEnlace.jsp"); // Redirige a la página deseada
 	}
 
