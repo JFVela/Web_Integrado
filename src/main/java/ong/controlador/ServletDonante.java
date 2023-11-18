@@ -55,7 +55,7 @@ public class ServletDonante extends HttpServlet {
 		boolean respuesta=verficarSaldo(request,response);
 		
 		if(respuesta) {
-			String email,camp,tipdon,tpmon,monto,numcuen;
+			String email,camp,tpmon,monto,numcuen;
 			int estado=0,estado2=0;
 			
 			HttpSession session = request.getSession(false);
@@ -66,7 +66,6 @@ public class ServletDonante extends HttpServlet {
 
 			email = request.getParameter("email");
 			camp=request.getParameter("camp");
-			tipdon=request.getParameter("tdon");
 			tpmon=request.getParameter("tmone");
 			monto=request.getParameter("monto");
 			numcuen=request.getParameter("numcuen");
@@ -76,7 +75,6 @@ public class ServletDonante extends HttpServlet {
 			bean2.setIdCampaña(Integer.parseInt(camp));
 			bean2.setIdMoneda(Integer.parseInt(tpmon));
 			bean2.setMonto(Double.parseDouble(monto));
-			bean2.setTipoDonacion(Integer.parseInt(tipdon));
 			bean2.setNumCuenta(Integer.parseInt(numcuen));
 			
 			boolean veri= new MySqlDonanteDAO().verificarDNI(dniObtenido);

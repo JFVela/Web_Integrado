@@ -114,7 +114,7 @@
 		bottom:100%;
 		transition: 1s;
 		transition-delay:0.75s;
-	}
+	}--%>
 .navbar-nav .nav-link {
 	transition: color 0.3s;
 }
@@ -200,12 +200,15 @@ body.shimeji-select-ie {
 	width: 100%; /* Ocupa todo el ancho disponible */
 }
 .miDiv {
-       box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.5); /* Sombra 3D */
-       transition: transform 0.3s ease-in-out;
-    }
-     .miDiv:hover {
-      transform: scale(1.02); /* Escala el elemento al 105% al pasar el mouse */
-    }
+    box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.5s ease-in-out; /* Transición solo para la sombra */
+}
+
+.miDiv:hover {
+    box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.5); /* Agrega otra sombra */
+    transition: box-shadow 0.5s ease-in-out; /* Ajusta la transición según sea necesario */
+}
+
 .linea-vertical {
 	border-right: 1px solid #7da2b2; /* Establece un borde izquierdo */
 	margin: 0 auto 0 0;
@@ -304,16 +307,6 @@ body.shimeji-select-ie {
 	background-position: center top;
 }
 
-.loader {
-	width: 50px; /* Cambia el valor a tu preferencia */
-	height: 50px; /* Ajusta la altura proporcionalmente */
-	border: 6px solid #3498db; /* Ajusta el grosor del borde */
-	border-top: 6px solid transparent;
-	/* Ajusta el grosor del borde superior */
-	border-radius: 50%;
-	animation: spin 2s linear infinite;
-}
-
 @keyframes spin { 0% {
 	transform: rotate(0deg);
 }
@@ -375,27 +368,39 @@ body.shimeji-select-ie {
 	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered custom-modal-dialog">
+		<div class="modal-dialog modal-dialog-centered custom-modal-dialog ">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #7ca1b1;"></div>
 				<div class="modal-body text-center">
 
-					<div class="linea-azul"></div>
-					<h1 class="p-4" style="color: #1f4145;">
+					<div class="linea-azul pt-1"></div>
+					<h1 class="p-4 display-5" style="color: #1f4145;">
 						<strong>¿Ya tienes una cuenta?</strong>
 					</h1>
-					<div class="linea-azul"></div>
+					<div class="linea-azul pb-1"></div>
 					<div class="row custom-modal-row">
-						<div class="col">
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button id="id-si" class="btn btn-primary" type="button">SI</button>
-								<button id="id-no" class="btn btn-primary" type="button">NO</button>
+						<div class="col mt-2">
+							
+							<div class="d-grid gap-2  mx-auto">
+								<img src="img/amor.png" class="img-fluid mx-auto" style="height: 150px;width: 150px">
+								<div class="linea-azul"></div>
+								<p class="p-2">Selecciona la opción que corresponda a tu estado de registro
+								 para avanzar con tu donación. Queremos
+								   facilitar el proceso según tus necesidades y garantizar
+								    una experiencia de donación personalizada. ¡Tu contribución
+								     marca la diferencia!</p>
+								<div class="btn-group mx-auto" role="group" aria-label="Basic mixed styles example">
+								  <button id="id-no" type="button" class="btn btn-danger ">No</button>
+								  <button id="id-si" type="button" class="btn btn-success">Si</button>
+								</div>
 							</div>
 						</div>
 						<div class="linea-vertical" style="margin-top: 15px;"></div>
 						<div class="col">
-							<div class="col-12 p-4">
+							<div class="col-12 pt-4">
 								<div class="desaparecer" id="email-correo" >
+								<p>Por favor, ingresa tu correo electrónico para verificar tu identidad y registrar
+								 tu generosidad de manera segura.</p>
 								  <label id="id-emailEnvio" >Correo Electrónico</label>
 								  <form id="formInputCorreo">
 									  <div class="input-group m-2 ">
@@ -404,27 +409,31 @@ body.shimeji-select-ie {
  										  placeholder="@.com" aria-label="Username" 
  										  id="id-ingresoCorreo" aria-describedby="basic-addon1" name="ingresoCorreo">
 									  </div>
-									      <div id="countdown"></div>
+									      <div id="countdown" class="pb-2"></div>
 									  
-									  <div id=msg-error></div>
+									  	<div id=msg-error></div>
 										<button id="startCountdown"	class="btn btn-outline-success">Enviar</button>
 								</form>
 								</div>
-								
+							
 								<label class="mx-auto" id="confirmationLabel"
 									style="display: none">Código de confirmación</label>
-									<input
-									class="mx-auto" id="confirmationInput" style="display: none">
-								<button class="mx-auto" id="confirmationButton"
-									style="display: none" type="button"
-									class="btn btn-outline-success">Confirmar</button>
-								<div class="loader desaparecer">
-									<div class="spinner"></div>
-								</div>
+									<div class="input-group mb-3">
+									  <span class="input-group-text" id="inputGroup-sizing-default" style="display: none">Código</span>
+									  <input type="text"  id="confirmationInput" class="form-control" 
+									  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="display: none">
+									</div>
+									
+									<div id="ms-error" class="m-2"></div>
+									<button id="confirmationButton"
+									style="display: none" type="button" class="mx-auto btn btn-outline-warning">Confirmar</button>
+								
 							</div>
 							<form id="formRegistro" method="post"
 								action="ServletDonante?accion=insertarModal">
-								<div class="col-12 p-4">
+								<div class="col">
+									<p>¡Completa tus Datos y Haz la Diferencia!</p>
+									<h4 style="color: #1f4145;">Información Personal</h4>
 									<div class="d-flex">
 										<div class="form-group">
 											<label for="exampleInputPassword1" class="form-label">DNI</label>
@@ -469,7 +478,7 @@ body.shimeji-select-ie {
 											<select name="departamento"
 												class="form-control departamento-label" id="id-departamento"
 												required>
-												<option value=" ">[Seleccione un Departamento]</option>
+												<option value=" ">[Departamento]</option>
 											</select>
 										</div>
 									</div>
@@ -478,14 +487,14 @@ body.shimeji-select-ie {
 											<label for="provincia" class="label-form text-secondary">Provincia</label>
 											<select name="provincia" class="form-control provincia-label"
 												id="id-provincia" required>
-												<option value=" ">[Seleccione una provincia]</option>
+												<option value=" ">[Provincia]</option>
 											</select>
 										</div>
 										<div class="form-group spa">
 												<label for="distrito" class="label-form text-secondary">Distrito</label>
 												<select name="distrito" class="form-control distrito-label"
 													id="id-distrito" required>
-													<option value=" ">[Seleccione un distrito]</option>
+													<option value=" ">[Distrito]</option>
 												</select>
 											</div>
 										</div>
@@ -493,7 +502,7 @@ body.shimeji-select-ie {
 										<div class="form-group">
 											<label for="exampleInputPassword1" class="form-label">Email</label>
 											<input type="text" class="form-control correo"
-												placeholder="usuario@gmail.com" name="email">
+												placeholder="@gmail.com" name="email">
 											<div class="mensajeEmail" style="text-align: left;"></div>
 										</div>
 
@@ -511,8 +520,7 @@ body.shimeji-select-ie {
 				</div>
 				<div class="modal-footer">
 					<button id="id-cerrar" type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Understood</button>
+						data-bs-dismiss="modal">Cerrar</button>
 				</div>
 			</div>
 		</div>
@@ -532,12 +540,28 @@ body.shimeji-select-ie {
 						<p class="estilo-parr">Tu
 							donación física tiene un impacto local. Al ofrecer recursos
 							tangibles, marcas la diferencia en comunidades cercanas.</p>
-						<img src="img/R.png" class="img-fluid"
-							style="height: 300px; width: 450px; padding-top: 10px; padding-bottom: 10px;">
 						
-						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary" id="donar-fisico">
-							Donar en Físico</button>
+							<div class="row">
+								<div class="col">
+								<img src="img/ojoq.png" class="img-fluid">
+								</div>
+								<div class="col pt-5">
+								<div class="col">
+									<img src="img/donacion-de-alimentos.png" class="img-fluid" style="height: 130px; width: 130px;">
+									<p>¡Juntos podemos cambiar vidas! Sé parte del cambio: presiona aquí
+									 para ser un héroe y marcar la diferencia en el
+									  mundo.</p>
+								</div>
+								<div class="col">
+									<a class="btn-neon btn-cerrar2" id="donar-fisico">
+										<span id="span1"></span>
+										<span id="span3"></span>
+										<span id="span2"></span>
+										<span id="span4"></span>
+										Donar Físico</a>
+								</div>
+								</div>
+							</div>
 					</div>
 					<!-- Modal -->
 					<div class="modal fade" id="donafisico" data-bs-backdrop="static"
@@ -587,7 +611,7 @@ body.shimeji-select-ie {
 
 											</div>
 											<div class="col-md-6 ms-auto">
-												<img src="img/ola.jpg" class="img-fluid">
+												<img src="img/donar-box.jpg" class="img-fluid" style="height: 350px;">
 											</div>
 										</div>
 									</div>
@@ -613,14 +637,28 @@ body.shimeji-select-ie {
 						<p class="estilo-parr">Donar en
 							línea es poderoso. Con tu ayuda virtual, apoyas causas en todo el
 							mundo desde casa.</p>
-						<img src="img/asa.png" class="img-fluid"
-							style="height: 300px; width: 250px;">
-							<a class="btn-neon btn-cerrar2" id="donar-virtual">
-							<span id="span1"></span>
-							<span id="span3"></span>
-							<span id="span2"></span>
-							<span id="span4"></span>
-							Donar Virtual</a>
+							<div class="row">
+								<div class="col">
+								<img src="img/asa.png" class="img-fluid">
+								</div>
+								<div class="col">
+								<div class="col pt-2">
+									<img src="img/corazon.png" class="img-fluid" style="height: 130px; width: 130px;">
+									<p>¡Transforma vidas con tu generosidad! Actúa y marca
+									 la diferencia en vidas. Tu aporte  cambia realidades.
+									  ¡Únete a la causa, sé el cambio!</p>
+								</div>
+								<div class="col">
+									<a class="btn-neon btn-cerrar2" id="donar-virtual">
+										<span id="span1"></span>
+										<span id="span3"></span>
+										<span id="span2"></span>
+										<span id="span4"></span>
+										Donar Virtual</a>
+								</div>
+								</div>
+							</div>
+							
 					</div>
 					<!-- Modal -->
 					<div class="modal fade" id="donavirtual" data-bs-backdrop="static"
@@ -653,16 +691,6 @@ body.shimeji-select-ie {
 
 
 													<%--Condicional Virtual --%>
-													<%--Tipo donacion --%>
-													<div id="tipodona" class="form-group">
-														<label for="exampleInputEmail2" class="form-label">Tipo
-															Donación</label> <select class="form-select form-control"
-															aria-label="Default select example" id="id-tipodona"
-															name="tdon">
-															<option value="" selected hidden="disable">Seleccione
-																Tipo de Donación</option>
-														</select>
-													</div>
 													<%--Campaña --%>
 													<div id="campaña" class="form-group">
 														<label for="exampleInputEmail2" class="form-label">Campaña</label>
@@ -745,7 +773,7 @@ body.shimeji-select-ie {
 									<button id="donarexterno1" class="btn btn-primary">Donar</button>
 								</div>
 							</div>
-
+				
 						</div>
 					</div>
 				</div>
@@ -1416,7 +1444,6 @@ body.shimeji-select-ie {
 	<script>
 		CargarLocaciones();
 		CargarCampaña();
-		CargarTipoDonacion();
 		CargatTipoMoneda();
 		
 		function CargarLocaciones(){
@@ -1430,13 +1457,6 @@ body.shimeji-select-ie {
 			$.get("ServletCampañaJSON",function(response){
 				$.each(response,function(index,item){
 					$("#id-campaña").append("<option value='"+item.id+"'>"+item.nombre+"</option>");
-				})
-			})
-		}
-		function CargarTipoDonacion(){
-			$.get("ServletTipoDonacionJSON",function(response){
-				$.each(response,function(index,item){
-					$("#id-tipodona").append("<option value='"+item.id+"'>"+item.nombre+"</option>");
 				})
 			})
 		}
@@ -1761,13 +1781,7 @@ body.shimeji-select-ie {
 	    $(document).ready(function(){     
 	        $('#formDonante1').bootstrapValidator({      
 	        	 fields:{
-	        		 tipodedonao:{
-	        			 validators:{
-		        				notEmpty:{
-		        					message:'Este campo es obligatorio'
-		        				}
-		        			}
-	        		 },numcuen:{
+	        		 numcuen:{
 	        			validators:{
 	        				notEmpty:{
 	        					message:'Este campo es obligatorio'
@@ -1979,23 +1993,29 @@ body.shimeji-select-ie {
 		  $('#formRegistro').hide();
 		  $('#email-correo').hide();
 		
-		  // Muestra u oculta el formulario al hacer clic en "SI" o "NO"
-		  $('#id-no').click(function() {
-		    $('#formRegistro').show();
-		    $('#email-correo').hide();
-		  });
-		
-		  $('#id-si').click(function() {
-			  $('#email-correo').show();
-		    $('#formRegistro').hide();
-		  });
+		  // Función para mostrar el formulario y ocultar el campo de correo
+		    function mostrarFormulario() {
+		        $('#formRegistro').show();
+		        $('#email-correo').hide();
+		    }
+
+		    // Función para mostrar el campo de correo y ocultar el formulario
+		    function mostrarCorreo() {
+		        $('#email-correo').show();
+		        $('#formRegistro').hide();
+		    }
+
+		    // Muestra u oculta el formulario al hacer clic en "SI" o "NO"
+		    $('#id-no').click(mostrarFormulario);
+
+		    $('#id-si').click(mostrarCorreo);
+
 		});
 		
 	</script>
 	<script>
 	$(document).ready(function() {
 	    let botonOrigen = "";
-
 	    // Código para manejar el clic en "Donar en Físico"
 	    $("#donar-fisico").click(function() {
 	        botonOrigen = "fisico";
@@ -2010,7 +2030,16 @@ body.shimeji-select-ie {
 
 	    // Función para manejar el clic en el botón de confirmación
 	    function handleConfirmationButtonClick() {
-	        var codigo = $("#confirmationInput").val();
+	        var codigo = $("#confirmationInput").val().trim();
+
+	        // Validar la longitud del código
+	        if (codigo.length !== 8) {
+	            $("#ms-error").text("El código debe tener exactamente 8 caracteres");
+	            $("#ms-error").addClass("error");
+	            $("#confirmationInput").addClass("error");
+	            return;
+	        }
+
 	        $.ajax({
 	            type: "POST",
 	            url: "ServletDonacionEmail",
@@ -2028,8 +2057,13 @@ body.shimeji-select-ie {
 	                        $("#donavirtual").modal("show");
 	                        $('#staticBackdrop').modal("hide");
 	                    }
+	                    $("#confirmationInput").removeClass("error");
+	        	        $("#ms-error").text("");
+	        	        $("#ms-error").removeClass("error");
 	                } else {
-	                    console.log("invalido");
+	                	$("#ms-error").text("Código incorrecto");
+	                	$("#ms-error").addClass("error");
+	        	        $("#confirmationInput").addClass("error");
 	                }
 	            },
 	            error: function() {
@@ -2038,11 +2072,19 @@ body.shimeji-select-ie {
 	        });
 	    }
 
+	    // Agregar evento de escucha para el evento input en el campo de confirmación
+	    $("#confirmationInput").on("input", function() {
+	        $("#ms-error").text("");
+	        $("#ms-error").removeClass("error");
+	        $("#confirmationInput").removeClass("error");
+	    });
+
 	    // Asociar el evento de clic al botón de confirmación
 	    $("#confirmationButton").click(handleConfirmationButtonClick);
 	});
+</script>
 
-	</script>
+
 	
 	<%--ACCION DE OCULTAR CAMPOS Y MOSTRAR EL CONTADOR AL ENVIAR AL EMAIL --%>
 	<script>
@@ -2055,10 +2097,10 @@ body.shimeji-select-ie {
         var emailEnvio = document.getElementById("id-emailEnvio");
         var ingresoCorreo = document.getElementById("id-ingresoCorreo");
         var span = document.getElementById("basic-addon1");
-
+		var span1= document.getElementById("inputGroup-sizing-default");
+		ingresoCorreo.readOnly = true;
         // Muestra el contador y comienza el temporizador
         countdownElement.style.display = "block";
-
         var seconds = 5;
         var countdownInterval = setInterval(function () {
             countdownElement.innerText = seconds;
@@ -2072,12 +2114,16 @@ body.shimeji-select-ie {
                 botonenviar.style.display = "none";
                 span.style.display = "none";
                 confirmationLabel.style.display = "block";
+                
+                // Muestra el div oculto con el id "confirmationInput"
                 confirmationInput.style.display = "block";
+                span1.style.display = "block";
                 confirmationButton.style.display = "block";
             }
         }, 1000);
     }
 </script>
+
 
 	
 	<%--AJAX PARA EL ENVIO DE CORREOS ELECTRONICOS--%>
@@ -2093,14 +2139,40 @@ body.shimeji-select-ie {
 		            correo: correo
 		        },
 		        success: function(response) {
-		            // Puedes manejar la respuesta aquí si es necesario
 		        },
 		        error: function() {
 		            // Puedes manejar el error aquí si es necesario
 		        }
 		    });
 		}
-	</script><%--FIN DE LA SCRIPT DEL AJAX --%>
+	</script>
+	<script>
+	$(document).on("click","#id-cerrar",function(){
+
+		$("#formRegistro").trigger("reset");
+		$("#formInputCorreo").trigger("reset");
+		$("#formRegistro").data("bootstrapValidator").resetForm(true);
+		 $("#id-ingresoCorreo").removeClass("error");
+	        $("#msg-error").text("");
+	        $("#msg-error").removeClass("error");
+	     // Resetear la validación de jQuery Validation
+	        var validator = $("#formInputCorreo").validate();
+	        $('#formRegistro').hide();
+			 $('#email-correo').hide();
+	        validator.resetForm();
+	        $("#confirmationInput").removeClass("error");
+	        $("#ms-error").text("");
+	        $("#ms-error").removeClass("error");
+	        $("#confirmationInput").val("");
+	        $("#confirmationLabel").hide();
+	        $("#inputGroup-sizing-default").hide();
+	        $("#confirmationInput").hide();
+	        $("#ms-error").hide();
+	        $("#confirmationButton").hide();
+	})
+	
+	</script>
+	<%--FIN DE LA SCRIPT DEL AJAX --%>
 
 	<%--No se para que sirve, acciones de pestañas?
 	<script>

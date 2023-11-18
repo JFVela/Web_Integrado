@@ -15,7 +15,6 @@ import ong.utils.JavaEmail;
 @WebServlet("/ServletDonacionEmail")
 public class ServletDonacionEmail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	String codigo=JavaEmail.GenerarCodigo();
 	
     public ServletDonacionEmail() {
         super();
@@ -32,11 +31,12 @@ public class ServletDonacionEmail extends HttpServlet {
 
 	private void confirmar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String campoConfirmacion=request.getParameter("codigo");
-		
+		HttpSession ses = request.getSession();
+	    String codigoAlmacenado = (String) ses.getAttribute("codigo");
 		response.setContentType("text/plain");
 		PrintWriter out = response.getWriter();
 		
-		if(campoConfirmacion.equals(codigo)) {
+		if(campoConfirmacion.equals(codigoAlmacenado)) {
 			out.print("valido");
 		}else {
 			out.print("invalido");
@@ -46,10 +46,13 @@ public class ServletDonacionEmail extends HttpServlet {
 	private void enviarEmail(HttpServletRequest request, HttpServletResponse response) {
 		String receptor=request.getParameter("correo");
 		try {
+			String codigo=JavaEmail.GenerarCodigo();
 			HttpSession ses=request.getSession(true);
-			ses.setAttribute("codigo", receptor);
+			ses.setAttribute("codigo", codigo);
 			JavaEmail.enviarMail(receptor,codigo);
 			
+			response.setContentType("text/plain");
+			PrintWriter out = response.getWriter();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

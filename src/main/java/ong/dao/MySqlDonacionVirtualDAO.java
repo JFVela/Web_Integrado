@@ -22,15 +22,14 @@ public class MySqlDonacionVirtualDAO implements DonacionVirtualDAO{
 
 		try {
 			cn = new MySqlConectar().getConectar();
-			String sentencia = "INSERT INTO donacion_virtual(donantes_dni,campaña_id_campaña,tipos_donacion_id_tipo\r\n"
-					+ ",moneda_id_moneda,monto,cuenta_numero)VALUES(?,?,?,?,?,?);";
+			String sentencia = "INSERT INTO donacion_virtual(donantes_dni,campaña_id_campaña\r\n"
+					+ ",moneda_id_moneda,monto,cuenta_numero)VALUES(?,?,?,?,?);";
 			pstm=cn.prepareStatement(sentencia);
 			pstm.setInt(1, bean.getDniDonante());
 			pstm.setInt(2, bean.getIdCampaña());
-			pstm.setInt(3, bean.getTipoDonacion());
-			pstm.setInt(4, bean.getIdMoneda());
-			pstm.setDouble(5, bean.getMonto());
-			pstm.setInt(6, bean.getNumCuenta());
+			pstm.setInt(3, bean.getIdMoneda());
+			pstm.setDouble(4, bean.getMonto());
+			pstm.setInt(5, bean.getNumCuenta());
 			salida = pstm.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
