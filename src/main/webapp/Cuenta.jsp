@@ -132,6 +132,37 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Saldo</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        
+	        <form>
+			  <div class="mb-3">
+			    <label class="form-label">Nombre del Titular</label>
+			    <input type="text" class="form-control" id="" value="" name="titular">
+			    
+			  </div>
+			  <div class="mb-3">
+			    <label class="form-label">Monto</label>
+			    <input type="text" class="form-control" id="" name="monto">
+			  </div>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+	        <button type="button" class="btn btn-primary">Grabar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- fin Modal  -->
 </body>
 <!-- libreria principal de JQUERY -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -184,7 +215,7 @@
 		                "<div class='btn-group'>" +
 		                    "<button type='button' class='btn btn-secondary dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false'><i class='bi bi-gear-fill'></i></button>" +
 		                    "<ul class='dropdown-menu'>" +
-		                        "<li><a class='dropdown-item' href='#'>Recargar Saldo</a></li>" +
+		                        "<li><a class='dropdown-item' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>Recargar Saldo</a></li>" +
 		                        "<li><a class='dropdown-item' href='#'>Otra Opción</a></li>" +
 		                        "<li><hr class='dropdown-divider'></li>" +
 		                        "<li><a class='dropdown-item' href='#'>Algo más</a></li>" +
