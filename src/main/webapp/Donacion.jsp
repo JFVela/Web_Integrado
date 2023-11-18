@@ -40,18 +40,94 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	rel="stylesheet">
 
+
 <title>Donacion</title>
 
 <%--ESTILOS --%>
 <style>
+.btn-neon{
+		position: relative;
+		display: inline-block;
+		padding: 10px 15px;
+		color: black;
+		font-size: 16px;
+		border-radius:10px;
+		text-decoration: none;
+		overflow: hidden;
+		transition:0.2s;
+		border: 2px solid #1f526d; 
+		cursor: pointer;
+	}
+	.btn-neon:hover{
+		background: #1f526d;
+		box-shadow: 0 0 10px #1f526d 0 40px #1f526d 0 80px #1f526d;
+		transition-delay:1s;
+		color: white !important;
+		border: transparent; 
+	}
+	.btn-neon span{
+		position: absolute;
+		display: block;
+	}
+	#span1{
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 2px;
+		background: linear-gradient(90deg, transparent, #1f526d)
+	}
+	.btn-neon:hover #span1{
+		left:100%;
+		transition: 1s;  
+	}
+	#span3{
+		bottom: 0;
+		right: -100%;
+		width: 100%;
+		height: 2px;
+		background: linear-gradient(270deg, transparent, #1f526d)
+	}
+	.btn-neon:hover #span3{
+		right:100%;
+		transition: 1s;  
+	}
+	#span2{
+		top: -100%;
+		right: 0;
+		width: 2px;
+		height: 100%;
+		background: linear-gradient(180deg, transparent, #1f526d)
+	}
+	.btn-neon:hover #span2{
+		top:100%;
+		transition: 1s;
+		transition-delay:0.25s;
+	}
+	#span4{
+		bottom: -100%;
+		left: 0;
+		width: 2px;
+		height: 100%;
+		background: linear-gradient(360deg, transparent, #1f526d)
+	}
+	.btn-neon:hover #span4{
+		bottom:100%;
+		transition: 1s;
+		transition-delay:0.75s;
+	}
 .navbar-nav .nav-link {
 	transition: color 0.3s;
 }
-
+.estilo-parr{
+	padding: 10px 80px 0 80px;
+	color: #1f526d;
+}
 .navbar-nav .nav-link:hover {
 	color: red;
 }
-
+.color-text{
+	color: #043a4a;
+}
 body.shimeji-pinned iframe {
 	pointer-events: none;
 }
@@ -123,7 +199,13 @@ body.shimeji-select-ie {
 	background-color: #7da2b2; /* Color de fondo azul */
 	width: 100%; /* Ocupa todo el ancho disponible */
 }
-
+.miDiv {
+       box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.5); /* Sombra 3D */
+       transition: transform 0.3s ease-in-out;
+    }
+     .miDiv:hover {
+      transform: scale(1.02); /* Escala el elemento al 105% al pasar el mouse */
+    }
 .linea-vertical {
 	border-right: 1px solid #7da2b2; /* Establece un borde izquierdo */
 	margin: 0 auto 0 0;
@@ -441,16 +523,18 @@ body.shimeji-select-ie {
 		<div class="container-fluid">
 			<div class="row">
 				<%--PRIMERA COLUMNA --%>
-				<div class="col estilo-col2" style="margin-right: 40px;">
-					<div class="text-center">
-						<h1>
-							<span style="color: green;">Donación </span>Física
+				<div class="miDiv col estilo-col2 " style="margin-right: 40px;">
+					<div class="text-center p-4">
+					
+						<h1 class="color-text">
+							<strong>Donación Física</strong>
 						</h1>
+						<p class="estilo-parr">Tu
+							donación física tiene un impacto local. Al ofrecer recursos
+							tangibles, marcas la diferencia en comunidades cercanas.</p>
 						<img src="img/R.png" class="img-fluid"
 							style="height: 300px; width: 450px; padding-top: 10px; padding-bottom: 10px;">
-						<p style="padding-left: 50px; padding-right: 50px;">Tu
-							donación física tiene un impacto local. Al ofrecer recursos
-							tangibles, marcas la diferencia en comunidades cercanas</p>
+						
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-primary" id="donar-fisico">
 							Donar en Físico</button>
@@ -521,18 +605,22 @@ body.shimeji-select-ie {
 
 				<%--SEGUNDA COLUMNA --%>
 				<%--DONACION VIRTUAL --%>
-				<div class="col estilo-col2">
-					<div class="text-center">
-						<h1>
-							<span style="color: white;">Donación </span>Virtual
+				<div class="miDiv col estilo-col2">
+					<div class="text-center p-4">
+						<h1 class="color-text">
+							<Strong>Donación Virtual</Strong>
 						</h1>
+						<p class="estilo-parr">Donar en
+							línea es poderoso. Con tu ayuda virtual, apoyas causas en todo el
+							mundo desde casa.</p>
 						<img src="img/asa.png" class="img-fluid"
 							style="height: 300px; width: 250px;">
-						<p style="padding-left: 50px; padding-right: 50px;">"Donar en
-							línea es poderoso. Con tu ayuda virtual, apoyas causas en todo el
-							mundo desde casa."</p>
-						<button type="button" class="btn btn-primary btn-cerrar2"
-							id="donar-virtual">Donar en Virtual</button>
+							<a class="btn-neon btn-cerrar2" id="donar-virtual">
+							<span id="span1"></span>
+							<span id="span3"></span>
+							<span id="span2"></span>
+							<span id="span4"></span>
+							Donar Virtual</a>
 					</div>
 					<!-- Modal -->
 					<div class="modal fade" id="donavirtual" data-bs-backdrop="static"
