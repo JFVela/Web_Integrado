@@ -47,7 +47,7 @@
 <body>
 	<div class="container">
 		<div class="row mb-2">
-			<div class="col-md-12">
+			<div class="col-md-12 mt-5">
 				<div class="card">
 					<div class="card-header bg-dark text-white">
 						<h3 class="text-center">Buscar Cuenta</h3>
@@ -143,24 +143,24 @@
 	      </div>
 	      <div class="modal-body">
 	        
-	        <form>
+	        <form id="frmValidarMonto" action="ServletCuenta?accion=recargar" method="POST">
 			  <div class="mb-3">
 			    <label class="form-label">Nombre del Titular</label>
-			    <input type="text" class="form-control" id="" value="" name="titular" readonly>
+			    <input type="text" class="form-control" id="id-titular" value="" name="titular" readonly>
 			  </div>
 			  <div class="mb-3">
 			    <label class="form-label">Cuenta</label>
-			    <input type="text" class="form-control" id="" value="" name="cuenta" readonly>
+			    <input type="text" class="form-control" id="id-cuenta" value="" name="cuenta" readonly>
 			  </div>
 			  <div class="mb-3">
 			    <label class="form-label">Monto</label>
-			    <input type="text" class="form-control" id="" name="monto">
+			    <input type="number" class="form-control" id="id-monto" name="monto" min="0" step="0.01" pattern="\d+(\.\d{1,2})?" title="Ingresa un número positivo con hasta dos decimales">
 			  </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+		        <button type="submit" class="btn btn-primary">Grabar</button>
+		      </div>
 			</form>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-	        <button type="button" class="btn btn-primary">Grabar</button>
 	      </div>
 	    </div>
 	  </div>
@@ -191,7 +191,28 @@
 
 <script
 	src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-	
+
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.MENSAJE!=null}">
+	<script>
+			toastr.success("${sessionScope.MENSAJE}", toastr.options = {
+					"timeOut": "2000",
+					"positionClass " : " toast-top-right ",
+				});
+	</script>
+</c:if>
+<!-- validar si existe el atrubuto MENSAJE -->
+<c:if test="${sessionScope.ERROR!=null}">
+	<script>
+			toastr.error("${sessionScope.ERROR}", toastr.options = {
+					"timeOut": "2000",
+					"positionClass " : " toast-top-right ",
+				});
+	</script>
+</c:if>
+<!-- eliminar atributo de tipo sesión MENSAJE -->
+<c:remove var="MENSAJE" scope="session"/>
+<c:remove var="ERROR" scope="session"/>
 	
 	<!-- Funciones Script -->
 	<script>

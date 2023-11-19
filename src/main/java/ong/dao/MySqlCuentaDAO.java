@@ -52,4 +52,42 @@ public class MySqlCuentaDAO implements CuentaDAO {
 		return dato;
 	}
 
+	@Override
+	public int recargarCuenta(Cuenta bean) {
+		int salida =-1;
+		Connection cn = null;
+		PreparedStatement pstm = null;
+		
+		try {
+			
+			cn = new MySqlConectar().getConectar();
+			String sql = "UPDATE cuenta SET saldo_actual = saldo_actual + ? WHERE numero = ?";
+			pstm=cn.prepareStatement(sql);
+			
+			pstm.setDouble(1, bean.getSaldo());
+			pstm.setInt(2, bean.getNumero());
+			//pstm.setString(1, bean.getNombre());
+			//pstm.setString(2, bean.getDescripcion());
+			//pstm.setInt(3, bean.getId());
+			
+			salida = pstm.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				
+				if(pstm!=null) pstm.close();
+				if(cn!=null) cn.close();
+				
+			} catch (Exception e2) {
+				
+				e2.printStackTrace();
+			}
+		}
+		
+		
+		return salida;
+	}
+
 }
