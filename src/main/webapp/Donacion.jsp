@@ -2093,10 +2093,8 @@ body.shimeji-select-ie {
         var confirmationLabel = document.getElementById("confirmationLabel");
         var confirmationInput = document.getElementById("confirmationInput");
         var confirmationButton = document.getElementById("confirmationButton");
-        var botonenviar = document.getElementById("startCountdown");
         var emailEnvio = document.getElementById("id-emailEnvio");
         var ingresoCorreo = document.getElementById("id-ingresoCorreo");
-        var span = document.getElementById("basic-addon1");
 		var span1= document.getElementById("inputGroup-sizing-default");
 		ingresoCorreo.readOnly = true;
         // Muestra el contador y comienza el temporizador
@@ -2109,12 +2107,9 @@ body.shimeji-select-ie {
             if (seconds < 0) {
                 clearInterval(countdownInterval);
                 countdownElement.style.display = "none";
-                ingresoCorreo.style.display = "none";
-                emailEnvio.style.display = "none";
-                botonenviar.style.display = "none";
-                span.style.display = "none";
+                emailEnvio.style.display = "none"; 
                 confirmationLabel.style.display = "block";
-                
+                $('#email-correo').hide();
                 // Muestra el div oculto con el id "confirmationInput"
                 confirmationInput.style.display = "block";
                 span1.style.display = "block";
@@ -2169,6 +2164,9 @@ body.shimeji-select-ie {
 	        $("#confirmationInput").hide();
 	        $("#ms-error").hide();
 	        $("#confirmationButton").hide();
+	        $('#id-ingresoCorreo').prop('readonly', false);
+
+
 	})
 	
 	</script>
