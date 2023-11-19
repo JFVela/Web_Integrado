@@ -519,7 +519,7 @@ body.shimeji-select-ie {
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button id="id-cerrar" type="button" class="btn btn-secondary"
+					<button  type="button" class="btn btn-secondary todos-cerrar"
 						data-bs-dismiss="modal">Cerrar</button>
 				</div>
 			</div>
@@ -573,7 +573,7 @@ body.shimeji-select-ie {
 								<div class="modal-header">
 									<h1 class="modal-title fs-5" id="staticBackdropLabel">Donación
 										Física</h1>
-									<button type="button" class="btn-close btn-cerrar"
+									<button type="button" class="btn-close btn-cerrar todos-cerrar"
 										data-bs-dismiss="modal" aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
@@ -617,7 +617,7 @@ body.shimeji-select-ie {
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary btn-cerrar1"
+									<button type="button" class="btn btn-secondary btn-cerrar1 todos-cerrar"
 										data-bs-dismiss="modal">Cerrar</button>
 									<button id="botonexterno" class="btn btn-primary">Donar</button>
 								</div>
@@ -670,7 +670,7 @@ body.shimeji-select-ie {
 								<div class="modal-header">
 									<h1 class="modal-title fs-5" id="staticBackdropLabel">Donación
 										Virtual</h1>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
+									<button type="button" class="btn-close todos-cerrar" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
@@ -702,7 +702,7 @@ body.shimeji-select-ie {
 														</select>
 													</div>
 													<%--Moneda --%>
-													<div class="col-md-6">
+													
 														<div id="tipo-moneda" class="form-group">
 															<label for="exampleInputEmail2" class="form-label">Moneda</label>
 															<select class="form-select form-control"
@@ -712,7 +712,7 @@ body.shimeji-select-ie {
 																	Moneda</option>
 															</select>
 														</div>
-													</div>
+													
 
 													<%--Tarjeta  de Credito--%>
 
@@ -752,7 +752,7 @@ body.shimeji-select-ie {
 
 													</div>
 													<div>
-														<div id="id-monto" class="col-md-6 form-group">
+														<div id="id-monto" class="form-group">
 															<div class="form-group">
 																<label for="exampleInputPassword1" class="form-label">Monto</label>
 																<input id="monto" placeholder="Monto:" type="text"
@@ -768,8 +768,8 @@ body.shimeji-select-ie {
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary btn-cerrar3"
-										>Cerrar</button>
+								<button type="button" class="btn btn-secondary btn-cerrar1 todos-cerrar"
+										data-bs-dismiss="modal">Cerrar</button>
 									<button id="donarexterno1" class="btn btn-primary">Donar</button>
 								</div>
 							</div>
@@ -2088,6 +2088,7 @@ body.shimeji-select-ie {
 	
 	<%--ACCION DE OCULTAR CAMPOS Y MOSTRAR EL CONTADOR AL ENVIAR AL EMAIL --%>
 	<script>
+
     function enviarCodigoCorreo() {
         var countdownElement = document.getElementById("countdown");
         var confirmationLabel = document.getElementById("confirmationLabel");
@@ -2097,6 +2098,8 @@ body.shimeji-select-ie {
         var ingresoCorreo = document.getElementById("id-ingresoCorreo");
 		var span1= document.getElementById("inputGroup-sizing-default");
 		ingresoCorreo.readOnly = true;
+		$('#startCountdown').prop('disabled', true);
+		   
         // Muestra el contador y comienza el temporizador
         countdownElement.style.display = "block";
         var seconds = 5;
@@ -2114,6 +2117,8 @@ body.shimeji-select-ie {
                 confirmationInput.style.display = "block";
                 span1.style.display = "block";
                 confirmationButton.style.display = "block";
+                $('#id-no').prop('disabled', true);
+
             }
         }, 1000);
     }
@@ -2142,7 +2147,7 @@ body.shimeji-select-ie {
 		}
 	</script>
 	<script>
-	$(document).on("click","#id-cerrar",function(){
+	$(document).on("click",".todos-cerrar",function(){
 
 		$("#formRegistro").trigger("reset");
 		$("#formInputCorreo").trigger("reset");
@@ -2165,8 +2170,8 @@ body.shimeji-select-ie {
 	        $("#ms-error").hide();
 	        $("#confirmationButton").hide();
 	        $('#id-ingresoCorreo').prop('readonly', false);
-
-
+	        $('#id-no').prop('disabled', false);
+	        $('#startCountdown').prop('disabled', false);
 	})
 	
 	</script>

@@ -86,4 +86,33 @@ public class MySqlDonacionVirtualDAO implements DonacionVirtualDAO{
 		return dato;
 	}
 
+	@Override
+	public double valormoneda(int idmoneda) {
+		Connection cn=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		double valor=0;
+		try {
+			cn=new MySqlConectar().getConectar();
+			String consulta="SELECT valor FROM ong_web.moneda where id_moneda=?";
+			ps=cn.prepareStatement(consulta);
+			ps.setInt(1,idmoneda);
+			rs=ps.executeQuery();
+			if (rs.next()) {
+	            valor = rs.getDouble(1); 
+	        }
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			try {
+				if(cn!=null) cn.close();
+				if(ps!=null) ps.close();
+				if(rs!=null) rs.close();
+			}catch(Exception ex2) {
+				ex2.printStackTrace();
+			}
+		}
+		return valor;
+	}
+
 }

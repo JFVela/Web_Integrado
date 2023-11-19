@@ -8,4 +8,5 @@ import ong.entity.DonacionVirtual;
 public interface DonacionVirtualDAO {
 	int save(DonacionVirtual bean);
 	public List<DonacionVirtual> findAll();
+	double valormoneda(int idmoneda);
 }

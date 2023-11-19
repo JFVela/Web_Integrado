@@ -10,7 +10,6 @@ import javax.activation.DataHandler;
 
 public class JavaEmail {
 	public static void enviarMail(String receptor,String mensaje) throws Exception {
-		System.out.print("Preparando el envio");
 		Properties pr=new Properties();
 		pr.put("mail.smtp.auth", true);
 		pr.put("mail.smtp.starttls.enable", true);
@@ -27,7 +26,6 @@ public class JavaEmail {
 		});
 		Message ms=prepareMessage(session,miCuenta,receptor,mensaje);
 		Transport.send(ms);
-		System.out.print("Mensaje enviado con exito");
 	}
 
 	private static Message prepareMessage(Session session, String miCuenta, String receptor, String mensaje) {

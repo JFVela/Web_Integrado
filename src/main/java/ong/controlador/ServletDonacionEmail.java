@@ -49,6 +49,7 @@ public class ServletDonacionEmail extends HttpServlet {
 			String codigo=JavaEmail.GenerarCodigo();
 			HttpSession ses=request.getSession(true);
 			ses.setAttribute("codigo", codigo);
+			ses.setAttribute("receptor", receptor);
 			JavaEmail.enviarMail(receptor,codigo);
 			
 			response.setContentType("text/plain");

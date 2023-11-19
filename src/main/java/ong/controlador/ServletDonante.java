@@ -55,16 +55,15 @@ public class ServletDonante extends HttpServlet {
 		boolean respuesta=verficarSaldo(request,response);
 		
 		if(respuesta) {
-			String email,camp,tpmon,monto,numcuen;
+			String camp,tpmon,monto,numcuen;
 			int estado=0,estado2=0;
 			
 			HttpSession session = request.getSession(false);
 
 			//recuperamos el correo ingresado
-			String correo = (String) session.getAttribute("codigo");
+			String correo = (String) session.getAttribute("receptor");
 			int dniObtenido=new MySqlDonanteDAO().obtenerDNI(correo);
 
-			email = request.getParameter("email");
 			camp=request.getParameter("camp");
 			tpmon=request.getParameter("tmone");
 			monto=request.getParameter("monto");
@@ -87,10 +86,11 @@ public class ServletDonante extends HttpServlet {
 			
 			//Actualiza la tarjeta
 			Tarjeta bean3=new Tarjeta();
+			double valor=new MySqlDonacionVirtualDAO().valormoneda(Integer.parseInt(tpmon));
 			if(Integer.parseInt(tpmon)==2) {
-				bean3.setSaldo(Double.parseDouble(monto)*3.81);
+				bean3.setSaldo(Double.parseDouble(monto)*valor);
 			}else {
-				bean3.setSaldo(Double.parseDouble(monto));
+				bean3.setSaldo(Double.parseDouble(monto)*valor);
 			}
 			bean3.setCvc(Integer.parseInt(request.getParameter("cvv")));
 			bean3.setNumCuenta(Integer.parseInt(request.getParameter("numcuen")));
@@ -208,12 +208,14 @@ public class ServletDonante extends HttpServlet {
 
 
 	private void insertarDonante(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email,local, des;
+		
+		String local, des;
+		
 		int estado=0,estado1=0;
 		HttpSession session = request.getSession(false);
 
-		//recuperamos el correo ingresado
-		String correo = (String) session.getAttribute("codigo");
+		//recuperamos el correo
+		String correo = (String) session.getAttribute("receptor");
 		
 		local = request.getParameter("locacion");
 		des = request.getParameter("descrip");
