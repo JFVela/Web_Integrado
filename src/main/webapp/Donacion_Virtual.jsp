@@ -91,7 +91,6 @@ body{
 		     <th>ID</th>
 		     <th>DNI</th>
 		     <th>ID Campaña</th>
-             <th>Tipo Donación</th>
              <th>Moneda</th>
              <th>Monto</th>
              <th>Nro Tarjeta</th>
