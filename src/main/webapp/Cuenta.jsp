@@ -146,8 +146,11 @@
 	        <form>
 			  <div class="mb-3">
 			    <label class="form-label">Nombre del Titular</label>
-			    <input type="text" class="form-control" id="" value="" name="titular">
-			    
+			    <input type="text" class="form-control" id="" value="" name="titular" readonly>
+			  </div>
+			  <div class="mb-3">
+			    <label class="form-label">Cuenta</label>
+			    <input type="text" class="form-control" id="" value="" name="cuenta" readonly>
 			  </div>
 			  <div class="mb-3">
 			    <label class="form-label">Monto</label>
@@ -215,7 +218,7 @@
 		                "<div class='btn-group'>" +
 		                    "<button type='button' class='btn btn-secondary dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false'><i class='bi bi-gear-fill'></i></button>" +
 		                    "<ul class='dropdown-menu'>" +
-		                        "<li><a class='dropdown-item' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>Recargar Saldo</a></li>" +
+		                        "<li><a class='dropdown-item' data-bs-toggle='modal' data-bs-target='#staticBackdrop' data-dueno='" + response.dueno + "' data-cuenta='" + response.numero + "'>Recargar Saldo</a></li>" +
 		                        "<li><a class='dropdown-item' href='#'>Otra Opción</a></li>" +
 		                        "<li><hr class='dropdown-divider'></li>" +
 		                        "<li><a class='dropdown-item' href='#'>Algo más</a></li>" +
@@ -227,6 +230,13 @@
 		            "</tr>");
 	            
 	            new DataTable('#tblCuenta');
+		         // Establecer el valor del campo "titular" en el formulario del modal con el valor obtenido de response.dueno
+		            $('#staticBackdrop').on('show.bs.modal', function(event) {
+		                var dueno = $(event.relatedTarget).data('dueno');
+		                var cuenta = $(event.relatedTarget).data('cuenta');
+		                $(this).find('input[name="titular"]').val(dueno);
+		                $(this).find('input[name="cuenta"]').val(cuenta);
+		            });
 	            }
 	        });
 	    });
