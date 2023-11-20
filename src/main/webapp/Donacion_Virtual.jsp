@@ -37,6 +37,10 @@ body{
 	  border: 1px solid red;
 	  box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
 	}
+
+.bg-fondo{
+	background-color: #990000;
+}
 </style>
 
 </head>
@@ -44,8 +48,16 @@ body{
 
 <div class="container">
 
-<h1 class="mt-5 text-center">Donantes virtuales</h1>
 
+<div class="row mb-2">
+			<div class="col-md-12 mt-5">
+				<div class="card">
+					<div class="card-header bg-fondo text-white">
+						<h1 class="text-center">Donantes virtuales</h1>
+					</div>
+				</div>
+			</div>
+		</div>
 <!-- Button trigger modal -->
 <!--  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Agregar
@@ -86,7 +98,7 @@ body{
 
 	<div class="mt-3">
 	<table id="tblDonantesVirtuales" class="table table-striped table-bordered" style="width:100%">
-		 <thead>
+		 <thead class="table-dark">
 		   <tr>
 		     <th>ID</th>
 		     <th>DNI</th>
@@ -96,15 +108,7 @@ body{
              <th>Nro Tarjeta</th>
 		   </tr>
 		 </thead>
-		 <tbody>
-		 	<!-- 	
-		 	<c:forEach items="${requestScope.tipodonacion}" var="row">
-			 <tr>
-			    <td>${row.idtipo}</td>
-				<td>${row.nombre}</td>
-			 </tr>
-			 </c:forEach>
-			  -->
+		 <tbody class="table-warning">
 		 </tbody>
 	</table>
 	</div>
