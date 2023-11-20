@@ -64,10 +64,10 @@ public class MySqlDonacionVirtualDAO implements DonacionVirtualDAO{
 				bean.setId(rs.getInt(1));
 				bean.setDniDonante(rs.getInt(2));
 				bean.setIdCampaña(rs.getInt(3));
-				bean.setTipoDonacion(rs.getInt(4));
-				bean.setIdMoneda(rs.getInt(5));
-				bean.setMonto(rs.getDouble(6));
-				bean.setNumCuenta(rs.getInt(7));
+				//bean.setTipoDonacion(rs.getInt(4));
+				bean.setIdMoneda(rs.getInt(4));
+				bean.setMonto(rs.getDouble(5));
+				bean.setNumCuenta(rs.getInt(6));
 				
 				
 				dato.add(bean);

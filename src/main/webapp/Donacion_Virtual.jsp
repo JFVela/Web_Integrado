@@ -155,13 +155,13 @@ body{
 	function cargarDonantesVirtuales(){
 		$.get("ServletDonacionVirtualJSON",function(response){
 			console.log(response)
-			let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
-            let botonEliminar="<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+			//let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+            //let botonEliminar="<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
             $.each(response, function(index,item){
             	//llenar la tabla
             	$("#tblDonantesVirtuales").append("<tr><td>"+item.id+"</td>"+
 						 "<td>"+item.dniDonante+"</td>"+"<td>"+item.idCampaña+"</td>"+
-						 "<td>"+item.tipoDonacion+"</td>"+"<td>"+item.idMoneda+"</td>"+
+						 "<td>"+item.idMoneda+"</td>"+
 						 "<td>"+item.monto+"</td>"+"<td>"+item.numCuenta+"</td>"+
 						 "</td></tr>");
             });
