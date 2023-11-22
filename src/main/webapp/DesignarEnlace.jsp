@@ -171,7 +171,6 @@ fieldset, legend {
 						<th>ID-Enlace</th>
 						<th>Nombre del Enlace</th>
 						<th></th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -292,7 +291,7 @@ fieldset, legend {
                     "<td>" + item.nombreRol + "</td>" +
                     "<td>" + item.enlace_id_enlace + "</td>" +
                     "<td>" + item.nombreEnlace + "</td>" +
-                    "<td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
+                    "<td>" + botonEliminar + "</td></tr>");
             });
 
             // Inicializar la tabla DataTable
@@ -360,7 +359,6 @@ fieldset, legend {
         let nombreRol = rolesData[IdRol];
         let IdEnlace = $(this).parents("tr").find("td")[0].innerHTML;
         let nombreE = $(this).parents("tr").find("td")[1].innerHTML;
-
         let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button>";
         $.get("ServletAsignarEnlaceJSON?accion=ADICIONAR&ROL=" + IdRol + "&ENLACE=" + IdEnlace, function(response) {
             console.log(response);
