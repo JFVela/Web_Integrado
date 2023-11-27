@@ -40,6 +40,7 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 			tabla(request, response);
 		} else if (tipo.equals("ELIMINAR")) {
 			eliminar(request, response);
+
 		}
 	}
 
@@ -101,18 +102,23 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 
 	private void grabar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		List<Asignar_Enlace> datos = (List<Asignar_Enlace>) request.getSession().getAttribute("carrito");
-		int resultado = new MySQL_AsignarEnlace().saveAsignaciones(datos);
-		String tipoMensaje = "error";
 
-		if (resultado >= 0) {
-			tipoMensaje = "success";
-			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE", "Asignación guardada");
-		} else {
-			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE", "Error al guardar la asignación");
+		// Verificar si la lista no es nula antes de intentar limpiarla
+		if (datos != null) {
+			int resultado = new MySQL_AsignarEnlace().saveAsignaciones(datos);
+			String tipoMensaje = "error";
+
+			if (resultado >= 0) {
+				tipoMensaje = "success";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE", "Asignación guardada");
+			} else {
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE", "Error al guardar la asignación");
+			}
+
+			datos.clear();
 		}
-		datos.clear();
 
 		response.sendRedirect("DesignarEnlace.jsp"); // Redirige a la página deseada
 	}

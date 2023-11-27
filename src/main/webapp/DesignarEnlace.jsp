@@ -98,13 +98,14 @@ fieldset, legend {
 								<div class="col-lg-6">
 									<fieldset class="reset">
 										<legend class="reset">Consulta Rol</legend>
-										<div class="row mt-3">
-											<label for="inputEmail3" class="col-sm-2">Rol</label>
-											<div class="form-group col-sm-6">
-												<select class="form-select" id="idRol">
-													<option value=" ">[Seleccione Rol]</option>
-												</select>
-											</div>
+										<div class="form-group col-sm-6">
+											<label for="idRol">Rol</label> <select class="form-select"
+												id="idRol" required>
+												<option value="" disabled selected>[Seleccione Rol]</option>
+												<!-- Agrega las opciones de roles aquí -->
+											</select>
+											<div class="invalid-feedback">Por favor, seleccione un
+												rol.</div>
 										</div>
 										<br>
 										<table id="tableEnlaces" class="table table-striped mt-4"
@@ -210,7 +211,7 @@ fieldset, legend {
 		<script>
 		var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
 		toastr[tipoMensaje]("${sessionScope.MENSAJE}", toastr.options = {
-			"timeOut" : "2000",
+			"timeOut" : "4000",
 			"positionClass " : " toast-top-right ",
 		});
 	</script>
@@ -346,7 +347,7 @@ fieldset, legend {
 	function listaEnlacesSeleccionados() {
 	    $.get("ServletRequerimiento?accion=LISTAR", function(response) {
 	        $.each(response, function(index, item) {
-	            let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button>";
+	            let botonEliminar = "<button type='button' class='btn btn-danger btn-quitarLista'><i class='fas fa-trash-alt'></i></button>";
 	            $("#tableAsignacionesRolesyEnlaces").append("<tr><td>" + item.ROL + "</td>" +
 	                "<td>" + item.nombreRol + "</td><td>" + item.ENLACE + "</td><td>" + item.nombreEnlace + "</td><td>" + botonEliminar + "</td></tr>");
 	        });
