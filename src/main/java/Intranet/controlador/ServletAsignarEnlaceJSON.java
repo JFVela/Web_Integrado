@@ -1,6 +1,5 @@
 package Intranet.controlador;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -44,10 +43,9 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 		}
 	}
 
-
 	private void quitar(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -69,21 +67,36 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 		String IdRol = request.getParameter("ROL");
 		String IdEnlace = request.getParameter("ENLACE");
 		List<Asignar_Enlace> lista = null;
+
 		if (request.getSession().getAttribute("carrito") == null) {
 			lista = new ArrayList<Asignar_Enlace>();
 		} else {
 			lista = (List<Asignar_Enlace>) request.getSession().getAttribute("carrito");
 		}
-		Asignar_Enlace asignacion = new Asignar_Enlace();
-		asignacion.setRoles_id_rol(Integer.parseInt(IdRol));
-		asignacion.setEnlace_id_enlace(Integer.parseInt(IdEnlace));
-		lista.add(asignacion);
-		request.getSession().setAttribute("carrito", lista);
-		Gson gson = new Gson();
-		String json = gson.toJson(asignacion);
-		response.setContentType("application/json;charset=UTF-8");
-		PrintWriter pw = response.getWriter();
-		pw.print(new Gson().toJson(asignacion));
+
+		// Verificar si ya existe un objeto con el mismo ID de rol y enlace
+		boolean existe = false;
+		for (Asignar_Enlace asignacion : lista) {
+			if (asignacion.getRoles_id_rol() == Integer.parseInt(IdRol)
+					&& asignacion.getEnlace_id_enlace() == Integer.parseInt(IdEnlace)) {
+				existe = true;
+				break;
+			}
+		}
+
+		if (!existe) {
+			Asignar_Enlace asignacion = new Asignar_Enlace();
+			asignacion.setRoles_id_rol(Integer.parseInt(IdRol));
+			asignacion.setEnlace_id_enlace(Integer.parseInt(IdEnlace));
+			lista.add(asignacion);
+			request.getSession().setAttribute("carrito", lista);
+
+			Gson gson = new Gson();
+			String json = gson.toJson(asignacion);
+			response.setContentType("application/json;charset=UTF-8");
+			PrintWriter pw = response.getWriter();
+			pw.print(json);
+		}
 	}
 
 	private void grabar(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -354,18 +354,24 @@ fieldset, legend {
 	}
 
     // Manejar evento al hacer clic en un botón de adición
-    $(document).on("click", ".btn-adicionar", function() {
-        let IdRol = $("#idRol").val();
-        let nombreRol = rolesData[IdRol];
-        let IdEnlace = $(this).parents("tr").find("td")[0].innerHTML;
-        let nombreE = $(this).parents("tr").find("td")[1].innerHTML;
-        let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button>";
-        $.get("ServletAsignarEnlaceJSON?accion=ADICIONAR&ROL=" + IdRol + "&ENLACE=" + IdEnlace, function(response) {
-            console.log(response);
+$(document).on("click", ".btn-adicionar", function() {
+    let IdRol = $("#idRol").val();
+    let nombreRol = rolesData[IdRol];
+    let IdEnlace = $(this).parents("tr").find("td")[0].innerHTML;
+    let nombreE = $(this).parents("tr").find("td")[1].innerHTML;
+    let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button>";
+
+    $.get("ServletAsignarEnlaceJSON?accion=ADICIONAR&ROL=" + IdRol + "&ENLACE=" + IdEnlace, function(response) {
+        console.log(response);
+
+        // Verificar si response tiene valores definidos antes de agregar a la tabla
+        if (response.roles_id_rol !== undefined && response.enlace_id_enlace !== undefined) {
             $("#tableAsignacionesRolesyEnlaces").append("<tr><td>" + response.roles_id_rol + "</td>" +
-                "<td>" + nombreRol + "</td><td>" + response.enlace_id_enlace + "</td><td>" + nombreE + "</td><td>" + botonEliminar + "</td></tr>");
-        });
+                "<td>" + nombreRol + "</td><td>" + response.enlace_id_enlace + "</td><td>" +
+                nombreE + "</td><td>" + botonEliminar + "</td></tr>");
+        }
     });
+});
 </script>
 </body>
 </html>
