@@ -344,15 +344,21 @@ fieldset, legend {
     });
 
     // Listar enlaces seleccionados
-	function listaEnlacesSeleccionados() {
-	    $.get("ServletRequerimiento?accion=LISTAR", function(response) {
-	        $.each(response, function(index, item) {
-	            let botonEliminar = "<button type='button' class='btn btn-danger btn-quitarLista'><i class='fas fa-trash-alt'></i></button>";
-	            $("#tableAsignacionesRolesyEnlaces").append("<tr><td>" + item.ROL + "</td>" +
-	                "<td>" + item.nombreRol + "</td><td>" + item.ENLACE + "</td><td>" + item.nombreEnlace + "</td><td>" + botonEliminar + "</td></tr>");
-	        });
-	    });
-	}
+function listaEnlacesSeleccionados() {
+    $.get("ServletRequerimiento?accion=LISTAR", function(response) {
+        $.each(response, function(index, item) {
+            let botonEliminar = "<button type='button' class='btn btn-danger btn-quitarLista' " +
+                "data-idrol='" + item.ROL + "' data-idenlace='" + item.ENLACE + "'>" +
+                "<i class='fas fa-trash-alt'></i></button>";
+
+            $("#tableAsignacionesRolesyEnlaces").append("<tr><td>" + 
+                item.ROL + "</td>" + "<td>" + item.nombreRol + "</td><td>" 
+                + item.ENLACE + "</td><td>"+ item.nombreEnlace + "</td><td>" 
+                + botonEliminar + "</td></tr>");
+        });
+    });
+}
+
 
     // Manejar evento al hacer clic en un botón de adición
 $(document).on("click", ".btn-adicionar", function() {
@@ -360,19 +366,42 @@ $(document).on("click", ".btn-adicionar", function() {
     let nombreRol = rolesData[IdRol];
     let IdEnlace = $(this).parents("tr").find("td")[0].innerHTML;
     let nombreE = $(this).parents("tr").find("td")[1].innerHTML;
-    let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'><i class='fas fa-trash-alt'></i></button>";
+    let botonEliminar = "<button type='button' class='btn btn-danger btn-quitarLista'><i class='fas fa-trash-alt'></i></button>";
 
     $.get("ServletAsignarEnlaceJSON?accion=ADICIONAR&ROL=" + IdRol + "&ENLACE=" + IdEnlace, function(response) {
-        console.log(response);
-
         // Verificar si response tiene valores definidos antes de agregar a la tabla
         if (response.roles_id_rol !== undefined && response.enlace_id_enlace !== undefined) {
             $("#tableAsignacionesRolesyEnlaces").append("<tr><td>" + response.roles_id_rol + "</td>" +
                 "<td>" + nombreRol + "</td><td>" + response.enlace_id_enlace + "</td><td>" +
                 nombreE + "</td><td>" + botonEliminar + "</td></tr>");
         }
+        console.log(response);
     });
 });
+    
+    
+//QUITAR DE LA LISTA
+$(document).on("click", ".btn-quitarLista", function() {
+    // Almacena una referencia a 'this'
+    var botonQuitar = $(this);
+    
+    let IdRol = botonQuitar.parents("tr").find("td")[0].innerHTML;
+    let IdEnlace = botonQuitar.parents("tr").find("td")[2].innerHTML;
+
+    // Realizar la petición para quitar la asignación
+    $.post("ServletAsignarEnlaceJSON?accion=QUITAR&ROL=" + IdRol + "&ENLACE=" + IdEnlace, function(response) {
+        // Verificar si response indica éxito
+        if (response === "Objeto eliminado correctamente") {
+            // Utiliza la variable que almacenó la referencia a 'this'
+            botonQuitar.parents("tr").remove();
+        } else {
+            console.log("Error al eliminar objeto:", response);
+        }
+    });
+});
+
+
+    
 </script>
 </body>
 </html>

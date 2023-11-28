@@ -3,6 +3,7 @@ package Intranet.controlador;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -44,9 +45,31 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 		}
 	}
 
-	private void quitar(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+	private void quitar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// Obtén los parámetros del request (idRol e idEnlace)
+		String idRol = request.getParameter("ROL");
+		String idEnlace = request.getParameter("ENLACE");
 
+		// Obtén la lista de la sesión
+		List<Asignar_Enlace> lista = (List<Asignar_Enlace>) request.getSession().getAttribute("carrito");
+
+		// Encuentra y elimina el objeto de la lista
+		Iterator<Asignar_Enlace> iterator = lista.iterator();
+		while (iterator.hasNext()) {
+			Asignar_Enlace asignacion = iterator.next();
+			if (String.valueOf(asignacion.getRoles_id_rol()).equals(idRol)
+					&& String.valueOf(asignacion.getEnlace_id_enlace()).equals(idEnlace)) {
+				iterator.remove();
+				break;
+			}
+		}
+
+		// Actualiza la sesión con la lista modificada
+		request.getSession().setAttribute("carrito", lista);
+
+		// Puedes enviar una respuesta si es necesario
+		response.setContentType("text/plain");
+		response.getWriter().write("Objeto eliminado correctamente");
 	}
 
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -111,10 +134,10 @@ public class ServletAsignarEnlaceJSON extends HttpServlet {
 			if (resultado >= 0) {
 				tipoMensaje = "success";
 				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE", "Asignación guardada");
+				request.getSession().setAttribute("MENSAJE", "GUARDADO CORRECTAMENTE");
 			} else {
 				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE", "Error al guardar la asignación");
+				request.getSession().setAttribute("MENSAJE", "NO SE GUARDO CORRECTAMENTE");
 			}
 
 			datos.clear();
