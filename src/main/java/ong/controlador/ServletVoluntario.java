@@ -1,7 +1,13 @@
 package ong.controlador;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URI;
 import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
 
 import javax.servlet.ServletException;
@@ -146,11 +152,25 @@ public class ServletVoluntario extends HttpServlet {
 	}
 
 	private void listarVoluntario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//crear atributo
-		request.setAttribute("docentes",new MySqlVoluntarioDAO().findAll());
-		//direccionar a la página "docente.jsp"
-		request.getRequestDispatcher("/AdVoluntarios.jsp").forward(request,response);		
-	}
+		try {
+			//crear objeto de la classe HTTPCLIENT
+			HttpClient http = HttpClient.newHttpClient();
+			//crear objeto de la clase HTTPREQUEST --> Solicitud
+			HttpRequest request_lista = HttpRequest.newBuilder().uri(URI.create("http://localhost:8091/voluntario/lista"))
+										.GET().build();
+			
+			//crear objeto de la clase HTTPRESPONSE ---
+			HttpResponse<String> response_lista = http.send(request_lista, BodyHandlers.ofString());
+			//Preparar salida en format JSON
+			response.setContentType("application/json;charset=UTF-8");
+			//
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}		
+	
 
 	private void verificarDNI(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		 // Recuperar el DNI del formulario

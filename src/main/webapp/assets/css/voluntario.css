@@ -655,10 +655,10 @@ section.faq {
 
 
 .canvasSec{
-    padding: 30px 100px;
+    padding: 30px 200px;
 }
 #grafico-de-barras-eventos{
-	height: 760px!important;
+	height: 550px!important;
 	}
 
 .canvas1{
@@ -675,11 +675,11 @@ section.faq {
 
 .canvasSec2{
 	    background-color: rgb(26, 26, 26);
-    padding: 30px 100px;
+    padding: 30px 200px;
 }
 
 #grafico-de-barras-especialidades{
-	height: 760px!important;
+	height: 550px!important;
 	}
 
 .canvas2{
@@ -695,7 +695,7 @@ section.faq {
 }
 .canvasSec3{
 	    background-color: rgb(26, 26, 26);
-    padding: 50px 150px;
+    padding: 50px 200px;
 }
 
 
@@ -709,7 +709,7 @@ section.faq {
     border-radius: 25px;
     box-sizing: border-box;
     justify-content: center;
-    height: 800px;
+    height: 550px;
     
    
 }
