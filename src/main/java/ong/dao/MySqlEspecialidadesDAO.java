@@ -23,7 +23,7 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 		    // 1. Obtener Conexión
 		    con = new MySqlConectar().getConectar();
 		    // 2. Sentencia SQL
-		    String sql = "INSERT INTO especialidades (idEspecialidades, nombre) VALUES(?,?)";
+		    String sql = "INSERT INTO especialidades (id_Especialidades, nombre) VALUES(?,?)";
 		    // 3. Crear objeto "ps" y enviar la variable "sql"
 		    ps = con.prepareStatement(sql);
 		    // 4. Parámetros
@@ -59,7 +59,7 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 		        // 1. Obtener Conexión
 		        con = new MySqlConectar().getConectar();
 		        // 2. Sentencia SQL para actualizar
-		        String sql = "UPDATE especialidades SET nombre = ? WHERE idEspecialidades = ?";
+		        String sql = "UPDATE especialidades SET nombre = ? WHERE id_Especialidades = ?";
 		        // 3. Crear objeto "ps" y enviar la variable "sql"
 		        ps = con.prepareStatement(sql);
 		        // 4. Parámetros
@@ -95,7 +95,7 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 		        // 1. Obtener Conexión
 		        con = new MySqlConectar().getConectar();
 		        // 2. Sentencia SQL para eliminar por ID
-		        String sql = "DELETE FROM especialidades WHERE idEspecialidades = ?";
+		        String sql = "DELETE FROM especialidades WHERE id_Especialidades = ?";
 		        // 3. Crear objeto "ps" y enviar la variable "sql"
 		        ps = con.prepareStatement(sql);
 		        // 4. Parámetro
@@ -132,7 +132,7 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 		        // 1. Obtener Conexión
 		        con = new MySqlConectar().getConectar();
 		        // 2. Sentencia SQL para obtener una especialidad por su ID
-		        String sql = "SELECT * FROM especialidades WHERE idEspecialidades = ?";
+		        String sql = "SELECT * FROM especialidades WHERE id_Especialidades = ?";
 		        // 3. Crear objeto "ps" y enviar la variable "sql"
 		        ps = con.prepareStatement(sql);
 		        // 4. Parámetro
@@ -177,10 +177,10 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 	        // 1. Obtener Conexión
 	        con = new MySqlConectar().getConectar();
 	        // 2. Sentencia SQL para obtener todos los registros
-	        String sql = "SELECT e.idEspecialidades, e.nombre, COUNT(v.dni) AS inscritos " +
+	        String sql = "SELECT e.id_Especialidades, e.nombre, COUNT(v.dni) AS inscritos " +
 	                     "FROM especialidades e " +
-	                     "LEFT JOIN voluntario v ON e.idEspecialidades = v.Especialidades_idEspecialidades " +
-	                     "GROUP BY e.idEspecialidades, e.nombre";
+	                     "LEFT JOIN voluntario v ON e.id_Especialidades = v.Especialidades_idEspecialidades " +
+	                     "GROUP BY e.id_Especialidades, e.nombre";
 	        // 3. Crear objeto "ps" y enviar la variable "sql"
 	        ps = con.prepareStatement(sql);
 
@@ -191,7 +191,7 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 	        while (rs.next()) {
 	            // Crear un objeto Especialidad con los datos obtenidos de la consulta
 	            Especialidad especialidad = new Especialidad();
-	            especialidad.setIdEspecialidades(rs.getInt("idEspecialidades"));
+	            especialidad.setIdEspecialidades(rs.getInt("id_Especialidades"));
 	            especialidad.setNombre(rs.getString("nombre"));
 	            especialidad.setInscritos(rs.getInt("inscritos"));
 

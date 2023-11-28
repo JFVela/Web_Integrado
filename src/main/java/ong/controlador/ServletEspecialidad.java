@@ -1,6 +1,13 @@
 package ong.controlador;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,11 +44,33 @@ public class ServletEspecialidad extends HttpServlet {
 		    //validar tipo
 		    if (tipo.equals("guardar")) {
 		        grabarEspecialidad(request, response);
-		    }else if(tipo.equals("eliminar"))
+		    }else if(tipo.equals("eliminar")) {
 				eliminarEspecialidad(request,response);	
+		    }else if(tipo.equals("listaEspecialidad"))
+				listaEspecialidad(request,response);
 	}
 
 
+
+	private void listaEspecialidad(HttpServletRequest request, HttpServletResponse response) {
+			try {
+				//crear objeto de la classe HTTPCLIENT
+				HttpClient http = HttpClient.newHttpClient();
+				//crear objeto de la clase HTTPREQUEST --> Solicitud
+				HttpRequest request_lista = HttpRequest.newBuilder().uri(URI.create("http://localhost:8091/especialidad/lista"))
+											.GET().build();
+				
+				//crear objeto de la clase HTTPRESPONSE ---
+				HttpResponse<String> response_lista = http.send(request_lista, BodyHandlers.ofString());
+				//Preparar salida en format JSON
+				response.setContentType("application/json;charset=UTF-8");
+				//
+				PrintWriter pw = response.getWriter();
+				pw.print(response_lista.body());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
 	private void eliminarEspecialidad(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		 String id = request.getParameter("id");

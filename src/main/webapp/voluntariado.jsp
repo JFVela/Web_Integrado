@@ -687,7 +687,7 @@ body.shimeji-select-ie {
 
 
 
-			$.get("ServletEspecialidadesJSON", function(response) {
+			$.get("ServletEspecialidad?accion=listaEspecialidad", function(response) {
 				$.each(response, function(index, item) {
 					$("#id-especialidad").append(
 							"<option value='"+item.IdEspecialidades+"'>"
