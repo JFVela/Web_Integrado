@@ -196,14 +196,14 @@ function cargarRoles() {
     });
 }
 $(document).on("click", ".btn-editar", function() {
-    var codigo;
-    codigo = $(this).parents("tr").find("td")[0].innerHTML;
-    $.get("ServletFindRolJSON?codigo=" + codigo, function(response) {
+    var codigo = $(this).parents("tr").find("td")[0].innerHTML;
+    $.get("ServletRol?accion=buscarRol&id=" + codigo, function(response) { 
         $("#id-codigo").val(response.id);
         $("#id-nombre").val(response.nombre);
         $("#id-descripcion").val(response.descripcion);
     });
 });
+
 
 $(document).on("click", ".btn-eliminar", function() {
     var codigo;
@@ -222,7 +222,8 @@ $(document).on("click", ".btn-eliminar", function() {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location = "ServletRol?accion=eliminar&codigo=" + codigo;
+           // window.location = "ServletRol?accion=eliminar&codigo=" + codigo;
+            window.location = "http://localhost:8080/GitHub_ONG/ServletRol?accion=eliminar&id=" + codigo;
         }
     });
 });

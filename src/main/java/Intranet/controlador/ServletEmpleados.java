@@ -24,6 +24,7 @@ import com.google.gson.JsonObject;
 import Intranet.dao.MySQL_Empleados;
 import Intranet.entidad.Empleados;
 import Intranet.entidad.Enlace;
+import Intranet.entidad.Roles;
 
 @WebServlet("/ServletEmpleados")
 public class ServletEmpleados<Enlace> extends HttpServlet {
@@ -362,8 +363,16 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		empleado.setCorreo(correo);
 		empleado.setDireccion(direccion);
 		empleado.setSueldo(Double.parseDouble(sueldo));
+		
+		Roles R=new Roles();
+		R.setId(Integer.parseInt(id_rol));
+		//empleado.setId_rol();
+		
 		empleado.setId_rol(Integer.parseInt(id_rol));
 		empleado.setId_depa(Integer.parseInt(id_depa));
+		
+
+		
 
 		if (empleado.getCodigo() == 0) {
 			int estado = new MySQL_Empleados().save(empleado);
