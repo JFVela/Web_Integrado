@@ -1,6 +1,12 @@
 package Intranet.controlador;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -52,6 +58,56 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 				telefono(request, response);
 			else if (tipo.equals("verificarCorreo"))
 				correo(request, response);
+			else if (tipo.equals("listarRol"))
+				listarRol(request, response);
+
+			else if (tipo.equals("listarDepartamento"))
+				listaDepa(request, response);
+
+		}
+	}
+
+	private void listaDepa(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			// Crear un cliente HTTP
+			HttpClient client = HttpClient.newHttpClient();
+
+			// Crear una solicitud HTTP GET con la URI especificada
+			HttpRequest request_lista = HttpRequest.newBuilder().uri(URI.create("http://localhost:8091/Depa/lista"))
+					.GET().build();
+
+			// Enviar la solicitud y obtener la respuesta
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			response.setContentType("application/json;charset=UTF-8");
+
+			// Obtener la respuesta del servidor y enviarla al cliente
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void listarRol(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			// Crear un cliente HTTP
+			HttpClient client = HttpClient.newHttpClient();
+
+			// Crear una solicitud HTTP GET con la URI especificada
+			HttpRequest request_lista = HttpRequest.newBuilder().uri(URI.create("http://localhost:8091/Roles/lista"))
+					.GET().build();
+
+			// Enviar la solicitud y obtener la respuesta
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			response.setContentType("application/json;charset=UTF-8");
+
+			// Obtener la respuesta del servidor y enviarla al cliente
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -232,10 +288,37 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		}
 	}
 
+	
+	/*
+	 * AL COMIENZO USAMOS ESTO PARA LISTAR
 	private void ListarEmpleados(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setAttribute("empleados", new MySQL_Empleados().findAll());
 		request.getRequestDispatcher("/Empleados.jsp").forward(request, response);
+	}*/
+	
+	private void ListarEmpleados(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			// Crear un cliente HTTP
+			HttpClient client = HttpClient.newHttpClient();
+
+			// Crear una solicitud HTTP GET con la URI especificada
+			HttpRequest request_lista = HttpRequest.newBuilder().uri(URI.create("http://localhost:8091/Empleado/lista"))
+					.GET().build();
+
+			// Enviar la solicitud y obtener la respuesta
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			response.setContentType("application/json;charset=UTF-8");
+
+			// Obtener la respuesta del servidor y enviarla al cliente
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void GuardarEmpleado(HttpServletRequest request, HttpServletResponse response)

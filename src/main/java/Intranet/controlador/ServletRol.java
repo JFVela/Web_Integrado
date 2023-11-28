@@ -1,6 +1,13 @@
 package Intranet.controlador;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,10 +37,33 @@ public class ServletRol extends HttpServlet {
 			EliminarRol(request, response);
 	}
 
-	private void ListarRol(HttpServletRequest request, HttpServletResponse response)
+	/*private void ListarRol(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setAttribute("rol", new MySQL_Roles().findAll());
 		request.getRequestDispatcher("/Roles.jsp").forward(request, response);
+	}*/
+	
+	private void ListarRol(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			// Crear un cliente HTTP
+			HttpClient client = HttpClient.newHttpClient();
+
+			// Crear una solicitud HTTP GET con la URI especificada
+			HttpRequest request_lista = HttpRequest.newBuilder().uri(URI.create("http://localhost:8091/Roles/lista"))
+					.GET().build();
+
+			// Enviar la solicitud y obtener la respuesta
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			response.setContentType("application/json;charset=UTF-8");
+
+			// Obtener la respuesta del servidor y enviarla al cliente
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void GuardarRol(HttpServletRequest request, HttpServletResponse response)

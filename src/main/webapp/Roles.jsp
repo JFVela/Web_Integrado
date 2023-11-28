@@ -164,7 +164,8 @@
 <script>
 cargarRoles();
 function cargarRoles() {
-    $.get("ServletRolJSON", function(response) {
+    //$.get("ServletRolJSON", function(response) {
+    	$.get("ServletRol?accion=listado", function(response) {
         let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
         let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
         $.each(response, function(index, item) {

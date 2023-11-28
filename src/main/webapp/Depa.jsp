@@ -41,6 +41,7 @@
 	border: 1px solid red;
 	box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
 }
+
 .navbar-nav .nav-link {
 	transition: color 0.3s;
 }
@@ -165,11 +166,12 @@
  
  //crear función para leer JSON de Departamentos
 function cargarDepa() {
-	$.get("ServletDepaJSON", function (response) {
+	//$.get("ServletDepaJSON", function (response) {
+		$.get("ServletDepa?accion=listado", function (response) {
 		let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
 		let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
 		$.each(response, function (index, item) {
-			$("#TablaDepa").append("<tr><td>" + item.id + "</td>" +
+			$("#TablaDepa").append("<tr><td>" + item.id_depa+ "</td>" +
 				"<td>" + item.nombre + "</td><td>" + item.descripcion + "</td>" +
 				"<td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
 		});

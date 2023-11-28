@@ -227,23 +227,24 @@
     cargarRol();
     
     function cargarDepa(){
-		$.get("ServletDepaJSON",function(response){	
+		$.get("ServletEmpleados?accion=listarDepartamento",function(response){	
 			$.each(response,function(index,item){
-				$("#id-departamento").append("<option value='"+item.id+"'>"+item.nombre+"</option>");
+				$("#id-departamento").append("<option value='"+item.id_depa+"'>"+item.nombre+"</option>");
 			})
 		})
 	}
     
-    function cargarRol(){
-		$.get("ServletRolJSON",function(response){	
-			$.each(response,function(index,item){
-				$("#id-rol").append("<option value='"+item.id+"'>"+item.nombre+"</option>");
-			})
-		})
-	}
+    function cargarRol() {
+        $.get("ServletEmpleados?accion=listarRol", function(response) {
+            $.each(response, function(index, item) {
+                $("#id-rol").append("<option value='" + item.id + "'>" + item.nombre + "</option>");
+            });
+        });
+    }
     
     function cargarEmpleados() {
-        $.get("ServletEmpleadosJSON", function(response) {
+        //$.get("ServletEmpleadosJSON", function(response) {
+            $.get("ServletEmpleados?accion=listado", function(response) {
             let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
             let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
             $.each(response, function(index, item) {
@@ -253,8 +254,8 @@
                     "<td>" + item.nombre + "</td><td>" + item.paterno + "</td>" +
                     "<td>" + item.materno + "</td><td>" + item.telefono + "</td>" +
                     "<td>" + item.correo + "</td><td>" + item.direccion + "</td>" +
-                    "<td>" + item.sueldo + "</td><td>" + item.nombre_rol + "</td>" +
-                    "<td>" + item.nombre_departamento + "</td><td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
+                    "<td>" + item.sueldo + "</td><td>" + item.rol.nombre + "</td>" +
+                    "<td>" + item.depa.nombre + "</td><td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
             });
 
             $(document).ready(function() {

@@ -19,7 +19,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
 	rel="stylesheet">
-<!-- JavaScript para redirigir a login.jsp si sessionScope.datosEmpleado es nulo -->
+<!-- JavaScript para redirigir a login.jsp si sessionScope.datosEmpleado es nulo 
 
 <script type="text/javascript">
 	document.addEventListener("DOMContentLoaded", function() {
@@ -29,6 +29,7 @@
 		}
 	});
 </script>
+-->
 
 </head>
 <body>
