@@ -20,7 +20,7 @@
 	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
 	rel="stylesheet">
 <!-- JavaScript para redirigir a login.jsp si sessionScope.datosEmpleado es nulo -->
-<!--
+
 <script type="text/javascript">
 	document.addEventListener("DOMContentLoaded", function() {
 		var datosEmpleado = "${sessionScope.datosEmpleado}";
@@ -29,7 +29,7 @@
 		}
 	});
 </script>
--->
+
 </head>
 <body>
 	<!-- NAVBAR -->

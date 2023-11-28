@@ -115,7 +115,7 @@
 }
 
 .fond {
-	background-color: white;
+	background-color: black;
 	display: inline-block;
 	/* Hace que el fondo se ajuste al contenido del título */
 	padding: 5px 10px;

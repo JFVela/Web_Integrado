@@ -41,7 +41,6 @@
 	border: 1px solid red;
 	box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
 }
-
 .navbar-nav .nav-link {
 	transition: color 0.3s;
 }
