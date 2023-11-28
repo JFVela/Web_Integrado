@@ -183,36 +183,7 @@
 <body>
 
 	<!-- Navbar -->
-	<nav
-		class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0 border-bottom">
-		<div id="navv" class="container">
-			<a class="navbar-brand" href="#!"> <img id="logoimg"
-				src="assets/img/logo1.png" alt="ONG">
-			</a>
-			<button class="navbar-toggler collapsed" type="button"
-				data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<i class="fas fa-bars"></i>
-			</button>
-			<div class="navbar-collapse collapse" id="navbarSupportedContent"
-				style="">
-				<ul class="navbar-nav ms-auto">
-					<li class="nav-item"><a class="nav-link" href="menu.html">Inicio</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="Nosotros.jsp">Nosotros</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="HisExito.jsp">Historias
-							de éxito</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="voluntariado.jsp">Voluntariado</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">Eventos
-							y noticias</a></li>
-					<a type="" class="btn btn-primary ms-3" href="Donacion.jsp">Dona</a>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<jsp:include page="nabvar.jsp"></jsp:include>
 	<!-- Navbar -->
 
 
@@ -313,141 +284,123 @@
 	<%--Fin de la ultima Sección --%>
 
 	<!-- Footer -->
-<footer class="footer-area footer--light">
-			<div class="footer-big">
-				<!-- start .container -->
-				<div class="container">
-					<div class="row">
-						<div class="col-md-3 col-sm-12">
-							<div class="footer-widget">
-								<div class="widget-about">
-									<img src="assets/img/footerimg.jpg" alt="" class="img-fluid">
-									<p id="footerp">Organización sin fines de lucro creada para ayudar a los más
-										neceesitados del Perú</p>
-									<ul class="contact-details">
-										<li id="footerli">
-											<span class="icon-earphones"></span> Telef:
-											<a id="footera" href="tel:344-755-111">344-755-111</a>
-										</li>
-										<li id="footerli">
-											<span class="icon-envelope-open"></span>
-											<a id="footera" href="">51, San Martín 15108</a>
-										</li>
-									</ul>
-								</div>
+	<footer class="footer-area footer--light">
+		<div class="footer-big">
+			<!-- start .container -->
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3 col-sm-12">
+						<div class="footer-widget">
+							<div class="widget-about">
+								<img src="assets/img/footerimg.jpg" alt="" class="img-fluid">
+								<p id="footerp">Organización sin fines de lucro creada para
+									ayudar a los más neceesitados del Perú</p>
+								<ul class="contact-details">
+									<li id="footerli"><span class="icon-earphones"></span>
+										Telef: <a id="footera" href="tel:344-755-111">344-755-111</a>
+									</li>
+									<li id="footerli"><span class="icon-envelope-open"></span>
+										<a id="footera" href="">51, San Martín 15108</a></li>
+								</ul>
 							</div>
-							<!-- Ends: .footer-widget -->
 						</div>
-						<!-- end /.col-md-4 -->
-						<div class="col-md-3 col-sm-4">
-							<div class="footer-widget">
-								<div class="footer-menu footer-menu--1">
-									<h4 id="footerh4" class="footer-widget-title">Categotoria popular</h4>
-									<ul id="footerul">
-										<li id="footerli">
-											<a id="footera" href="voluntariado.jsp">Voluntariado</a>
-										</li>
-										<li id="footerli">
-											<a id="footera" href="Donacion.jsp">Donar</a>
-										</li>
-										<li id="footerli">
-											<a id="footera" href="voluntariado.jsp#howvol">¿Cómo ser voluntario?</a>
-										</li>
-										<li id="footerli">
-											<a id="footera" href="#">Admin</a>
-										</li>
-									</ul>
-								</div>
-								<!-- end /.footer-menu -->
-							</div>
-							<!-- Ends: .footer-widget -->
-						</div>
-						<!-- end /.col-md-3 -->
-
-						<div class="col-md-3 col-sm-4">
-							<div class="footer-widget">
-								<div class="footer-menu">
-									<h4 id="footerh4" class="footer-widget-title">ONG</h4>
-									<ul id="footerul">
-										<li id="footerli">
-											<a id="footera" href="Nosotros.jsp">Nosotros</a>
-										</li>
-										<li id="footerli">
-											<a id="footera" href="HisExito.jsp">Historias de éxito </a>
-										</li>
-										<li id="footerli">
-											<a id="footera" href="voluntariado.jsp">Voluntariado</a>
-										</li>
-										<li id="footerli">
-											<a id="footera" href="#">Contáctanos</a>
-										</li>
-										<li id="footerli">
-											<a id="footera" href="#">Eventos &amp; Noticiaas</a>
-										</li>
-									</ul>
-								</div>
-								<!-- end /.footer-menu -->
-							</div>
-							<!-- Ends: .footer-widget -->
-						</div>
-						<!-- end /.col-lg-3 -->
-
-						<div class="col-md-3 col-sm-4">
-							<div class="footer-widget">
-								<div class="footer-menu no-padding">
-									<h4 id="footerh4" class="footer-widget-title">Soporte de ayuda</h4>
-									<ul id="footerul">
-										<li id="footerli">
-											<a id="footera" href="#">Foro de soporte</a>
-										</li>
-										<li id="footerli">
-											<a id="footera" href="#">Terminos &amp; Condiciones</a>
-										</li>
-										<li id="footerli">
-											<a id="footera" href="#">Politica de privacidad</a>
-										</li>
-										<li id="footerli">
-											<a id="footera" href="voluntariado.jsp#fa1">FAQ voluntariado</a>
-										</li>
-										<li id="footerli">
-											<a id="footera" href="#">FAQ Donar</a>
-										</li>
-										<li id="footerli">
-											<a id="footera" href="#">FAQ Nosotros</a>
-										</li>
-									</ul>
-								</div>
-								<!-- end /.footer-menu -->
-							</div>
-							<!-- Ends: .footer-widget -->
-						</div>
-						<!-- Ends: .col-lg-3 -->
-
+						<!-- Ends: .footer-widget -->
 					</div>
-					<!-- end /.row -->
-				</div>
-				<!-- end /.container -->
-			</div>
-			<!-- end /.footer-big -->
-
-			<div class="mini-footer">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="copyright-text">
-								<p id="footerp">© 2023
-									<a id="footera" href="#">Renovando Vidas</a>. Todos los derechos reservados. Creado
-									por
-									<a id="footera" href="#">J.José, Juan, Diego, Alex</a>
-								</p>
+					<!-- end /.col-md-4 -->
+					<div class="col-md-3 col-sm-4">
+						<div class="footer-widget">
+							<div class="footer-menu footer-menu--1">
+								<h4 id="footerh4" class="footer-widget-title">Categotoria
+									popular</h4>
+								<ul id="footerul">
+									<li id="footerli"><a id="footera" href="voluntariado.jsp">Voluntariado</a>
+									</li>
+									<li id="footerli"><a id="footera" href="Donacion.jsp">Donar</a>
+									</li>
+									<li id="footerli"><a id="footera"
+										href="voluntariado.jsp#howvol">¿Cómo ser voluntario?</a></li>
+									<li id="footerli"><a id="footera" href="#">Admin</a></li>
+								</ul>
 							</div>
-
-
+							<!-- end /.footer-menu -->
 						</div>
+						<!-- Ends: .footer-widget -->
+					</div>
+					<!-- end /.col-md-3 -->
+
+					<div class="col-md-3 col-sm-4">
+						<div class="footer-widget">
+							<div class="footer-menu">
+								<h4 id="footerh4" class="footer-widget-title">ONG</h4>
+								<ul id="footerul">
+									<li id="footerli"><a id="footera" href="Nosotros.jsp">Nosotros</a>
+									</li>
+									<li id="footerli"><a id="footera" href="HisExito.jsp">Historias
+											de éxito </a></li>
+									<li id="footerli"><a id="footera" href="voluntariado.jsp">Voluntariado</a>
+									</li>
+									<li id="footerli"><a id="footera" href="#">Contáctanos</a>
+									</li>
+									<li id="footerli"><a id="footera" href="#">Eventos
+											&amp; Noticiaas</a></li>
+								</ul>
+							</div>
+							<!-- end /.footer-menu -->
+						</div>
+						<!-- Ends: .footer-widget -->
+					</div>
+					<!-- end /.col-lg-3 -->
+
+					<div class="col-md-3 col-sm-4">
+						<div class="footer-widget">
+							<div class="footer-menu no-padding">
+								<h4 id="footerh4" class="footer-widget-title">Soporte de
+									ayuda</h4>
+								<ul id="footerul">
+									<li id="footerli"><a id="footera" href="#">Foro de
+											soporte</a></li>
+									<li id="footerli"><a id="footera" href="#">Terminos
+											&amp; Condiciones</a></li>
+									<li id="footerli"><a id="footera" href="#">Politica de
+											privacidad</a></li>
+									<li id="footerli"><a id="footera"
+										href="voluntariado.jsp#fa1">FAQ voluntariado</a></li>
+									<li id="footerli"><a id="footera" href="#">FAQ Donar</a></li>
+									<li id="footerli"><a id="footera" href="#">FAQ
+											Nosotros</a></li>
+								</ul>
+							</div>
+							<!-- end /.footer-menu -->
+						</div>
+						<!-- Ends: .footer-widget -->
+					</div>
+					<!-- Ends: .col-lg-3 -->
+
+				</div>
+				<!-- end /.row -->
+			</div>
+			<!-- end /.container -->
+		</div>
+		<!-- end /.footer-big -->
+
+		<div class="mini-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="copyright-text">
+							<p id="footerp">
+								© 2023 <a id="footera" href="#">Renovando Vidas</a>. Todos los
+								derechos reservados. Creado por <a id="footera" href="#">J.José,
+									Juan, Diego, Alex</a>
+							</p>
+						</div>
+
+
 					</div>
 				</div>
 			</div>
-		</footer>
+		</div>
+	</footer>
 	<!-- Fin del Footer -->
 </body>
 </html>
