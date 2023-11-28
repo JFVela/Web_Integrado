@@ -30,7 +30,6 @@
 	href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.4.1/plugins/css/all.min.css">
 <link rel="stylesheet" href="assets/css/menu.css">
 
-<link rel="stylesheet" href="assets/css/menu.css">
 <style>
 .nav-link.active:focus {
 	background-color: #dc3545;
@@ -38,7 +37,7 @@
 }
 
 .espace {
-	margin-top: 73px;
+	margin-top: 88px;
 }
 /* Estilo predeterminado para la tarjeta */
 .tarjeta {
@@ -115,14 +114,14 @@
 }
 
 .fond {
-	background-color: white;
+	background: #ffffff;
 	display: inline-block;
 	/* Hace que el fondo se ajuste al contenido del título */
 	padding: 5px 10px;
 	/* Ajusta el espaciado interior del fondo del título */
 	border-radius: 5px;
-	color: black;
 	margin-bottom: 0px;
+	color: black;
 }
 
 .fon2 {
@@ -181,10 +180,10 @@
 </style>
 </head>
 <body>
-
-	<!-- Navbar -->
+<!-- Navbar -->
 	<jsp:include page="nabvar.jsp"></jsp:include>
 	<!-- Navbar -->
+	
 
 
 	<%--Secciones en forma de tarjeta --%>
@@ -193,15 +192,15 @@
 			<div class="row">
 				<div class="d-flex">
 					<div class="w-100">
-						<div class="card text-bg-dark tarjeta  tamaño-card">
-							<img src="img/ll.jpg" class="card-img  h-100" alt="...">
+						<div class="card text-bg-dark tarjeta tamaño-card">
+							<img src="img/ll.jpg" class="card-img" alt="...">
 							<div class="card-img-overlay">
 								<div class="tarjeta-texto">
-									<h1 class="card-title fond">
+									<h1 class="card-title fond text-dark">
 										<strong>RENOVANDO</strong>
 									</h1>
 									<br>
-									<h1 class="card-title fond">
+									<h1 class="card-title fond text-dark">
 										<strong>VIDAS</strong>
 									</h1>
 									<p class="card-text fon2">Conoce más sobre nuestra
@@ -216,18 +215,17 @@
 							<img src="img/dd.jpg" class="card-img h-100" alt="...">
 							<div class="card-img-overlay">
 								<div class="tarjeta-texto">
-									<h1 class="card-title fond">
+									<h1 class="card-title fond text-dark">
 										<strong>NUESTRA</strong>
 									</h1>
 									<br>
-									<h1 class="card-title fond">
+									<h1 class="card-title fond text-dark">
 										<strong>HISTORIA</strong>
 									</h1>
 									<p class="card-text fon2">Enterate más sobre la historia de
 										nuestra organización.</p>
 									<a class="btn estilo-boton" href="Nosotros_historia.jsp">VER
 										MÁS</a>
-
 								</div>
 							</div>
 						</div>
@@ -237,11 +235,11 @@
 							<img src="img/bb.jpg" class="card-img h-100" alt="...">
 							<div class="card-img-overlay">
 								<div class="tarjeta-texto">
-									<h1 class="card-title fond">
+									<h1 class="card-title fond text-dark">
 										<strong>NUESTROS</strong>
 									</h1>
 									<br>
-									<h1 class="card-title fond">
+									<h1 class="card-title fond text-dark">
 										<strong>COLABORADORES</strong>
 									</h1>
 									<p class="card-text fon2">Encuentra aquí las entidades que
