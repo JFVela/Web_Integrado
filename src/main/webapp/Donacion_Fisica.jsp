@@ -36,7 +36,7 @@
 <div class="container">
 		<h1 class="mt-5 p-3 text-center display-2"><strong>Listado de <span style="color: green;">Donaciones Físicas</span></strong></h1>
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" 
-		data-bs-target="#exampleModal">Nuevo Donante</button>
+		data-bs-target="#exampleModal">Nueva Donación</button>
 		<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" 
 	aria-hidden="true" data-bs-backdrop="static"
@@ -150,21 +150,21 @@ cargarDonacionesFisicas();
 CargarLocaciones();
 CargarDni();
 function CargarLocaciones(){
-	$.get("ServletLocacionJSON",function(response){
+	$.get("ServletLocacion?accion=listado",function(response){
 		$.each(response,function(index,item){
-			$("#id-local").append("<option value='"+item.id+"'>"+item.nombre+"</option>");
+			$("#id-local").append("<option value='"+item.id_local+"'>"+item.nombre+"</option>");
 		})
 	})	
 }
 function CargarDni(){
-	$.get("ServletDonanteJSON",function(response){
+	$.get("ServletDonante?accion=listado",function(response){
 		$.each(response,function(index,item){
 			$("#id-dnidonante").append("<option value='"+item.dni+"'>"+item.dni+"</option>");
 		})
 	})	
 }
 function cargarDonacionesFisicas(){
-	$.get("ServletDonacionFisicoJSON?accion=listado",function(response){	
+	$.get("ServletDonacionFisico?accion=listado",function(response){	
 		
 		let botonEditar="<a class='btn-neon1 btn-edit'  data-bs-toggle='modal' data-bs-target='#exampleModal' data-operacion='actualizar' ><span id=span11></span><span id=span21></span><span id=span31></span><span id=span41></span>Editar</a>";
         let botonEliminar="<a class='btn-neon btn-deleted'><span id=span1></span> <span id=span2></span> <span id=span3></span><span id=span4></span>Eliminar</a>";
@@ -173,8 +173,8 @@ function cargarDonacionesFisicas(){
             let estadoTexto = item.estado === false ? "No entregado" : "Entregado";
 
 			//llenar tabla
-			$("#tablaDonFisi").append("<tr><td>"+item.idFisico+"</td>"+
-				 "<td>"+item.dniDonantes+"</td>"+"<td>"+item.nombreLocal+"</td>"+
+			$("#tablaDonFisi").append("<tr><td>"+item.id_fisica+"</td>"+
+				 "<td>"+item.donan.dni+"</td>"+"<td>"+item.local_don.nombre+"</td>"+
 				 "<td>"+item.descripcion+"</td>"+"<td>"+estadoTexto+"</td>"+
 				 "<td>"+botonEditar+"</td><td>"+botonEliminar+"</td></tr>");
 		})
@@ -187,10 +187,10 @@ function cargarDonacionesFisicas(){
 
 		var id;
 		id=$(this).parents("tr").find("td")[0].innerHTML;
-		$.get("ServletFindDonacionFisicoJSON?accion=buscar&id="+id,function(response){
-			$("#id-id").val(response.idFisico);
-			$("#id-dnidonante").val(response.dniDonantes);
-			$("#id-local").val(response.idLocal);
+		$.get("ServletDonacionFisico?accion=buscar&id="+id,function(response){
+			$("#id-id").val(response.id_fisica);
+			$("#id-dnidonante").val(response.donan.dni);
+			$("#id-local").val(response.local_don.id_local);
 			$("#id-descripcion").val(response.descripcion);
 			$("#id-estado").val(response.estado ? "true" : "false");
 
@@ -200,12 +200,11 @@ function cargarDonacionesFisicas(){
 	$(document).on("click", ".btn-deleted", function () {
     var id = parseInt($(this).parents("tr").find("td")[0].innerHTML);
 
-    $.get("ServletDonacionFisicoJSON", function (response) {
+    $.get("ServletDonacionFisico?accion=listado", function (response) {
 
         var item = response.find(function (element) {
-            return element.idFisico === id;
+            return element.id_fisica === id;
         });
-        console.log(item.estado);
         if (item.estado === false) {
         	Swal.fire({
                 title: 'Seguro de Eliminar?',

@@ -94,9 +94,17 @@ public class ServletLocacion extends HttpServlet {
 	}
 
 	private void listarLocacion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		//request.setAttribute("locaciones", new MySqlDonanteDAO().findAll());
-		request.getRequestDispatcher("/Locacion.jsp").forward(request, response);
+		try {
+			HttpClient client = HttpClient.newHttpClient();
+			HttpRequest request_lista = HttpRequest.newBuilder().uri(URI.create("http://localhost:8091/local/lista"))
+					.GET().build();
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			response.setContentType("application/json;charset=UTF-8");
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
 		
 	}
 
@@ -111,7 +119,7 @@ public class ServletLocacion extends HttpServlet {
 				//2.crear objeto de la clase Docente
 				Locacion bean=new Locacion();
 				//3.setear los atributos del objeto "bean" con las variables
-				bean.setId(Integer.parseInt(id));
+				bean.setId_local(Integer.parseInt(id));
 				bean.setNombre(nom);
 				bean.setDireccion(direc);
 				Gson g = new Gson();

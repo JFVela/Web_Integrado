@@ -24,7 +24,7 @@ public class MySqlLocacionDAO implements LocacionDAO{
 			rs=pstm.executeQuery();
 			while(rs.next()){
 				bean=new Locacion();
-				bean.setId(rs.getInt(1));
+				bean.setId_local(rs.getInt(1));
 				bean.setNombre(rs.getString(2));
 				bean.setDireccion(rs.getString(3));
 				dato.add(bean);
@@ -96,7 +96,7 @@ public class MySqlLocacionDAO implements LocacionDAO{
 				//7. crear objeto de la clase Docente
 				bean=new Locacion();
 				//8 setear atributos del objeto "d" con los valores de la fila actual "rs"
-				bean.setId(rs.getInt(1));
+				bean.setId_local(rs.getInt(1));
 				bean.setNombre(rs.getString(2));
 				bean.setDireccion(rs.getString(3));
 			}
@@ -130,7 +130,7 @@ public class MySqlLocacionDAO implements LocacionDAO{
 			//4. parámetros
 			pstm.setString(1,bean.getNombre());
 			pstm.setString(2,bean.getDireccion());
-			pstm.setInt(3,bean.getId());
+			pstm.setInt(3,bean.getId_local());
 			salida=pstm.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

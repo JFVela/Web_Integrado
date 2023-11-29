@@ -1449,7 +1449,7 @@ body.shimeji-select-ie {
 		function CargarLocaciones(){
 			$.get("ServletLocacionJSON",function(response){
 				$.each(response,function(index,item){
-					$("#id-location").append("<option value='"+item.id+"'>"+item.nombre+"</option>");
+					$("#id-location").append("<option value='"+item.id_local+"'>"+item.nombre+"</option>");
 				})
 			})	
 		}
@@ -2118,7 +2118,7 @@ body.shimeji-select-ie {
                 span1.style.display = "block";
                 confirmationButton.style.display = "block";
                 $('#id-no').prop('disabled', true);
-
+                $('#id-si').prop('disabled', true);
             }
         }, 1000);
     }
@@ -2171,6 +2171,7 @@ body.shimeji-select-ie {
 	        $("#confirmationButton").hide();
 	        $('#id-ingresoCorreo').prop('readonly', false);
 	        $('#id-no').prop('disabled', false);
+	        $('#id-si').prop('disabled', false);
 	        $('#startCountdown').prop('disabled', false);
 	})
 	

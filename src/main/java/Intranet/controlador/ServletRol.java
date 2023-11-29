@@ -137,13 +137,13 @@ public class ServletRol extends HttpServlet {
 		} else {
 			try {
 				HttpClient client = HttpClient.newHttpClient();
-				HttpRequest request_crear = HttpRequest.newBuilder()
+				HttpRequest request_crear1 = HttpRequest.newBuilder()
 						.uri(URI.create("http://localhost:8091/Roles/actualizar"))
 						.header("Content-type", "application/json").PUT(BodyPublishers.ofString(json)).build();
 
-				HttpResponse<String> response_lista = client.send(request_crear, BodyHandlers.ofString());
+				HttpResponse<String> response_lista2 = client.send(request_crear1, BodyHandlers.ofString());
 
-				if (response_lista.statusCode() == 200) {
+				if (response_lista2.statusCode() == 200) {
 					tipoMensaje = "success";
 					request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 					request.getSession().setAttribute("MENSAJE", "Rol actualizado con éxito");

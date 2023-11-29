@@ -179,7 +179,7 @@
 <script>
 cargarDonantes();
 function cargarDonantes(){
-	$.get("ServletDonanteJSON?accion=listado",function(response){
+	$.get("ServletDonante?accion=listado",function(response){
 		let botonEditar="<a class='btn-neon1 btn-edit'  data-bs-toggle='modal' data-bs-target='#exampleModal' data-operacion='actualizar' ><span id=span11></span><span id=span21></span><span id=span31></span><span id=span41></span>Editar</a>";
         let botonEliminar="<a class='btn-neon btn-deleted'><span id=span1></span> <span id=span2></span> <span id=span3></span><span id=span4></span>Eliminar</a>";
 		$.each(response,function(index,item){
@@ -207,7 +207,7 @@ $(document).on("click", ".btn-edit", function () {
 
     // Realiza una solicitud AJAX para cargar el archivo JSON
     $.get("assets/map.pe.json", function (data) {
-        $.get("ServletFindDonanteJSON?accion=buscar&dni=" + dni, function (response) {
+        $.get("ServletDonante?accion=buscar&id=" + dni, function (response) {
             $("#id-dni").val(response.dni);
             $("#id-nombre").val(response.nombre);
             $("#id-paterno").val(response.paterno);
@@ -273,7 +273,7 @@ $(document).on("click", ".btn-edit", function () {
         if (operacion === "actualizar") {
             // Configurar el modal para la actualización
             $("#exampleModal .modal-title").text("Editar Donante");
-            $("#formDonante").attr("action", "ServletDonante?accion=actualizar&dniAntiguo=" + dni);
+            $("#formDonante").attr("action", "ServletDonante?accion=actualizar");
             $("#id-dni-antiguo").val(dni);
         }
     });
@@ -285,7 +285,6 @@ $(document).on("click", ".btn-edit", function () {
 	$(document).on("click",".btn-deleted",function(){
 		var dni;
 		dni=$(this).parents("tr").find("td")[0].innerHTML;
-		console.log(dni);
 		// Definir la función verificarDonacion fuera del controlador de clic
 		function verificarDonacion(dni) {
 		    $.ajax({
@@ -296,7 +295,7 @@ $(document).on("click", ".btn-edit", function () {
 		            if (response === "false") {
 		                Swal.fire({
 		                    title: 'Seguro de Eliminar?',
-		                    text: "Donante con DNI: " + dni + " tiene donaciones asociadas.",
+		                    text: "Donante con DNI: " + dni + " no tiene donaciones asociadas.",
 		                    icon: 'error',
 		                    showCancelButton: true,
 		                    confirmButtonColor: '#3085d6',
