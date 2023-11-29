@@ -1,11 +1,21 @@
 package ong.controlador;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse.BodyHandlers;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import ong.dao.MySqlLocacionDAO;
 import ong.entity.Locacion;
@@ -24,30 +34,60 @@ public class ServletLocacion extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String tipo = request.getParameter("accion");
 		
-		if (tipo.equals("insertar")) {
+		if (tipo.equals("insertar"))
 			insertarLocacion(request, response);
-		} else if (tipo.equals("listado")) {
+		 else if (tipo.equals("listado")) 
 			listarLocacion(request, response);
-		}else if(tipo.equals("eliminar"))
+		else if(tipo.equals("eliminar"))
 			eliminar(request,response);
+			else if(tipo.equals("eliminar"))
+			eliminar(request,response);
+			else if(tipo.equals("buscar"))
+				buscar(request,response);
+		}
+
+
+	private void buscar(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String cod = request.getParameter("id"); // Corregir el nombre del parámetro
+			HttpClient client = HttpClient.newHttpClient();
+
+			HttpRequest request_lista = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8091/local/buscar/" + cod)).GET().build();
+
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			response.setContentType("application/json;charset=UTF-8");
+
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String dato=request.getParameter("dato");
 		String tipoMensaje;
-		//invocar al método deleteById y enviar la variable "cod"
-		int estado=new MySqlLocacionDAO().deleteById(Integer.parseInt(dato));
-		//validar estado
-		if(estado==1) {
+		try {
+			HttpClient client = HttpClient.newHttpClient();
+
+			HttpRequest request_lista = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8091/local/eliminar/" + dato)).DELETE().build();
+
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
 			tipoMensaje="error";
 			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 			request.getSession().setAttribute("MENSAJE", "Locacion Eliminado");
-		}else {
+		}catch(Exception ex) {
+			ex.printStackTrace();
 			tipoMensaje="error";
 			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 			request.getSession().setAttribute("MENSAJE", "Error al eliminar");
 		}
+		
 		//invocar método listarDocente
 		//listarDocente(request,response);
 		response.sendRedirect("Locacion.jsp");		
@@ -74,30 +114,43 @@ public class ServletLocacion extends HttpServlet {
 				bean.setId(Integer.parseInt(id));
 				bean.setNombre(nom);
 				bean.setDireccion(direc);
+				Gson g = new Gson();
+				String json = g.toJson(bean);
 				//validar variable cod
 				if(Integer.parseInt(id)==0){
-					//4.invocar al método save y enviar el objeto "bean"
-					int estado=new MySqlLocacionDAO().insertar(bean);
-					//validar estado
-					if(estado==1) {
+					try {
+						HttpClient client = HttpClient.newHttpClient();
+						HttpRequest request_crear = HttpRequest.newBuilder()
+								.uri(URI.create("http://localhost:8091/local/registrar"))
+								.header("Content-type", "application/json").POST(BodyPublishers.ofString(json)).build();
+
+						HttpResponse<String> response_crear = client.send(request_crear, BodyHandlers.ofString());
+						
 						tipoMensaje="success";
-					request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-					request.getSession().setAttribute("MENSAJE", "Locación Registrada");
-					}else {
+						request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+						request.getSession().setAttribute("MENSAJE", "Locación Registrada");
+					}catch(Exception ex) {
+						ex.printStackTrace();
 						tipoMensaje="error";
 						request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 						request.getSession().setAttribute("MENSAJE", "Error al Registrar Locacion");
 					}
 				}
 				else {
-					//4.invocar al método update y enviar el objeto "bean"
-					int estado=new MySqlLocacionDAO().update(bean);
-					//validar estado
-					if(estado==1) {
+					try {
+						HttpClient client = HttpClient.newHttpClient();
+						HttpRequest request_crear = HttpRequest.newBuilder()
+								.uri(URI.create("http://localhost:8091/local/actualizar"))
+								.header("Content-type", "application/json").PUT(BodyPublishers.ofString(json)).build();
+
+						HttpResponse<String> response_act = client.send(request_crear, BodyHandlers.ofString());
+
+					
 						tipoMensaje="warning";
 						request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 						request.getSession().setAttribute("MENSAJE", "Locación Actualizada");
-					}else {
+					}catch(Exception ex) {
+						ex.printStackTrace();
 						tipoMensaje="error";
 						request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 						request.getSession().setAttribute("MENSAJE", "Error al Actualizar");

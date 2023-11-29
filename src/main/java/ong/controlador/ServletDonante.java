@@ -2,6 +2,11 @@ package ong.controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,22 +38,43 @@ public class ServletDonante extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String tipo = request.getParameter("accion");
 		
-		if (tipo.equals("insertarfi")) {
+		if (tipo.equals("insertarfi")) 
 			insertarDonante(request, response);
-		}else if(tipo.equals("insertarvir")){
+		else if(tipo.equals("insertarvir"))
 			insertarDonantevir(request, response);
-		}else if (tipo.equals("listado")) {
+		else if (tipo.equals("listado")) 
 			listarDonante(request, response);
-		} else if(tipo.equals("insertarModal")) {
+		else if(tipo.equals("insertarModal")) 
 			insertarDonanteMo(request, response);
-		}else if(tipo.equals("actualizar")) {
+		else if(tipo.equals("actualizar")) 
 			actualizar(request, response);
-		}else if(tipo.equals("eliminar")) {
+		else if(tipo.equals("eliminar")) 
 			eliminar(request,response);
-		}
+		else if (tipo.equals("buscar"))
+	        buscar(request, response);
+		
 	}
 
 	
+
+	private void buscar(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String cod = request.getParameter("id"); // Corregir el nombre del parámetro
+			HttpClient client = HttpClient.newHttpClient();
+
+			HttpRequest request_lista = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8091/donante/buscar/" + cod)).GET().build();
+
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			response.setContentType("application/json;charset=UTF-8");
+
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
 
 	private void insertarDonantevir(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
@@ -111,6 +137,24 @@ public class ServletDonante extends HttpServlet {
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String dato=request.getParameter("dato");
 		String tipoMensaje;
+		
+		try {
+			HttpClient client = HttpClient.newHttpClient();
+
+			HttpRequest request_lista = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8091/donante/eliminar/" + dato)).DELETE().build();
+
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			tipoMensaje="error";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE","Donacion Fisica eliminado");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			tipoMensaje="error";
+			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			request.getSession().setAttribute("MENSAJE","Error al eliminar donación física");
+		}
+		/*
 		//invocar al método deleteById y enviar la variable "cod"
 		int id=new MySqlDonacionFiscaDAO().obtenerid(Integer.parseInt(dato));
 		int estado1=new MySqlDonacionFiscaDAO().deleteById(id);
@@ -126,7 +170,7 @@ public class ServletDonante extends HttpServlet {
 				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 				request.getSession().setAttribute("MENSAJE", "No se puedo eliminar");
 		}
-		//invocar método listarDocente
+		//invocar método listarDocente*/
 		//listarDocente(request,response);
 		response.sendRedirect("Donantes.jsp");}
 	
@@ -201,9 +245,17 @@ public class ServletDonante extends HttpServlet {
 
 	private void listarDonante(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		request.setAttribute("donantes", new MySqlDonanteDAO().findAll());
-		request.getRequestDispatcher("/Donantes.jsp").forward(request, response);
+		try {
+			HttpClient client = HttpClient.newHttpClient();
+			HttpRequest request_lista = HttpRequest.newBuilder().uri(URI.create("http://localhost:8091/donante/lista"))
+					.GET().build();
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			response.setContentType("application/json;charset=UTF-8");
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 

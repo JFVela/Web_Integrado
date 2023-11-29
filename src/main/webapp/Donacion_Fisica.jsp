@@ -164,7 +164,7 @@ function CargarDni(){
 	})	
 }
 function cargarDonacionesFisicas(){
-	$.get("ServletDonacionFisicoJSON",function(response){	
+	$.get("ServletDonacionFisicoJSON?accion=listado",function(response){	
 		
 		let botonEditar="<a class='btn-neon1 btn-edit'  data-bs-toggle='modal' data-bs-target='#exampleModal' data-operacion='actualizar' ><span id=span11></span><span id=span21></span><span id=span31></span><span id=span41></span>Editar</a>";
         let botonEliminar="<a class='btn-neon btn-deleted'><span id=span1></span> <span id=span2></span> <span id=span3></span><span id=span4></span>Eliminar</a>";
@@ -187,7 +187,7 @@ function cargarDonacionesFisicas(){
 
 		var id;
 		id=$(this).parents("tr").find("td")[0].innerHTML;
-		$.get("ServletFindDonacionFisicoJSON?id="+id,function(response){
+		$.get("ServletFindDonacionFisicoJSON?accion=buscar&id="+id,function(response){
 			$("#id-id").val(response.idFisico);
 			$("#id-dnidonante").val(response.dniDonantes);
 			$("#id-local").val(response.idLocal);

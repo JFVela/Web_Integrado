@@ -179,7 +179,7 @@
 <script>
 cargarDonantes();
 function cargarDonantes(){
-	$.get("ServletDonanteJSON",function(response){
+	$.get("ServletDonanteJSON?accion=listado",function(response){
 		let botonEditar="<a class='btn-neon1 btn-edit'  data-bs-toggle='modal' data-bs-target='#exampleModal' data-operacion='actualizar' ><span id=span11></span><span id=span21></span><span id=span31></span><span id=span41></span>Editar</a>";
         let botonEliminar="<a class='btn-neon btn-deleted'><span id=span1></span> <span id=span2></span> <span id=span3></span><span id=span4></span>Eliminar</a>";
 		$.each(response,function(index,item){
@@ -207,7 +207,7 @@ $(document).on("click", ".btn-edit", function () {
 
     // Realiza una solicitud AJAX para cargar el archivo JSON
     $.get("assets/map.pe.json", function (data) {
-        $.get("ServletFindDonanteJSON?dni=" + dni, function (response) {
+        $.get("ServletFindDonanteJSON?accion=buscar&dni=" + dni, function (response) {
             $("#id-dni").val(response.dni);
             $("#id-nombre").val(response.nombre);
             $("#id-paterno").val(response.paterno);
