@@ -189,6 +189,7 @@ body {
                 let botonEliminar="<button type='button' class='btn btn-rounded-el btn-eliminar'>Eliminar</button>";
 				$.each(response,function(index,item){
 					//llenar tabla
+					console.log(response);
 					$("#TableVoluntario").append("<tr><td>"+item.dni+"</td>"+
 						 "<td>"+item.nombre+" "+item.paterno+"</td>"+
 						 "<td>"+item.email+"</td>"+"<td>"+item.telefono+"</td>"+

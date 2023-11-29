@@ -185,7 +185,8 @@ th {
                 let botonEliminar="<button type='button' class='c__cta font-weight-bold btn btn-rounded-el btn-eliminar'>Eliminar</button>";
 				$.each(response,function(index,item){
 					//llenar tabla
-					$("#TableEspecialidad").append("<tr><td>"+item.IdEspecialidades+"</td>"+
+					console.log(response);
+					$("#TableEspecialidad").append("<tr><td>"+item.id_Especialidades+"</td>"+
 						 "<td>"+item.nombre+"</td>"+
 						 "<td>"+item.inscritos+"</td>"+
 						 "<td>"+botonEditar+"</td>"+"<td>"+botonEliminar+"</td></tr>");
@@ -239,7 +240,7 @@ th {
 		$(document).on("click",".btn-editar",function(){
 			var id;
 			id=$(this).parents("tr").find("td")[0].innerHTML;
-			$.get("ServletFindEspecialidadJSON?id="+id, function(response){
+			$.get("ServletEspecialidad?accion=buscarEspecialidad&id="+id, function(response){
 				//console.log(response);
 				//mostrar valores en las cajas
 				$("#id").val(response.IdEspecialidades);

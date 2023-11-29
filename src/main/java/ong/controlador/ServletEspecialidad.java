@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 
@@ -13,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import ong.dao.MySqlEspecialidadesDAO;
 import ong.dao.MySqlEventosDAO;
@@ -48,9 +51,30 @@ public class ServletEspecialidad extends HttpServlet {
 				eliminarEspecialidad(request,response);	
 		    }else if(tipo.equals("listaEspecialidad"))
 				listaEspecialidad(request,response);
+		    else if (tipo.equals("buscarEspecialidad"))
+				buscarEspecialidad(request, response);
 	}
 
 
+
+	private void buscarEspecialidad(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String cod = request.getParameter("id"); // Corregir el nombre del parámetro
+			HttpClient client = HttpClient.newHttpClient();
+
+			HttpRequest request_lista = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8091/especialidad/buscar/" + cod)).GET().build();
+
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			response.setContentType("application/json;charset=UTF-8");
+
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		}
 
 	private void listaEspecialidad(HttpServletRequest request, HttpServletResponse response) {
 			try {
@@ -90,7 +114,7 @@ public class ServletEspecialidad extends HttpServlet {
 		    response.sendRedirect("AdEspecialidades.jsp");
 		}
 
-	private void grabarEspecialidad(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void grabarEspecialidad(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		//1. recuperar los valores de los controles (cajas) del form
 		//usar atributo name.
 		String nom, id;
@@ -105,7 +129,7 @@ public class ServletEspecialidad extends HttpServlet {
 	    String tipoMensaje = "error"; // Color por defecto: rojo
 
 		//validar variable cod
-	    if(Integer.parseInt(id)==0) {
+	    /*if(Integer.parseInt(id)==0) {
 			//4.invocar al método save y enviar el objeto "bean"
 			int estado=new MySqlEspecialidadesDAO().save(bean);
 			//validar estado
@@ -125,7 +149,35 @@ public class ServletEspecialidad extends HttpServlet {
 				 tipoMensaje = "error";
 				 request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 				request.getSession().setAttribute("MENSAJE","Error en la actualización");
-			}}
+			}}*/
+	    Gson gson = new Gson();
+	    String json = gson.toJson(bean);
+
+	    // Invocar al servicio web correspondiente y enviar el objeto convertido a JSON
+	    String url = (bean.getIdEspecialidades() == 0) ? "http://localhost:8091/especialidad/registrar" : "http://localhost:8091/especialidad/actualizar";
+
+	    try {
+	        HttpClient client = HttpClient.newHttpClient();
+	        HttpRequest requestEnviar = (bean.getIdEspecialidades() == 0)
+	                ? HttpRequest.newBuilder().uri(URI.create(url)).header("Content-type", "application/json").POST(BodyPublishers.ofString(json)).build()
+	                : HttpRequest.newBuilder().uri(URI.create(url)).header("Content-type", "application/json").PUT(BodyPublishers.ofString(json)).build();
+
+	        HttpResponse<String> responseLista = client.send(requestEnviar, BodyHandlers.ofString());
+
+	        if (responseLista.statusCode() == 200) {
+	            tipoMensaje = (bean.getIdEspecialidades() == 0) ? "success" : "warning";
+	            request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+	            request.getSession().setAttribute("MENSAJE", (bean.getIdEspecialidades() == 0) ? "Especialidad registrada con éxito" : "Especialidad actualizada con éxito");
+	        } else {
+	            tipoMensaje = "error";
+	            request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+	            request.getSession().setAttribute("MENSAJE", (bean.getIdEspecialidades() == 0) ? "Error en el registro de la especialidad" : "Error en la actualización de la especialidad");
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw new ServletException("Error al procesar la solicitud", e);
+	    }
 		
 		response.sendRedirect("AdEspecialidades.jsp");	
 		

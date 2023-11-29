@@ -179,7 +179,7 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 	        // 2. Sentencia SQL para obtener todos los registros
 	        String sql = "SELECT e.id_Especialidades, e.nombre, COUNT(v.dni) AS inscritos " +
 	                     "FROM especialidades e " +
-	                     "LEFT JOIN voluntario v ON e.id_Especialidades = v.Especialidades_idEspecialidades " +
+	                     "LEFT JOIN voluntario v ON e.id_Especialidades = v.id_Especialidades " +
 	                     "GROUP BY e.id_Especialidades, e.nombre";
 	        // 3. Crear objeto "ps" y enviar la variable "sql"
 	        ps = con.prepareStatement(sql);

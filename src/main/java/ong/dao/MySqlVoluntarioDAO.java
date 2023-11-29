@@ -36,7 +36,7 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 		        ps.setInt(4, bean.getDni());
 		        ps.setString(5, bean.getEmail());
 		        ps.setInt(6, bean.getTelefono());
-		        ps.setInt(7, bean.getEspecialidad());
+		        ps.setInt(7, bean.getId_Especialidades());
 		        ps.setString(8, bean.getCiudad());
 		        ps.setString(9, bean.getProvincia());
 		        ps.setString(10, bean.getDistrito());
@@ -148,7 +148,7 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 		            voluntario.setDni(rs.getInt("dni"));
 		            voluntario.setEmail(rs.getString("correo"));
 		            voluntario.setTelefono(rs.getInt("telefono"));
-		            voluntario.setEspecialidad(rs.getInt("idEspecialidades"));
+		            voluntario.setId_Especialidades(rs.getInt("id_Especialidades"));
 		            voluntario.setCiudad(rs.getString("ciudad"));
 		            voluntario.setProvincia(rs.getString("provincia"));
 		            voluntario.setDistrito(rs.getString("distrito"));
@@ -204,7 +204,7 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 		            voluntario.setMaterno(rs.getString("materno"));
 		            voluntario.setEmail(rs.getString("correo"));
 		            voluntario.setTelefono(rs.getInt("telefono"));
-		            voluntario.setEspecialidad(rs.getInt("id_Especialidades"));
+		            voluntario.setId_Especialidades(rs.getInt("id_Especialidades"));
 		            voluntario.setEspecialidadNombre(rs.getString("especialidad_nombre"));
 		            voluntario.setCiudad(rs.getString("ciudad"));
 		            voluntario.setProvincia(rs.getString("provincia"));
@@ -332,7 +332,7 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 	        con.setAutoCommit(false); // Deshabilitar la confirmación automática
 
 	        // 2. Sentencia SQL para la inserción del voluntario
-	        String sqlVoluntario = "INSERT INTO voluntario (dni, nombre, paterno, materno, correo, telefono, ciudad, provincia, distrito, idEspecialidades) VALUES(?,?,?,?,?,?,?,?,?,?)";
+	        String sqlVoluntario = "INSERT INTO voluntario (dni, nombre, paterno, materno, correo, telefono, ciudad, provincia, distrito, id_Especialidades) VALUES(?,?,?,?,?,?,?,?,?,?)";
 	        psVoluntario = con.prepareStatement(sqlVoluntario);
 	        psVoluntario.setInt(1, voluntario.getDni());
 	        psVoluntario.setString(2, voluntario.getNombre());
@@ -343,7 +343,7 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 	        psVoluntario.setString(7, voluntario.getCiudad());
 	        psVoluntario.setString(8, voluntario.getProvincia());
 	        psVoluntario.setString(9, voluntario.getDistrito());
-	        psVoluntario.setInt(10, voluntario.getEspecialidad());
+	        psVoluntario.setInt(10, voluntario.getId_Especialidades());
 	        
 	        // 3. Sentencia SQL para la inserción de la inscripción
 	        String sqlInscripcion = "INSERT INTO inscripcion (voluntario_dni, eventos_id_evento) VALUES(?,?)";
@@ -398,7 +398,9 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 		        // 1. Obtener Conexión
 		        con = new MySqlConectar().getConectar();
 		        // 2. Sentencia SQL para eliminar voluntarios por ID de evento
-		        String sql = "DELETE FROM voluntario WHERE id_Especialidades = ?";
+		        String sql = "DELETE v FROM voluntario v \" +\r\n"
+		        		+ "                     \"INNER JOIN inscripcion i ON v.dni = i.voluntario_dni \" +\r\n"
+		        		+ "                     \"WHERE i.eventos_id_evento = ?\"";
 		        // 3. Crear objeto "ps" y enviar la variable "sql"
 		        ps = con.prepareStatement(sql);
 		        // 4. Parámetros
