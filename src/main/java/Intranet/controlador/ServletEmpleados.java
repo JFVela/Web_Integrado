@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import Intranet.dao.MySQL_Empleados;
+import Intranet.entidad.Departamento;
 import Intranet.entidad.Empleados;
 import Intranet.entidad.Enlace;
 import Intranet.entidad.Roles;
@@ -64,7 +66,28 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 
 			else if (tipo.equals("listarDepartamento"))
 				listaDepa(request, response);
+			else if (tipo.equals("buscar"))
+				Buscar(request, response);
 
+		}
+	}
+
+	private void Buscar(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String cod = request.getParameter("id"); // Corregir el nombre del parámetro
+			HttpClient client = HttpClient.newHttpClient();
+
+			HttpRequest request_lista = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8091/Empleado/buscar/" + cod)).GET().build();
+
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			response.setContentType("application/json;charset=UTF-8");
+
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -257,7 +280,7 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		// Comparar los hashes
 		if (hashIngresado.equals(empleado.getContraseña())) {
 			// Las contraseñas coinciden, el inicio de sesión es exitoso
-			List<Intranet.entidad.Enlace> lista = new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getId_rol());
+			List<Intranet.entidad.Enlace> lista = new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getRolNumber());
 			HttpSession session = request.getSession();
 			session.setAttribute("listaEnlaces", lista);
 			session.setAttribute("datosEmpleado", empleado.getLogin());
@@ -271,33 +294,56 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 	}
 
 	private void EliminarEmpleado(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String codigo = request.getParameter("codigo");
-		int estado = new MySQL_Empleados().deleteCod(Integer.parseInt(codigo));
-		String tipoMensaje = "";
+		try {
+			String tipoMensaje = "";
 
-		if (estado == 1) {
-			tipoMensaje = "error";
-			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE", "Empleado eliminado con éxito");
-			response.sendRedirect("Empleados.jsp");
-		} else {
-			// Mostrar mensaje de error utilizando Toastr
-			tipoMensaje = "error";
-			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-			request.getSession().setAttribute("MENSAJE", "No se puede eliminar el Empleado");
-			response.sendRedirect("Empleados.jsp");
+			String cod = request.getParameter("id"); // Corregir el nombre del parámetro
+			HttpClient client = HttpClient.newHttpClient();
+
+			HttpRequest request_lista = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8091/Empleado/eliminar/" + cod)).DELETE().build();
+
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			if (response_lista.statusCode() == 200) {
+				tipoMensaje = "success";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE", "Empleado eliminado con éxito");
+			} else {
+				tipoMensaje = "error";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE", "No se puede eliminar el Empleado");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		response.sendRedirect("Empleados.jsp");
+
+		/*
+		 * String codigo = request.getParameter("codigo"); int estado = new
+		 * MySQL_Empleados().deleteCod(Integer.parseInt(codigo)); String tipoMensaje =
+		 * "";
+		 * 
+		 * if (estado == 1) { tipoMensaje = "error";
+		 * request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+		 * request.getSession().setAttribute("MENSAJE", "Empleado eliminado con éxito");
+		 * response.sendRedirect("Empleados.jsp"); } else { // Mostrar mensaje de error
+		 * utilizando Toastr tipoMensaje = "error";
+		 * request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+		 * request.getSession().setAttribute("MENSAJE",
+		 * "No se puede eliminar el Empleado"); response.sendRedirect("Empleados.jsp");
+		 * }
+		 */
 	}
 
-	
 	/*
-	 * AL COMIENZO USAMOS ESTO PARA LISTAR
-	private void ListarEmpleados(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setAttribute("empleados", new MySQL_Empleados().findAll());
-		request.getRequestDispatcher("/Empleados.jsp").forward(request, response);
-	}*/
-	
+	 * AL COMIENZO USAMOS ESTO PARA LISTAR private void
+	 * ListarEmpleados(HttpServletRequest request, HttpServletResponse response)
+	 * throws ServletException, IOException { request.setAttribute("empleados", new
+	 * MySQL_Empleados().findAll());
+	 * request.getRequestDispatcher("/Empleados.jsp").forward(request, response); }
+	 */
+
 	private void ListarEmpleados(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
@@ -319,7 +365,7 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private void GuardarEmpleado(HttpServletRequest request, HttpServletResponse response)
@@ -351,11 +397,10 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		String contraseñaEncriptada = hashPassword(contraseña, salt);
 
 		Empleados empleado = new Empleados();
-		empleado.setDni(Integer.parseInt(dni));
 		empleado.setCodigo(Integer.parseInt(codigo));
+		empleado.setDni(Integer.parseInt(dni));
 		empleado.setLogin(login);
 		empleado.setContraseña(contraseñaEncriptada); // Guardar la contraseña encriptada
-		empleado.setSalt(salt); // Guardar el salt
 		empleado.setNombre(nombre);
 		empleado.setPaterno(paterno);
 		empleado.setMaterno(materno);
@@ -363,40 +408,83 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		empleado.setCorreo(correo);
 		empleado.setDireccion(direccion);
 		empleado.setSueldo(Double.parseDouble(sueldo));
-		
-		Roles R=new Roles();
-		R.setId(Integer.parseInt(id_rol));
-		//empleado.setId_rol();
-		
-		empleado.setId_rol(Integer.parseInt(id_rol));
-		empleado.setId_depa(Integer.parseInt(id_depa));
-		
+		empleado.setSalt(salt); // Guardar el salt
 
-		
+		Departamento objetoDepa = new Departamento();
+		objetoDepa.setId_depa(Integer.parseInt(id_depa));
+		empleado.setDepa(objetoDepa);
+
+		Roles objetoRol = new Roles();
+		objetoRol.setId(Integer.parseInt(id_rol));
+		empleado.setRol(objetoRol);
+
+		Gson g = new Gson();
+		String json = g.toJson(empleado);
 
 		if (empleado.getCodigo() == 0) {
-			int estado = new MySQL_Empleados().save(empleado);
-			if (estado == 1) {
-				tipoMensaje = "success";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE", "Empleado registrado");
-			} else {
-				tipoMensaje = "error";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE", "Error en el registro");
+
+			try {
+				HttpClient client = HttpClient.newHttpClient();
+				HttpRequest request_crear = HttpRequest.newBuilder()
+						.uri(URI.create("http://localhost:8091/Empleado/registrar"))
+						.header("Content-type", "application/json").POST(BodyPublishers.ofString(json)).build();
+
+				HttpResponse<String> response_lista = client.send(request_crear, BodyHandlers.ofString());
+
+				if (response_lista.statusCode() == 200) {
+					tipoMensaje = "success";
+					request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+					request.getSession().setAttribute("MENSAJE", "Empleado registrado");
+				} else {
+					tipoMensaje = "error";
+					request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+					request.getSession().setAttribute("MENSAJE", "Error en el registro");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new ServletException("Error al procesar la solicitud", e);
 			}
+			/*
+			 * int estado = new MySQL_Empleados().save(empleado); if (estado == 1) {
+			 * tipoMensaje = "success"; request.getSession().setAttribute("TIPO_MENSAJE",
+			 * tipoMensaje); request.getSession().setAttribute("MENSAJE",
+			 * "Empleado registrado"); } else { tipoMensaje = "error";
+			 * request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			 * request.getSession().setAttribute("MENSAJE", "Error en el registro"); }
+			 */
 		} else {
-			// Implementa la actualización del empleado aquí
-			int estado = new MySQL_Empleados().update(empleado);
-			if (estado == 1) {
-				tipoMensaje = "warning";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE", "Empleado actualizado");
-			} else {
-				tipoMensaje = "error";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE", "Error en la actualización");
+			try {
+				HttpClient client = HttpClient.newHttpClient();
+				HttpRequest request_crear = HttpRequest.newBuilder()
+						.uri(URI.create("http://localhost:8091/Empleado/actualizar"))
+						.header("Content-type", "application/json").PUT(BodyPublishers.ofString(json)).build();
+
+				HttpResponse<String> response_lista = client.send(request_crear, BodyHandlers.ofString());
+
+				if (response_lista.statusCode() == 200) {
+					tipoMensaje = "success";
+					request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+					request.getSession().setAttribute("MENSAJE", "Empleado actualizado");
+				} else {
+					tipoMensaje = "error";
+					request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+					request.getSession().setAttribute("MENSAJE", "Error en la actualización");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new ServletException("Error al procesar la solicitud", e);
 			}
+			/*
+			 * Implementa la actualización del empleado aquí int estado = new
+			 * MySQL_Empleados().update(empleado); if (estado == 1) { tipoMensaje =
+			 * "warning"; request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			 * request.getSession().setAttribute("MENSAJE", "Empleado actualizado"); } else
+			 * { tipoMensaje = "error"; request.getSession().setAttribute("TIPO_MENSAJE",
+			 * tipoMensaje); request.getSession().setAttribute("MENSAJE",
+			 * "Error en la actualización"); }
+			 */
 		}
 		response.sendRedirect("Empleados.jsp");
 	}

@@ -281,9 +281,8 @@
 
     
     $(document).on("click", ".btn-editar", function() {
-        var codigo;
-        codigo = $(this).parents("tr").find("td")[0].innerHTML;
-        $.get("ServletFindEmpleadosJSON?codigo=" + codigo, function(response) {
+        var cod = $(this).parents("tr").find("td")[0].innerHTML;
+        $.get("ServletEmpleados?accion=buscar&id=" + cod, function(response) {
             $("#id-codigo").val(response.codigo);
             $("#id-dni").val(response.dni);
             $("#id-login").val(response.login);
@@ -295,8 +294,8 @@
             $("#id-correo").val(response.correo);
             $("#id-direccion").val(response.direccion);
             $("#id-sueldo").val(response.sueldo);
-            $("#id-rol").val(response.id_rol);
-            $("#id-departamento").val(response.id_depa);
+            $("#id-rol").val(response.rol.id);
+            $("#id-departamento").val(response.depa.id_depa);
         });
     });
     
@@ -319,7 +318,8 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location = "http://localhost:8080/GitHub_ONG/ServletEmpleados?accion=eliminar&codigo=" + codigo;
+                //window.location = "http://localhost:8080/GitHub_ONG/ServletEmpleados?accion=eliminar&codigo=" + codigo;
+                window.location = "http://localhost:8080/GitHub_ONG/ServletEmpleados?accion=eliminar&id=" + codigo;
             }
         });
     });

@@ -34,8 +34,8 @@ public class MySQL_Empleados implements interfazEmpleados {
 			pstm.setString(8, empleado.getCorreo());
 			pstm.setString(9, empleado.getDireccion());
 			pstm.setDouble(10, empleado.getSueldo());
-			pstm.setInt(11, empleado.getId_rol());
-			pstm.setInt(12, empleado.getId_depa());
+			pstm.setInt(11, empleado.getRolNumber());
+			pstm.setInt(12, empleado.getDepaNumber());
 			pstm.setBytes(13, empleado.getSalt()); // Insertar el valor de salt como un arreglo de bytes
 
 			salida = pstm.executeUpdate();
@@ -73,8 +73,8 @@ public class MySQL_Empleados implements interfazEmpleados {
 			pstm.setString(8, empleado.getCorreo());
 			pstm.setString(9, empleado.getDireccion());
 			pstm.setDouble(10, empleado.getSueldo());
-			pstm.setInt(11, empleado.getId_rol());
-			pstm.setInt(12, empleado.getId_depa());
+			pstm.setInt(11, empleado.getRolNumber());
+			pstm.setInt(12, empleado.getDepaNumber());
 			pstm.setBytes(13, empleado.getSalt()); // Insertar el valor de salt como un arreglo de bytes
 			pstm.setInt(14, empleado.getCodigo());
 
@@ -145,8 +145,8 @@ public class MySQL_Empleados implements interfazEmpleados {
 				empleado.setCorreo(rs.getString("correo"));
 				empleado.setDireccion(rs.getString("direccion"));
 				empleado.setSueldo(rs.getDouble("sueldo"));
-				empleado.setId_rol(rs.getInt("id_rol"));
-				empleado.setId_depa(rs.getInt("id_depa"));
+				empleado.setRolNumber(rs.getInt("id_rol"));
+				empleado.setDepaNumber(rs.getInt("id_depa"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -192,8 +192,8 @@ public class MySQL_Empleados implements interfazEmpleados {
 				empleado.setCorreo(rs.getString("correo"));
 				empleado.setDireccion(rs.getString("direccion"));
 				empleado.setSueldo(rs.getDouble("sueldo"));
-				empleado.setId_rol(rs.getInt("id_rol")); // Asignar el ID del rol
-				empleado.setId_depa(rs.getInt("id_depa")); // Asignar el ID del departamento
+				empleado.setRolNumber(rs.getInt("id_rol")); // Asignar el ID del rol
+				empleado.setDepaNumber(rs.getInt("id_depa")); // Asignar el ID del departamento
 				empleado.setIdONG(rs.getInt("idONG"));
 				empleado.setNombre_rol(rs.getString("nombre_rol")); // Nombre del rol
 				empleado.setNombre_departamento(rs.getString("nombre_departamento")); // Nombre del departamento
@@ -263,7 +263,7 @@ public class MySQL_Empleados implements interfazEmpleados {
 				empleado.setCodigo(rs.getInt("codigo"));
 				empleado.setLogin(rs.getString("login"));
 				empleado.setNombre(rs.getString("nombre"));
-				empleado.setId_rol(rs.getInt("id_rol"));
+				empleado.setRolNumber(rs.getInt("id_rol"));
 				empleado.setContraseña(rs.getString("contraseña"));
 				byte[] salt = rs.getBytes("salt"); // Obtener el salt como un arreglo de bytes
 				empleado.setSalt(salt);
