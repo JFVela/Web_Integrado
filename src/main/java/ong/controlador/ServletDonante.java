@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse.BodyHandlers;
 
 import javax.servlet.ServletException;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
+
+import com.google.gson.Gson;
 
 import ong.dao.MySqlTarjetaDAO;
 import ong.dao.MySqlDonacionFiscaDAO;
@@ -113,11 +116,10 @@ public class ServletDonante extends HttpServlet {
 			//Actualiza la tarjeta
 			Tarjeta bean3=new Tarjeta();
 			double valor=new MySqlDonacionVirtualDAO().valormoneda(Integer.parseInt(tpmon));
-			if(Integer.parseInt(tpmon)==2) {
+			System.out.print(valor);
+
 				bean3.setSaldo(Double.parseDouble(monto)*valor);
-			}else {
-				bean3.setSaldo(Double.parseDouble(monto)*valor);
-			}
+				
 			bean3.setCvc(Integer.parseInt(request.getParameter("cvv")));
 			bean3.setNumCuenta(Integer.parseInt(request.getParameter("numcuen")));
 			bean3.setMes(Integer.parseInt(request.getParameter("expirationMonth")));
@@ -178,7 +180,7 @@ public class ServletDonante extends HttpServlet {
 	private void actualizar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String dni,nom,tipoMensaje, ma, pa, dis, direc, cel, email;
 		
-		String dniAntiguo = request.getParameter("dniAntiguo");
+		//String dniAntiguo = request.getParameter("dniAntiguo");
 		dni=request.getParameter("dni");
 		nom = request.getParameter("nombre");
 		ma = request.getParameter("materno");
@@ -196,18 +198,26 @@ public class ServletDonante extends HttpServlet {
 		bean.setCelular(Integer.parseInt(cel));
 		bean.setDireccion(direc);
 		bean.setEmail(email);
-		int estado = new MySqlDonanteDAO().update(bean,Integer.parseInt(dniAntiguo));		
-		if(estado==1) {
+		Gson g = new Gson();
+		String json = g.toJson(bean);
+		try {
+			HttpClient client = HttpClient.newHttpClient();
+			HttpRequest request_crear = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8091/donante/actualizar"))
+					.header("Content-type", "application/json").PUT(BodyPublishers.ofString(json)).build();
+
+			HttpResponse<String> response_act = client.send(request_crear, BodyHandlers.ofString());
+
+		
 			tipoMensaje="warning";
 			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 			request.getSession().setAttribute("MENSAJE", "Donante Actualizado");
-
-		}else {
+		}catch(Exception ex) {
+			ex.printStackTrace();
 			tipoMensaje="error";
 			request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
 			request.getSession().setAttribute("MENSAJE", "Error al editar");
-		}
-	
+		}	
 		response.sendRedirect("Donantes.jsp");
 	}
 
@@ -272,13 +282,12 @@ public class ServletDonante extends HttpServlet {
 		local = request.getParameter("locacion");
 		des = request.getParameter("descrip");
 		int dniObtenido=new MySqlDonanteDAO().obtenerDNI(correo);
-		
+
 		DonacionFisica bean1 = new DonacionFisica();
-		bean1.setDniDonantes(dniObtenido);
-		bean1.setIdLocal(Integer.parseInt(local));
+		bean1.setDonan_dni(dniObtenido);
+		bean1.setLocal_id(Integer.parseInt(local));
 		bean1.setDescripcion(des);
 		bean1.setEstado(false);
-		
 		boolean veri= new MySqlDonanteDAO().verificarDNI(dniObtenido);
 		if(veri==true) {
 			 estado1 = new MySqlDonacionFiscaDAO().save(bean1);

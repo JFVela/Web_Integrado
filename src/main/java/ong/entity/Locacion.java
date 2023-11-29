@@ -1,15 +1,16 @@
 package ong.entity;
 
 public class Locacion {
-	private int id;
+	private int id_local;
 	private String nombre;
 	private String direccion;
+
 	
-	public int getId() {
-		return id;
+	public int getId_local() {
+		return id_local;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId_local(int id_local) {
+		this.id_local = id_local;
 	}
 	public String getNombre() {
 		return nombre;

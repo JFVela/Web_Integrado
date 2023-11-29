@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import ong.dao.MySqlDonacionFiscaDAO;
-import ong.entity.DonacionFisica;
+import ong.entity.*;
 
 
 @WebServlet("/ServletDonacionFisico")
@@ -51,7 +51,6 @@ public class ServletDonacionFisico extends HttpServlet {
 		try {
 			String cod = request.getParameter("id"); // Corregir el nombre del parámetro
 			HttpClient client = HttpClient.newHttpClient();
-
 			HttpRequest request_lista = HttpRequest.newBuilder()
 					.uri(URI.create("http://localhost:8091/donfisica/buscar/" + cod)).GET().build();
 
@@ -99,7 +98,7 @@ public class ServletDonacionFisico extends HttpServlet {
 			ex.printStackTrace();
 		}
 	}
-	private void insertarDonFisica(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void insertarDonFisica(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String id,dnidon,idlocal,descrip,estadol,tipoMensaje;
 		id=request.getParameter("id");
 		dnidon=request.getParameter("dnidonante");
@@ -109,15 +108,23 @@ public class ServletDonacionFisico extends HttpServlet {
 		//2.crear objeto de la clase Docente
 		DonacionFisica bean=new DonacionFisica();
 		//3.setear los atributos del objeto "bean" con las variables
-		bean.setIdFisico(Integer.parseInt(id));
-		bean.setDniDonantes(Integer.parseInt(dnidon));
-		bean.setIdLocal(Integer.parseInt(idlocal));
+		bean.setId_fisica(Integer.parseInt(id));
+		//bean.setDonan_dni(Integer.parseInt(dnidon));
 		bean.setDescripcion(descrip);
 		bean.setEstado(Boolean.parseBoolean(estadol));
+		
+		Donante donan=new Donante();
+		donan.setDni(Integer.parseInt(dnidon));
+		bean.setDonan(donan);
+		
+		Locacion lc=new Locacion();
+		lc.setId_local(Integer.parseInt(idlocal));
+		bean.setLocal_don(lc);
+		
 		Gson g = new Gson();
 		String json = g.toJson(bean);
 		//validar variable cod
-		if(Integer.parseInt(id)==0){
+		if(bean.getId_fisica()==0){
 			try {
 				HttpClient client = HttpClient.newHttpClient();
 				HttpRequest request_crear = HttpRequest.newBuilder()
@@ -125,15 +132,19 @@ public class ServletDonacionFisico extends HttpServlet {
 						.header("Content-type", "application/json").POST(BodyPublishers.ofString(json)).build();
 
 				HttpResponse<String> response_crear = client.send(request_crear, BodyHandlers.ofString());
+				if (response_crear.statusCode() == 200) {
+					tipoMensaje="success";
+					request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+					request.getSession().setAttribute("MENSAJE","Donacion Fisica registrada");
+				} else {
+					tipoMensaje = "error";
+					request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+					request.getSession().setAttribute("MENSAJE", "Error en el registro de la donación");
+				}
 				
-				tipoMensaje="success";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE","Donacion Fisica registrada");
 			}catch(Exception ex) {
 				ex.printStackTrace();
-				tipoMensaje="error";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE","Error al registrar donación");
+				
 			}
 		}
 		else {
@@ -146,14 +157,20 @@ public class ServletDonacionFisico extends HttpServlet {
 				HttpResponse<String> response_act = client.send(request_crear, BodyHandlers.ofString());
 
 			
-				tipoMensaje="warning";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE","Donacion Fisica actualizado");
+				if (response_act.statusCode() == 200) {
+					tipoMensaje="warning";
+					request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+					request.getSession().setAttribute("MENSAJE","Donacion Fisica actualizado");
+				} else {
+					tipoMensaje = "error";
+					request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+					request.getSession().setAttribute("MENSAJE", "Error en la actualización");
+				}
+
+				
 			}catch(Exception ex) {
 				ex.printStackTrace();
-				tipoMensaje="error";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE","Error en la actualización");
+
 			}
 			
 		}		

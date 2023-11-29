@@ -56,7 +56,7 @@
 <body>
 
 	<div class="container">
-		<h1 class="mt-5 text-center">Departamentos</h1>
+		<h1 class="mt-5 text-center">Empleados</h1>
 		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
 			data-bs-target="#exampleModal">Nuevo Docente</button>

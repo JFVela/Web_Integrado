@@ -1,23 +1,25 @@
 package ong.entity;
 
 public class DonacionFisica {
-	private int idFisico;
-	private int dniDonantes;
-	private int idLocal;
-	private String nombreLocal;
+	private int id_fisica;
+	private String nombre;
 	private String descripcion;
 	private boolean estado;
-	public int getDniDonantes() {
-		return dniDonantes;
+	private Donante donan ;
+	private Locacion local_don ; //prueba sino local
+	private int donan_dni;
+	private int local_id;
+	public int getId_fisica() {
+		return id_fisica;
 	}
-	public void setDniDonantes(int dniDonantes) {
-		this.dniDonantes = dniDonantes;
+	public void setId_fisica(int id_fisica) {
+		this.id_fisica = id_fisica;
 	}
-	public int getIdLocal() {
-		return idLocal;
+	public String getNombre() {
+		return nombre;
 	}
-	public void setIdLocal(int idLocal) {
-		this.idLocal = idLocal;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	public String getDescripcion() {
 		return descripcion;
@@ -31,18 +33,30 @@ public class DonacionFisica {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
-	public int getIdFisico() {
-		return idFisico;
+	public Donante getDonan() {
+		return donan;
 	}
-	public void setIdFisico(int idFisico) {
-		this.idFisico = idFisico;
+	public void setDonan(Donante donan) {
+		this.donan = donan;
 	}
-	public String getNombreLocal() {
-		return nombreLocal;
+	public Locacion getLocal_don() {
+		return local_don;
 	}
-	public void setNombreLocal(String nombreLocal) {
-		this.nombreLocal = nombreLocal;
+	public void setLocal_don(Locacion local_don) {
+		this.local_don = local_don;
 	}
-	
+	public int getDonan_dni() {
+		return donan_dni;
+	}
+	public void setDonan_dni(int donan_dni) {
+		this.donan_dni = donan_dni;
+	}
+	public int getLocal_id() {
+		return local_id;
+	}
+	public void setLocal_id(int local_id) {
+		this.local_id = local_id;
+	}
+
 	
 }

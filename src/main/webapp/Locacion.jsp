@@ -43,7 +43,7 @@
 	<div class="container">
 		<h1 class="mt-5 text-center display-2 p-3"><strong>Listado de <span style="color: green;">Locaciones</span></strong></h1>
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-			data-bs-target="#exampleModal">Nuevo Locacion</button>
+			data-bs-target="#exampleModal">Nueva Locación</button>
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -142,13 +142,13 @@
 <script>
 cargarLocacion();
 function cargarLocacion(){
-	$.get("ServletLocacionJSON?accion=listado",function(response){	
+	$.get("ServletLocacion?accion=listado",function(response){	
 		let botonEditar="<a class='btn-neon1 btn-edit'  data-bs-toggle='modal' data-bs-target='#exampleModal' data-operacion='actualizar' ><span id=span11></span><span id=span21></span><span id=span31></span><span id=span41></span>Editar</a>";
         let botonEliminar="<a class='btn-neon btn-deleted'><span id=span1></span> <span id=span2></span> <span id=span3></span><span id=span4></span>Eliminar</a>";
         
 		$.each(response,function(index,item){
 			//llenar tabla
-			$("#tablaLocacion").append("<tr><td>"+item.id+"</td>"+
+			$("#tablaLocacion").append("<tr><td>"+item.id_local+"</td>"+
 				 "<td>"+item.nombre+"</td>"+"<td>"+item.direccion+"</td>"+
 				 "<td>"+botonEditar+"</td><td>"+botonEliminar+"</td></tr>");
 		})
@@ -159,8 +159,8 @@ function cargarLocacion(){
 	$(document).on("click",".btn-edit",function(){
 		var id;
 		id=$(this).parents("tr").find("td")[0].innerHTML;
-		$.get("ServletFindLocacionJSON?accion=buscar&id="+id,function(response){
-			$("#id-id").val(response.id);
+		$.get("ServletLocacion?accion=buscar&id="+id,function(response){
+			$("#id-id").val(response.id_local);
 			$("#id-nombre").val(response.nombre);
 			$("#id-direccion").val(response.direccion);
 		})

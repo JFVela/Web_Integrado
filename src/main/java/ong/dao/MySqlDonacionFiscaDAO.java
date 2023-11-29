@@ -26,8 +26,8 @@ public class MySqlDonacionFiscaDAO implements DonacionFisicoDAO {
 			String sentencia = "INSERT INTO donacion_fisica(donantes_dni,local_donacion_id_local,descripcion,"
 					+ "estado) values(?,?,?,?);";
 			pstm=cn.prepareStatement(sentencia);
-			pstm.setInt(1, bean.getDniDonantes());
-			pstm.setInt(2, bean.getIdLocal());
+			pstm.setInt(1, bean.getDonan_dni());
+			pstm.setInt(2, bean.getLocal_id());
 			pstm.setString(3, bean.getDescripcion());
 			pstm.setBoolean(4,bean.isEstado());
 			
@@ -64,12 +64,12 @@ public class MySqlDonacionFiscaDAO implements DonacionFisicoDAO {
 			rs=pstm.executeQuery();
 			while(rs.next()){
 				bean=new DonacionFisica();
-				bean.setIdFisico(rs.getInt(1));
-				bean.setDniDonantes(rs.getInt(2));
-				bean.setIdLocal(rs.getInt(3));
+				bean.setId_fisica((rs.getInt(1)));;
+				bean.setDonan_dni(rs.getInt(2));
+				bean.setLocal_id(rs.getInt(3));
 				bean.setDescripcion(rs.getString(4));
 				bean.setEstado(rs.getBoolean(5));
-				bean.setNombreLocal(rs.getString(6));
+				bean.setNombre(rs.getString(6));
 				dato.add(bean);
 			}
 		}catch(Exception e) {
@@ -107,9 +107,9 @@ public class MySqlDonacionFiscaDAO implements DonacionFisicoDAO {
 			if(rs.next()){
 				//7. crear objeto de la clase Docente
 				bean=new DonacionFisica();
-				bean.setIdFisico(rs.getInt(1));
-				bean.setDniDonantes(rs.getInt(2));
-				bean.setIdLocal(rs.getInt(3));
+				bean.setId_fisica((rs.getInt(1)));;
+				bean.setDonan_dni(rs.getInt(2));
+				bean.setLocal_id(rs.getInt(3));
 				bean.setDescripcion(rs.getString(4));
 				bean.setEstado(rs.getBoolean(5));
 			}
@@ -141,10 +141,10 @@ public class MySqlDonacionFiscaDAO implements DonacionFisicoDAO {
 			//3. crear objeto "pstm" y enviar la variable "sql"
 			pstm=cn.prepareStatement(sql);
 			//4. parámetros
-			pstm.setInt(1, bean.getIdLocal());
+			pstm.setInt(1, bean.getLocal_id());
 			pstm.setString(2,bean.getDescripcion());
 			pstm.setBoolean(3, bean.isEstado());
-			pstm.setInt(4, bean.getIdFisico());
+			pstm.setInt(4, bean.getId_fisica());
 			salida=pstm.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

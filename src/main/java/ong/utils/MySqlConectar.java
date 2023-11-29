@@ -21,7 +21,5 @@ public class MySqlConectar {
 		}
 		return cn;
 	}
-	
-	
-	
+
 }
