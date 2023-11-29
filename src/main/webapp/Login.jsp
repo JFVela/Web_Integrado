@@ -154,7 +154,6 @@
 			window.history.replaceState({}, document.title, "Login.jsp");
 		}
 	}
-
 	// Llama a la función para mostrar el mensaje
 	showMessage();
 </script>
