@@ -1,16 +1,16 @@
 package Intranet.entidad;
 
 public class Departamento {
-	private int id;
+	private int id_depa;
 	private String nombre;
 	private String descripcion;
 
-	public int getId() {
-		return id;
+	public int getId_depa() {
+		return id_depa;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId_depa(int id) {
+		this.id_depa = id;
 	}
 
 	public String getNombre() {

@@ -50,7 +50,7 @@ public class MySQL_Departamento implements interfazDepartamento {
 			pstm = cn.prepareStatement(sql);
 			pstm.setString(1, bean.getNombre());
 			pstm.setString(2, bean.getDescripcion());
-			pstm.setInt(3, bean.getId());
+			pstm.setInt(3, bean.getId_depa());
 			salida = pstm.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,7 +107,7 @@ public class MySQL_Departamento implements interfazDepartamento {
 			rs = pstm.executeQuery();
 			if (rs.next()) {
 				bean = new Departamento();
-				bean.setId(rs.getInt(1));
+				bean.setId_depa(rs.getInt(1));
 				bean.setNombre(rs.getString(2));
 				bean.setDescripcion(rs.getString(3));
 			}
@@ -143,7 +143,7 @@ public class MySQL_Departamento implements interfazDepartamento {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				Departamento D = new Departamento();
-				D.setId(rs.getInt(1));
+				D.setId_depa(rs.getInt(1));
 				D.setNombre(rs.getNString(2));
 				D.setDescripcion(rs.getString(3));
 				lista.add(D);

@@ -162,120 +162,117 @@
 <c:remove var="MENSAJE" scope="session" />
 
 <script>
- cargarDepa();
- 
- //crear función para leer JSON de Departamentos
-function cargarDepa() {
-	//$.get("ServletDepaJSON", function (response) {
-		$.get("ServletDepa?accion=listado", function (response) {
-		let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
-		let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
-		$.each(response, function (index, item) {
-			$("#TablaDepa").append("<tr><td>" + item.id_depa+ "</td>" +
-				"<td>" + item.nombre + "</td><td>" + item.descripcion + "</td>" +
-				"<td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
-		});
+    cargarDepa();
 
-		// Inicializar DataTable
-		$(document).ready(function () {
-			$('#TablaDepa').DataTable({
-				"language": {
-					"lengthMenu": "Mostrar _MENU_ registros por página",
-					"zeroRecords": "No se encontraron registros",
-					"info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-					"infoEmpty": "Mostrando 0 a 0 de 0 registros",
-					"infoFiltered": "(filtrados de un total de _MAX_ registros)",
-					"search": "Buscar:",
-					"paginate": {
-						"first": "Primero",
-						"previous": "Anterior",
-						"next": "Siguiente",
-						"last": "Último"
-					}
-				}
-			});
-		});
+    // Crear función para leer JSON de Departamentos
+    function cargarDepa() {
+        // $.get("ServletDepaJSON", function (response) {
+        $.get("ServletDepa?accion=listado", function (response) {
+            let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+            let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+            
+            $.each(response, function (index, item) {
+                $("#TablaDepa").append("<tr><td>" + item.id_depa + "</td>" +
+                    "<td>" + item.nombre + "</td><td>" + item.descripcion + "</td>" +
+                    "<td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
+            });
 
-	});
-}
+            // Inicializar DataTable
+            $(document).ready(function () {
+                $('#TablaDepa').DataTable({
+                    "language": {
+                        "lengthMenu": "Mostrar _MENU_ registros por página",
+                        "zeroRecords": "No se encontraron registros",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                        "infoFiltered": "(filtrados de un total de _MAX_ registros)",
+                        "search": "Buscar:",
+                        "paginate": {
+                            "first": "Primero",
+                            "previous": "Anterior",
+                            "next": "Siguiente",
+                            "last": "Último"
+                        }
+                    }
+                });
+            });
 
- 
-//asignar evento click a todos los botones con nombre de clase btn-editar
- $(document).on("click",".btn-editar",function(){ var cod;
- cod=$(this).parents("tr").find("td")[0].innerHTML;
- $.get("ServletFindDepaJSON?codigo="+cod, function(response){
-		$("#id-codigo").val(response.id);
-		$("#id-nombre").val(response.nombre);
-		$("#id-descrip").val(response.descripcion); 
-	 
- }) 
- })
- 
- //asignar evento click a todos los botones con nombre de clase btn-eliminar
-		$(document).on("click", ".btn-eliminar", function () {
-    var cod;
-    var nombre;
-    cod = $(this).parents("tr").find("td")[0].innerHTML;
-    nombre = $(this).parents("tr").find("td")[1].innerHTML; // Obtener el nombre del departamento
+        });
+    }
 
-    Swal.fire({
-        title: '¿Seguro de eliminar?',
-        text: '¿Desea eliminar el departamento "' + nombre + '", ID: ' + cod + '"?', // Usar el nombre y el ID en el mensaje
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Aceptar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location = "http://localhost:8080/GitHub_ONG/ServletDepa?accion=eliminar&codigo=" + cod;
-        }
+    // Asignar evento click a todos los botones con nombre de clase btn-editar
+    $(document).on("click", ".btn-editar", function () {
+        var cod = $(this).parents("tr").find("td")[0].innerHTML;
+        $.get("ServletDepa?accion=buscar&id_depa=" + cod, function (response) {
+            $("#id-codigo").val(response.id_depa);
+            $("#id-nombre").val(response.nombre);
+            $("#id-descrip").val(response.descripcion);
+        });
     });
-});
-		
-		//asignar evento click al botón con ID "btn-cerrar"
-		$(document).on("click","#btn-cerrar",function(){
-			//resetear formulario
-			$("#FormularioDepa").trigger("reset");
-			//resetar validación
-			$("#FormularioDepa").data("bootstrapValidator").resetForm(true);
-			//
-			$("#id-codigo").val("0");
-		})
-</script>
 
+    // Asignar evento click a todos los botones con nombre de clase btn-eliminar
+    $(document).on("click", ".btn-eliminar", function () {
+        var cod;
+        var nombre;
+        cod = $(this).parents("tr").find("td")[0].innerHTML;
+        nombre = $(this).parents("tr").find("td")[1].innerHTML; // Obtener el nombre del departamento
+
+        Swal.fire({
+            title: '¿Seguro de eliminar?',
+            text: '¿Desea eliminar el departamento "' + nombre + '", ID: ' + cod + '"?', // Usar el nombre y el ID en el mensaje
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = "http://localhost:8080/GitHub_ONG/ServletDepa?accion=eliminar&id=" + cod;
+            }
+        });
+    });
+
+    // Asignar evento click al botón con ID "btn-cerrar"
+    $(document).on("click", "#btn-cerrar", function () {
+        // Resetear formulario
+        $("#FormularioDepa").trigger("reset");
+        // Resetear validación
+        $("#FormularioDepa").data("bootstrapValidator").resetForm(true);
+        // Establecer valor predeterminado para el campo código
+        $("#id-codigo").val("0");
+    });
+</script>
 
 <script>
-	$(document).ready(function() {
-						$('#FormularioDepa')
-								.bootstrapValidator(
-										{
-											fields : {
-												nombre : {
-													validators : {
-														notEmpty : {
-															message : 'Campo de nombre es obligatorio'
-														},
-														regexp : {
-															regexp : /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s,.;:¡!¿?"'()]+$/, // Modificado para no permitir números
-															message : 'El nombre solo puede contener letras, espacios y signos de puntuación, pero no números'
-														}
-													}
-												},
-												descripcion : {
-													validators : {
-														notEmpty : {
-															message : 'Campo de descripcion es obligatorio'
-														},
-														regexp : {
-															regexp : /^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s,.;:¡!¿?"'()]+$/,
-															message : 'La descripcion solo puede contener letras, números, espacios y signos de puntuación'
-														}
-													}
-												}
-											}
-										});
-					});
+    $(document).ready(function () {
+        $('#FormularioDepa').bootstrapValidator({
+            fields: {
+                nombre: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Campo de nombre es obligatorio'
+                        },
+                        regexp: {
+                            regexp: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s,.;:¡!¿?"'()]+$/, // Modificado para no permitir números
+                            message: 'El nombre solo puede contener letras, espacios y signos de puntuación, pero no números'
+                        }
+                    }
+                },
+                descripcion: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Campo de descripcion es obligatorio'
+                        },
+                        regexp: {
+                            regexp: /^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s,.;:¡!¿?"'()]+$/,
+                            message: 'La descripcion solo puede contener letras, números, espacios y signos de puntuación'
+                        }
+                    }
+                }
+            }
+        });
+    });
 </script>
+
 </html>

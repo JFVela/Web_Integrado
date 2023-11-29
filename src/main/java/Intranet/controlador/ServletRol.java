@@ -72,18 +72,11 @@ public class ServletRol extends HttpServlet {
 	private void ListarRol(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			// Crear un cliente HTTP
 			HttpClient client = HttpClient.newHttpClient();
-
-			// Crear una solicitud HTTP GET con la URI especificada
 			HttpRequest request_lista = HttpRequest.newBuilder().uri(URI.create("http://localhost:8091/Roles/lista"))
 					.GET().build();
-
-			// Enviar la solicitud y obtener la respuesta
 			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
 			response.setContentType("application/json;charset=UTF-8");
-
-			// Obtener la respuesta del servidor y enviarla al cliente
 			PrintWriter pw = response.getWriter();
 			pw.print(response_lista.body());
 
@@ -98,7 +91,7 @@ public class ServletRol extends HttpServlet {
 		cod = request.getParameter("codigo");
 		nom = request.getParameter("nombre");
 		des = request.getParameter("descripcion");
-		String tipoMensaje = "error";
+		String tipoMensaje = "";
 
 		Roles bean = new Roles();
 		bean.setId(Integer.parseInt(cod));
