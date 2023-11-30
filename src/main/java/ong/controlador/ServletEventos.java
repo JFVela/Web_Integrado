@@ -247,38 +247,84 @@ public class ServletEventos extends HttpServlet {
 		// 4.invocar al método save y enviar el objeto "bean"
 		// validar estado
 		 // Convertir objeto a JSON
-	    Gson gson = new Gson();
-	    String json = gson.toJson(bean);
+	    //Gson gson = new Gson();
+	    //String json = gson.toJson(bean);
 
+		if(Integer.parseInt(id)==0) {
+		    int estado = new MySqlEventosDAO().save(bean);
+		    if (estado == 1) { 
+		    	tipoMensaje ="success";
+		    	request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+		    	request.getSession().setAttribute("MENSAJE", "Evento registrado con éxito");
+		    }
+		    else { 
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE", "Error en el registro del evento");
+		    }
+		} else {
+	    int estado = new MySqlEventosDAO().update(bean);
+			if (estado == 1) {
+			     tipoMensaje = "warning";
+			     request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			     request.getSession().setAttribute("MENSAJE", "Evento actualizado con éxito");
+			} else {
+				 tipoMensaje = "error";
+			     request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+			     request.getSession().setAttribute("MENSAJE", "Error en la actualización del Evento");
+			 }}
 
 	    // Invocar al servicio web correspondiente y enviar el objeto convertido a JSON
-	    String url = (bean.getId_evento() == 0) ? "http://localhost:8091/eventos/registrar" : "http://localhost:8091/eventos/actualizar";
+	   /* if (bean.getId_evento() == 0) {
+	        try {
+	            HttpClient client = HttpClient.newHttpClient();
+	            HttpRequest request_crear = HttpRequest.newBuilder()
+	                    .uri(URI.create("http://localhost:8091/eventos/registrar"))  // Cambiar el URL a "eventos/registrar"
+	                    .header("Content-type", "application/json")
+	                    .POST(BodyPublishers.ofString(json))
+	                    .build();
 
-	    try {
-	        HttpClient client = HttpClient.newHttpClient();
-	        HttpRequest requestEnviar = (bean.getId_evento()== 0)
-	                ? HttpRequest.newBuilder().uri(URI.create(url)).header("Content-type", "application/json").POST(BodyPublishers.ofString(json)).build()
-	                : HttpRequest.newBuilder().uri(URI.create(url)).header("Content-type", "application/json").PUT(BodyPublishers.ofString(json)).build();
+	            HttpResponse<String> response_lista = client.send(request_crear, BodyHandlers.ofString());
 
-	        HttpResponse<String> responseLista = client.send(requestEnviar, BodyHandlers.ofString());
+	            if (response_lista.statusCode() == 200) {
+	                tipoMensaje = "success";
+	                request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+	                request.getSession().setAttribute("MENSAJE", "Evento registrado con éxito");
+	            } else {
+	                tipoMensaje = "error";
+	                request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+	                request.getSession().setAttribute("MENSAJE", "Error en el registro del evento");
+	            }
 
-	        if (responseLista.statusCode() == 200) {
-	            tipoMensaje = (bean.getId_evento() == 0) ? "success" : "warning";
-	            request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-	            request.getSession().setAttribute("MENSAJE", (bean.getId_evento() == 0) ? "Evento registrado con éxito" : "Evento actualizado con éxito");
-	        } else {
-	            tipoMensaje = "error";
-	            request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-	            request.getSession().setAttribute("MENSAJE", (bean.getId_evento() == 0) ? "Error en el registro del evento" : "Error en la actualización del evento");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            throw new ServletException("Error al procesar la solicitud", e);
 	        }
+	    } else {
+	        try {
+	            HttpClient client = HttpClient.newHttpClient();
+	            HttpRequest request_crear1 = HttpRequest.newBuilder()
+	                    .uri(URI.create("http://localhost:8091/eventos/actualizar"))  // Cambiar el URL a "eventos/actualizar"
+	                    .header("Content-type", "application/json")
+	                    .PUT(BodyPublishers.ofString(json))
+	                    .build();
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        throw new ServletException("Error al procesar la solicitud", e);
-	    }
+	            HttpResponse<String> response_lista2 = client.send(request_crear1, BodyHandlers.ofString());
 
+	            if (response_lista2.statusCode() == 200) {
+	                tipoMensaje = "success";
+	                request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+	                request.getSession().setAttribute("MENSAJE", "Evento actualizado con éxito");
+	            } else {
+	                tipoMensaje = "error";
+	                request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+	                request.getSession().setAttribute("MENSAJE", "Error en la actualización del evento");
+	            }
 
-		response.sendRedirect("AdEventos.jsp");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            throw new ServletException("Error al procesar la solicitud", e);
+	        }
+	    }*/
+	    response.sendRedirect("AdEventos.jsp");
 	}
-//delegado
 }

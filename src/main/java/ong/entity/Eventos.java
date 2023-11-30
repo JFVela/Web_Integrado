@@ -7,8 +7,8 @@ public class Eventos {
 	private String ubicacion;
 	private java.sql.Date inicio_inscripcion;
 	private java.sql.Date final_inscripcion;
-	private java.sql.Date einicio;
-	private java.sql.Date efinal;
+	private java.sql.Date inicio;
+	private java.sql.Date finalE;
 	private String detalle;
 	private String inicio_inscripcionStr;
 	private String final_inscripcionStr;
@@ -78,16 +78,16 @@ public class Eventos {
 		this.final_inscripcion = final_inscripcion;
 	}
 	public java.sql.Date getEinicio() {
-		return einicio;
+		return inicio;
 	}
 	public void setEinicio(java.sql.Date einicio) {
-		this.einicio = einicio;
+		this.inicio = einicio;
 	}
 	public java.sql.Date getEfinal() {
-		return efinal;
+		return finalE;
 	}
 	public void setEfinal(java.sql.Date efinal) {
-		this.efinal = efinal;
+		this.finalE = efinal;
 	}
 	public int getVacantes() {
 		return vacantes;
