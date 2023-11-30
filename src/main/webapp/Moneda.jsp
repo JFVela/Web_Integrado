@@ -51,7 +51,7 @@
       </div>
       <div class="modal-body">
         
-      <form id="formMoneda" method="post" action="ServletMoneda?accion=grabar">
+      <form id="formMoneda" method="post" action="ServletApiMoneda?tipo=grabar">
 	      	
 	      	<div class="form-group">
 			    <label for="exampleInputEmail1" class="form-label">Código</label>
@@ -69,7 +69,7 @@
 		  </div>
   
   		<div class="modal-footer">
-             <button type="submit" class="btn btn-primary">Grabar</button>
+             <button type="submit" class="btn btn-primary"><i class="bi bi-floppy-fill"></i></button>
              <button type="button" class="btn btn-secondary btn-cerrar" data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
       	</div>
 
@@ -158,7 +158,7 @@
 	cargarMoneda();
 	
 	//Crear funcion para leer JSON Moneda
-	function cargarMoneda(){
+	/*function cargarMoneda(){
 			$.get("ServletMonedaJSON",function(response){	
 				console.log(response)
 				let botonEditar= "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'><i class='bi bi-pencil'></i></button>";
@@ -174,15 +174,28 @@
 				});
 				new DataTable('#TableMoneda');
 			})
-		};
+		};*/
+		function cargarMoneda(){
+			$.get("ServletApiMoneda?tipo=listaMoneda",function(response){	
+				let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'><i class='bi bi-pencil'></i></button>";
+		        let botonEliminar="<button type='button' class='btn btn-danger btn-eliminar'><i class='bi bi-trash'></i></button>";
+		        $("#TableMoneda").DataTable().destroy();
+		        $.each(response,function(index,item){
+					$("#TableMoneda").append("<tr><td>"+item.codigo+"</td>"+
+						 "<td>"+item.nombre+"</td>"+"<td>"+item.valor+"</td>"+
+						 "<td>"+botonEditar+"</td><td>"+botonEliminar+"</td></tr>");
+				})
+				new DataTable('#TableMoneda');
+			})
+		}
 		//asignar evento click a todos los botones con nombre de clase btn-editar
 		$(document).on("click",".btn-editar",function(){
 			var cod;
 			cod=$(this).parents("tr").find("td")[0].innerHTML;
-			$.get("ServletFindMonedaJSON?codigo="+cod, function(response){
+			$.get("ServletApiMoneda?tipo=buscar&codigo="+cod, function(response){
 				//console.log(response);
 				//mostrar valores en las cajas
-				$("#id-codigo").val(response.id);
+				$("#id-codigo").val(response.codigo);
 				$("#id-nombre").val(response.nombre);
 				$("#id-valor").val(response.valor);
 			})

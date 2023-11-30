@@ -102,10 +102,10 @@ body{
 		   <tr>
 		     <th>ID</th>
 		     <th>DNI</th>
-		     <th>ID Campaña</th>
+		     <th>Nombre Campaña</th>
              <th>Moneda</th>
              <th>Monto</th>
-             <th>Nro Tarjeta</th>
+             <th>Dueño Tarjeta</th>
 		   </tr>
 		 </thead>
 		 <tbody class="table-warning">
@@ -156,7 +156,7 @@ body{
 	cargarDonantesVirtuales();
 	
 	//crear funcion para leer JSON de TDonacion
-	function cargarDonantesVirtuales(){
+	/*function cargarDonantesVirtuales(){
 		$.get("ServletDonacionVirtualJSON",function(response){
 			console.log(response)
 			//let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
@@ -170,6 +170,21 @@ body{
 						 "</td></tr>");
             });
             new DataTable('#tblDonantesVirtuales');
+		})
+	}*/
+	function cargarDonantesVirtuales(){
+		$.get("ServletApiDonacionVirtual?tipo=listaDonantesVirtuales",function(response){	
+			let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'><i class='bi bi-pencil'></i></button>";
+	        let botonEliminar="<button type='button' class='btn btn-danger btn-eliminar'><i class='bi bi-trash'></i></button>";
+	        $("#tblDonantesVirtuales").DataTable().destroy();
+	        $.each(response,function(index,item){
+				$("#tblDonantesVirtuales").append("<tr><td>"+item.codigo+"</td>"+
+						 "<td>"+item.donantesdni+"</td>"+"<td>"+item.campaña.nombre+"</td>"+
+						 "<td>"+item.moneda.nombre+"</td>"+
+						 "<td>"+item.monto+"</td>"+"<td>"+item.cuenta.dueño+"</td>"+
+						 "</td></tr>");
+			})
+			new DataTable('#tblDonantesVirtuales');
 		})
 	}
 	

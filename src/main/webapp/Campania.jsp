@@ -1,5 +1,5 @@
 <jsp:include page="intranet.jsp"></jsp:include>
-
+<!-- aquí va el intranet -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -67,7 +67,7 @@
         
       </div>
       <div class="modal-body">
-        <form accept-charset="UTF-8" id="frmCampania" method="POST" action="ServletCampaña?accion=grabar">
+        <form accept-charset="UTF-8" id="frmCampania" method="POST" action="ServletApiCampaña?tipo=grabar">
         
         <div class="form-group">
 		    <label for="exampleInputEmail1" class="form-label">codigo</label>
@@ -177,7 +177,7 @@
 	cargarCampana();
     
 	//crear funcion para leer JSON de TDonacion
-	function cargarCampana(){
+	/*function cargarCampana(){
 		$.get("ServletCampañaJSON",function(response){
 			console.log(response)
 			let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
@@ -191,15 +191,28 @@
             });
             new DataTable('#tablaCampana');
 		})
+	}*/
+	function cargarCampana(){
+		$.get("ServletApiCampaña?tipo=listaCampana",function(response){	
+			let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+	        let botonEliminar="<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+	        $("#tablaCampana").DataTable().destroy();
+	        $.each(response,function(index,item){
+				$("#tablaCampana").append("<tr><td>"+item.codigo+"</td>"+
+					 "<td>"+item.nombre+"</td>"+"<td>"+item.descripcion+"</td>"+
+					 "<td>"+botonEditar+"</td><td>"+botonEliminar+"</td></tr>");
+			})
+			new DataTable('#tablaCampana');
+		})
 	}
 	//
 	//asignamos eventos oneClick
 	$(document).on("click",".btn-editar",function(){
 		var cod;
 		cod=$(this).parents("tr").find("td")[0].innerHTML;
-		$.get("ServletFindCampaña?codigo="+cod,function(response){
+		$.get("ServletApiCampaña?tipo=buscar&codigo="+cod,function(response){
 			
-			$("#id-codigo").val(response.id);
+			$("#id-codigo").val(response.codigo);
 			$("#id-nombre").val(response.nombre);
 			$("#id-descripcion").val(response.descripcion);
 			
@@ -232,7 +245,7 @@
 				  cancelButtonText: 'Cancelar'
 				}).then((result) => {
 				  if (result.isConfirmed) {
-				    window.location="http://localhost:8080/GitHub_ONG/ServletCampaña?accion=eliminar&codigo="+cod;
+				    window.location="http://localhost:8080/GitHub_ONG/ServletApiCampaña?tipo=eliminar&codigo="+cod;
 				  }
 				})
 				

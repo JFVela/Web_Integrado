@@ -1,17 +1,15 @@
 package ong.entity;
-//Cambié solo el private int id, ahora será codigo
-public class Campaña {
-	private int id;
+
+public class CampañaAp {
+	private int codigo;
 	private String nombre;
 	private String descripcion;
-
-	public int getId() {
-		return id;
+	public int getCodigo() {
+		return codigo;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
-	
 	public String getNombre() {
 		return nombre;
 	}
@@ -24,6 +22,5 @@ public class Campaña {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
 	
 }
