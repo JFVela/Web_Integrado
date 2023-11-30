@@ -51,7 +51,7 @@ public class JavaEmail {
 					+ "            </p>\r\n"
 					+ "        </div>\r\n"
 					+ "    </section>";
-			message.setContent(htmlcode,"text/html");
+			 message.setContent(htmlcode, "text/html; charset=utf-8");
 			return message;
 		}catch(Exception ex) {
 			Logger.getLogger(JavaEmail.class.getName()).log(Level.SEVERE,null,ex);
