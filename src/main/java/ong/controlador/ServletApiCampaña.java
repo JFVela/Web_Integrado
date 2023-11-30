@@ -58,7 +58,7 @@ public class ServletApiCampaña extends HttpServlet {
 			//Crear objeto de la clase HttpResponse ========> respuesta
 			HttpResponse<String> response_lista = http.send(request_lista, BodyHandlers.ofString());
 			
-			request.getSession().setAttribute("MENSAJE","Campaña eliminado");
+			request.getSession().setAttribute("ERROR","Campaña eliminado");
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -139,7 +139,7 @@ public class ServletApiCampaña extends HttpServlet {
 						.PUT(BodyPublishers.ofString(json)).build();
 				//Crear objeto de la clase HttpResponse ========> respuesta
 				HttpResponse<String> response_lista = http.send(request_crear, BodyHandlers.ofString());
-				request.getSession().setAttribute("MENSAJE","Campaña Actualizado");
+				request.getSession().setAttribute("MODIFICADO","Campaña Actualizado");
 			}
 			
 			//request.getSession().setAttribute("MENSAJE","Alumno actualizado");
