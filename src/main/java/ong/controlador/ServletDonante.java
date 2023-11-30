@@ -116,9 +116,8 @@ public class ServletDonante extends HttpServlet {
 			//Actualiza la tarjeta
 			Tarjeta bean3=new Tarjeta();
 			double valor=new MySqlDonacionVirtualDAO().valormoneda(Integer.parseInt(tpmon));
-			System.out.print(valor);
 
-				bean3.setSaldo(Double.parseDouble(monto)*valor);
+			bean3.setSaldo(Double.parseDouble(monto)*valor);
 				
 			bean3.setCvc(Integer.parseInt(request.getParameter("cvv")));
 			bean3.setNumCuenta(Integer.parseInt(request.getParameter("numcuen")));
@@ -131,8 +130,11 @@ public class ServletDonante extends HttpServlet {
 			}else{
 				request.getSession().setAttribute("MENSAJE","Fallida");
 			}	
-			response.sendRedirect("Donacion.jsp");
+			
+		}else {
+			request.getSession().setAttribute("MENSAJE","Fallida");
 		}
+		response.sendRedirect("Donacion.jsp");
 	}
 
 
@@ -305,7 +307,7 @@ public class ServletDonante extends HttpServlet {
 	private boolean verficarSaldo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String saldo=request.getParameter("monto");
+		String monto=request.getParameter("monto");
 		int tipomon=Integer.parseInt(request.getParameter("tmone"));
 		int numeroTarjeta = Integer.parseInt(request.getParameter("numcuen"));
 		int mes = Integer.parseInt(request.getParameter("expirationMonth"));
@@ -318,20 +320,13 @@ public class ServletDonante extends HttpServlet {
 		tarjeta.setCvc(cvc);
 		
 	      double saldoActual = new MySqlTarjetaDAO().saldoTarjeta(tarjeta);
-	      if(tipomon==1) {
-	    		if (saldoActual < Double.parseDouble(saldo)) {
-	    			return false;
-		    	   }else {
-		    		   return true;
-		    	   }
-	      }else if(tipomon==2){
-	    			if (saldoActual < Double.parseDouble(saldo)*3.81) {
-		    	        return false;
-		    	    }else {
-		    	    	return true;
-		    	    }
-	      }
-		return false;
+	      double valor=new MySqlDonacionVirtualDAO().valormoneda(tipomon);
+
+		if (saldoActual < Double.parseDouble(monto)*valor) {
+			return false;
+    	   }else {
+    		   return true;
+    	   }
 	     
 	}
 }
