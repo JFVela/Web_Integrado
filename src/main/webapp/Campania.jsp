@@ -1,4 +1,4 @@
-<jsp:include page="intranet.jsp"></jsp:include>
+
 <!-- aquí va el intranet -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

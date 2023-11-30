@@ -58,7 +58,7 @@ public class ServletApiMoneda extends HttpServlet {
 			//Crear objeto de la clase HttpResponse ========> respuesta
 			HttpResponse<String> response_lista = http.send(request_lista, BodyHandlers.ofString());
 			
-			request.getSession().setAttribute("MENSAJE","Moneda Borrada");
+			request.getSession().setAttribute("ERROR","Moneda Borrada");
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -127,7 +127,7 @@ public class ServletApiMoneda extends HttpServlet {
 						.PUT(BodyPublishers.ofString(json)).build();
 				//Crear objeto de la clase HttpResponse ========> respuesta
 				HttpResponse<String> response_lista = http.send(request_crear, BodyHandlers.ofString());
-				request.getSession().setAttribute("MODIFICADO","Moneda Actualizada Admin");
+				request.getSession().setAttribute("MODIFICADO","MONEDA Actualizada");
 			}
 			
 			//request.getSession().setAttribute("MENSAJE","Alumno actualizado");
