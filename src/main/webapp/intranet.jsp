@@ -23,12 +23,12 @@
 
 
 <script type="text/javascript">
-	document.addEventListener("DOMContentLoaded", function() {
+	/*document.addEventListener("DOMContentLoaded", function() {
 		var datosEmpleado = "${sessionScope.datosEmpleado}";
 		if (!datosEmpleado) {
 			window.location.href = "Login.jsp?showMessage";
 		}
-	});
+	});*/
 </script>
 
 </head>

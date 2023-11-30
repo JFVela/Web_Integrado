@@ -58,7 +58,12 @@ public class ServletVoluntario extends HttpServlet {
 	    String tipo = request.getParameter("accion");
 	    //validar tipo
 	    if (tipo.equals("guardar")) {
-	        grabarVoluntario(request, response);
+	        try {
+				grabarVoluntario(request, response);
+			} catch (IOException | InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    } else if (tipo.equals("verificarDNI")) {
 	        verificarDNI(request, response);
 	    } else if (tipo.equals("verificarCorreo")) {
@@ -239,7 +244,8 @@ public class ServletVoluntario extends HttpServlet {
 	    voluntario.setDni(Integer.parseInt(dni));
 	    voluntario.setEmail(email);
 	    voluntario.setTelefono(Integer.parseInt(tel));
-	    voluntario.setId_Especialidades(Integer.parseInt(espec));
+	    //voluntario.setId_Especialidades(Integer.parseInt(espec));
+	    voluntario.setId_Especialidades(1);
 	    voluntario.setCiudad(ciud);
 	    voluntario.setProvincia(prov);
 	    voluntario.setDistrito(dist);
