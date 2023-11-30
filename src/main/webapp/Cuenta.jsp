@@ -43,6 +43,16 @@
 	border: 1px solid red;
 	box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
 }
+
+  #tblCuenta {
+    font-size: 14px;
+  }
+
+  
+  #tblCuenta td,
+  #tblCuenta th {
+    font-size: 18px;
+  }
 </style>
 <body>
 	<div class="container">
@@ -82,14 +92,14 @@
 								<div class="row">
 									<div class="col-sm-12 col-md-6">
 										<div class="dataTables_length" id="AgenteUsers_length">
-											<label>Show <select name="AgenteUsers_length"
+											<!-- <label>Show <select name="AgenteUsers_length"
 												aria-controls="AgenteUsers"
 												class="custom-select custom-select-sm form-control form-control-sm"><option
 														value="10">10</option>
 													<option value="25">25</option>
 													<option value="50">50</option>
 													<option value="100">100</option></select> entries
-											</label>
+											</label> -->
 										</div>
 									</div>
 								</div>
@@ -237,12 +247,10 @@
 	            $("#tablaCuerpoCuenta").append("<tr>" +
 		            "<td>" +
 		                "<div class='btn-group'>" +
-		                    "<button type='button' class='btn btn-secondary dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false'><i class='bi bi-gear-fill'></i></button>" +
+		                    "<button type='button' class='btn btn-success dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false'><i class='bi bi-gear-fill'></i></button>" +
 		                    "<ul class='dropdown-menu'>" +
 		                        "<li><a class='dropdown-item' data-bs-toggle='modal' data-bs-target='#staticBackdrop' data-dueno='" + response.dueno + "' data-cuenta='" + response.numero + "'>Recargar Saldo</a></li>" +
-		                        "<li><a class='dropdown-item' href='#'>Otra Opción</a></li>" +
-		                        "<li><hr class='dropdown-divider'></li>" +
-		                        "<li><a class='dropdown-item' href='#'>Algo más</a></li>" +
+		                        
 		                    "</ul>" +
 		                "</div>" +
 		            "</td>" +
