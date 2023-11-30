@@ -39,6 +39,31 @@ public class ServletApiMoneda extends HttpServlet {
 			grabarMoneda(request,response);
 		else if(accion.equals("buscar"))
 			buscarMoneda(request,response);
+		else if(accion.equals("eliminar"))
+			eliminarMoneda(request,response);
+	}
+
+
+	private void eliminarMoneda(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		try {
+			String cod;
+			cod=request.getParameter("codigo");
+			
+			//Crear objeto de la clase HttpClient
+			HttpClient http = HttpClient.newHttpClient();
+			//Crear objeto de la clase HttpRequest ===========>Solicitud
+			HttpRequest request_lista = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8091/moneda/eliminar/"+cod))
+					.DELETE().build();
+			//Crear objeto de la clase HttpResponse ========> respuesta
+			HttpResponse<String> response_lista = http.send(request_lista, BodyHandlers.ofString());
+			
+			request.getSession().setAttribute("MENSAJE","Moneda Borrada");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		response.sendRedirect("Moneda.jsp");
+		
 	}
 
 

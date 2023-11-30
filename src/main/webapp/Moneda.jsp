@@ -210,6 +210,26 @@
 			//
 			$("#id-codigo").val("0");
 		})
+		//asignar evento click a todos los botones con nombre de clase btn-eliminar
+	$(document).on("click",".btn-eliminar",function(){
+			var cod;
+			cod=$(this).parents("tr").find("td")[0].innerHTML;
+			Swal.fire({
+				  title: '¿Seguro de eliminar?',
+				  text: "Campaña con ID: "+cod,
+				  icon: 'error',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Aceptar',
+				  cancelButtonText: 'Cancelar'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+				    window.location="http://localhost:8080/GitHub_ONG/ServletApiMoneda?tipo=eliminar&codigo="+cod;
+				  }
+				})
+				
+		})
 			
 </script>
 
