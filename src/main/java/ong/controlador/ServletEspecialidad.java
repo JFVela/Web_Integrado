@@ -125,7 +125,7 @@ public class ServletEspecialidad extends HttpServlet {
 		Especialidad bean = new Especialidad();
 		//3.Setear los atributos del objeto "bean" con las variables
 		bean.setNombre(nom);
-		bean.setIdEspecialidades(Integer.parseInt(id));
+		bean.setId_Especialidades(Integer.parseInt(id));
 	    String tipoMensaje = "error"; // Color por defecto: rojo
 
 		//validar variable cod
@@ -154,24 +154,24 @@ public class ServletEspecialidad extends HttpServlet {
 	    String json = gson.toJson(bean);
 
 	    // Invocar al servicio web correspondiente y enviar el objeto convertido a JSON
-	    String url = (bean.getIdEspecialidades() == 0) ? "http://localhost:8091/especialidad/registrar" : "http://localhost:8091/especialidad/actualizar";
+	    String url = (bean.getId_Especialidades() == 0) ? "http://localhost:8091/especialidad/registrar" : "http://localhost:8091/especialidad/actualizar";
 
 	    try {
 	        HttpClient client = HttpClient.newHttpClient();
-	        HttpRequest requestEnviar = (bean.getIdEspecialidades() == 0)
+	        HttpRequest requestEnviar = (bean.getId_Especialidades() == 0)
 	                ? HttpRequest.newBuilder().uri(URI.create(url)).header("Content-type", "application/json").POST(BodyPublishers.ofString(json)).build()
 	                : HttpRequest.newBuilder().uri(URI.create(url)).header("Content-type", "application/json").PUT(BodyPublishers.ofString(json)).build();
 
 	        HttpResponse<String> responseLista = client.send(requestEnviar, BodyHandlers.ofString());
 
 	        if (responseLista.statusCode() == 200) {
-	            tipoMensaje = (bean.getIdEspecialidades() == 0) ? "success" : "warning";
+	            tipoMensaje = (bean.getId_Especialidades() == 0) ? "success" : "warning";
 	            request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-	            request.getSession().setAttribute("MENSAJE", (bean.getIdEspecialidades() == 0) ? "Especialidad registrada con éxito" : "Especialidad actualizada con éxito");
+	            request.getSession().setAttribute("MENSAJE", (bean.getId_Especialidades() == 0) ? "Especialidad registrada con éxito" : "Especialidad actualizada con éxito");
 	        } else {
 	            tipoMensaje = "error";
 	            request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-	            request.getSession().setAttribute("MENSAJE", (bean.getIdEspecialidades() == 0) ? "Error en el registro de la especialidad" : "Error en la actualización de la especialidad");
+	            request.getSession().setAttribute("MENSAJE", (bean.getId_Especialidades() == 0) ? "Error en el registro de la especialidad" : "Error en la actualización de la especialidad");
 	        }
 
 	    } catch (Exception e) {

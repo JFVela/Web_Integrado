@@ -118,7 +118,7 @@ public class MySqlnscripcionDAO implements InscripcionDAO{
 		        con.setAutoCommit(false);
 
 		        // Eliminar las inscripciones relacionadas con la especialidad
-		        String sql = "DELETE FROM inscripcion WHERE voluntario_dni IN (SELECT dni FROM voluntario WHERE Especialidades_idEspecialidades = ?)";
+		        String sql = "DELETE FROM inscripcion WHERE voluntario_dni IN (SELECT dni FROM voluntario WHERE id_Especialidades = ?)";
 		        ps = con.prepareStatement(sql);
 		        ps.setInt(1, especialidadID);
 		        result = ps.executeUpdate();

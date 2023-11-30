@@ -2,15 +2,14 @@ package ong.entity;
 
 public class Especialidad {
 	
-	private int Id_Especialidades;
+	private int id_Especialidades;
 	private String nombre;
 	private int inscritos;
-	
-	public int getIdEspecialidades() {
-		return Id_Especialidades;
+	public int getId_Especialidades() {
+		return id_Especialidades;
 	}
-	public void setIdEspecialidades(int idEspecialidades) {
-		Id_Especialidades = idEspecialidades;
+	public void setId_Especialidades(int id_Especialidades) {
+		this.id_Especialidades = id_Especialidades;
 	}
 	public String getNombre() {
 		return nombre;
@@ -25,4 +24,5 @@ public class Especialidad {
 		this.inscritos = inscritos;
 	}
 	
+
 }

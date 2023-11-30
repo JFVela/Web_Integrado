@@ -223,7 +223,7 @@ th {
 			insc=$(this).parents("tr").find("td")[2].innerHTML;
 			Swal.fire({
 				  title: '¿Seguro de eliminar?',
-				  text: "Hay "+insc+" voluntario(s) inscrito(s) en la especialidad '"+nom+"', si elimina la especialidad se eliminarán los "+insc+" voluntario(s)",
+				  text: "Hay "+insc+ id+" voluntario(s) inscrito(s) en la especialidad '"+nom+"', si elimina la especialidad se eliminarán los "+insc+" voluntario(s)",
 				  icon: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
@@ -243,7 +243,7 @@ th {
 			$.get("ServletEspecialidad?accion=buscarEspecialidad&id="+id, function(response){
 				//console.log(response);
 				//mostrar valores en las cajas
-				$("#id").val(response.IdEspecialidades);
+				$("#id").val(response.id_Especialidades);
 				$("#nombre").val(response.nombre);
 			})
 		})
