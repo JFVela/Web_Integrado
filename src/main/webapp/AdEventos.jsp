@@ -85,7 +85,7 @@ th {
 						<h5 class="modal-title form-head text-bold fs-4">Tabla de
 							Eventos</h5>
 					</div>
-
+//delegado
 					<div class="modal-body">
 
 						<form id="contact-form" method="post"

@@ -190,7 +190,7 @@ body.shimeji-select-ie {
 												<label for="especialidad" class="label-form text-secondary">Especialidad</label>
 												<select class="form-select" name="especialidad"
 													id="id-especialidad">
-													<option value=" ">[Seleccione tipo de
+													<option value="1">[Seleccione tipo de
 														voluntariado]</option>
 												</select>
 											</div>
@@ -687,10 +687,10 @@ body.shimeji-select-ie {
 
 
 
-			$.get("ServletEspecialidad?accion=listaEspecialidad", function(response) {
+			$.get("ServletEspecialidadesJSON", function(response) {
 				$.each(response, function(index, item) {
 					$("#id-especialidad").append(
-							"<option value='"+item.IdEspecialidades+"'>"
+							"<option value='"+item.id_Especialidades+"'>"
 									+ item.nombre + "</option")
 				})
 			})

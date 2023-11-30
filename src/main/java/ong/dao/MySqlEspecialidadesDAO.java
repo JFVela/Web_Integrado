@@ -27,7 +27,7 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 		    // 3. Crear objeto "ps" y enviar la variable "sql"
 		    ps = con.prepareStatement(sql);
 		    // 4. Parámetros
-		    ps.setInt(1, bean.getIdEspecialidades());
+		    ps.setInt(1, bean.getId_Especialidades());
 		    ps.setString(2, bean.getNombre()); // Reemplaza nombreEspecialidad con el nombre de la especialidad que deseas insertar.
 		    // 5. Ejecutar ps
 		    // Si la sentencia INSERT se ejecuta correctamente, el método executeUpdate retorna 1.
@@ -64,7 +64,7 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 		        ps = con.prepareStatement(sql);
 		        // 4. Parámetros
 		        ps.setString(1, bean.getNombre()); // Reemplaza getNombre() con el nuevo nombre de la especialidad.
-		        ps.setInt(2, bean.getIdEspecialidades()); // Agrega el id como segundo parámetro
+		        ps.setInt(2, bean.getId_Especialidades()); // Agrega el id como segundo parámetro
 
 		        // 5. Ejecutar ps
 		        // Si la sentencia UPDATE se ejecuta correctamente, el método executeUpdate retorna 1.
@@ -144,7 +144,7 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 		        // 6. Procesar el resultado
 		        if (rs.next()) {
 		            especialidad = new Especialidad();
-		            especialidad.setIdEspecialidades(rs.getInt("idEspecialidades"));
+		            especialidad.setId_Especialidades(rs.getInt("idEspecialidades"));
 		            especialidad.setNombre(rs.getString("nombre"));
 		            // Continúa asignando otros atributos de la especialidad si los hay
 		        }
@@ -179,7 +179,7 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 	        // 2. Sentencia SQL para obtener todos los registros
 	        String sql = "SELECT e.id_Especialidades, e.nombre, COUNT(v.dni) AS inscritos " +
 	                     "FROM especialidades e " +
-	                     "LEFT JOIN voluntario v ON e.id_Especialidades = v.Especialidades_idEspecialidades " +
+	                     "LEFT JOIN voluntario v ON e.id_Especialidades = v.id_Especialidades " +
 	                     "GROUP BY e.id_Especialidades, e.nombre";
 	        // 3. Crear objeto "ps" y enviar la variable "sql"
 	        ps = con.prepareStatement(sql);
@@ -191,7 +191,7 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 	        while (rs.next()) {
 	            // Crear un objeto Especialidad con los datos obtenidos de la consulta
 	            Especialidad especialidad = new Especialidad();
-	            especialidad.setIdEspecialidades(rs.getInt("id_Especialidades"));
+	            especialidad.setId_Especialidades(rs.getInt("id_Especialidades"));
 	            especialidad.setNombre(rs.getString("nombre"));
 	            especialidad.setInscritos(rs.getInt("inscritos"));
 

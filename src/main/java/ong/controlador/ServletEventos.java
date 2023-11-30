@@ -1,6 +1,13 @@
 package ong.controlador;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -12,6 +19,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import ong.dao.MySqlEventosDAO;
 import ong.dao.MySqlVoluntarioDAO;
@@ -44,10 +53,54 @@ public class ServletEventos extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		 String tipo = request.getParameter("accion");
 		    //validar tipo
-	  if (tipo.equals("guardar")) {
-		  grabarEventos(request, response);
-	  } else if(tipo.equals("eliminar"))
-		  eliminarEvento(request,response);
+		  if (tipo.equals("guardar")) {
+			  grabarEventos(request, response);
+		  } else if(tipo.equals("eliminar"))
+			  eliminarEvento(request,response);
+		  else if(tipo.equals("listaEventos"))
+				listaEventos(request,response);
+		  else if (tipo.equals("buscarEvento"))
+				buscarEvento(request, response);
+	}
+
+	private void buscarEvento(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String cod = request.getParameter("id"); // Corregir el nombre del parámetro
+			HttpClient client = HttpClient.newHttpClient();
+
+			HttpRequest request_lista = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8091/eventos/buscar/" + cod)).GET().build();
+
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			response.setContentType("application/json;charset=UTF-8");
+
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());	
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void listaEventos(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			//crear objeto de la classe HTTPCLIENT
+			HttpClient http = HttpClient.newHttpClient();
+			//crear objeto de la clase HTTPREQUEST --> Solicitud
+			HttpRequest request_lista = HttpRequest.newBuilder().uri(URI.create("http://localhost:8091/eventos/lista"))
+										.GET().build();
+			
+			//crear objeto de la clase HTTPRESPONSE ---
+			HttpResponse<String> response_lista = http.send(request_lista, BodyHandlers.ofString());
+			//Preparar salida en format JSON
+			response.setContentType("application/json;charset=UTF-8");
+			//
+			PrintWriter pw = response.getWriter();
+			pw.print(response_lista.body());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void eliminarEvento(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -61,7 +114,7 @@ public class ServletEventos extends HttpServlet {
 
 		try {
 			con = new MySqlConectar().getConectar();
-			// Deshabilitar el autocommit para iniciar una transacción
+			// Deshabilitar el autocommit para iniciar una tr	ansacción
 			con.setAutoCommit(false);
 
 			// Eliminar voluntarios inscritos en el evento
@@ -107,10 +160,34 @@ public class ServletEventos extends HttpServlet {
 				e2.printStackTrace();
 			}
 		}
+		
+		/*try {
+			String tipoMensaje = "";
+
+			String cod = request.getParameter("id"); // Corregir el nombre del parámetro
+			HttpClient client = HttpClient.newHttpClient();
+
+			HttpRequest request_lista = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8091/eventos/eliminar/" + cod)).DELETE().build();
+
+			HttpResponse<String> response_lista = client.send(request_lista, BodyHandlers.ofString());
+			if (response_lista.statusCode() == 200) {
+				tipoMensaje = "success";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE", "Evento eliminado con éxito");
+			} else {
+				tipoMensaje = "error";
+				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+				request.getSession().setAttribute("MENSAJE", "No se puede eliminar el Evento");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
 		response.sendRedirect("AdEventos.jsp");
 	}
 
-	private void grabarEventos(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void grabarEventos(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// 1. recuperar los valores de los controles (cajas) del form
 		// usar atributo name.
 		String nom, id, ubi, ini, fin, eini, efin, det, vac;
@@ -169,31 +246,39 @@ public class ServletEventos extends HttpServlet {
 		String tipoMensaje = "error"; // Color por defecto: rojo
 		// 4.invocar al método save y enviar el objeto "bean"
 		// validar estado
-		if (Integer.parseInt(id) == 0) {
-			int estado = new MySqlEventosDAO().save(bean);
+		 // Convertir objeto a JSON
+	    Gson gson = new Gson();
+	    String json = gson.toJson(bean);
 
-			if (estado == 1) {
-				tipoMensaje = "success"; // Para mensajes de éxito (verde)
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE", "Evento registrado");
-			} else {
-				request.getSession().setAttribute("MENSAJE", "Error en el registro");
-			}
-		} else {
-			int estado = new MySqlEventosDAO().update(bean);
 
-			if (estado == 1) {
-				tipoMensaje = "warning";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE", "Evento actualizado");
-			} else {
-				tipoMensaje = "error";
-				request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
-				request.getSession().setAttribute("MENSAJE", "Error en la actualización");
-			}
-		}
+	    // Invocar al servicio web correspondiente y enviar el objeto convertido a JSON
+	    String url = (bean.getId_evento() == 0) ? "http://localhost:8091/eventos/registrar" : "http://localhost:8091/eventos/actualizar";
+
+	    try {
+	        HttpClient client = HttpClient.newHttpClient();
+	        HttpRequest requestEnviar = (bean.getId_evento()== 0)
+	                ? HttpRequest.newBuilder().uri(URI.create(url)).header("Content-type", "application/json").POST(BodyPublishers.ofString(json)).build()
+	                : HttpRequest.newBuilder().uri(URI.create(url)).header("Content-type", "application/json").PUT(BodyPublishers.ofString(json)).build();
+
+	        HttpResponse<String> responseLista = client.send(requestEnviar, BodyHandlers.ofString());
+
+	        if (responseLista.statusCode() == 200) {
+	            tipoMensaje = (bean.getId_evento() == 0) ? "success" : "warning";
+	            request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+	            request.getSession().setAttribute("MENSAJE", (bean.getId_evento() == 0) ? "Evento registrado con éxito" : "Evento actualizado con éxito");
+	        } else {
+	            tipoMensaje = "error";
+	            request.getSession().setAttribute("TIPO_MENSAJE", tipoMensaje);
+	            request.getSession().setAttribute("MENSAJE", (bean.getId_evento() == 0) ? "Error en el registro del evento" : "Error en la actualización del evento");
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw new ServletException("Error al procesar la solicitud", e);
+	    }
+
 
 		response.sendRedirect("AdEventos.jsp");
 	}
-
+//delegado
 }
