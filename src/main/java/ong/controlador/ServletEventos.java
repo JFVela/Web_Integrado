@@ -160,7 +160,7 @@ public class ServletEventos extends HttpServlet {
 				e2.printStackTrace();
 			}
 		}
-		
+		//XD
 		/*try {
 			String tipoMensaje = "";
 
