@@ -42,7 +42,7 @@ public class JavaEmail {
 					+ "           <img src=\"https://live.staticflickr.com/65535/53309313117_b757d25132_c.jpg\" width=\"300\"\r\n"
 					+ "             height=\"300\" alt=\"Quiero-donar-foto-lateral-Dona\"/>\r\n"
 					+ "        </div>        \r\n"
-					+ "        <div style=\"font-size: 18px;color: white;\">\r\n"
+					+ "        <div style=\"font-size: 18px;color: white;text-align: center;\">\r\n"
 					+ "            <p>Gracias por tu generosidad y por ser parte de nuestro esfuerzo. Tu donación hará una diferencia real en nuestras causas.</p>\r\n"
 					+ "\r\n"
 					+ "            <p>Atentamente,<br>\r\n"
