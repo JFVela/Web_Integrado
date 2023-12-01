@@ -194,7 +194,7 @@ public class MySQL_Empleados implements interfazEmpleados {
 				empleado.setSueldo(rs.getDouble("sueldo"));
 				empleado.setRolNumber(rs.getInt("id_rol")); // Asignar el ID del rol
 				empleado.setDepaNumber(rs.getInt("id_depa")); // Asignar el ID del departamento
-				empleado.setIdONG(rs.getInt("idONG"));
+				empleado.setOngNumber(rs.getInt("idONG"));
 				empleado.setNombre_rol(rs.getString("nombre_rol")); // Nombre del rol
 				empleado.setNombre_departamento(rs.getString("nombre_departamento")); // Nombre del departamento
 				// lugar de ID

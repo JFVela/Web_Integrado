@@ -27,6 +27,7 @@ import Intranet.entidad.Departamento;
 import Intranet.entidad.Empleados;
 import Intranet.entidad.Enlace;
 import Intranet.entidad.Roles;
+import Intranet.entidad.ongEmpresa;
 
 @WebServlet("/ServletEmpleados")
 public class ServletEmpleados<Enlace> extends HttpServlet {
@@ -372,7 +373,7 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 			throws ServletException, IOException {
 		// Obtener datos del formulario
 		String dni, codigo, login, contraseña, nombre, paterno, materno, telefono, correo, direccion, sueldo, id_rol,
-				id_depa;
+				id_depa, id_ong;
 		dni = request.getParameter("dni");
 		codigo = request.getParameter("codigo");
 		login = request.getParameter("login");
@@ -386,6 +387,7 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		sueldo = request.getParameter("sueldo");
 		id_rol = request.getParameter("rol");
 		id_depa = request.getParameter("departamento");
+		id_ong = request.getParameter("ong");
 		String tipoMensaje = "error";
 
 		// Generar una sal (salt) aleatoria para la contraseña
@@ -417,6 +419,10 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		Roles objetoRol = new Roles();
 		objetoRol.setId(Integer.parseInt(id_rol));
 		empleado.setRol(objetoRol);
+
+		ongEmpresa objetoONG = new ongEmpresa();
+		objetoONG.setId(Integer.parseInt(id_ong));
+		empleado.setOng(objetoONG);
 
 		Gson g = new Gson();
 		String json = g.toJson(empleado);
