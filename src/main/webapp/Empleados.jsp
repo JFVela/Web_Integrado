@@ -128,6 +128,11 @@
 											type="number" class="form-control" name="sueldo"
 											id="id-sueldo">
 									</div>
+
+									<div class="form-group">
+										<input type="hidden" name="ong" id="id-ong" value="1">
+									</div>
+
 									<div class="form-group">
 										<label for="rol" class="form-label">Rol</label> <select
 											class="form-control" name="rol" id="id-rol">
