@@ -165,10 +165,10 @@
 <c:remove var="MENSAJE" scope="session" />
 <script>
 
-
+//TOMAMOS EL VALOR DEL ROL
 var rolDelEmpleado = ${sessionScope.rolDelEmpleado};
 console.log(rolDelEmpleado);
-
+//OCULTA EL BOTON AGREGAR SEGUN EL ROL
 if (rolDelEmpleado !== 1 && rolDelEmpleado !== 2) {
     $(document).ready(function() {
         $("#botonAgregar").hide();
