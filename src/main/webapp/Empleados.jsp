@@ -143,7 +143,7 @@
 										<label for="departamento" class="form-label">Departamento</label>
 										<select class="form-control" name="departamento"
 											id="id-departamento">
-											<option value="">[Seleccione un Departamento]</option>
+											<option value="">[Seleccione un Depart.]</option>
 										</select>
 									</div>
 								</div>
@@ -177,7 +177,7 @@
 						<th>Dirección</th>
 						<th>Sueldo</th>
 						<th>Rol</th>
-						<th>Departamento</th>
+						<th>Depart.</th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -227,6 +227,18 @@
 <!-- eliminar atributo de tipo sesión MENSAJE -->
 <c:remove var="MENSAJE" scope="session" />
 <script>
+
+	//TOMAMOS EL VALOR DEL ROL
+	var rolDelEmpleado = ${sessionScope.rolDelEmpleado};
+	console.log(rolDelEmpleado);
+	//OCULTA EL BOTON AGREGAR SEGUN EL ROL
+	if (rolDelEmpleado !== 1 && rolDelEmpleado !== 2) {
+	    $(document).ready(function() {
+	        $("#botonAgregar").hide();
+	    });
+	}
+
+
     cargarEmpleados();
     cargarDepa();
     cargarRol();
@@ -250,10 +262,10 @@
     function cargarEmpleados() {
         //$.get("ServletEmpleadosJSON", function(response) {
             $.get("ServletEmpleados?accion=listado", function(response) {
-            let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
-            let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
-            $.each(response, function(index, item) {
-                $("#TablaEmpleados").append("<tr><td>" + item.codigo + "</td>" +
+            	$.each(response, function(index, item) {
+                    let botonEditar = (rolDelEmpleado !== 1 && rolDelEmpleado !== 2) ? "" : "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+                    let botonEliminar = (rolDelEmpleado !== 1) ? "" : "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+     				$("#TablaEmpleados").append("<tr><td>" + item.codigo + "</td>" +
                         "<td>" + item.dni + "</td>" +
                         "<td>" + item.login + "</td>" +
                     "<td>" + item.nombre + "</td><td>" + item.paterno + "</td>" +
@@ -329,11 +341,19 @@
         });
     });
     
+ // Añadir evento al cerrar el modal para reiniciar el formulario
+    $('#exampleModal').on('hidden.bs.modal', function () {
+        $("#FormularioEmpleado").trigger("reset");
+        $("#FormularioEmpleado").data("bootstrapValidator").resetForm(true);
+        $("#id-codigo").val("0");
+    });
+
     $(document).on("click", "#btn-cerrar", function() {
         $("#FormularioEmpleado").trigger("reset");
         $("#FormularioEmpleado").data("bootstrapValidator").resetForm(true);
         $("#id-codigo").val("0");
     });
+
 </script>
 
 <script>
