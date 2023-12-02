@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Locacion</title>
+<title>Locación</title>
 <link rel="icon" href="assets/img/health-monitoring-svgrepo-com.svg">
 
 <link
@@ -23,25 +23,16 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
 	rel="stylesheet">
-	<link rel="stylesheet" href="assets/css/EstiloBotones.css">
-<style>
-.help-block {
-	color: red;
-}
+<link rel="stylesheet" href="assets/css/EstiloBotones.css">
+<link rel="stylesheet" href="assets/css/Locacion.css">
 
-.form-group.has-error .form-control-label {
-	color: red;
-}
-
-.form-group.has-error .form-control {
-	border: 1px solid red;
-	box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
-}
-</style>
 </head>
 <body>
+	<!-- ENCABEZADO -->
 	<div class="container">
-		<h1 class="mt-5 text-center display-2 p-3"><strong>Listado de <span style="color: green;">Locaciones</span></strong></h1>
+		<h1 class="mt-5 text-center display-2 p-3">
+			<strong>Listado de <span style="color: green;">Locaciones</span></strong>
+		</h1>
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
 			data-bs-target="#exampleModal">Nueva Locación</button>
 		<!-- Modal -->
@@ -88,6 +79,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- Modal -->
 		<%--Tabla --%>
 		<div class="mt-5">
 			<table id="tablaLocacion" class="table table-striped table-bordered"
@@ -107,6 +99,8 @@
 		</div>
 	</div>
 </body>
+
+<!-- LIBRERIAS -->
 <!-- libreria principal de JQUERY -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
@@ -117,7 +111,8 @@
 	crossorigin="anonymous"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
@@ -127,7 +122,9 @@
 	src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script
 	src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<!-- LIBRERIAS -->
 
+<!-- TOAST -->
 <c:if test="${sessionScope.MENSAJE!=null}">
 	<script>
 	 		var tipoMensaje = "${sessionScope.TIPO_MENSAJE}";
@@ -138,9 +135,12 @@
 	</script>
 </c:if>
 <c:remove var="MENSAJE" scope="session" />
+<!-- TOAST -->
 
+<!-- SCRIPT -->
 <script>
 cargarLocacion();
+//CARGAMOS LA TABLA DE LOCACIONES
 function cargarLocacion(){
 	$.get("ServletLocacion?accion=listado",function(response){	
 		let botonEditar="<a class='btn-neon1 btn-edit'  data-bs-toggle='modal' data-bs-target='#exampleModal' data-operacion='actualizar' ><span id=span11></span><span id=span21></span><span id=span31></span><span id=span41></span>Editar</a>";
@@ -156,6 +156,7 @@ function cargarLocacion(){
 	})
 }
 
+//ACCION BOTON EDITAR
 	$(document).on("click",".btn-edit",function(){
 		var id;
 		id=$(this).parents("tr").find("td")[0].innerHTML;
@@ -166,10 +167,11 @@ function cargarLocacion(){
 		})
 	})
 	
-	
+//ACCION BOTON ELIMINAR
 	$(document).on("click", ".btn-deleted", function(){
     var id;
     id = $(this).parents("tr").find("td")[0].innerHTML;
+    //FUNCIÓN CON AJAX , PRA VERIFICAR LA LOCACION
     function verificarLocacion(id) {
         $.ajax({
             type: "POST",
@@ -216,23 +218,27 @@ function cargarLocacion(){
     // Llamar la función verificarLocacion con el valor de id
     verificarLocacion(id);
 	});
-		$(document).on("click", ".btn-deleted", function() {
-		    var dni;
-		    dni = $(this).parents("tr").find("td")[0].innerHTML;
+	
+	$(document).on("click", ".btn-deleted", function() {
+	    var dni;
+	    dni = $(this).parents("tr").find("td")[0].innerHTML;
 
-		    // Llamar la función verificarDonacion con el valor de dni
-		    verificarLocacion(id);
-		});
+	    // Llamar la función verificarDonacion con el valor de dni
+	    verificarLocacion(id);
+	});
 		
 		
-		
+	///FORMATEMAOS EL MODAL	
 	$(document).on("click","#btn-cerrar",function(){
 		$("#formLocacion").trigger("reset");
 		$("#formLocacion").data("bootstrapValidator").resetForm(true);
 		$("#id-id").val("0");
 	})
 </script>
-<script>    
+
+
+<script>
+//VALIDACIÓN CON BOOSTRAP VALIDATOR PLUGIN
     $(document).ready(function(){     
         $('#formLocacion').bootstrapValidator({      
         	 fields:{
