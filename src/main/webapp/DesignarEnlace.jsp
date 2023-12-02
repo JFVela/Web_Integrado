@@ -298,7 +298,7 @@ fieldset, legend {
     function cargarAsignarEnlace() {
         $.get("ServletAsignarEnlaceJSON?accion=TABLA", function(response) {
         	$.each(response, function(index, item) {
-                let botonEliminar = (rolDelEmpleado !== 1) ? "" : "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+                let botonEliminar = (rolDelEmpleado !== 1) ? "" : "<button type='button' class='btn btn-danger btn-eliminar-db'>Eliminar</button>";
 			 $("#TablaAsignarEnlace").append("<tr><td>" + item.roles_id_rol + "</td>" +
                     "<td>" + item.nombreRol + "</td>" +
                     "<td>" + item.enlace_id_enlace + "</td>" +
@@ -371,7 +371,7 @@ function listaEnlacesSeleccionados() {
 }
 
 
-    // Manejar evento al hacer clic en un botón de adición
+// Manejar evento al hacer clic en un botón de adición
 $(document).on("click", ".btn-adicionar", function() {
     let IdRol = $("#idRol").val();
     let nombreRol = rolesData[IdRol];

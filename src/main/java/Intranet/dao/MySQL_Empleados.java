@@ -244,6 +244,7 @@ public class MySQL_Empleados implements interfazEmpleados {
 		}
 		return lista;
 	}
+	
 
 	@Override
 	public Empleados iniciarSesion(String login) {
