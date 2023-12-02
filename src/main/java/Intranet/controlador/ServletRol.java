@@ -52,7 +52,7 @@ public class ServletRol extends HttpServlet {
 
 	private void buscar(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			String cod = request.getParameter("id"); // Corregir el nombre del parámetro
+			String cod = request.getParameter("id"); 
 			HttpClient client = HttpClient.newHttpClient();
 
 			HttpRequest request_lista = HttpRequest.newBuilder()
@@ -178,7 +178,7 @@ public class ServletRol extends HttpServlet {
 		try {
 			String tipoMensaje = "";
 
-			String cod = request.getParameter("id"); // Corregir el nombre del parámetro
+			String cod = request.getParameter("id");
 			HttpClient client = HttpClient.newHttpClient();
 
 			HttpRequest request_lista = HttpRequest.newBuilder()
