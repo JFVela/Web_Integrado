@@ -1,122 +1,142 @@
 <jsp:include page="intranet.jsp"></jsp:include>
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 
 <title>Campañas</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
 
 <!-- para mensajes de confirmacion -->
-<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<link
+	href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+	rel="stylesheet">
 
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <!-- para eliminar -->
-<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
+	rel="stylesheet">
 
 
 <style>
-.modal-header{
-		color:#fff;
-		background: #428bca;
-		display: flex;
-  		justify-content: center;
-  		
-	}
-	.help-block {
-	  		color: red;
-	}
-	.form-group.has-error .form-control-label {
-	  color: red;
-	}
-	.form-group.has-error .form-control {
-	  border: 1px solid red;
-	  box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
-	}
-	
-   
+.modal-header {
+	color: #fff;
+	background: #428bca;
+	display: flex;
+	justify-content: center;
+}
+
+.help-block {
+	color: red;
+}
+
+.form-group.has-error .form-control-label {
+	color: red;
+}
+
+.form-group.has-error .form-control {
+	border: 1px solid red;
+	box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+}
 </style>
-	
+
 </style>
 
 </head>
 <body>
 
-<div class="container">
+	<div class="container">
 
-<h1 class="mt-5 text-center">Campañas</h1>
+		<h1 class="mt-5 text-center">Campañas</h1>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Agregar
-</button>
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-outline-primary"
+			data-bs-toggle="modal" data-bs-target="#exampleModal">
+			Agregar</button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Campaña</h1>
-        
-      </div>
-      <div class="modal-body">
-        <form accept-charset="UTF-8" id="frmCampania" method="POST" action="ServletApiCampaña?tipo=grabar">
-        
-        <div class="form-group">
-		    <label for="exampleInputEmail1" class="form-label">codigo</label>
-		    <input type="text" class="form-control" id="id-codigo" name="codigo" value="0" readonly>
-		  </div>
-        
-		  <div class="form-group">
-		    <label for="exampleInputEmail1" class="form-label">Nombre de Campaña</label>
-		    <input type="text" class="form-control" id="id-nombre" name="nombre">
-		  </div>
-		  
-		  <div class="form-group">
-		  <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
-		  <textarea class="form-control" id="id-descripcion" name="descripcion" rows="3"></textarea>
-		  </div>
-		  
-		  
-	      <div class="modal-footer">
-	      <button type="submit" class="btn btn-primary">Grabar</button>
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
-	        
-	      </div>
-		  
-		</form>
-      </div>
-    </div>
-  </div>
-</div>
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" data-bs-backdrop="static"
+			data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">Nueva
+							Campaña</h1>
 
-<table id="tablaCampana" class="table table-striped table-bordered" style="width:100%">
-  <thead>
-    <tr>
-      <th>CÓDIGO</th>
-      <th>NOMBRE</th>
-      <th>DESCRIPCIÓN</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-  <!-- 
+					</div>
+					<div class="modal-body">
+						<form accept-charset="UTF-8" id="frmCampania" method="POST"
+							action="ServletApiCampaña?tipo=grabar">
+
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="form-label">codigo</label>
+								<input type="text" class="form-control" id="id-codigo"
+									name="codigo" value="0" readonly>
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="form-label">Nombre
+									de Campaña</label> <input type="text" class="form-control"
+									id="id-nombre" name="nombre">
+							</div>
+
+							<div class="form-group">
+								<label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
+								<textarea class="form-control" id="id-descripcion"
+									name="descripcion" rows="3"></textarea>
+							</div>
+
+
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Grabar</button>
+								<button type="button" class="btn btn-secondary"
+									data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
+
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<table id="tablaCampana" class="table table-striped table-bordered"
+			style="width: 100%">
+			<thead>
+				<tr>
+					<th>CÓDIGO</th>
+					<th>NOMBRE</th>
+					<th>DESCRIPCIÓN</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- 
 	    <tr>
 	      <td>1</td>
 		  <td>2</td>
 		  <td>3</td>
 	    </tr>
 	     -->
-  </tbody>
-</table>
-</div>
+			</tbody>
+		</table>
+	</div>
 
 
 
@@ -127,19 +147,27 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <!-- Libreria Jquery de boostrap y que funcione Modal-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
 
 <!-- libreria JS de la tabla (buscador)-->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script
+	src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <!-- Libreria para validar (boostrap validator) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
 
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <!-- mesanje eliminar -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 <!-- validar si existe el atrubuto MENSAJE -->
 <c:if test="${sessionScope.MENSAJE!=null}">
@@ -169,9 +197,9 @@
 	</script>
 </c:if>
 <!-- eliminar atributo de tipo sesión MENSAJE -->
-<c:remove var="MENSAJE" scope="session"/>
-<c:remove var="MODIFICADO" scope="session"/>
-<c:remove var="ERROR" scope="session"/>
+<c:remove var="MENSAJE" scope="session" />
+<c:remove var="MODIFICADO" scope="session" />
+<c:remove var="ERROR" scope="session" />
 <script>
 	cargarCampana();
     

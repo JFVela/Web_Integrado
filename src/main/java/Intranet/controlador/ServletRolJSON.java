@@ -25,7 +25,7 @@ public class ServletRolJSON extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<Roles> lista = new MySQL_Roles().findAll(); // Cambiado a MySQL_Roles para Roles
+		List<Roles> lista = new MySQL_Roles().findAll(); 
 		Gson gson = new Gson();
 		String json = gson.toJson(lista);
 		response.setContentType("application/json;charset=UTF-8");

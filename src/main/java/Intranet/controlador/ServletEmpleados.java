@@ -248,9 +248,16 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 	}
 
 	private void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// Obtiene la sesión actual del usuario
 		HttpSession session = request.getSession();
+
+		// Invalida (cierra) la sesión
 		session.invalidate();
+
+		// Establece un atributo de sesión indicando que la sesión ha sido cerrada
 		request.getSession().setAttribute("CERRAR", "SESSION CERRADA");
+
+		// Redirige al usuario a la página de inicio de sesión (Login.jsp)
 		response.sendRedirect("Login.jsp");
 	}
 

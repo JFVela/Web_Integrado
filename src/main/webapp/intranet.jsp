@@ -19,7 +19,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
 	rel="stylesheet">
-<!-- JavaScript para redirigir a login.jsp si sessionScope.datosEmpleado es nulo -->
+<!-- Script para redireccionar a la página de inicio de sesión si no hay datos de empleado en la sesión -->
 <script type="text/javascript">
 	document.addEventListener("DOMContentLoaded", function() {
 		var datosEmpleado = "${sessionScope.datosEmpleado}";
@@ -31,7 +31,7 @@
 
 </head>
 <body>
-	<!-- NAVBAR -->
+	<!-- Navbar -->
 	<nav class="navbar navbar-expand-lg bg-light">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="DashBoard.jsp">INTRANET</a>
@@ -42,19 +42,19 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<!-- Lista de enlaces generada dinámicamente con un forEach -->
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<c:forEach items="${sessionScope.listaEnlaces}" var="row">
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="${row.ruta}">${row.descripcion}</a></li>
 				</c:forEach>
 			</ul>
+			<!-- Sección para mostrar información del usuario y botón para cerrar sesión -->
 			<div class="flex"
 				style="width: 200px !important; padding-top: 10px; font-weight: bolder;">
 				<p style="color: black;">Bienvenido
 					${sessionScope.datosEmpleado}! IdRol:${sessionScope.rolDelEmpleado}</p>
 			</div>
-
-
 			<form id="FormularioInicioSesion" method="post"
 				action="ServletEmpleados?accion=CERRAR">
 				<button class="btn btn-outline-success" type="submit">CERRAR</button>

@@ -18,15 +18,20 @@ public class MySQL_Roles implements interfazRoles {
 		Connection cn = null;
 		PreparedStatement pstm = null;
 		try {
+			// Obtener la conexión a la base de datos
 			cn = new MySQL_Conexion().getConnection();
+			// Definir la consulta SQL para insertar un nuevo rol
 			String sql = "INSERT INTO roles (nombre, descripcion) VALUES (?, ?)";
 			pstm = cn.prepareStatement(sql);
+			// Establecer los valores de los parámetros
 			pstm.setString(1, bean.getNombre());
 			pstm.setString(2, bean.getDescripcion());
+			// Ejecutar la consulta y obtener el número de filas afectadas
 			salida = pstm.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			// Cerrar recursos en el bloque finally para asegurar que se cierren siempre
 			try {
 				if (pstm != null)
 					pstm.close();
@@ -46,11 +51,14 @@ public class MySQL_Roles implements interfazRoles {
 		PreparedStatement pstm = null;
 		try {
 			cn = new MySQL_Conexion().getConnection();
+			// Definir la consulta SQL para actualizar un rol
 			String sql = "UPDATE roles SET nombre = ?, descripcion = ? WHERE id_rol = ?";
 			pstm = cn.prepareStatement(sql);
+			// Establecer los valores de los parámetros
 			pstm.setString(1, bean.getNombre());
 			pstm.setString(2, bean.getDescripcion());
 			pstm.setInt(3, bean.getId());
+			// Ejecutar la consulta y obtener el número de filas afectadas
 			salida = pstm.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,9 +82,12 @@ public class MySQL_Roles implements interfazRoles {
 		PreparedStatement pstm = null;
 		try {
 			cn = new MySQL_Conexion().getConnection();
+			// Definir la consulta SQL para eliminar un rol por su ID
 			String sql = "DELETE FROM roles WHERE id_rol = ?";
 			pstm = cn.prepareStatement(sql);
+			// Establecer el valor del parámetro
 			pstm.setInt(1, id);
+			// Ejecutar la consulta y obtener el número de filas afectadas
 			salida = pstm.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,10 +112,14 @@ public class MySQL_Roles implements interfazRoles {
 		ResultSet rs = null;
 		try {
 			cn = new MySQL_Conexion().getConnection();
+			// Definir la consulta SQL para obtener un rol por su ID
 			String sql = "SELECT * FROM roles WHERE id_rol = ?";
 			pstm = cn.prepareStatement(sql);
+			// Establecer el valor del parámetro
 			pstm.setInt(1, id);
+			// Ejecutar la consulta y obtener el conjunto de resultados
 			rs = pstm.executeQuery();
+			// Procesar los resultados
 			if (rs.next()) {
 				bean = new Roles();
 				bean.setId(rs.getInt(1));
@@ -115,6 +130,7 @@ public class MySQL_Roles implements interfazRoles {
 			e.printStackTrace();
 		} finally {
 			try {
+				// Cerrar recursos en el bloque finally para asegurar que se cierren siempre
 				if (rs != null)
 					rs.close();
 				if (pstm != null)
@@ -137,9 +153,12 @@ public class MySQL_Roles implements interfazRoles {
 
 		try {
 			cn = new MySQL_Conexion().getConnection();
+			// Definir la consulta SQL para obtener todos los roles
 			String sql = "SELECT * FROM roles;";
 			pstm = cn.prepareStatement(sql);
+			// Ejecutar la consulta y obtener el conjunto de resultados
 			rs = pstm.executeQuery();
+			// Procesar los resultados y agregarlos a la lista
 			while (rs.next()) {
 				Roles R = new Roles();
 				R.setId(rs.getInt(1));

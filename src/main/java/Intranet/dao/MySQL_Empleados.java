@@ -265,7 +265,7 @@ public class MySQL_Empleados implements interfazEmpleados {
 				empleado.setLogin(rs.getString("login"));
 				empleado.setNombre(rs.getString("nombre"));
 				empleado.setRolNumber(rs.getInt("id_rol"));
-				empleado.setNombre_rol(rs.getString("nombre_rol")); // Nuevo campo para el nombre del rol
+				empleado.setNombre_rol(rs.getString("nombre_rol")); 
 				empleado.setContraseña(rs.getString("contraseña"));
 				byte[] salt = rs.getBytes("salt");
 				empleado.setSalt(salt);
