@@ -245,7 +245,7 @@ public class ServletVoluntario extends HttpServlet {
 	    voluntario.setEmail(email);
 	    voluntario.setTelefono(Integer.parseInt(tel));
 	    //voluntario.setId_Especialidades(Integer.parseInt(espec));
-	    voluntario.setId_Especialidades(1);
+	    voluntario.setId_Especialidades(Integer.parseInt(espec));
 	    voluntario.setCiudad(ciud);
 	    voluntario.setProvincia(prov);
 	    voluntario.setDistrito(dist);

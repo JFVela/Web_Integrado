@@ -194,7 +194,7 @@ public class MySQL_Empleados implements interfazEmpleados {
 				empleado.setSueldo(rs.getDouble("sueldo"));
 				empleado.setRolNumber(rs.getInt("id_rol")); // Asignar el ID del rol
 				empleado.setDepaNumber(rs.getInt("id_depa")); // Asignar el ID del departamento
-				empleado.setIdONG(rs.getInt("idONG"));
+				empleado.setOngNumber(rs.getInt("idONG"));
 				empleado.setNombre_rol(rs.getString("nombre_rol")); // Nombre del rol
 				empleado.setNombre_departamento(rs.getString("nombre_departamento")); // Nombre del departamento
 				// lugar de ID
@@ -253,8 +253,9 @@ public class MySQL_Empleados implements interfazEmpleados {
 		ResultSet rs = null;
 
 		try {
-			conn = new MySQL_Conexion().getConnection(); // Reemplaza con tu método de conexión
-			String sql = "SELECT codigo, login, nombre, id_rol, contraseña, salt FROM empleados WHERE login = ?";
+			conn = new MySQL_Conexion().getConnection();
+			String sql = "SELECT e.codigo, e.login, e.nombre, e.id_rol, e.contraseña, e.salt, r.nombre as nombre_rol "
+					+ "FROM empleados e " + "INNER JOIN roles r ON e.id_rol = r.id_rol " + "WHERE e.login = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, login);
 			rs = pstmt.executeQuery();
@@ -264,8 +265,9 @@ public class MySQL_Empleados implements interfazEmpleados {
 				empleado.setLogin(rs.getString("login"));
 				empleado.setNombre(rs.getString("nombre"));
 				empleado.setRolNumber(rs.getInt("id_rol"));
+				empleado.setNombre_rol(rs.getString("nombre_rol")); 
 				empleado.setContraseña(rs.getString("contraseña"));
-				byte[] salt = rs.getBytes("salt"); // Obtener el salt como un arreglo de bytes
+				byte[] salt = rs.getBytes("salt");
 				empleado.setSalt(salt);
 			}
 		} catch (Exception e) {

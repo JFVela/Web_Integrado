@@ -22,7 +22,7 @@ public class ServletFindRolJSON extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String cod = request.getParameter("codigo");
-		Roles bean = new MySQL_Roles().finById(Integer.parseInt(cod)); // Cambiado a MySQL_Roles para Roles
+		Roles bean = new MySQL_Roles().finById(Integer.parseInt(cod)); 
 		Gson gson = new Gson();
 		String json = gson.toJson(bean);
 		response.setContentType("application/json;charset=UTF-8");

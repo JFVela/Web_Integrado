@@ -27,6 +27,7 @@ import Intranet.entidad.Departamento;
 import Intranet.entidad.Empleados;
 import Intranet.entidad.Enlace;
 import Intranet.entidad.Roles;
+import Intranet.entidad.ongEmpresa;
 
 @WebServlet("/ServletEmpleados")
 public class ServletEmpleados<Enlace> extends HttpServlet {
@@ -247,9 +248,16 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 	}
 
 	private void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// Obtiene la sesión actual del usuario
 		HttpSession session = request.getSession();
+
+		// Invalida (cierra) la sesión
 		session.invalidate();
+
+		// Establece un atributo de sesión indicando que la sesión ha sido cerrada
 		request.getSession().setAttribute("CERRAR", "SESSION CERRADA");
+
+		// Redirige al usuario a la página de inicio de sesión (Login.jsp)
 		response.sendRedirect("Login.jsp");
 	}
 
@@ -283,8 +291,11 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 			List<Intranet.entidad.Enlace> lista = new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getRolNumber());
 			HttpSession session = request.getSession();
 			session.setAttribute("listaEnlaces", lista);
+			session.setAttribute("codigoEmpreado", empleado.getCodigo());
 			session.setAttribute("datosEmpleado", empleado.getLogin());
-			response.sendRedirect("intranet.jsp");
+			session.setAttribute("rolDelEmpleado", empleado.getRolNumber());
+			session.setAttribute("nombreRol", empleado.getNombre_rol());
+			response.sendRedirect("DashBoard.jsp");
 			request.getSession().setAttribute("INICIO", "BIENVENIDO");
 		} else {
 			// Las contraseñas no coinciden, inicio de sesión fallido
@@ -372,7 +383,7 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 			throws ServletException, IOException {
 		// Obtener datos del formulario
 		String dni, codigo, login, contraseña, nombre, paterno, materno, telefono, correo, direccion, sueldo, id_rol,
-				id_depa;
+				id_depa, id_ong;
 		dni = request.getParameter("dni");
 		codigo = request.getParameter("codigo");
 		login = request.getParameter("login");
@@ -386,6 +397,7 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		sueldo = request.getParameter("sueldo");
 		id_rol = request.getParameter("rol");
 		id_depa = request.getParameter("departamento");
+		id_ong = request.getParameter("ong");
 		String tipoMensaje = "error";
 
 		// Generar una sal (salt) aleatoria para la contraseña
@@ -417,6 +429,10 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 		Roles objetoRol = new Roles();
 		objetoRol.setId(Integer.parseInt(id_rol));
 		empleado.setRol(objetoRol);
+
+		ongEmpresa objetoONG = new ongEmpresa();
+		objetoONG.setId(Integer.parseInt(id_ong));
+		empleado.setOng(objetoONG);
 
 		Gson g = new Gson();
 		String json = g.toJson(empleado);

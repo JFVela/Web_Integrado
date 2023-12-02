@@ -190,7 +190,7 @@ body.shimeji-select-ie {
 												<label for="especialidad" class="label-form text-secondary">Especialidad</label>
 												<select class="form-select" name="especialidad"
 													id="id-especialidad">
-													<option value="1">[Seleccione tipo de
+													<option value="">[Seleccione tipo de
 														voluntariado]</option>
 												</select>
 											</div>

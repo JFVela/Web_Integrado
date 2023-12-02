@@ -123,34 +123,34 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 
 	@Override
 	public Especialidad findById(int cod) {
-		   Especialidad especialidad = null;
-		    Connection con = null;
-		    PreparedStatement ps = null;
-		    ResultSet rs = null;
-
-		    try {
-		        // 1. Obtener Conexión
-		        con = new MySqlConectar().getConectar();
-		        // 2. Sentencia SQL para obtener una especialidad por su ID
-		        String sql = "SELECT * FROM especialidades WHERE id_Especialidades = ?";
-		        // 3. Crear objeto "ps" y enviar la variable "sql"
-		        ps = con.prepareStatement(sql);
-		        // 4. Parámetro
-		        ps.setInt(1, cod); // ID de la especialidad que deseas recuperar
-
-		        // 5. Ejecutar consulta
-		        rs = ps.executeQuery();
-
-		        // 6. Procesar el resultado
-		        if (rs.next()) {
-		            especialidad = new Especialidad();
-		            especialidad.setId_Especialidades(rs.getInt("idEspecialidades"));
-		            especialidad.setNombre(rs.getString("nombre"));
-		            // Continúa asignando otros atributos de la especialidad si los hay
-		        }
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		    } finally {
+			   Especialidad especialidad = null;
+			    Connection con = null;
+			    PreparedStatement ps = null;
+			    ResultSet rs = null;
+	
+			    try {
+			        // 1. Obtener Conexión
+			        con = new MySqlConectar().getConectar();
+			        // 2. Sentencia SQL para obtener una especialidad por su ID
+			        String sql = "SELECT * FROM especialidades WHERE id_Especialidades = ?";
+			        // 3. Crear objeto "ps" y enviar la variable "sql"
+			        ps = con.prepareStatement(sql);
+			        // 4. Parámetro
+			        ps.setInt(1, cod); // ID de la especialidad que deseas recuperar
+	
+			        // 5. Ejecutar consulta
+			        rs = ps.executeQuery();
+	
+			        // 6. Procesar el resultado
+			        if (rs.next()) {
+			            especialidad = new Especialidad();
+			            especialidad.setId_Especialidades(rs.getInt("idEspecialidades"));
+			            especialidad.setNombre(rs.getString("nombre"));
+			            // Continúa asignando otros atributos de la especialidad si los hay
+			        }
+			    } catch (Exception e) {
+			        e.printStackTrace();
+			    } finally {
 		        try {
 		            if (rs != null)
 		                rs.close();
@@ -168,24 +168,24 @@ public class MySqlEspecialidadesDAO implements EspecialidadesDAO{
 
 	@Override
 	public List<Especialidad> findAll() {		
-		List<Especialidad> data = new ArrayList<Especialidad>();
-	    Connection con = null;
-	    PreparedStatement ps = null;
-	    ResultSet rs = null;
-
-	    try {
-	        // 1. Obtener Conexión
-	        con = new MySqlConectar().getConectar();
-	        // 2. Sentencia SQL para obtener todos los registros
-	        String sql = "SELECT e.id_Especialidades, e.nombre, COUNT(v.dni) AS inscritos " +
-	                     "FROM especialidades e " +
-	                     "LEFT JOIN voluntario v ON e.id_Especialidades = v.id_Especialidades " +
-	                     "GROUP BY e.id_Especialidades, e.nombre";
-	        // 3. Crear objeto "ps" y enviar la variable "sql"
-	        ps = con.prepareStatement(sql);
-
-	        // 4. Ejecutar la consulta
-	        rs = ps.executeQuery();
+			List<Especialidad> data = new ArrayList<Especialidad>();
+		    Connection con = null;
+		    PreparedStatement ps = null;
+		    ResultSet rs = null;
+	
+		    try {
+		        // 1. Obtener Conexión
+		        con = new MySqlConectar().getConectar();
+		        // 2. Sentencia SQL para obtener todos los registros
+		        String sql = "SELECT e.id_Especialidades, e.nombre, COUNT(v.dni) AS inscritos " +
+		                     "FROM especialidades e " +
+		                     "LEFT JOIN voluntario v ON e.id_Especialidades = v.id_Especialidades " +
+		                     "GROUP BY e.id_Especialidades, e.nombre";
+		        // 3. Crear objeto "ps" y enviar la variable "sql"
+		        ps = con.prepareStatement(sql);
+	
+		        // 4. Ejecutar la consulta
+		        rs = ps.executeQuery();
 
 	        // 5. Procesar el resultado
 	        while (rs.next()) {
