@@ -174,10 +174,10 @@ body{
 	}*/
 	function cargarDonantesVirtuales(){
 		$.get("ServletApiDonacionVirtual?tipo=listaDonantesVirtuales",function(response){	
-			$("#tblDonantesVirtuales").DataTable().destroy();
+			let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'><i class='bi bi-pencil'></i></button>";
+	        let botonEliminar="<button type='button' class='btn btn-danger btn-eliminar'><i class='bi bi-trash'></i></button>";
+	        $("#tblDonantesVirtuales").DataTable().destroy();
 	        $.each(response,function(index,item){
-	        	let botonEditar = (rolDelEmpleado !== 1 && rolDelEmpleado !== 2) ? "" : "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
-	            let botonEliminar = (rolDelEmpleado !== 1) ? "" : "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
 				$("#tblDonantesVirtuales").append("<tr><td>"+item.codigo+"</td>"+
 						 "<td>"+item.donantesdni+"</td>"+"<td>"+item.campaña.nombre+"</td>"+
 						 "<td>"+item.moneda.nombre+"</td>"+

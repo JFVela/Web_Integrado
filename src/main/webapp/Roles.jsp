@@ -241,6 +241,12 @@ $(document).on("click", ".btn-eliminar", function() {
     });
 });
 
+// Añadir evento al cerrar el modal para reiniciar el formulario
+$('#exampleModal').on('hidden.bs.modal', function () {
+    $("#FormularioRol").trigger("reset");
+    $("#FormularioRol").data("bootstrapValidator").resetForm(true);
+    $("#id-codigo").val("0");
+});
 
 $(document).on("click", "#btn-cerrar", function() {
     $("#FormularioRol").trigger("reset");
