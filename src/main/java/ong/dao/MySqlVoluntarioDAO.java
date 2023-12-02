@@ -19,7 +19,7 @@ public class MySqlVoluntarioDAO implements VoluntarioDAO {
 		int salida = -1;
 		Connection con = null;
 		PreparedStatement ps = null;
-
+		//PIJAMADAS
 		try {
 			// 1. Obtener Conexion
 			con = new MySqlConectar().getConectar();
