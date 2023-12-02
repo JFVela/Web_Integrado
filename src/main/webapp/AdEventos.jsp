@@ -85,7 +85,6 @@ th {
 						<h5 class="modal-title form-head text-bold fs-4">Tabla de
 							Eventos</h5>
 					</div>
-//delegado
 					<div class="modal-body">
 
 						<form id="contact-form" method="post"
@@ -267,7 +266,7 @@ th {
 					$("#TableEventos").append("<tr><td>"+item.id_evento+"</td>"+
 						 "<td>"+item.nombre+"</td>"+"<td>"+item.ubicacion+"</td>"+
 						 "<td>"+item.inicio_inscripcion+"</td>"+"<td>"+item.final_inscripcion+"</td>"+
-						 "<td>"+item.einicio+"</td>"+"<td>"+item.efinal+"</td>"+
+						 "<td>"+item.inicio+"</td>"+"<td>"+item.finalE+"</td>"+
 						 "<td>"+item.detalle+"</td>"+"<td>"+item.vacantes+"</td>"+
 						 "<td>"+item.inscritos+"</td>"+
 						 "<td>"+botonEditar+"</td>"+"<td>"+botonEliminar+"</td></tr>");
@@ -397,7 +396,7 @@ th {
                             }
                         }
                     },
-                    inicioEvento: {
+                    inicioEvento: {	
                         validators: {
                             notEmpty: {
                                 message: 'Campo inicio de evento es obligatorio'

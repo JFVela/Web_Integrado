@@ -284,8 +284,11 @@ public class ServletEmpleados<Enlace> extends HttpServlet {
 			List<Intranet.entidad.Enlace> lista = new MySQL_Empleados().traerEnlaceDelUsuario(empleado.getRolNumber());
 			HttpSession session = request.getSession();
 			session.setAttribute("listaEnlaces", lista);
+			session.setAttribute("codigoEmpreado", empleado.getCodigo());
 			session.setAttribute("datosEmpleado", empleado.getLogin());
-			response.sendRedirect("intranet.jsp");
+			session.setAttribute("rolDelEmpleado", empleado.getRolNumber());
+			session.setAttribute("nombreRol", empleado.getNombre_rol());
+			response.sendRedirect("DashBoard.jsp");
 			request.getSession().setAttribute("INICIO", "BIENVENIDO");
 		} else {
 			// Las contraseñas no coinciden, inicio de sesión fallido
