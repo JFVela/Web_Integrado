@@ -59,8 +59,10 @@
 		<h1 class="mt-5 text-center">Roles de la empresa</h1>
 
 		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-			data-bs-target="#exampleModal">Agregar rol</button>
+		<button type="button" class="btn btn-primary btn-agregar"
+			data-bs-toggle="modal" data-bs-target="#exampleModal"
+			id="botonAgregar">Agregar rol</button>
+
 
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -162,18 +164,30 @@
 <!-- eliminar atributo de tipo sesión MENSAJE -->
 <c:remove var="MENSAJE" scope="session" />
 <script>
+
+
+var rolDelEmpleado = ${sessionScope.rolDelEmpleado};
+console.log(rolDelEmpleado);
+
+if (rolDelEmpleado !== 1 && rolDelEmpleado !== 2) {
+    $(document).ready(function() {
+        $("#botonAgregar").hide();
+    });
+}
+
 cargarRoles();
 function cargarRoles() {
     //$.get("ServletRolJSON", function(response) {
-    	$.get("ServletRol?accion=listado", function(response) {
-        let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
-        let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
-        $.each(response, function(index, item) {
-            $("#TablaRol").append("<tr><td>" + item.id + "</td>" +
-                "<td>" + item.nombre + "</td>" +
-                "<td>" + item.descripcion + "</td>" +
-                "<td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
-        });
+    $.get("ServletRol?accion=listado", function(response) {
+    	$.each(response, function(index, item) {
+        let botonEditar = (rolDelEmpleado !== 1 && rolDelEmpleado !== 2) ? "" : "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+        let botonEliminar = (rolDelEmpleado !== 1) ? "" : "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+
+        $("#TablaRol").append("<tr><td>" + item.id + "</td>" +
+            "<td>" + item.nombre + "</td>" +
+            "<td>" + item.descripcion + "</td>" +
+            "<td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
+    });
 
         $(document).ready(function() {
             $('#TablaRol').DataTable({
@@ -204,7 +218,6 @@ $(document).on("click", ".btn-editar", function() {
     });
 });
 
-
 $(document).on("click", ".btn-eliminar", function() {
     var codigo;
     var nombre;
@@ -222,11 +235,12 @@ $(document).on("click", ".btn-eliminar", function() {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-           // window.location = "ServletRol?accion=eliminar&codigo=" + codigo;
+            // Si se confirma la eliminación, realiza la redirección
             window.location = "http://localhost:8080/GitHub_ONG/ServletRol?accion=eliminar&id=" + codigo;
         }
     });
 });
+
 
 $(document).on("click", "#btn-cerrar", function() {
     $("#FormularioRol").trigger("reset");
