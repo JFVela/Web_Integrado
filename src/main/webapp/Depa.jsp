@@ -58,7 +58,8 @@
 		<h1 class="mt-5 text-center">Departamentos</h1>
 		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-			data-bs-target="#exampleModal">+ Departamento</button>
+			data-bs-target="#exampleModal" id="botonAgregar">Agregar
+			Depart.</button>
 
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -162,16 +163,26 @@
 <c:remove var="MENSAJE" scope="session" />
 
 <script>
+
+	//TOMAMOS EL VALOR DEL ROL
+	var rolDelEmpleado = ${sessionScope.rolDelEmpleado};
+	console.log(rolDelEmpleado);
+	//OCULTA EL BOTON AGREGAR SEGUN EL ROL
+	if (rolDelEmpleado !== 1 && rolDelEmpleado !== 2) {
+	    $(document).ready(function() {
+	        $("#botonAgregar").hide();
+	    });
+	}
+	
     cargarDepa();
 
     // Crear función para leer JSON de Departamentos
     function cargarDepa() {
         // $.get("ServletDepaJSON", function (response) {
         $.get("ServletDepa?accion=listado", function (response) {
-            let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
-            let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
-            
-            $.each(response, function (index, item) {
+        	$.each(response, function(index, item) {
+                let botonEditar = (rolDelEmpleado !== 1 && rolDelEmpleado !== 2) ? "" : "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
+                let botonEliminar = (rolDelEmpleado !== 1) ? "" : "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
                 $("#TablaDepa").append("<tr><td>" + item.id_depa + "</td>" +
                     "<td>" + item.nombre + "</td><td>" + item.descripcion + "</td>" +
                     "<td>" + botonEditar + "</td><td>" + botonEliminar + "</td></tr>");
@@ -232,16 +243,20 @@
             }
         });
     });
-
-    // Asignar evento click al botón con ID "btn-cerrar"
-    $(document).on("click", "#btn-cerrar", function () {
-        // Resetear formulario
+    
+ // Añadir evento al cerrar el modal para reiniciar el formulario
+    $('#exampleModal').on('hidden.bs.modal', function () {
         $("#FormularioDepa").trigger("reset");
-        // Resetear validación
         $("#FormularioDepa").data("bootstrapValidator").resetForm(true);
-        // Establecer valor predeterminado para el campo código
         $("#id-codigo").val("0");
     });
+
+    $(document).on("click", "#btn-cerrar", function() {
+        $("#FormularioDepa").trigger("reset");
+        $("#FormularioDepa").data("bootstrapValidator").resetForm(true);
+        $("#id-codigo").val("0");
+    });
+
 </script>
 
 <script>

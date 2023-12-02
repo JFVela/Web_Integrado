@@ -80,7 +80,8 @@ fieldset, legend {
 		<h1 class="mt-5 text-center">Designación de Enlaces</h1>
 		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-			data-bs-target="#modalRequerimiento">Nueva Asignación</button>
+			data-bs-target="#modalRequerimiento" id="botonAgregar">Nueva
+			Asignación</button>
 
 		<!-- Modal -->
 		<div class="modal fade" id="modalRequerimiento" tabindex="-1"
@@ -220,6 +221,17 @@ fieldset, legend {
 	<!-- eliminar atributo de tipo sesión MENSAJE -->
 	<c:remove var="MENSAJE" scope="session" />
 	<script>
+	
+	//TOMAMOS EL VALOR DEL ROL
+	var rolDelEmpleado = ${sessionScope.rolDelEmpleado};
+	console.log(rolDelEmpleado);
+	//OCULTA EL BOTON AGREGAR SEGUN EL ROL
+	if (rolDelEmpleado !== 1 && rolDelEmpleado !== 2) {
+	    $(document).ready(function() {
+	        $("#botonAgregar").hide();
+	    });
+	}
+	
     // Cargar datos al cargar la página
     cargarRol();
     cargarAsignarEnlace();
@@ -285,10 +297,9 @@ fieldset, legend {
     // Cargar datos de asignación de enlaces
     function cargarAsignarEnlace() {
         $.get("ServletAsignarEnlaceJSON?accion=TABLA", function(response) {
-            $.each(response, function(index, item) {
-                let botonEditar = "<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'>Editar</button>";
-                let botonEliminar = "<button type='button' class='btn btn-danger btn-eliminar-db'>Eliminar</button>";
-                $("#TablaAsignarEnlace").append("<tr><td>" + item.roles_id_rol + "</td>" +
+        	$.each(response, function(index, item) {
+                let botonEliminar = (rolDelEmpleado !== 1) ? "" : "<button type='button' class='btn btn-danger btn-eliminar'>Eliminar</button>";
+			 $("#TablaAsignarEnlace").append("<tr><td>" + item.roles_id_rol + "</td>" +
                     "<td>" + item.nombreRol + "</td>" +
                     "<td>" + item.enlace_id_enlace + "</td>" +
                     "<td>" + item.nombreEnlace + "</td>" +
