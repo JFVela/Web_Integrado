@@ -2,150 +2,157 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Donantes</title>
 <link rel="icon" href="assets/img/health-monitoring-svgrepo-com.svg">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
+<link
+	href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css"
+	rel="stylesheet">
 <link rel="stylesheet" href="assets/css/EstiloBotones.css">
 <style>
 .help-block {
-		color: red;
-	}
-	.form-group.has-error .form-control-label {
-		color: red;
-	}
-	
-	.form-group.has-error .form-control {
-		border: 1px solid red;
-		box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
-	}
+	color: red;
+}
+
+.form-group.has-error .form-control-label {
+	color: red;
+}
+
+.form-group.has-error .form-control {
+	border: 1px solid red;
+	box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+}
 </style>
 </head>
 <body>
 	<div class="container">
-		<h1 class="mt-5 p-3 display-2 text-center"><strong>Listado de <span style="color: green;">Donantes</span></strong></h1>
+		<h1 class="mt-5 p-3 display-2 text-center">
+			<strong>Listado de <span style="color: green;">Donantes</span></strong>
+		</h1>
 		<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" 
-		aria-hidden="true" data-bs-backdrop="static"
-		data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" >
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Donante</h1>
-      </div>
-      <div class="modal-body ">
-        
-      <form id="formDonante" method="post" action="ServletDonante?accion=insertarModal">
-		  <div class="form-group">
-		    <label for="exampleInputEmail1" class="form-label">DNI</label>
-		    <input type="text" class="form-control" name="dni" id="id-dni" readonly>
-		  </div>
-		  <div class="form-group">
-		    <label for="exampleInputEmail1" class="form-label">Nombre</label>
-		    <input type="text" class="form-control" name="nombre" id="id-nombre">
-		  </div>
-  
-		  <div class="form-group">
-		    <label for="exampleInputPassword1" class="form-label">Paterno</label>
-		    <input type="text" class="form-control" name="paterno" id="id-paterno">
-		  </div>
-  
-		  <div class="form-group">
-		    <label for="exampleInputPassword1" class="form-label">Materno</label>
-		    <input type="text" class="form-control" name="materno" id="id-materno">
-		  </div>
-  
-	    <div class="form-group">
-	    <label for="exampleInputPassword1" class="form-label">Celular</label>
-	    <input type="text" class="form-control" name="celular" id="id-celular">
-	  	</div>
-  
-    <div class="form-group">
-    <label for="exampleInputPassword1" class="form-label">Correo Electrónico</label>
-    <input type="text" class="form-control" name="email" id="id-email">
-  </div>
-  	<div class="form-group">
-		<label for="departamento" class="label-form text-secondary">Departamento</label>
-		<select name="departamento" class="form-control departamento-label"
-			id="id-departamento" required>
-			<option value=" ">[Seleccione un Departamento]</option>
-		</select>
-	</div>
-	<div class="form-group">
-		<label for="provincia" class="label-form text-secondary">Provincia</label>
-		<select name="provincia"
-			class="form-control provincia-label" id="id-provincia"
-			required>
-			<option value=" ">[Seleccione una provincia]</option>
-		</select>
-	</div>
-	<div class="form-group">
-		<label for="distrito" class="label-form text-secondary">Distrito</label>
-		<select name="distrito" class="form-control distrito-label"
-			id="id-distrito" required>
-			<option value=" ">[Seleccione un distrito]</option>
-		</select>
-	</div>
-  <div class="form-group">
-    <label for="exampleInputPassword1" class="form-label">Dirección</label>
-    <input type="text" class="form-control" name="direccion" id="id-direccion">
-  </div>
-  
-		<div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Grabar</button>
-             <button type="button" class="btn btn-secondary boton-cerrar" data-bs-dismiss="modal">Cerrar</button>
-      	</div>
+		<div class="modal fade" id="exampleModal" tabindex="-1"
+			aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false"
+			aria-labelledby="staticBackdropLabel">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">Donante</h1>
+					</div>
+					<div class="modal-body ">
 
-	</form>  
-        
-      </div>
-      
-    </div>
-  </div>
-</div>
+						<form id="formDonante" method="post"
+							action="ServletDonante?accion=insertarModal">
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="form-label">DNI</label> <input
+									type="text" class="form-control" name="dni" id="id-dni"
+									readonly>
+							</div>
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="form-label">Nombre</label>
+								<input type="text" class="form-control" name="nombre"
+									id="id-nombre">
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputPassword1" class="form-label">Paterno</label>
+								<input type="text" class="form-control" name="paterno"
+									id="id-paterno">
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputPassword1" class="form-label">Materno</label>
+								<input type="text" class="form-control" name="materno"
+									id="id-materno">
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputPassword1" class="form-label">Celular</label>
+								<input type="text" class="form-control" name="celular"
+									id="id-celular">
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputPassword1" class="form-label">Correo
+									Electrónico</label> <input type="text" class="form-control"
+									name="email" id="id-email">
+							</div>
+							<div class="form-group">
+								<label for="departamento" class="label-form text-secondary">Departamento</label>
+								<select name="departamento"
+									class="form-control departamento-label" id="id-departamento"
+									required>
+									<option value=" ">[Seleccione un Departamento]</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="provincia" class="label-form text-secondary">Provincia</label>
+								<select name="provincia" class="form-control provincia-label"
+									id="id-provincia" required>
+									<option value=" ">[Seleccione una provincia]</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="distrito" class="label-form text-secondary">Distrito</label>
+								<select name="distrito" class="form-control distrito-label"
+									id="id-distrito" required>
+									<option value=" ">[Seleccione un distrito]</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="exampleInputPassword1" class="form-label">Dirección</label>
+								<input type="text" class="form-control" name="direccion"
+									id="id-direccion">
+							</div>
+
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Grabar</button>
+								<button type="button" class="btn btn-secondary boton-cerrar"
+									data-bs-dismiss="modal">Cerrar</button>
+							</div>
+
+						</form>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
 		<%--Tabla --%>
 		<div class="mt-5">
-		  <table id="tablaDonante" class="table table-striped table-bordered" style="width:100%">
-	        <thead>
-	            <tr>
-	                <th>DNI</th>
-	                <th>Nombre</th>
-	                <th>Paterno</th>
-	                <th>Materno</th>
-	                <th>Correo Electronico</th>
-	                <th>Celular</th>
-	                <th>Distrito</th>
-	                <th>Dirección</th>
-	                <th></th>
-	                <th></th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	           <%-- 
-	           <c:forEach items="${requestScope.donantes}" var="row">
-	            <tr>
-	                <td>${row.dni}</td>
-	                <td>${row.nombre}</td>
-	                <td>${row.paterno}</td>
-	                <td>${row.materno}</td>
-	                <td>${row.email}</td>
-	                <td>${row.celular}</td>
-	                <td>${row.ciudad}</td>
-	                <td>${row.direccion}</td>
-	                <td><button type="button" class="btn btn-success btn-edit" data-bs-toggle="modal" data-bs-target="#exampleModal"  data-operacion="actualizar">Editar</button></td>
-	                <td><button type="button" class="btn btn-danger btn-deleted">Eliminar</button></td>
-	            </tr>
-	            </c:forEach>
-	            --%>
-	        </tbody>
-    </table>
+			<table id="tablaDonante" class="table table-striped table-bordered"
+				style="width: 100%">
+				<thead>
+					<tr>
+						<th>DNI</th>
+						<th>Nombre</th>
+						<th>Paterno</th>
+						<th>Materno</th>
+						<th>Correo Electronico</th>
+						<th>Celular</th>
+						<th>Distrito</th>
+						<th>Dirección</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </body>
@@ -154,13 +161,21 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <!-- libreria JS de bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
 <!-- libreria JS de la tabla -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script
+	src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 
 <!-- validar si existe el atrubuto MENSAJE -->
@@ -175,7 +190,7 @@
 </c:if>
 
 
-<c:remove var="MENSAJE" scope="session"/>
+<c:remove var="MENSAJE" scope="session" />
 <script>
 cargarDonantes();
 function cargarDonantes(){
@@ -462,9 +477,8 @@ $(document).on("click", ".btn-edit", function () {
 	    });
 	    
 	</script>
-	<script>
+<script>
 		//Script para cargar dinamicamente los select de Ciudad, Distrito y Provincia.
-		// Obtener una referencia a los elementos select
 		const ciudadSelect = document.getElementById('id-departamento');
 		const provinciaSelect = document.getElementById('id-provincia');
 		const distritoSelect = document.getElementById('id-distrito');
