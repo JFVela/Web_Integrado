@@ -164,7 +164,7 @@
 			  </div>
 			  <div class="mb-3">
 			    <label class="form-label">Monto</label>
-			    <input type="number" class="form-control" id="id-monto" name="monto" min="0" step="0.01" pattern="\d+(\.\d{1,2})?" title="Ingresa un número positivo con hasta dos decimales">
+			    <input type="number" class="form-control" id="id-monto" name="monto" min="0" max="5000" step="0.01" pattern="\d+(\.\d{1,2})?" title="Ingresa un número positivo con hasta dos decimales">
 			  </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -272,4 +272,27 @@
 		//
 	});
 	</script>
+	<script>
+    /*$(document).ready(function(){
+        $('#frmValidarMonto').bootstrapValidator({
+            fields: {
+                monto: {
+                    validators: {
+                        notEmpty: {
+                            message: 'El campo monto es requerido'
+                        },
+                        numeric: {
+                            message: 'Ingrese solo números'
+                        },
+                        between: {
+                            min: 1,
+                            max: 5000,
+                            message: 'El monto debe estar entre 1 y 5000'
+                        }
+                    }
+                }
+            }
+        });
+    });*/
+</script>
 </html>
