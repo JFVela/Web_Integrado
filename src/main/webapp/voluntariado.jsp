@@ -224,7 +224,7 @@ body.shimeji-select-ie {
 													acepta los términos y politicas de Renovando Vidas.</label>
 											</div>
 											<div class="text-center pt-2">
-												<button type="submit"
+												<button type="submit" id="btn-guardar"
 													class="submit-btn c__cta btn btn-rounded fs-5"
 													style="margin-bottom: 10px;">Inscríbirse</button>
 											</div>
@@ -781,7 +781,7 @@ body.shimeji-select-ie {
 	                            imageAlt: 'imgError',
 	                        });
 	                        dniExistente = true;
-	                        $("#nombre, #paterno, #materno, #email, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", true);
+	                        $("#nombre, #paterno, #materno, #email, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito, #btn-guardar").prop("disabled", true);
 	                    } else {
 	                        dniExistente = false;
 	                        $("#nombre, #paterno, #materno, #email, #telefono, #id-evento, #id-especialidad, #ciudad, #provincia, #distrito").prop("disabled", false);
@@ -815,7 +815,7 @@ body.shimeji-select-ie {
 	                            imageAlt: 'imgError',
 	                        });
 	                        correoExistente = true;
-	                        $("#nombre, #paterno, #materno, #dni, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", true);
+	                        $("#nombre, #paterno, #materno, #dni, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito, #btn-guardar").prop("disabled", true);
 	                    } else {
 	                        correoExistente = false;
 	                        $("#nombre, #paterno, #materno, #email, #dni, #telefono, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", false);
@@ -856,7 +856,7 @@ body.shimeji-select-ie {
 	                        });
 	                        telefonoExistente = true;
 	                        // Bloquear campos si el teléfono existe
-	                        $("#nombre, #paterno, #materno, #email, #dni, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito").prop("disabled", true);
+	                        $("#nombre, #paterno, #materno, #email, #dni, #ciudad, #id-evento, #id-especialidad, #provincia, #distrito, #btn-guardar").prop("disabled", true);
 	                    } else {
 	                        telefonoExistente = false;
 	                        // Desbloquear campos si el teléfono no existe
