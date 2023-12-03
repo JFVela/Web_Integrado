@@ -561,8 +561,8 @@ $(document).ready(function() {
                         message: 'El Nombre no debe tener más de 15 caracteres'
                     },
                     regexp: {
-                        regexp: /^[A-Za-zñÑáéíóúÁÉÍÓÚüÜ]+$/,
-                        message: 'El Nombre solo puede contener letras y tildes'
+                        regexp: /^[A-Za-zñÑáéíóúÁÉÍÓÚüÜ\s]+$/,
+                        message: 'El Nombre solo puede contener letras, tildes y espacios'
                     }
                 }
             },
