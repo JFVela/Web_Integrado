@@ -1771,12 +1771,6 @@ body.shimeji-select-ie {
 	});
 
 	</script>
-
-
-
-
-
-
 	<script>    
 	    $(document).ready(function(){     
 	        $('#formDonante1').bootstrapValidator({      
@@ -2146,36 +2140,37 @@ body.shimeji-select-ie {
 		    });
 		}
 	</script>
-	<script>
-	$(document).on("click",".todos-cerrar",function(){
+<script>
+	$(document).on("click", ".todos-cerrar", function () {
+	    console.log("Botón clickeado");
 
-		$("#formRegistro").trigger("reset");
-		$("#formInputCorreo").trigger("reset");
-		$("#formRegistro").data("bootstrapValidator").resetForm(true);
-		 $("#id-ingresoCorreo").removeClass("error");
-	        $("#msg-error").text("");
-	        $("#msg-error").removeClass("error");
-	     // Resetear la validación de jQuery Validation
-	        var validator = $("#formInputCorreo").validate();
-	        $('#formRegistro').hide();
-			 $('#email-correo').hide();
-	        validator.resetForm();
-	        $("#confirmationInput").removeClass("error");
-	        $("#ms-error").text("");
-	        $("#ms-error").removeClass("error");
-	        $("#confirmationInput").val("");
-	        $("#confirmationLabel").hide();
-	        $("#inputGroup-sizing-default").hide();
-	        $("#confirmationInput").hide();
-	        $("#ms-error").hide();
-	        $("#confirmationButton").hide();
-	        $('#id-ingresoCorreo').prop('readonly', false);
-	        $('#id-no').prop('disabled', false);
-	        $('#id-si').prop('disabled', false);
-	        $('#startCountdown').prop('disabled', false);
-	})
-	
-	</script>
+	    // Reiniciar los formularios
+	    $("#formDonante1")[0].reset();
+	    $("#formDonante")[0].reset();
+	    $("#formRegistro")[0].reset();
+	    $("#formInputCorreo")[0].reset();
+
+	    // Reiniciar el formulario de BootstrapValidator (asegúrate de tener BootstrapValidator cargado)
+	    $("#formRegistro").data("bootstrapValidator").resetForm(true);
+
+	    // Limpiar campos y elementos adicionales
+	    $("#id-ingresoCorreo").removeClass("error");
+	    $("#msg-error").text("").removeClass("error");
+
+	    // Resetear la validación de jQuery Validation
+	    var validator = $("#formInputCorreo").validate();
+	    $('#formRegistro').hide();
+	    $('#email-correo').hide();
+	    validator.resetForm();
+
+	    $("#confirmationInput").removeClass("error").val("");
+	    $("#confirmationLabel, #inputGroup-sizing-default, #confirmationInput, #ms-error, #confirmationButton").hide();
+
+	    // Habilitar campos
+	    $('#id-ingresoCorreo, #id-no, #id-si, #startCountdown').prop('readonly', false).prop('disabled', false);
+	});
+</script>
+
 	<%--FIN DE LA SCRIPT DEL AJAX --%>
 
 	<%--No se para que sirve, acciones de pestañas?
