@@ -478,7 +478,7 @@ body.shimeji-select-ie {
 											<select name="departamento"
 												class="form-control departamento-label" id="id-departamento"
 												required>
-												<option value=" ">[Departamento]</option>
+												<option value=" ">[Seleccione una ciudad]</option>
 											</select>
 										</div>
 									</div>
@@ -487,14 +487,14 @@ body.shimeji-select-ie {
 											<label for="provincia" class="label-form text-secondary">Provincia</label>
 											<select name="provincia" class="form-control provincia-label"
 												id="id-provincia" required>
-												<option value=" ">[Provincia]</option>
+												<option value=" ">[Seleccione una provincia]</option>
 											</select>
 										</div>
 										<div class="form-group spa">
 												<label for="distrito" class="label-form text-secondary">Distrito</label>
 												<select name="distrito" class="form-control distrito-label"
 													id="id-distrito" required>
-													<option value=" ">[Distrito]</option>
+													<option value=" ">[Seleccione un distrito]</option>
 												</select>
 											</div>
 										</div>
