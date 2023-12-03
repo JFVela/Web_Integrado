@@ -357,6 +357,7 @@ th {
 			//resetar validación
 			$("#contact-form").data("bootstrapValidator").resetForm(true);
 			//
+		    $("#id").val("0");
 		})
 	</script>
 

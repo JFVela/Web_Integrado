@@ -596,11 +596,6 @@ body.shimeji-select-ie {
 	<script src="assets/js/validacion.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
-
-	<script type="text/javascript">
-		{
-		}
-	</script>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery.scrollex.min.js"></script>
 	<script src="assets/js/jquery.scrolly.min.js"></script>
