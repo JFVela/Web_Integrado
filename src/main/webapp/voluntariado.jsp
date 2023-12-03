@@ -77,7 +77,6 @@ body.shimeji-select-ie {
 #shimeji-contextMenu::-webkit-scrollbar-thumb:hover {
 	background: #555;
 }
-
 </style>
 </head>
 <body>
@@ -105,8 +104,7 @@ body.shimeji-select-ie {
 							de éxito</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="voluntariado.jsp">Voluntariado</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">Eventos
-							y noticias</a></li>
+
 					<a type="" class="btn btn-primary ms-3" href="Donacion.jsp">Dona</a>
 				</ul>
 			</div>
@@ -190,8 +188,7 @@ body.shimeji-select-ie {
 												<label for="especialidad" class="label-form text-secondary">Especialidad</label>
 												<select class="form-select" name="especialidad"
 													id="id-especialidad">
-													<option value="">[Seleccione tipo de
-														voluntariado]</option>
+													<option value="">[Seleccione tipo de voluntariado]</option>
 												</select>
 											</div>
 											<div class="form-group">
@@ -417,40 +414,40 @@ body.shimeji-select-ie {
 				</ul>
 			</div>
 		</div>
-		
+
 		<!-- grafico -->
-		
+
 		<section class="canvasSec">
-		
+
 			<h2 class="text-center">Voluntarios inscritos en eventos</h2>
 			<hr class="my-4">
-		<div class="canvas1 pt-5">
+			<div class="canvas1 pt-5">
 				<canvas id="grafico-de-barras-eventos"></canvas>
-		
-		</div>
+
+			</div>
 		</section>
-		
+
 		<section class="canvasSec2">
-		
+
 			<h2 class="text-center">Voluntarios inscritos en especialidades</h2>
 			<hr class="my-4">
-		<div class="canvas2 pt-5">
-			<canvas id="grafico-de-barras-especialidades"></canvas>		
-		</div>
+			<div class="canvas2 pt-5">
+				<canvas id="grafico-de-barras-especialidades"></canvas>
+			</div>
 		</section>
-		
-		
+
+
 		<section class="canvasSec3">
-		
+
 			<h2 class="text-center">Voluntarios por ciudad</h2>
 			<hr class="my-4">
-		<div class="canvas3 pt-5">
-		 <canvas id="doughnut-chart"></canvas>
-		</div>
+			<div class="canvas3 pt-5">
+				<canvas id="doughnut-chart"></canvas>
+			</div>
 		</section>
-		
-  
-  
+
+
+
 
 		<!-- Footer -->
 		<footer class="footer-area footer--light">
@@ -572,9 +569,9 @@ body.shimeji-select-ie {
 			</div>
 		</footer>
 	</main>
-	
+
 	<!-- graficos -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 	<!-- libreria principal de JQUERY -->
@@ -883,8 +880,8 @@ body.shimeji-select-ie {
 
 	});
 	</script>
-	
-	
+
+
 	<script>
 	//GRAFICOS
 	
@@ -974,7 +971,7 @@ body.shimeji-select-ie {
 
 	
 	</script>
-	
+
 	<script>
 	 $(document).ready(function() {
          $.get("ServletVoluntarioJSON", function(response) {

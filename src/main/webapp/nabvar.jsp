@@ -44,8 +44,7 @@
 								de éxito</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="voluntariado.jsp">Voluntariado</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">Eventos
-								y noticias</a></li>
+
 						<a type="" class="btn btn-primary ms-3" href="Donacion.jsp">Dona</a>
 					</ul>
 				</div>
