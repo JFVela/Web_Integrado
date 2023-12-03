@@ -59,7 +59,7 @@
 		<h1 class="mt-5 text-center">Empleados</h1>
 		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-			data-bs-target="#exampleModal">Nuevo Docente</button>
+			data-bs-target="#exampleModal">Nuevo Empleado</button>
 		<div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-labelledby="modalEmpleadoLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
@@ -149,7 +149,7 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary">Guardar</button>
+								<button type="submit" class="btn btn-primary" id="boton-Guardar">Guardar</button>
 								<button type="button" class="btn btn-danger"
 									data-bs-dismiss="modal" id="btn-cerrar">Cerrar</button>
 							</div>
@@ -383,10 +383,10 @@
                                 imageAlt: 'imgError',
                             });
                             dniExistente = true;
-                            $("#id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", true);
+                            $("#id-login, #boton-Guardar ,#id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", true);
                         } else {
                             dniExistente = false;
-                            $("#id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", false);
+                            $("#id-login, #boton-Guardar , #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", false);
                         }
                     },
                     error: function() {
@@ -415,10 +415,10 @@
                             imageAlt: 'imgError',
                         });
                         loginExistente = true;
-                        $("#id-dni, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", true);
+                        $("#id-dni, #boton-Guardar, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", true);
                     } else {
                         loginExistente = false;
-                        $("#id-dni, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", false);
+                        $("#id-dni, #boton-Guardar, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", false);
                     }
                 },
                 error: function() {
@@ -447,10 +447,10 @@
                                 imageAlt: 'imgError',
                             });
                             telefonoExistente = true;
-                            $("#id-dni, #id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", true);
+                            $("#id-dni, #boton-Guardar, #id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", true);
                         } else {
                             telefonoExistente = false;
-                            $("#id-dni, #id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", false);
+                            $("#id-dni, #boton-Guardar, #id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-correo, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", false);
                         }
                     },
                     error: function() {
@@ -480,10 +480,10 @@
                                 imageHeight: 275,
                                 imageAlt: 'imgError',                            });
                             correoExistente = true;
-                            $("#id-dni, #id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", true);
+                            $("#id-dni, #boton-Guardar, #id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", true);
                         } else {
                             correoExistente = false;
-                            $("#id-dni, #id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", false);
+                            $("#id-dni, #boton-Guardar, #id-login, #id-contraseña, #id-nombre, #id-paterno, #id-materno, #id-telefono, #id-direccion, #id-sueldo, #id-rol, #id-departamento").prop("disabled", false);
                         }
                     },
                     error: function() {
