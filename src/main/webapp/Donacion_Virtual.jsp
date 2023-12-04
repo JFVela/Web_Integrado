@@ -63,7 +63,44 @@ body{
 <!--  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Agregar
 </button>-->
-
+<div class="row">
+<div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Monto Recaudado (DOLARES)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="total-dolares">
+                                
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Monto Recaudado (Euros)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="total-euros">
+                                
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -174,20 +211,37 @@ body{
 		})
 	}*/
 	function cargarDonantesVirtuales(){
+		let totalDolares = 0;
+	    let totalEuros = 0;
+	    
 		$.get("ServletApiDonacionVirtual?tipo=listaDonantesVirtuales",function(response){	
-			let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'><i class='bi bi-pencil'></i></button>";
-	        let botonEliminar="<button type='button' class='btn btn-danger btn-eliminar'><i class='bi bi-trash'></i></button>";
-	        $("#tblDonantesVirtuales").DataTable().destroy();
+			//let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'><i class='bi bi-pencil'></i></button>";
+	        //let botonEliminar="<button type='button' class='btn btn-danger btn-eliminar'><i class='bi bi-trash'></i></button>";
+	        
+	        $('#tblDonantesVirtuales tbody').empty();
 	        $.each(response,function(index,item){
 				$("#tblDonantesVirtuales").append("<tr><td>"+item.codigo+"</td>"+
 						 "<td>"+item.donantesdni+"</td>"+"<td>"+item.campaña.nombre+"</td>"+
 						 "<td>"+item.moneda.nombre+"</td>"+
 						 "<td>"+item.monto+"</td>"+"<td>"+item.cuenta.dueño+"</td>"+
 						 "</td></tr>");
-			})
+				// Acumular el valor de monto según la moneda
+	            if (item.moneda.nombre.toLowerCase() === 'dolar') {
+	                totalDolares += parseFloat(item.monto);
+	            } else if (item.moneda.nombre.toLowerCase() === 'euros') {
+	                totalEuros += parseFloat(item.monto);
+	            }
+			});
+	     // Imprimir los totales en consola
+	        $('#total-dolares').text('$/'+totalDolares.toFixed(2));
+        $('#total-euros').text('€/'+totalEuros.toFixed(2));
 			new DataTable('#tblDonantesVirtuales');
-		})
+			
+		});
 	}
+	//sumar
+
+	//fin sumar
 	
 	//asignamos eventos oneClick
 	$(document).on("click",".btn-editar",function(){
