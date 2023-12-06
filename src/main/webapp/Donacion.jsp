@@ -437,8 +437,9 @@ body.shimeji-select-ie {
 									<div class="d-flex">
 										<div class="form-group">
 											<label for="exampleInputPassword1" class="form-label">DNI</label>
-											<input type="text" class="form-control" placeholder="DNI:"
+											<input type="text" class="form-control dni-input" placeholder="DNI:"
 												name="dni">
+											<div class="mensajedni" style="text-align: left;"></div>
 										</div>
 
 										<div class="form-group spa">
@@ -512,7 +513,7 @@ body.shimeji-select-ie {
 												placeholder="Dirección:" name="direccion">
 										</div>
 									</div>
-									<button type="submit" class="btn btn-outline-success">Registrar</button>
+									<button type="submit" id="mandar-form" onclick="validarCampos()" class="btn btn-outline-success">Registrar</button>
 								</div>
 							</form>
 						</div>
@@ -1468,6 +1469,158 @@ body.shimeji-select-ie {
 			})
 		}
 	</script><%--FIN DE LA CARGA DE DATOS --%>
+	
+	<script>
+	// Verificar si los correos ya existen con JSON
+	$(".correo").on("input", function () {
+	    var emailObtenido = $(this).val().trim();
+	    var mensajeEmail = $(".mensajeEmail");
+	    var elementoActual = $(this);
+	
+	    // Obtén los botones externos de ambos formularios
+	    var botonExternoForm1 = document.getElementById('mandar-form');
+	
+	    $.get("ServletDonanteJSON", function (response) {
+	        var emailExistente = false; // Variable para rastrear si el correo ya existe
+	
+	        // Recorre los datos del JSON obtenidos
+	        $.each(response, function (index, item) {
+	            var jsonEmail = item.email;
+	
+	            // Comparar el valor del campo email en el JSON con el valor del campo de entrada
+	            if (emailObtenido === jsonEmail) {
+	                mensajeEmail.text("La dirección de correo electrónico ya está en uso");
+	                $(elementoActual).addClass("error");
+	                mensajeEmail.css("color", "red");
+	                emailExistente = true;
+	            }
+	            
+	        });
+	
+	        // Habilitar o deshabilitar los botones según si el correo existe en cualquiera de los formularios
+	        if (emailExistente) {
+	            botonExternoForm1.disabled = true;
+	        } else {
+	        	resetearEstadoCorreo();
+	        }
+	    });
+	});
+	//Verificar si los celulares ya existen con JSON
+	$(".numcel").on("input", function () {
+	    var celObtenido = $(this).val().trim();
+	    var mensajeCelular = $(".mensajeCelular");
+	    var elementoActual = $(this);
+	    var botonExternoForm1 = document.getElementById('mandar-form');
+	    
+	    $.get("ServletDonanteJSON", function (response) {
+	    	var emailExistente = false;
+	        // Recorre los datos del JSON obtenidos
+	        $.each(response, function (index, item) {
+	            var jsoncel = item.celular;
+	            
+	            // Comparar el valor del campo email en el JSON con el valor del campo de entrada
+	            if (parseInt(celObtenido) === jsoncel) {
+	            	mensajeCelular.text("La número de celular ya ha sido registrado");
+		                $(elementoActual).addClass("error");
+		                mensajeCelular.css("color", "red");
+		                emailExistente = true;
+	            }
+	        });
+	        if (emailExistente) {
+	            botonExternoForm1.disabled = true;
+	        } else {
+	        	resetearEstadoCel();
+	        }
+	    });
+	});
+	// Verificar si el DNI ya existe
+	$(".dni-input").on("input", function () {
+	  var dniObtenido = $(this).val().trim();
+	  var mensajeDNI = $(".mensajedni");
+	  var elementoActual = $(this);
+
+	  // Obtén los botones externos de ambos formularios
+	  var botonExternoForm1 = document.getElementById('mandar-form');
+
+	  $.get("ServletDonanteJSON", function (response) {
+	    var dniExistente = false;
+
+	    // Recorre los datos del JSON obtenidos
+	    $.each(response, function (index, item) {
+	      var jsonDNI = item.dni;
+
+	      // Comparar el valor del campo DNI en el JSON con el valor del campo de entrada
+	      if (parseInt(dniObtenido) === jsonDNI) {
+	        mensajeDNI.text("El DNI ya está registrado");
+	        $(elementoActual).addClass("error");
+	        mensajeDNI.css("color", "red");
+	        dniExistente = true;
+
+	        // Puedes agregar más lógica aquí si necesitas hacer algo específico cuando se encuentra una coincidencia
+	      }
+	    });
+
+	    // Habilitar o deshabilitar los botones según si el DNI existe en cualquiera de los formularios
+	    if (dniExistente) {
+	      botonExternoForm1.disabled = true;
+	    } else {
+	    	resetearEstadoDNI();
+	    }
+	  });
+	});
+
+	function resetearEstadoDNI() {
+		  // Obtén los elementos específicos aquí
+		  var elementoActual = $(".dni-input");
+		  var botonExternoForm = document.getElementById('mandar-form');
+		  var mensaje = $(".mensajedni");
+
+		  // Restablecer estado
+		  botonExternoForm.disabled = false;
+		  elementoActual.removeClass("error");
+		  mensaje.text("");
+		  
+		}
+	function resetearEstadoCel() {
+		  // Obtén los elementos específicos aquí
+		  var elementoActual = $(".numcel");
+		  var botonExternoForm = document.getElementById('mandar-form');
+		  var mensaje = $(".mensajeCelular");
+
+		  // Restablecer estado
+		  botonExternoForm.disabled = false;
+		  elementoActual.removeClass("error");
+		  mensaje.text("");
+		}
+	function resetearEstadoCorreo() {
+		  // Obtén los elementos específicos aquí
+		  var elementoActual = $(".correo");
+		  var botonExternoForm = document.getElementById('mandar-form');
+		  var mensaje = $(".mensajeEmail");
+
+		  // Restablecer estado
+		  botonExternoForm.disabled = false;
+		  elementoActual.removeClass("error");
+		  mensaje.text("");
+		}
+	function validarCampos() {
+        // Realiza la validación de cada campo aquí
+        var campoEmail = $(".correo");
+        var campoCelular = $(".numcel");
+        var campoDNI = $(".dni-input");
+
+        // Verifica si algún campo tiene la clase de error
+        if (campoEmail.hasClass("error") || campoCelular.hasClass("error") || campoDNI.hasClass("error")) {
+            // Si hay errores, deshabilita el botón
+            document.getElementById('mandar-form').disabled = true;
+        } else {
+            // Si no hay errores, habilita el botón y procede a enviar el formulario
+            document.getElementById('mandar-form').disabled = false;
+            // Aquí puedes agregar el código para enviar el formulario o realizar cualquier acción adicional
+        }
+    }
+
+</script>
 
 	<%--VERIFICAR SI LOS DATOS DE LA TARJETA COINCIDEN--%>
 	<script>
@@ -1991,19 +2144,34 @@ body.shimeji-select-ie {
 		    function mostrarFormulario() {
 		        $('#formRegistro').show();
 		        $('#email-correo').hide();
+			    $("#formRegistro")[0].reset();
+			    $("#formInputCorreo")[0].reset();
+			    $("#formRegistro").data("bootstrapValidator").resetForm(true);
+			    var validator = $("#formInputCorreo").validate();
+			    validator.resetForm();
+
 		    }
 
 		    // Función para mostrar el campo de correo y ocultar el formulario
 		    function mostrarCorreo() {
 		        $('#email-correo').show();
 		        $('#formRegistro').hide();
+		        resetearEstadoCorreo();
+			    resetearEstadoCel();
+			    resetearEstadoDNI();
+			    $("#formRegistro").data("bootstrapValidator").resetForm(true);
+			    $("#formRegistro")[0].reset();
+			    $("#formInputCorreo")[0].reset();
+			    var validator = $("#formInputCorreo").validate();
+			    validator.resetForm();
+
 		    }
 
 		    // Muestra u oculta el formulario al hacer clic en "SI" o "NO"
 		    $('#id-no').click(mostrarFormulario);
 
 		    $('#id-si').click(mostrarCorreo);
-
+		    
 		});
 		
 	</script>
@@ -2142,8 +2310,6 @@ body.shimeji-select-ie {
 	</script>
 <script>
 	$(document).on("click", ".todos-cerrar", function () {
-	    console.log("Botón clickeado");
-
 	    // Reiniciar los formularios
 	    $("#formDonante1")[0].reset();
 	    $("#formDonante")[0].reset();
@@ -2162,7 +2328,9 @@ body.shimeji-select-ie {
 	    $('#formRegistro').hide();
 	    $('#email-correo').hide();
 	    validator.resetForm();
-
+	    resetearEstadoCorreo();
+	    resetearEstadoCel();
+	    resetearEstadoDNI();
 	    $("#confirmationInput").removeClass("error").val("");
 	    $("#confirmationLabel, #inputGroup-sizing-default, #confirmationInput, #ms-error, #confirmationButton").hide();
 
