@@ -2002,8 +2002,8 @@ body.shimeji-select-ie {
 	        					message:'Este campo es obligatorio'
 	        				}
 	        			}
-	        		},monto:{
-	        			validators: {
+	        		},monto: {
+	        		    validators: {
 	        		        notEmpty: {
 	        		            message: 'El campo monto es obligatorio'
 	        		        },
@@ -2011,18 +2011,19 @@ body.shimeji-select-ie {
 	        		            value: 0,
 	        		            inclusive: false,
 	        		            message: 'El monto debe ser un número positivo'
-	        		        },regexp: {
-	        				      regexp: /^[0-9]+$/, // Expresión regular para aceptar solo números
-	        				      message: 'Este campo debe contener solo números'
-	        				},
-	        				between:{
-        		 				min:1,
-        		 				max:9000,
-        		 				message:'Campo MONTO acepta solo números rango 1 - 9000'
-        		 			}
-        		 			
+	        		        },
+	        		        regexp: {
+	        		            regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
+	        		            message: 'Este campo debe contener solo números con hasta dos decimales'
+	        		        },
+	        		        between: {
+	        		            min: 1,
+	        		            max: 9000,
+	        		            message: 'Campo MONTO acepta solo números en el rango 1 - 9000'
+	        		        }
 	        		    }
 	        		}
+
 	        	 }	        	 
 	        });   
 				

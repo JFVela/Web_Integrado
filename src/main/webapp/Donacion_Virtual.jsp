@@ -100,6 +100,26 @@ body{
                 </div>
             </div>
         </div>
+        
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Monto Recaudado (Soles)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="total-soles">
+                                
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         </div>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -213,7 +233,7 @@ body{
 	function cargarDonantesVirtuales(){
 		let totalDolares = 0;
 	    let totalEuros = 0;
-	    
+	    let totalSoles = 0;
 		$.get("ServletApiDonacionVirtual?tipo=listaDonantesVirtuales",function(response){	
 			//let botonEditar="<button type='button' class='btn btn-success btn-editar' data-bs-toggle='modal' data-bs-target='#exampleModal'><i class='bi bi-pencil'></i></button>";
 	        //let botonEliminar="<button type='button' class='btn btn-danger btn-eliminar'><i class='bi bi-trash'></i></button>";
@@ -230,11 +250,14 @@ body{
 	                totalDolares += parseFloat(item.monto);
 	            } else if (item.moneda.nombre.toLowerCase() === 'euros') {
 	                totalEuros += parseFloat(item.monto);
+	            }else if (item.moneda.nombre.toLowerCase() === 'soles') {
+	                totalSoles += parseFloat(item.monto);
 	            }
 			});
 	     // Imprimir los totales en consola
 	        $('#total-dolares').text('$/'+totalDolares.toFixed(2));
         $('#total-euros').text('€/'+totalEuros.toFixed(2));
+        $('#total-soles').text('S/'+totalSoles.toFixed(2));
 			new DataTable('#tblDonantesVirtuales');
 			
 		});
