@@ -144,7 +144,7 @@ public class MySQL_Departamento implements interfazDepartamento {
 			while (rs.next()) {
 				Departamento D = new Departamento();
 				D.setId_depa(rs.getInt(1));
-				D.setNombre(rs.getNString(2));
+				D.setNombre(rs.getString(2));
 				D.setDescripcion(rs.getString(3));
 				lista.add(D);
 			}
